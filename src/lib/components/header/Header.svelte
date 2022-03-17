@@ -65,7 +65,8 @@
   <ul>
     <li>
       <!-- when on mainnnet, replace this line with the one below-->
-      <h1><a href="/"><img src="/logo-testnet.png" alt="Emerald City FLOAT" /></a></h1>
+      <h3>LOGO</h3>
+      <!-- <h1><a href="/"><img src="/logo-testnet.png" alt="Emerald City FLOAT" /></a></h1> -->
       <!-- <h1><a href="/"><img src="/floatlogowebpage.png" alt="Emerald City FLOAT" /></a></h1> -->
     </li>
   </ul>

@@ -1,63 +1,249 @@
 <script>
+  import Icon from "@iconify/svelte"
+
   import CheckAddress from '$lib/components/CheckAddress.svelte';
+  import CreateProject from '$lib/components/CreateProject.svelte';
   import { PAGE_TITLE_EXTENSION } from '$lib/constants';
+  import { handleTokenSelection, handleCollectionSelection,  } from "$lib/components/tabs/utils"
+
+  import { tabs, tokens, collections } from '$lib/stores';
+
+  let tabsValue
+  let activeTabValue = 0
+  let isHovered = {right: false, left: false}
+
+
+
+// logic
+  tabs.subscribe(value => {
+		tabsValue = value;
+	});
+
+  console.log("store tabs", tabsValue)
+
+  const handleEvent = msg => {
+console.log("handling")
+    switch (activeTabValue) {
+        case 0:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
+        case 1:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
+        case 2:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
+
+        default:
+            break;
+    }
+
+
+// console.log("msg", msg.detail.event) 
+// const event = msg.detail.event
+// const id = msg.detail.id
+
+// switch (event) {
+//   case "selectToken":
+//   handleTokenSelection($tokens, id)
+//     break;
+    
+//   case "selectCollection":
+//   handleCollectionSelection($collections, id)
+//     break;
+
+//   case "continue":
+//     $tabs[id].done = true
+//     handleAction("increment")
+
+//     break;
+
+//   default:
+//     break;
+}
+
+  const handleAction = action => action === "increment" ? activeTabValue ++ : activeTabValue --
+	const handleClick = tabValue => () => (activeTabValue = tabValue);
+
+
 </script>
 
-<style>
-  
-  /* video {
-    display:block;
-    width:100%;
-    max-width: 800px;
-    margin: 20px auto;
-  }
-   */
-  
-  h1 {
-    text-align:center;
-  }
-
-  .tag-line {
-    font-weight: 300;
-    font-size: 1.2rem;
-    margin-top: 30px;
-    display:block;
-  }
-
-  .island {
-    width: 30vw;
-    max-width: 400px;
-  }
-</style>
-
 <svelte:head>
-<title>Home {PAGE_TITLE_EXTENSION}</title>
+  <title>Home {PAGE_TITLE_EXTENSION}</title>
 </svelte:head>
 
 <!-- <video autoplay muted loop id="myVideo">
   <source src="island.mp4" type="video/mp4" />
 </video> -->
 
-<div class="grid">
-  <a href="/live">
-    <div class="text-center">
-      <img  class="island" src="/island.png" alt="FLOAT Logo" />
-    </div>
-  </a>
-  <div class="mt-2 mb-2 text-center">
-    <h1>Welcome to FLOAT</h1>
-    <small>A service by <a href="https://discord.gg/emeraldcity" target="_blank"><img style="height:20px;width:auto;margin-right:4px;" src="/emeraldcitylogo.png" alt="Emerald Logo" />Emerald City DAO</a></small>
-    <span class="tag-line">Unlock a unique identifier to show that you attended an event.</span>
+<!-- <div class="grid">
+  
 
-    <div class="grid mt-2 no-break align-center">
-      <a role="button" href="#findAddress" class="outline small-button mb-1">Find your event</a>
-      <a role="button" href="/create" class="small-button mb-1">Create an event</a>
-    </div>
-  </div>
-</div>
+    <
+</div> -->
 
 <article>
-  <h2 id="findAddress">View FLOATs from an Address</h2>
-  <CheckAddress />
+  <main class="tabbar">
+    <div class="chevron-wrapper" on:click={() => handleAction("decrement")}>
+      <div
+        class="chevron-icon"
+        on:pointerenter={() => (isHovered.left = !isHovered.left)}
+        on:pointerleave={() => (isHovered.left = !isHovered.left)}
+      >
+        <Icon
+          class="chevron-icon"
+          icon="akar-icons:circle-chevron-left"
+          height={36}
+          color={isHovered.left ? "var(--primary)" : "lightgrey"}
+        />
+      </div>
+    </div>
+    <ul>
+      {#each tabsValue as item, i}
+        <li
+          class={activeTabValue === item.value ? "active" : "inactive-tab"}
+          on:click={handleClick(item.value)}
+        >
+          <Icon
+            icon={item.icon}
+            height={30}
+            color={tabsValue[i].done
+              ? "#85DFB4"
+              : activeTabValue === item.value
+              ? "var(--primary)"
+              : "lightgrey"}
+          />
+        </li>
+      {/each}
+    </ul>
+    <div class="chevron-wrapper" on:click={() => handleAction("increment")}>
+      <div
+        class="chevron-icon"
+        on:pointerenter={() => (isHovered.right = !isHovered.right)}
+        on:pointerleave={() => (isHovered.right = !isHovered.right)}
+      >
+        <Icon
+          class="chevron-icon"
+          icon="akar-icons:circle-chevron-right"
+          height={36}
+          color={isHovered.right ? "var(--primary)" : "lightgrey"}
+        />
+      </div>
+    </div>
+  </main>
+
+  <!-- TabContent -->
+  {#each tabsValue as item}
+    {#if activeTabValue == item.value}
+      <div class="tab-content-container" >
+      <!-- <div class="tab-content-container" in:fade={{ duration: 1000 }}> -->
+        <!-- <svelte:component this={item.component} on:message={handleEvent} /> -->
+        <svelte:component this={item.component}  />
+      </div>
+      <footer>
+        <div class="mt-0 mb-0 pl-1">
+          <button class="contrast small-button" 
+          on:click={handleEvent}
+          >Continue</button
+          >
+        </div>
+      </footer>
+    {/if}
+  {/each}
+
+  <!-- <div class="grid no-break mb-1">
+    <div>div 1</div>
+    <div>div 1</div>
+  </div> -->
+  <!-- <h2 id="findAddress">View FLOATs from an Address</h2>
+  <CheckAddress /> -->
 </article>
 
+<style>
+  h1 {
+    text-align: center;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 70%;
+    width: 70%;
+    max-width: 70%;
+    overflow: scroll;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.08);
+    list-style: none;
+  }
+
+  ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    min-width: 25%;
+    cursor: pointer;
+  }
+
+  li.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #495057;
+    background-color: #fff;
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+    background-color: rgba(218, 4, 106, 0.1);
+    margin: 0;
+    padding: 0;
+    width: 25%;
+    height: 100%;
+    min-width: 25%;
+  }
+
+  .inactive-tab:hover {
+    background: var(--form-element-border-color);
+  }
+
+  .tabbar {
+    margin-top: -6%;
+    height: 3rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tag-line {
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    display: block;
+  }
+
+  .island {
+    width: 30vw;
+    max-width: 400px;
+  }
+
+  .chevron-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+  }
+</style>

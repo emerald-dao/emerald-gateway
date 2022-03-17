@@ -9,8 +9,8 @@
 /* Can be forced with data-theme="light" */
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
-  --primary: #35d9ba;
-  --primary-hover: #248f7a;
+  --primary: #DA046A;
+  --primary-hover: #DA046A;
   --primary-focus: transparent;
   --primary-inverse: #fff;
 }
@@ -19,8 +19,8 @@
 /* Automatically enabled if user has Dark mode enabled */
 @media only screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --primary: #38e8c6;
-    --primary-hover: #12bf9d;
+    --primary: #DA046A;
+    --primary-hover: #DA046A;
     --primary-focus: transparent;
     --primary-inverse: #111;
   }
@@ -29,8 +29,8 @@
 /* Green Dark scheme (Forced) */
 /* Enabled if forced with data-theme="dark" */
 [data-theme="dark"] {
-  --primary: #38e8c6;
-  --primary-hover: #12bf9d;
+  --primary: #DA046A;
+  --primary-hover: #DA046A;
   --primary-focus: transparent;
   --primary-inverse: #111;
 }
