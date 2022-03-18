@@ -6,13 +6,15 @@ import {
     getContext
 } from 'svelte';
 import {
-    tokens
+    tokens, modal, dialog, selectedToken
 } from '../../stores';
 import {
     createEventDispatcher
 } from 'svelte';
 
-import { handleEvent } from './utils';
+import {
+    handleEvent
+} from './utils';
 // import Popup from '../Popup.svelte';
 import Modal from '../Modal.svelte';
 import HorizontalSpace from "../HorizontalSpace.svelte";
@@ -22,127 +24,205 @@ import Dialog from '../Dialog.svelte';
 // import { modal } from '../../stores.js';
 
 let hoveredId;
-let isOpenModal = false;
-let isOpenDialog = false;
+// let isOpenModal = false;
 let tokensValue;
-let tokenId;
+let ModalVal
 
-tokens.subscribe(val => tokensValue = val)
+modal.subscribe(val => ModalVal= val)
+tokens.subscribe(val => {
+    tokensValue = val
+    console.log("tokensVal",  tokensValue)
+})
 const dispatch = createEventDispatcher();
 
 function openModal() {
-    isOpenModal = true;
+    $modal.opened = true
 }
+
 function openDialog() {
-    isOpenDialog = true;
+    $dialog.opened = true
 }
 
 function closeModal() {
-    isOpenModal = false;
+    $modal.opened = false
 }
+
 function closeDialog() {
-    isOpenDialog = false;
+    $dialog.opened = false
+
+}
+
+const handleEdit = (id) =>  {
+    $selectedToken = id
+    openDialog()
+
 }
 
 const handleSelection = (id) => {
-    tokenId = id
-    openDialog()
+    // update token 
+    $selectedToken = id
+    $tokens[id].selected = true
+    console.log("tokens val", tokensValue)
+
+
+    // check store state
+    const tokenAmount = $tokens[id].amount
+    if(tokenAmount === 0) {
+              openDialog()
+    } else {
+  //reset token amount and selection state
+  $tokens[id].amount = 0
+    $tokens[id].selected = false
+    }
+
+  
 }
 
 const handlePointerEnter = id => hoveredId = id
 const handlePointerLeave = id => hoveredId = null
 </script>
 
-<Modal {isOpenModal} on:closeModal={closeModal} />
-<Dialog isOpenDialog={isOpenDialog} id={tokenId} on:closeDialog={closeDialog} />
+<Modal   />
+<Dialog  />
 <main class="container">
     <header>
         <h3 class="mt-1">Tokens</h3>
         <p>Something about the Tokens</p>
     </header>
-        <div class="tokens-container mt-2">
-            <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
-                {#each tokensValue as { id, label, amount,  imgUrl }, i}
-                <li
-                    class={hoveredId === id ? "token-active mt-1" : "token-inactive mt-1"}
-                    on:pointerenter={() => handlePointerEnter(id)}
-                    on:pointerleave={() => handlePointerLeave(id)}
+    <div class="tokens-container mt-2">
+        <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
+            {#each tokensValue as { id, label, amount,  imgUrl, selected }, i}
+            <li
+                class={hoveredId === id ? "token-active mt-1" : "token-inactive mt-1"}
+                on:pointerenter={() => handlePointerEnter(id)}
+                on:pointerleave={() => handlePointerLeave(id)}
+                >
+                <div
+                    class={amount ? "token-container-active" : "token-container-inactive"}
                     >
                     <div
-                        style="display:flex; width: 80%; height: 100%; align-items:center"
+                        style="display:flex; justify-content:center; align-items:center; width: 2rem; height:100%;"
                         >
-                        <div
-                            style="display:flex; justify-content:center; align-items:center; width: 4rem; height:100%;"
-                            >
-                            <img
-                                style="height:2rem; border-radius: 50px; object-fit:cover"
-                                src={imgUrl}
-                                alt="logo"
-                                />
-                        </div>
-                        <div>
-                            {label}
-                        </div>
-                        {#if amount !== 0}
-                        <div style="margin-left:8px">
-                            {amount}
-                        </div>
-                        {:else}
-                        <div></div>
-                        {/if}
+                        <img
+                            style="height:100%; border-radius: 50px; object-fit:cover"
+                            src={imgUrl}
+                            alt="logo"
+                            />
+                    </div>
+                    <div  >
+                        {label}
+                    </div>
+                    {#if amount !== 0}
+                    <div class="amount-container"
+                    on:click={() => handleEdit(id)}
+                    >
+                        {amount}
+                        <div class="icon-container">
+                            <Icon icon="akar-icons:edit" s/>
 
+                        </div>
                     </div>
-                    <div
-                        style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
-                        >
-                        <!-- <input
-                            type="checkbox"
-                            on:click={() => handleEvent("selectToken", id, dispatch)}
-                        checked={tokensValue[id].selected}
-                        /> -->
-                        <input
-                            type="checkbox"
-                            on:click={() => handleSelection(id)}
-                        checked={tokensValue[id].selected}
-                        />
-                    </div>
-                </li>
-                {/each}
-            </ul>
-            <footer class="custom-container">
-                <div class="secondary-btn" on:click={openModal}>
-                    <div>
-                        <Icon icon="ant-design:plus-circle-outlined" height={"1.2rem"} />
-                    </div>
-                    <HorizontalSpace value="0.3rem" />
-                    <div>ADD CUSTOM TOKEN</div>
+                    {:else}
+                    <div></div>
+                    {/if}
+
                 </div>
-            </footer>
-    <!-- <footer>
-        <PrimaryBtn
-            label={"CONTINUE"}
-            onPressed={() => handleEvent("continue", 1, dispatch)}
-            />
-            </footer> -->
-            </main>
+                <div
+                    style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
+                    >
+
+                    <input
+                        type="checkbox"
+                        on:click={() => handleSelection(id)}
+                        bind:checked={selected}
+                    />
+                </div>
+            </li>
+            {/each}
+        </ul>
+        <footer class="custom-container">
+            <div class="secondary-btn" on:click={openModal}>
+                <div>
+                    <Icon icon="ant-design:plus-circle-outlined" height={"1.2rem"} />
+                </div>
+                <HorizontalSpace value="0.3rem" />
+                <div>ADD CUSTOM TOKEN</div>
+            </div>
+        </footer>
+
+        </main>
 
 <style>
+.amount-container {
+    color: #252E37;
+    font-weight: bold;
+    display: flex;
+    height: 100%;
+    width: 36%;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
 .token-inactive {
     display: flex;
-    height: 30%;
+    height: 20%;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    padding-left: 3%;
+
 }
 
 .token-active {
     display: flex;
-    height: 30%;
+    height: 20%;
     width: 100%;
     justify-content: space-between;
     align-items: center;
     background-color: rgba(218, 4, 106, 0.1);
     cursor: pointer;
+    padding-left: 3%;
+}
+
+.token-container-active {
+    position: relative;
+    display: flex;
+    width: 28%;
+    height: 100%;
+    justify-content: space-between;
+    border-radius: 50px;
+    align-items: center;
+    background-color: #252E37;
+    font-weight: bold;
+}
+
+.token-container-inactive {
+    position: relative;
+    display: flex;
+    width: 18%;
+    height: 100%;
+    justify-content: space-between;
+    border-radius: 50px;
+    align-items: center;
+    background-color: #252E37;
+    font-weight: bold;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:var(--primary);
+    border-radius: 100px;
+    position: absolute;
+    top: -0.6rem;
+    right: 0px;
+    height:1.2rem;
+    width:1.2rem;
+    padding: 0.2rem;
 }
 
 main {
@@ -150,12 +230,10 @@ main {
     padding: 0;
 }
 
-ul{
+ul {
     margin: 0;
     padding: 0;
 }
-
-
 
 textarea {
     border-top-left-radius: 0px;

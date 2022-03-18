@@ -676,7 +676,7 @@ async function fetch(url, options_) {
       resolve2(response2);
       return;
     }
-    const send = (parsedURL.protocol === "https:" ? import_node_https2.default : import_node_http2.default).request;
+    const send2 = (parsedURL.protocol === "https:" ? import_node_https2.default : import_node_http2.default).request;
     const { signal } = request;
     let response = null;
     const abort = () => {
@@ -698,7 +698,7 @@ async function fetch(url, options_) {
       abort();
       finalize();
     };
-    const request_ = send(parsedURL, options2);
+    const request_ = send2(parsedURL, options2);
     if (signal) {
       signal.addEventListener("abort", abortAndFinalize);
     }
@@ -5783,7 +5783,7 @@ async function render_response({
   error: error2,
   page: page3
 }) {
-  const css12 = new Set(options2.entry.css);
+  const css13 = new Set(options2.entry.css);
   const js = new Set(options2.entry.js);
   const styles = new Set();
   const serialized_data = [];
@@ -5794,9 +5794,9 @@ async function render_response({
     error2.stack = options2.get_stack(error2);
   }
   if (page_config.ssr) {
-    branch.forEach(({ node, loaded, fetched, uses_credentials }) => {
+    branch.forEach(({ node, loaded: loaded2, fetched, uses_credentials }) => {
       if (node.css)
-        node.css.forEach((url) => css12.add(url));
+        node.css.forEach((url) => css13.add(url));
       if (node.js)
         node.js.forEach((url) => js.add(url));
       if (node.styles)
@@ -5805,7 +5805,7 @@ async function render_response({
         serialized_data.push(...fetched);
       if (uses_credentials)
         is_private = true;
-      maxage = loaded.maxage;
+      maxage = loaded2.maxage;
     });
     const session = writable($session);
     const props = {
@@ -5839,7 +5839,7 @@ async function render_response({
     js.clear();
   const links = options2.amp ? styles.size > 0 || rendered.css.code.length > 0 ? `<style amp-custom>${Array.from(styles).concat(rendered.css.code).join("\n")}</style>` : "" : [
     ...Array.from(js).map((dep) => `<link rel="modulepreload" href="${dep}">`),
-    ...Array.from(css12).map((dep) => `<link rel="stylesheet" href="${dep}">`)
+    ...Array.from(css13).map((dep) => `<link rel="stylesheet" href="${dep}">`)
   ].join("\n		");
   let init2 = "";
   if (options2.amp) {
@@ -5940,17 +5940,17 @@ function serialize_error(error2) {
   }
   return serialized;
 }
-function normalize(loaded) {
-  const has_error_status = loaded.status && loaded.status >= 400 && loaded.status <= 599 && !loaded.redirect;
-  if (loaded.error || has_error_status) {
-    const status = loaded.status;
-    if (!loaded.error && has_error_status) {
+function normalize(loaded2) {
+  const has_error_status = loaded2.status && loaded2.status >= 400 && loaded2.status <= 599 && !loaded2.redirect;
+  if (loaded2.error || has_error_status) {
+    const status = loaded2.status;
+    if (!loaded2.error && has_error_status) {
       return {
         status: status || 500,
         error: new Error()
       };
     }
-    const error2 = typeof loaded.error === "string" ? new Error(loaded.error) : loaded.error;
+    const error2 = typeof loaded2.error === "string" ? new Error(loaded2.error) : loaded2.error;
     if (!(error2 instanceof Error)) {
       return {
         status: 500,
@@ -5963,24 +5963,24 @@ function normalize(loaded) {
     }
     return { status, error: error2 };
   }
-  if (loaded.redirect) {
-    if (!loaded.status || Math.floor(loaded.status / 100) !== 3) {
+  if (loaded2.redirect) {
+    if (!loaded2.status || Math.floor(loaded2.status / 100) !== 3) {
       return {
         status: 500,
         error: new Error('"redirect" property returned from load() must be accompanied by a 3xx status code')
       };
     }
-    if (typeof loaded.redirect !== "string") {
+    if (typeof loaded2.redirect !== "string") {
       return {
         status: 500,
         error: new Error('"redirect" property returned from load() must be a string')
       };
     }
   }
-  if (loaded.context) {
+  if (loaded2.context) {
     throw new Error('You are returning "context" from a load function. "context" was renamed to "stuff", please adjust your code accordingly.');
   }
-  return loaded;
+  return loaded2;
 }
 async function load_node({
   request,
@@ -6001,7 +6001,7 @@ async function load_node({
   let uses_credentials = false;
   const fetched = [];
   let set_cookie_headers = [];
-  let loaded;
+  let loaded2;
   const page_proxy = new Proxy(page3, {
     get: (target, prop, receiver) => {
       if (prop === "query" && prerender_enabled) {
@@ -6145,19 +6145,19 @@ async function load_node({
       load_input.status = status;
       load_input.error = error2;
     }
-    loaded = await module2.load.call(null, load_input);
+    loaded2 = await module2.load.call(null, load_input);
   } else {
-    loaded = {};
+    loaded2 = {};
   }
-  if (!loaded && is_leaf && !is_error)
+  if (!loaded2 && is_leaf && !is_error)
     return;
-  if (!loaded) {
+  if (!loaded2) {
     throw new Error(`${node.entry} - load must return a value except for page fall through`);
   }
   return {
     node,
-    loaded: normalize(loaded),
-    stuff: loaded.stuff || stuff,
+    loaded: normalize(loaded2),
+    stuff: loaded2.stuff || stuff,
     fetched,
     set_cookie_headers,
     uses_credentials
@@ -6172,7 +6172,7 @@ async function respond_with_error({ request, options: options2, state, $session,
     query: request.query,
     params: {}
   };
-  const loaded = await load_node({
+  const loaded2 = await load_node({
     request,
     options: options2,
     state,
@@ -6186,7 +6186,7 @@ async function respond_with_error({ request, options: options2, state, $session,
     is_error: false
   });
   const branch = [
-    loaded,
+    loaded2,
     await load_node({
       request,
       options: options2,
@@ -6195,7 +6195,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       page: page3,
       node: default_error,
       $session,
-      stuff: loaded ? loaded.stuff : {},
+      stuff: loaded2 ? loaded2.stuff : {},
       prerender_enabled: is_prerender_enabled(options2, default_error, state),
       is_leaf: false,
       is_error: true,
@@ -6264,10 +6264,10 @@ async function respond$1(opts) {
       let stuff = {};
       for (let i2 = 0; i2 < nodes.length; i2 += 1) {
         const node = nodes[i2];
-        let loaded;
+        let loaded2;
         if (node) {
           try {
-            loaded = await load_node({
+            loaded2 = await load_node({
               ...opts,
               node,
               stuff,
@@ -6275,19 +6275,19 @@ async function respond$1(opts) {
               is_leaf: i2 === nodes.length - 1,
               is_error: false
             });
-            if (!loaded)
+            if (!loaded2)
               return;
-            set_cookie_headers = set_cookie_headers.concat(loaded.set_cookie_headers);
-            if (loaded.loaded.redirect) {
+            set_cookie_headers = set_cookie_headers.concat(loaded2.set_cookie_headers);
+            if (loaded2.loaded.redirect) {
               return with_cookies({
-                status: loaded.loaded.status,
+                status: loaded2.loaded.status,
                 headers: {
-                  location: encodeURI(loaded.loaded.redirect)
+                  location: encodeURI(loaded2.loaded.redirect)
                 }
               }, set_cookie_headers);
             }
-            if (loaded.loaded.error) {
-              ({ status, error: error2 } = loaded.loaded);
+            if (loaded2.loaded.error) {
+              ({ status, error: error2 } = loaded2.loaded);
             }
           } catch (err) {
             const e3 = coalesce_to_error(err);
@@ -6295,8 +6295,8 @@ async function respond$1(opts) {
             status = 500;
             error2 = e3;
           }
-          if (loaded && !error2) {
-            branch.push(loaded);
+          if (loaded2 && !error2) {
+            branch.push(loaded2);
           }
           if (error2) {
             while (i2--) {
@@ -6341,10 +6341,10 @@ async function respond$1(opts) {
             }), set_cookie_headers);
           }
         }
-        if (loaded && loaded.loaded.stuff) {
+        if (loaded2 && loaded2.loaded.stuff) {
           stuff = {
             ...stuff,
-            ...loaded.loaded.stuff
+            ...loaded2.loaded.stuff
           };
         }
       }
@@ -6676,7 +6676,7 @@ var init_ssr = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-8213c399.js
+// .svelte-kit/output/server/chunks/index-6ebc447e.js
 function writable2(value, start = noop3) {
   let stop;
   const subscribers = /* @__PURE__ */ new Set();
@@ -6718,12 +6718,21 @@ function writable2(value, start = noop3) {
   }
   return { set, update, subscribe: subscribe2 };
 }
-var subscriber_queue2, user, transactionStatus, txId, transactionInProgress, eventCreationInProgress, eventCreatedStatus, floatClaimingInProgress, floatClaimedStatus;
-var init_stores_8213c399 = __esm({
-  ".svelte-kit/output/server/chunks/stores-8213c399.js"() {
+var subscriber_queue2;
+var init_index_6ebc447e = __esm({
+  ".svelte-kit/output/server/chunks/index-6ebc447e.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     subscriber_queue2 = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/stores-fdad96d2.js
+var user, transactionStatus, txId, transactionInProgress, eventCreationInProgress, eventCreatedStatus, floatClaimingInProgress, floatClaimedStatus;
+var init_stores_fdad96d2 = __esm({
+  ".svelte-kit/output/server/chunks/stores-fdad96d2.js"() {
+    init_shims();
+    init_index_6ebc447e();
     user = writable2(null);
     transactionStatus = writable2(null);
     txId = writable2(null);
@@ -20721,12 +20730,1959 @@ var init_config_860ef6b7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/UserAddress-2f245373.js
-var css, UserAddress;
-var init_UserAddress_2f245373 = __esm({
-  ".svelte-kit/output/server/chunks/UserAddress-2f245373.js"() {
+// .svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-69149cfb.js
+function fullIcon(data) {
+  return { ...iconDefaults, ...data };
+}
+function mergeIconData(icon, alias) {
+  const result = { ...icon };
+  for (const key in iconDefaults) {
+    const prop = key;
+    if (alias[prop] !== void 0) {
+      const value = alias[prop];
+      if (result[prop] === void 0) {
+        result[prop] = value;
+        continue;
+      }
+      switch (prop) {
+        case "rotate":
+          result[prop] = (result[prop] + value) % 4;
+          break;
+        case "hFlip":
+        case "vFlip":
+          result[prop] = value !== result[prop];
+          break;
+        default:
+          result[prop] = value;
+      }
+    }
+  }
+  return result;
+}
+function getIconData$1(data, name, full = false) {
+  function getIcon(name2, iteration) {
+    var _a, _b, _c, _d;
+    if (data.icons[name2] !== void 0) {
+      return Object.assign({}, data.icons[name2]);
+    }
+    if (iteration > 5) {
+      return null;
+    }
+    if (((_a = data.aliases) == null ? void 0 : _a[name2]) !== void 0) {
+      const item = (_b = data.aliases) == null ? void 0 : _b[name2];
+      const result2 = getIcon(item.parent, iteration + 1);
+      if (result2) {
+        return mergeIconData(result2, item);
+      }
+      return result2;
+    }
+    if (iteration === 0 && ((_c = data.chars) == null ? void 0 : _c[name2]) !== void 0) {
+      return getIcon((_d = data.chars) == null ? void 0 : _d[name2], iteration + 1);
+    }
+    return null;
+  }
+  const result = getIcon(name, 0);
+  if (result) {
+    for (const key in iconDefaults) {
+      if (result[key] === void 0 && data[key] !== void 0) {
+        result[key] = data[key];
+      }
+    }
+  }
+  return result && full ? fullIcon(result) : result;
+}
+function validateIconProps(item, fix) {
+  for (const key in item) {
+    const attr = key;
+    const value = item[attr];
+    const type = typeof value;
+    if (type === "undefined") {
+      delete item[attr];
+      continue;
+    }
+    switch (key) {
+      case "body":
+      case "parent":
+        if (type !== "string") {
+          return key;
+        }
+        break;
+      case "hFlip":
+      case "vFlip":
+      case "hidden":
+        if (type !== "boolean") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+        break;
+      case "width":
+      case "height":
+      case "left":
+      case "top":
+      case "rotate":
+      case "inlineHeight":
+      case "inlineTop":
+      case "verticalAlign":
+        if (type !== "number") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+        break;
+      default:
+        if (type === "object") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+    }
+  }
+  return null;
+}
+function validateIconSet(obj, options2) {
+  const fix = !!(options2 == null ? void 0 : options2.fix);
+  if (typeof obj !== "object" || obj === null || typeof obj.icons !== "object" || !obj.icons) {
+    throw new Error("Bad icon set");
+  }
+  const data = obj;
+  if (typeof (options2 == null ? void 0 : options2.prefix) === "string") {
+    data.prefix = options2.prefix;
+  } else if (typeof data.prefix !== "string" || !data.prefix.match(matchName)) {
+    throw new Error("Invalid prefix");
+  }
+  if (typeof (options2 == null ? void 0 : options2.provider) === "string") {
+    data.provider = options2.provider;
+  } else if (data.provider !== void 0) {
+    const value = data.provider;
+    if (typeof value !== "string" || value !== "" && !value.match(matchName)) {
+      if (fix) {
+        delete data.provider;
+      } else {
+        throw new Error("Invalid provider");
+      }
+    }
+  }
+  const icons = data.icons;
+  Object.keys(icons).forEach((name) => {
+    if (!name.match(matchName)) {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid icon name: "${name}"`);
+    }
+    const item = icons[name];
+    if (typeof item !== "object" || item === null || typeof item.body !== "string") {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid icon: "${name}"`);
+    }
+    const key = typeof item.parent === "string" ? "parent" : validateIconProps(item, fix);
+    if (key !== null) {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid property "${key}" in icon "${name}"`);
+    }
+  });
+  if (!Object.keys(data.icons).length) {
+    throw new Error("Icon set is empty");
+  }
+  if (data.aliases !== void 0) {
+    if (typeof data.aliases !== "object" || data.aliases === null) {
+      if (fix) {
+        delete data.aliases;
+      } else {
+        throw new Error("Invalid aliases list");
+      }
+    }
+  }
+  if (typeof data.aliases === "object") {
+    let validateAlias = function(name, iteration) {
+      if (validatedAliases.has(name)) {
+        return !failedAliases.has(name);
+      }
+      const item = aliases[name];
+      if (iteration > 5 || typeof item !== "object" || item === null || typeof item.parent !== "string" || !name.match(matchName)) {
+        if (fix) {
+          delete aliases[name];
+          failedAliases.add(name);
+          return false;
+        }
+        throw new Error(`Invalid icon alias: "${name}"`);
+      }
+      const parent = item.parent;
+      if (data.icons[parent] === void 0) {
+        if (aliases[parent] === void 0 || !validateAlias(parent, iteration + 1)) {
+          if (fix) {
+            delete aliases[name];
+            failedAliases.add(name);
+            return false;
+          }
+          throw new Error(`Missing parent icon for alias "${name}`);
+        }
+      }
+      if (fix && item.body !== void 0) {
+        delete item.body;
+      }
+      const key = item.body !== void 0 ? "body" : validateIconProps(item, fix);
+      if (key !== null) {
+        if (fix) {
+          delete aliases[name];
+          failedAliases.add(name);
+          return false;
+        }
+        throw new Error(`Invalid property "${key}" in alias "${name}"`);
+      }
+      validatedAliases.add(name);
+      return true;
+    };
+    const aliases = data.aliases;
+    const validatedAliases = /* @__PURE__ */ new Set();
+    const failedAliases = /* @__PURE__ */ new Set();
+    Object.keys(aliases).forEach((name) => {
+      validateAlias(name, 0);
+    });
+    if (fix && !Object.keys(data.aliases).length) {
+      delete data.aliases;
+    }
+  }
+  Object.keys(iconDefaults).forEach((prop) => {
+    const expectedType = typeof iconDefaults[prop];
+    const actualType = typeof data[prop];
+    if (actualType !== "undefined" && actualType !== expectedType) {
+      throw new Error(`Invalid value type for "${prop}"`);
+    }
+  });
+  if (data.chars !== void 0) {
+    if (typeof data.chars !== "object" || data.chars === null) {
+      if (fix) {
+        delete data.chars;
+      } else {
+        throw new Error("Invalid characters map");
+      }
+    }
+  }
+  if (typeof data.chars === "object") {
+    const chars2 = data.chars;
+    Object.keys(chars2).forEach((char) => {
+      var _a;
+      if (!char.match(matchChar) || typeof chars2[char] !== "string") {
+        if (fix) {
+          delete chars2[char];
+          return;
+        }
+        throw new Error(`Invalid character "${char}"`);
+      }
+      const target = chars2[char];
+      if (data.icons[target] === void 0 && ((_a = data.aliases) == null ? void 0 : _a[target]) === void 0) {
+        if (fix) {
+          delete chars2[char];
+          return;
+        }
+        throw new Error(`Character "${char}" points to missing icon "${target}"`);
+      }
+    });
+    if (fix && !Object.keys(data.chars).length) {
+      delete data.chars;
+    }
+  }
+  return data;
+}
+function isVariation(item) {
+  for (const key in iconDefaults) {
+    if (item[key] !== void 0) {
+      return true;
+    }
+  }
+  return false;
+}
+function parseIconSet(data, callback, options2) {
+  options2 = options2 || {};
+  const names = [];
+  if (typeof data !== "object" || typeof data.icons !== "object") {
+    return names;
+  }
+  const validate = options2.validate;
+  if (validate !== false) {
+    try {
+      validateIconSet(data, typeof validate === "object" ? validate : { fix: true });
+    } catch (err) {
+      return names;
+    }
+  }
+  if (data.not_found instanceof Array) {
+    data.not_found.forEach((name) => {
+      callback(name, null);
+      names.push(name);
+    });
+  }
+  const icons = data.icons;
+  Object.keys(icons).forEach((name) => {
+    const iconData = getIconData$1(data, name, true);
+    if (iconData) {
+      callback(name, iconData);
+      names.push(name);
+    }
+  });
+  const parseAliases = options2.aliases || "all";
+  if (parseAliases !== "none" && typeof data.aliases === "object") {
+    const aliases = data.aliases;
+    Object.keys(aliases).forEach((name) => {
+      if (parseAliases === "variations" && isVariation(aliases[name])) {
+        return;
+      }
+      const iconData = getIconData$1(data, name, true);
+      if (iconData) {
+        callback(name, iconData);
+        names.push(name);
+      }
+    });
+  }
+  return names;
+}
+function newStorage(provider, prefix) {
+  return {
+    provider,
+    prefix,
+    icons: /* @__PURE__ */ Object.create(null),
+    missing: /* @__PURE__ */ Object.create(null)
+  };
+}
+function getStorage(provider, prefix) {
+  if (storage$1[provider] === void 0) {
+    storage$1[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerStorage = storage$1[provider];
+  if (providerStorage[prefix] === void 0) {
+    providerStorage[prefix] = newStorage(provider, prefix);
+  }
+  return providerStorage[prefix];
+}
+function addIconSet(storage2, data) {
+  const t2 = Date.now();
+  return parseIconSet(data, (name, icon) => {
+    if (icon) {
+      storage2.icons[name] = icon;
+    } else {
+      storage2.missing[name] = t2;
+    }
+  });
+}
+function addIconToStorage(storage2, name, icon) {
+  try {
+    if (typeof icon.body === "string") {
+      storage2.icons[name] = Object.freeze(fullIcon(icon));
+      return true;
+    }
+  } catch (err) {
+  }
+  return false;
+}
+function getIconFromStorage(storage2, name) {
+  const value = storage2.icons[name];
+  return value === void 0 ? null : value;
+}
+function allowSimpleNames(allow) {
+  if (typeof allow === "boolean") {
+    simpleNames = allow;
+  }
+  return simpleNames;
+}
+function getIconData(name) {
+  const icon = typeof name === "string" ? stringToIcon(name, true, simpleNames) : name;
+  return icon ? getIconFromStorage(getStorage(icon.provider, icon.prefix), icon.name) : null;
+}
+function addIcon(name, data) {
+  const icon = stringToIcon(name, true, simpleNames);
+  if (!icon) {
+    return false;
+  }
+  const storage2 = getStorage(icon.provider, icon.prefix);
+  return addIconToStorage(storage2, icon.name, data);
+}
+function addCollection(data, provider) {
+  if (typeof data !== "object") {
+    return false;
+  }
+  if (typeof provider !== "string") {
+    provider = typeof data.provider === "string" ? data.provider : "";
+  }
+  if (simpleNames && provider === "" && (typeof data.prefix !== "string" || data.prefix === "")) {
+    let added = false;
+    parseIconSet(data, (name, icon) => {
+      if (icon && addIcon(name, icon)) {
+        added = true;
+      }
+    }, {
+      validate: {
+        fix: true,
+        prefix: ""
+      }
+    });
+    return added;
+  }
+  if (typeof data.prefix !== "string" || !validateIcon({
+    provider,
+    prefix: data.prefix,
+    name: "a"
+  })) {
+    return false;
+  }
+  const storage2 = getStorage(provider, data.prefix);
+  return !!addIconSet(storage2, data);
+}
+function mergeCustomisations(defaults2, item) {
+  const result = {};
+  for (const key in defaults2) {
+    const attr = key;
+    result[attr] = defaults2[attr];
+    if (item[attr] === void 0) {
+      continue;
+    }
+    const value = item[attr];
+    switch (attr) {
+      case "inline":
+      case "slice":
+        if (typeof value === "boolean") {
+          result[attr] = value;
+        }
+        break;
+      case "hFlip":
+      case "vFlip":
+        if (value === true) {
+          result[attr] = !result[attr];
+        }
+        break;
+      case "hAlign":
+      case "vAlign":
+        if (typeof value === "string" && value !== "") {
+          result[attr] = value;
+        }
+        break;
+      case "width":
+      case "height":
+        if (typeof value === "string" && value !== "" || typeof value === "number" && value || value === null) {
+          result[attr] = value;
+        }
+        break;
+      case "rotate":
+        if (typeof value === "number") {
+          result[attr] += value;
+        }
+        break;
+    }
+  }
+  return result;
+}
+function calculateSize(size, ratio, precision) {
+  if (ratio === 1) {
+    return size;
+  }
+  precision = precision === void 0 ? 100 : precision;
+  if (typeof size === "number") {
+    return Math.ceil(size * ratio * precision) / precision;
+  }
+  if (typeof size !== "string") {
+    return size;
+  }
+  const oldParts = size.split(unitsSplit);
+  if (oldParts === null || !oldParts.length) {
+    return size;
+  }
+  const newParts = [];
+  let code = oldParts.shift();
+  let isNumber = unitsTest.test(code);
+  while (true) {
+    if (isNumber) {
+      const num = parseFloat(code);
+      if (isNaN(num)) {
+        newParts.push(code);
+      } else {
+        newParts.push(Math.ceil(num * ratio * precision) / precision);
+      }
+    } else {
+      newParts.push(code);
+    }
+    code = oldParts.shift();
+    if (code === void 0) {
+      return newParts.join("");
+    }
+    isNumber = !isNumber;
+  }
+}
+function preserveAspectRatio(props) {
+  let result = "";
+  switch (props.hAlign) {
+    case "left":
+      result += "xMin";
+      break;
+    case "right":
+      result += "xMax";
+      break;
+    default:
+      result += "xMid";
+  }
+  switch (props.vAlign) {
+    case "top":
+      result += "YMin";
+      break;
+    case "bottom":
+      result += "YMax";
+      break;
+    default:
+      result += "YMid";
+  }
+  result += props.slice ? " slice" : " meet";
+  return result;
+}
+function iconToSVG(icon, customisations) {
+  const box = {
+    left: icon.left,
+    top: icon.top,
+    width: icon.width,
+    height: icon.height
+  };
+  let body = icon.body;
+  [icon, customisations].forEach((props) => {
+    const transformations = [];
+    const hFlip = props.hFlip;
+    const vFlip = props.vFlip;
+    let rotation = props.rotate;
+    if (hFlip) {
+      if (vFlip) {
+        rotation += 2;
+      } else {
+        transformations.push("translate(" + (box.width + box.left) + " " + (0 - box.top) + ")");
+        transformations.push("scale(-1 1)");
+        box.top = box.left = 0;
+      }
+    } else if (vFlip) {
+      transformations.push("translate(" + (0 - box.left) + " " + (box.height + box.top) + ")");
+      transformations.push("scale(1 -1)");
+      box.top = box.left = 0;
+    }
+    let tempValue;
+    if (rotation < 0) {
+      rotation -= Math.floor(rotation / 4) * 4;
+    }
+    rotation = rotation % 4;
+    switch (rotation) {
+      case 1:
+        tempValue = box.height / 2 + box.top;
+        transformations.unshift("rotate(90 " + tempValue + " " + tempValue + ")");
+        break;
+      case 2:
+        transformations.unshift("rotate(180 " + (box.width / 2 + box.left) + " " + (box.height / 2 + box.top) + ")");
+        break;
+      case 3:
+        tempValue = box.width / 2 + box.left;
+        transformations.unshift("rotate(-90 " + tempValue + " " + tempValue + ")");
+        break;
+    }
+    if (rotation % 2 === 1) {
+      if (box.left !== 0 || box.top !== 0) {
+        tempValue = box.left;
+        box.left = box.top;
+        box.top = tempValue;
+      }
+      if (box.width !== box.height) {
+        tempValue = box.width;
+        box.width = box.height;
+        box.height = tempValue;
+      }
+    }
+    if (transformations.length) {
+      body = '<g transform="' + transformations.join(" ") + '">' + body + "</g>";
+    }
+  });
+  let width, height;
+  if (customisations.width === null && customisations.height === null) {
+    height = "1em";
+    width = calculateSize(height, box.width / box.height);
+  } else if (customisations.width !== null && customisations.height !== null) {
+    width = customisations.width;
+    height = customisations.height;
+  } else if (customisations.height !== null) {
+    height = customisations.height;
+    width = calculateSize(height, box.width / box.height);
+  } else {
+    width = customisations.width;
+    height = calculateSize(width, box.height / box.width);
+  }
+  if (width === "auto") {
+    width = box.width;
+  }
+  if (height === "auto") {
+    height = box.height;
+  }
+  width = typeof width === "string" ? width : width + "";
+  height = typeof height === "string" ? height : height + "";
+  const result = {
+    attributes: {
+      width,
+      height,
+      preserveAspectRatio: preserveAspectRatio(customisations),
+      viewBox: box.left + " " + box.top + " " + box.width + " " + box.height
+    },
+    body
+  };
+  if (customisations.inline) {
+    result.inline = true;
+  }
+  return result;
+}
+function replaceIDs(body, prefix = randomPrefix) {
+  const ids = [];
+  let match;
+  while (match = regex.exec(body)) {
+    ids.push(match[1]);
+  }
+  if (!ids.length) {
+    return body;
+  }
+  ids.forEach((id) => {
+    const newID = typeof prefix === "function" ? prefix(id) : prefix + counter++;
+    const escapedID = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    body = body.replace(new RegExp('([#;"])(' + escapedID + ')([")]|\\.[a-z])', "g"), "$1" + newID + "$3");
+  });
+  return body;
+}
+function setAPIModule(provider, item) {
+  storage[provider] = item;
+}
+function getAPIModule(provider) {
+  return storage[provider] || storage[""];
+}
+function createAPIConfig(source) {
+  let resources;
+  if (typeof source.resources === "string") {
+    resources = [source.resources];
+  } else {
+    resources = source.resources;
+    if (!(resources instanceof Array) || !resources.length) {
+      return null;
+    }
+  }
+  const result = {
+    resources,
+    path: source.path === void 0 ? "/" : source.path,
+    maxURL: source.maxURL ? source.maxURL : 500,
+    rotate: source.rotate ? source.rotate : 750,
+    timeout: source.timeout ? source.timeout : 5e3,
+    random: source.random === true,
+    index: source.index ? source.index : 0,
+    dataAfterTimeout: source.dataAfterTimeout !== false
+  };
+  return result;
+}
+function addAPIProvider(provider, customConfig) {
+  const config22 = createAPIConfig(customConfig);
+  if (config22 === null) {
+    return false;
+  }
+  configStorage[provider] = config22;
+  return true;
+}
+function getAPIConfig(provider) {
+  return configStorage[provider];
+}
+function calculateMaxLength(provider, prefix) {
+  const config22 = getAPIConfig(provider);
+  if (!config22) {
+    return 0;
+  }
+  let result;
+  if (!config22.maxURL) {
+    result = 0;
+  } else {
+    let maxHostLength = 0;
+    config22.resources.forEach((item) => {
+      const host = item;
+      maxHostLength = Math.max(maxHostLength, host.length);
+    });
+    const url = mergeParams(prefix + ".json", {
+      icons: ""
+    });
+    result = config22.maxURL - maxHostLength - config22.path.length - url.length;
+  }
+  const cacheKey = provider + ":" + prefix;
+  pathCache[provider] = config22.path;
+  maxLengthCache[cacheKey] = result;
+  return result;
+}
+function getPath(provider) {
+  if (typeof provider === "string") {
+    if (pathCache[provider] === void 0) {
+      const config22 = getAPIConfig(provider);
+      if (!config22) {
+        return "/";
+      }
+      pathCache[provider] = config22.path;
+    }
+    return pathCache[provider];
+  }
+  return "/";
+}
+function sortIcons(icons) {
+  const result = {
+    loaded: [],
+    missing: [],
+    pending: []
+  };
+  const storage2 = /* @__PURE__ */ Object.create(null);
+  icons.sort((a2, b2) => {
+    if (a2.provider !== b2.provider) {
+      return a2.provider.localeCompare(b2.provider);
+    }
+    if (a2.prefix !== b2.prefix) {
+      return a2.prefix.localeCompare(b2.prefix);
+    }
+    return a2.name.localeCompare(b2.name);
+  });
+  let lastIcon = {
+    provider: "",
+    prefix: "",
+    name: ""
+  };
+  icons.forEach((icon) => {
+    if (lastIcon.name === icon.name && lastIcon.prefix === icon.prefix && lastIcon.provider === icon.provider) {
+      return;
+    }
+    lastIcon = icon;
+    const provider = icon.provider;
+    const prefix = icon.prefix;
+    const name = icon.name;
+    if (storage2[provider] === void 0) {
+      storage2[provider] = /* @__PURE__ */ Object.create(null);
+    }
+    const providerStorage = storage2[provider];
+    if (providerStorage[prefix] === void 0) {
+      providerStorage[prefix] = getStorage(provider, prefix);
+    }
+    const localStorage = providerStorage[prefix];
+    let list;
+    if (localStorage.icons[name] !== void 0) {
+      list = result.loaded;
+    } else if (prefix === "" || localStorage.missing[name] !== void 0) {
+      list = result.missing;
+    } else {
+      list = result.pending;
+    }
+    const item = {
+      provider,
+      prefix,
+      name
+    };
+    list.push(item);
+  });
+  return result;
+}
+function removeCallback(sources, id) {
+  sources.forEach((source) => {
+    const provider = source.provider;
+    if (callbacks[provider] === void 0) {
+      return;
+    }
+    const providerCallbacks = callbacks[provider];
+    const prefix = source.prefix;
+    const items = providerCallbacks[prefix];
+    if (items) {
+      providerCallbacks[prefix] = items.filter((row) => row.id !== id);
+    }
+  });
+}
+function updateCallbacks(provider, prefix) {
+  if (pendingUpdates[provider] === void 0) {
+    pendingUpdates[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerPendingUpdates = pendingUpdates[provider];
+  if (!providerPendingUpdates[prefix]) {
+    providerPendingUpdates[prefix] = true;
+    setTimeout(() => {
+      providerPendingUpdates[prefix] = false;
+      if (callbacks[provider] === void 0 || callbacks[provider][prefix] === void 0) {
+        return;
+      }
+      const items = callbacks[provider][prefix].slice(0);
+      if (!items.length) {
+        return;
+      }
+      const storage2 = getStorage(provider, prefix);
+      let hasPending = false;
+      items.forEach((item) => {
+        const icons = item.icons;
+        const oldLength = icons.pending.length;
+        icons.pending = icons.pending.filter((icon) => {
+          if (icon.prefix !== prefix) {
+            return true;
+          }
+          const name = icon.name;
+          if (storage2.icons[name] !== void 0) {
+            icons.loaded.push({
+              provider,
+              prefix,
+              name
+            });
+          } else if (storage2.missing[name] !== void 0) {
+            icons.missing.push({
+              provider,
+              prefix,
+              name
+            });
+          } else {
+            hasPending = true;
+            return true;
+          }
+          return false;
+        });
+        if (icons.pending.length !== oldLength) {
+          if (!hasPending) {
+            removeCallback([
+              {
+                provider,
+                prefix
+              }
+            ], item.id);
+          }
+          item.callback(icons.loaded.slice(0), icons.missing.slice(0), icons.pending.slice(0), item.abort);
+        }
+      });
+    });
+  }
+}
+function storeCallback(callback, icons, pendingSources) {
+  const id = idCounter++;
+  const abort = removeCallback.bind(null, pendingSources, id);
+  if (!icons.pending.length) {
+    return abort;
+  }
+  const item = {
+    id,
+    icons,
+    callback,
+    abort
+  };
+  pendingSources.forEach((source) => {
+    const provider = source.provider;
+    const prefix = source.prefix;
+    if (callbacks[provider] === void 0) {
+      callbacks[provider] = /* @__PURE__ */ Object.create(null);
+    }
+    const providerCallbacks = callbacks[provider];
+    if (providerCallbacks[prefix] === void 0) {
+      providerCallbacks[prefix] = [];
+    }
+    providerCallbacks[prefix].push(item);
+  });
+  return abort;
+}
+function listToIcons(list, validate = true, simpleNames2 = false) {
+  const result = [];
+  list.forEach((item) => {
+    const icon = typeof item === "string" ? stringToIcon(item, false, simpleNames2) : item;
+    if (!validate || validateIcon(icon, simpleNames2)) {
+      result.push({
+        provider: icon.provider,
+        prefix: icon.prefix,
+        name: icon.name
+      });
+    }
+  });
+  return result;
+}
+function sendQuery(config22, payload, query2, done, success) {
+  const resourcesCount = config22.resources.length;
+  const startIndex = config22.random ? Math.floor(Math.random() * resourcesCount) : config22.index;
+  let resources;
+  if (config22.random) {
+    let list = config22.resources.slice(0);
+    resources = [];
+    while (list.length > 1) {
+      const nextIndex = Math.floor(Math.random() * list.length);
+      resources.push(list[nextIndex]);
+      list = list.slice(0, nextIndex).concat(list.slice(nextIndex + 1));
+    }
+    resources = resources.concat(list);
+  } else {
+    resources = config22.resources.slice(startIndex).concat(config22.resources.slice(0, startIndex));
+  }
+  const startTime = Date.now();
+  let status = "pending";
+  let queriesSent = 0;
+  let lastError = void 0;
+  let timer = null;
+  let queue = [];
+  let doneCallbacks = [];
+  if (typeof done === "function") {
+    doneCallbacks.push(done);
+  }
+  function resetTimer() {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  }
+  function abort() {
+    if (status === "pending") {
+      status = "aborted";
+    }
+    resetTimer();
+    queue.forEach((item) => {
+      if (item.abort) {
+        item.abort();
+      }
+      if (item.status === "pending") {
+        item.status = "aborted";
+      }
+    });
+    queue = [];
+  }
+  function subscribe2(callback, overwrite) {
+    if (overwrite) {
+      doneCallbacks = [];
+    }
+    if (typeof callback === "function") {
+      doneCallbacks.push(callback);
+    }
+  }
+  function getQueryStatus() {
+    return {
+      startTime,
+      payload,
+      status,
+      queriesSent,
+      queriesPending: queue.length,
+      subscribe: subscribe2,
+      abort
+    };
+  }
+  function failQuery() {
+    status = "failed";
+    doneCallbacks.forEach((callback) => {
+      callback(void 0, lastError);
+    });
+  }
+  function clearQueue() {
+    queue = queue.filter((item) => {
+      if (item.status === "pending") {
+        item.status = "aborted";
+      }
+      if (item.abort) {
+        item.abort();
+      }
+      return false;
+    });
+  }
+  function moduleResponse(item, data, error2) {
+    const isError = data === void 0;
+    queue = queue.filter((queued) => queued !== item);
+    switch (status) {
+      case "pending":
+        break;
+      case "failed":
+        if (isError || !config22.dataAfterTimeout) {
+          return;
+        }
+        break;
+      default:
+        return;
+    }
+    if (isError) {
+      if (error2 !== void 0) {
+        lastError = error2;
+      }
+      if (!queue.length) {
+        if (!resources.length) {
+          failQuery();
+        } else {
+          execNext();
+        }
+      }
+      return;
+    }
+    resetTimer();
+    clearQueue();
+    if (success && !config22.random) {
+      const index = config22.resources.indexOf(item.resource);
+      if (index !== -1 && index !== config22.index) {
+        success(index);
+      }
+    }
+    status = "completed";
+    doneCallbacks.forEach((callback) => {
+      callback(data);
+    });
+  }
+  function execNext() {
+    if (status !== "pending") {
+      return;
+    }
+    resetTimer();
+    const resource = resources.shift();
+    if (resource === void 0) {
+      if (queue.length) {
+        const timeout2 = typeof config22.timeout === "function" ? config22.timeout(startTime) : config22.timeout;
+        if (timeout2) {
+          timer = setTimeout(() => {
+            resetTimer();
+            if (status === "pending") {
+              clearQueue();
+              failQuery();
+            }
+          }, timeout2);
+          return;
+        }
+      }
+      failQuery();
+      return;
+    }
+    const item = {
+      getQueryStatus,
+      status: "pending",
+      resource,
+      done: (data, error2) => {
+        moduleResponse(item, data, error2);
+      }
+    };
+    queue.push(item);
+    queriesSent++;
+    const timeout = typeof config22.rotate === "function" ? config22.rotate(queriesSent, startTime) : config22.rotate;
+    timer = setTimeout(execNext, timeout);
+    query2(resource, payload, item);
+  }
+  setTimeout(execNext);
+  return getQueryStatus;
+}
+function setConfig(config22) {
+  if (typeof config22 !== "object" || typeof config22.resources !== "object" || !(config22.resources instanceof Array) || !config22.resources.length) {
+    throw new Error("Invalid Reduncancy configuration");
+  }
+  const newConfig = /* @__PURE__ */ Object.create(null);
+  let key;
+  for (key in defaultConfig) {
+    if (config22[key] !== void 0) {
+      newConfig[key] = config22[key];
+    } else {
+      newConfig[key] = defaultConfig[key];
+    }
+  }
+  return newConfig;
+}
+function initRedundancy(cfg) {
+  const config22 = setConfig(cfg);
+  let queries = [];
+  function cleanup() {
+    queries = queries.filter((item) => item().status === "pending");
+  }
+  function query2(payload, queryCallback, doneCallback) {
+    const query22 = sendQuery(config22, payload, queryCallback, (data, error2) => {
+      cleanup();
+      if (doneCallback) {
+        doneCallback(data, error2);
+      }
+    }, (newIndex) => {
+      config22.index = newIndex;
+    });
+    queries.push(query22);
+    return query22;
+  }
+  function find(callback) {
+    const result = queries.find((value) => {
+      return callback(value);
+    });
+    return result !== void 0 ? result : null;
+  }
+  const instance = {
+    query: query2,
+    find,
+    setIndex: (index) => {
+      config22.index = index;
+    },
+    getIndex: () => config22.index,
+    cleanup
+  };
+  return instance;
+}
+function emptyCallback$1() {
+}
+function getRedundancyCache(provider) {
+  if (redundancyCache[provider] === void 0) {
+    const config22 = getAPIConfig(provider);
+    if (!config22) {
+      return;
+    }
+    const redundancy = initRedundancy(config22);
+    const cachedReundancy = {
+      config: config22,
+      redundancy
+    };
+    redundancyCache[provider] = cachedReundancy;
+  }
+  return redundancyCache[provider];
+}
+function sendAPIQuery(target, query2, callback) {
+  let redundancy;
+  let send2;
+  if (typeof target === "string") {
+    const api = getAPIModule(target);
+    if (!api) {
+      callback(void 0, 424);
+      return emptyCallback$1;
+    }
+    send2 = api.send;
+    const cached = getRedundancyCache(target);
+    if (cached) {
+      redundancy = cached.redundancy;
+    }
+  } else {
+    const config22 = createAPIConfig(target);
+    if (config22) {
+      redundancy = initRedundancy(config22);
+      const moduleKey = target.resources ? target.resources[0] : "";
+      const api = getAPIModule(moduleKey);
+      if (api) {
+        send2 = api.send;
+      }
+    }
+  }
+  if (!redundancy || !send2) {
+    callback(void 0, 424);
+    return emptyCallback$1;
+  }
+  return redundancy.query(query2, send2, callback)().abort;
+}
+function emptyCallback() {
+}
+function loadedNewIcons(provider, prefix) {
+  if (loaderFlags[provider] === void 0) {
+    loaderFlags[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerLoaderFlags = loaderFlags[provider];
+  if (!providerLoaderFlags[prefix]) {
+    providerLoaderFlags[prefix] = true;
+    setTimeout(() => {
+      providerLoaderFlags[prefix] = false;
+      updateCallbacks(provider, prefix);
+    });
+  }
+}
+function loadNewIcons(provider, prefix, icons) {
+  function err() {
+    const key = (provider === "" ? "" : "@" + provider + ":") + prefix;
+    const time = Math.floor(Date.now() / 6e4);
+    if (errorsCache[key] < time) {
+      errorsCache[key] = time;
+      console.error('Unable to retrieve icons for "' + key + '" because API is not configured properly.');
+    }
+  }
+  if (iconsToLoad[provider] === void 0) {
+    iconsToLoad[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerIconsToLoad = iconsToLoad[provider];
+  if (queueFlags[provider] === void 0) {
+    queueFlags[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerQueueFlags = queueFlags[provider];
+  if (pendingIcons[provider] === void 0) {
+    pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerPendingIcons = pendingIcons[provider];
+  if (providerIconsToLoad[prefix] === void 0) {
+    providerIconsToLoad[prefix] = icons;
+  } else {
+    providerIconsToLoad[prefix] = providerIconsToLoad[prefix].concat(icons).sort();
+  }
+  if (!providerQueueFlags[prefix]) {
+    providerQueueFlags[prefix] = true;
+    setTimeout(() => {
+      providerQueueFlags[prefix] = false;
+      const icons2 = providerIconsToLoad[prefix];
+      delete providerIconsToLoad[prefix];
+      const api = getAPIModule(provider);
+      if (!api) {
+        err();
+        return;
+      }
+      const params = api.prepare(provider, prefix, icons2);
+      params.forEach((item) => {
+        sendAPIQuery(provider, item, (data, error2) => {
+          const storage2 = getStorage(provider, prefix);
+          if (typeof data !== "object") {
+            if (error2 !== 404) {
+              return;
+            }
+            const t2 = Date.now();
+            item.icons.forEach((name) => {
+              storage2.missing[name] = t2;
+            });
+          } else {
+            try {
+              const parsed = addIconSet(storage2, data);
+              if (!parsed.length) {
+                return;
+              }
+              const pending = providerPendingIcons[prefix];
+              parsed.forEach((name) => {
+                delete pending[name];
+              });
+              if (cache.store) {
+                cache.store(provider, data);
+              }
+            } catch (err2) {
+              console.error(err2);
+            }
+          }
+          loadedNewIcons(provider, prefix);
+        });
+      });
+    });
+  }
+}
+function getGlobal(key) {
+  const attr = key + "Storage";
+  try {
+    if (_window && _window[attr] && typeof _window[attr].length === "number") {
+      return _window[attr];
+    }
+  } catch (err) {
+  }
+  config2[key] = false;
+  return null;
+}
+function setCount(storage2, key, value) {
+  try {
+    storage2.setItem(countKey, value + "");
+    count[key] = value;
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+function getCount(storage2) {
+  const count2 = storage2.getItem(countKey);
+  if (count2) {
+    const total = parseInt(count2);
+    return total ? total : 0;
+  }
+  return 0;
+}
+function initCache(storage2, key) {
+  try {
+    storage2.setItem(versionKey, cacheVersion);
+  } catch (err) {
+  }
+  setCount(storage2, key, 0);
+}
+function destroyCache(storage2) {
+  try {
+    const total = getCount(storage2);
+    for (let i2 = 0; i2 < total; i2++) {
+      storage2.removeItem(cachePrefix + i2);
+    }
+  } catch (err) {
+  }
+}
+function flipFromString(custom, flip) {
+  flip.split(separator).forEach((str) => {
+    const value = str.trim();
+    switch (value) {
+      case "horizontal":
+        custom.hFlip = true;
+        break;
+      case "vertical":
+        custom.vFlip = true;
+        break;
+    }
+  });
+}
+function alignmentFromString(custom, align) {
+  align.split(separator).forEach((str) => {
+    const value = str.trim();
+    switch (value) {
+      case "left":
+      case "center":
+      case "right":
+        custom.hAlign = value;
+        break;
+      case "top":
+      case "middle":
+      case "bottom":
+        custom.vAlign = value;
+        break;
+      case "slice":
+      case "crop":
+        custom.slice = true;
+        break;
+      case "meet":
+        custom.slice = false;
+    }
+  });
+}
+function rotateFromString(value, defaultValue = 0) {
+  const units = value.replace(/^-?[0-9.]*/, "");
+  function cleanup(value2) {
+    while (value2 < 0) {
+      value2 += 4;
+    }
+    return value2 % 4;
+  }
+  if (units === "") {
+    const num = parseInt(value);
+    return isNaN(num) ? 0 : cleanup(num);
+  } else if (units !== value) {
+    let split = 0;
+    switch (units) {
+      case "%":
+        split = 25;
+        break;
+      case "deg":
+        split = 90;
+    }
+    if (split) {
+      let num = parseFloat(value.slice(0, value.length - units.length));
+      if (isNaN(num)) {
+        return 0;
+      }
+      num = num / split;
+      return num % 1 === 0 ? cleanup(num) : 0;
+    }
+  }
+  return defaultValue;
+}
+function render(icon, props) {
+  const customisations = mergeCustomisations(defaults, props);
+  const componentProps = { ...svgDefaults };
+  let style = typeof props.style === "string" ? props.style : "";
+  for (let key in props) {
+    const value = props[key];
+    if (value === void 0) {
+      continue;
+    }
+    switch (key) {
+      case "icon":
+      case "style":
+      case "onLoad":
+        break;
+      case "inline":
+      case "hFlip":
+      case "vFlip":
+        customisations[key] = value === true || value === "true" || value === 1;
+        break;
+      case "flip":
+        if (typeof value === "string") {
+          flipFromString(customisations, value);
+        }
+        break;
+      case "align":
+        if (typeof value === "string") {
+          alignmentFromString(customisations, value);
+        }
+        break;
+      case "color":
+        style = style + (style.length > 0 && style.trim().slice(-1) !== ";" ? ";" : "") + "color: " + value + "; ";
+        break;
+      case "rotate":
+        if (typeof value === "string") {
+          customisations[key] = rotateFromString(value);
+        } else if (typeof value === "number") {
+          customisations[key] = value;
+        }
+        break;
+      case "ariaHidden":
+      case "aria-hidden":
+        if (value !== true && value !== "true") {
+          delete componentProps["aria-hidden"];
+        }
+        break;
+      default:
+        if (key.slice(0, 3) === "on:") {
+          break;
+        }
+        if (defaults[key] === void 0) {
+          componentProps[key] = value;
+        }
+    }
+  }
+  const item = iconToSVG(icon, customisations);
+  for (let key in item.attributes) {
+    componentProps[key] = item.attributes[key];
+  }
+  if (item.inline) {
+    style = "vertical-align: -0.125em; " + style;
+  }
+  if (style !== "") {
+    componentProps.style = style;
+  }
+  let localCounter = 0;
+  let id = props.id;
+  if (typeof id === "string") {
+    id = id.replace(/-/g, "_");
+  }
+  return {
+    attributes: componentProps,
+    body: replaceIDs(item.body, id ? () => id + "ID" + localCounter++ : "iconifySvelte")
+  };
+}
+function checkIconState(icon, state, mounted, callback, onload) {
+  function abortLoading() {
+    if (state.loading) {
+      state.loading.abort();
+      state.loading = null;
+    }
+  }
+  if (typeof icon === "object" && icon !== null && typeof icon.body === "string") {
+    state.name = "";
+    abortLoading();
+    return { data: fullIcon(icon) };
+  }
+  let iconName;
+  if (typeof icon !== "string" || (iconName = stringToIcon(icon, false, true)) === null) {
+    abortLoading();
+    return null;
+  }
+  const data = getIconData(iconName);
+  if (data === null) {
+    if (mounted && (!state.loading || state.loading.name !== icon)) {
+      abortLoading();
+      state.name = "";
+      state.loading = {
+        name: icon,
+        abort: loadIcons([iconName], callback)
+      };
+    }
+    return null;
+  }
+  abortLoading();
+  if (state.name !== icon) {
+    state.name = icon;
+    if (onload && !state.destroyed) {
+      onload(icon);
+    }
+  }
+  const classes = ["iconify"];
+  if (iconName.prefix !== "") {
+    classes.push("iconify--" + iconName.prefix);
+  }
+  if (iconName.provider !== "") {
+    classes.push("iconify--" + iconName.provider);
+  }
+  return { data, classes };
+}
+function generateIcon(icon, props) {
+  return icon ? render(icon, props) : null;
+}
+var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config2, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults;
+var init_Tab3_svelte_svelte_type_style_lang_69149cfb = __esm({
+  ".svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-69149cfb.js"() {
     init_shims();
-    init_app_990e780d();
+    matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+    iconDefaults = Object.freeze({
+      left: 0,
+      top: 0,
+      width: 16,
+      height: 16,
+      rotate: 0,
+      vFlip: false,
+      hFlip: false
+    });
+    stringToIcon = (value, validate, allowSimpleName, provider = "") => {
+      const colonSeparated = value.split(":");
+      if (value.slice(0, 1) === "@") {
+        if (colonSeparated.length < 2 || colonSeparated.length > 3) {
+          return null;
+        }
+        provider = colonSeparated.shift().slice(1);
+      }
+      if (colonSeparated.length > 3 || !colonSeparated.length) {
+        return null;
+      }
+      if (colonSeparated.length > 1) {
+        const name2 = colonSeparated.pop();
+        const prefix = colonSeparated.pop();
+        const result = {
+          provider: colonSeparated.length > 0 ? colonSeparated[0] : provider,
+          prefix,
+          name: name2
+        };
+        return validate && !validateIcon(result) ? null : result;
+      }
+      const name = colonSeparated[0];
+      const dashSeparated = name.split("-");
+      if (dashSeparated.length > 1) {
+        const result = {
+          provider,
+          prefix: dashSeparated.shift(),
+          name: dashSeparated.join("-")
+        };
+        return validate && !validateIcon(result) ? null : result;
+      }
+      if (allowSimpleName && provider === "") {
+        const result = {
+          provider,
+          prefix: "",
+          name
+        };
+        return validate && !validateIcon(result, allowSimpleName) ? null : result;
+      }
+      return null;
+    };
+    validateIcon = (icon, allowSimpleName) => {
+      if (!icon) {
+        return false;
+      }
+      return !!((icon.provider === "" || icon.provider.match(matchName)) && (allowSimpleName && icon.prefix === "" || icon.prefix.match(matchName)) && icon.name.match(matchName));
+    };
+    matchChar = /^[a-f0-9]+(-[a-f0-9]+)*$/;
+    storageVersion = 1;
+    storage$1 = /* @__PURE__ */ Object.create(null);
+    try {
+      const w = window || self;
+      if ((w == null ? void 0 : w._iconifyStorage.version) === storageVersion) {
+        storage$1 = w._iconifyStorage.storage;
+      }
+    } catch (err) {
+    }
+    simpleNames = false;
+    defaults = Object.freeze({
+      inline: false,
+      width: null,
+      height: null,
+      hAlign: "center",
+      vAlign: "middle",
+      slice: false,
+      hFlip: false,
+      vFlip: false,
+      rotate: 0
+    });
+    unitsSplit = /(-?[0-9.]*[0-9]+[0-9.]*)/g;
+    unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
+    regex = /\sid="(\S+)"/g;
+    randomPrefix = "IconifyId" + Date.now().toString(16) + (Math.random() * 16777216 | 0).toString(16);
+    counter = 0;
+    storage = /* @__PURE__ */ Object.create(null);
+    configStorage = /* @__PURE__ */ Object.create(null);
+    fallBackAPISources = [
+      "https://api.simplesvg.com",
+      "https://api.unisvg.com"
+    ];
+    fallBackAPI = [];
+    while (fallBackAPISources.length > 0) {
+      if (fallBackAPISources.length === 1) {
+        fallBackAPI.push(fallBackAPISources.shift());
+      } else {
+        if (Math.random() > 0.5) {
+          fallBackAPI.push(fallBackAPISources.shift());
+        } else {
+          fallBackAPI.push(fallBackAPISources.pop());
+        }
+      }
+    }
+    configStorage[""] = createAPIConfig({
+      resources: ["https://api.iconify.design"].concat(fallBackAPI)
+    });
+    mergeParams = (base2, params) => {
+      let result = base2, hasParams = result.indexOf("?") !== -1;
+      function paramToString(value) {
+        switch (typeof value) {
+          case "boolean":
+            return value ? "true" : "false";
+          case "number":
+            return encodeURIComponent(value);
+          case "string":
+            return encodeURIComponent(value);
+          default:
+            throw new Error("Invalid parameter");
+        }
+      }
+      Object.keys(params).forEach((key) => {
+        let value;
+        try {
+          value = paramToString(params[key]);
+        } catch (err) {
+          return;
+        }
+        result += (hasParams ? "&" : "?") + encodeURIComponent(key) + "=" + value;
+        hasParams = true;
+      });
+      return result;
+    };
+    maxLengthCache = /* @__PURE__ */ Object.create(null);
+    pathCache = /* @__PURE__ */ Object.create(null);
+    detectFetch = () => {
+      let callback;
+      try {
+        callback = fetch;
+        if (typeof callback === "function") {
+          return callback;
+        }
+      } catch (err) {
+      }
+      try {
+        const chunk = String.fromCharCode(114) + String.fromCharCode(101);
+        const req = global[chunk + "qui" + chunk];
+        callback = req("cross-fetch");
+        if (typeof callback === "function") {
+          return callback;
+        }
+      } catch (err) {
+      }
+      return null;
+    };
+    fetchModule = detectFetch();
+    prepare = (provider, prefix, icons) => {
+      const results = [];
+      let maxLength = maxLengthCache[prefix];
+      if (maxLength === void 0) {
+        maxLength = calculateMaxLength(provider, prefix);
+      }
+      const type = "icons";
+      let item = {
+        type,
+        provider,
+        prefix,
+        icons: []
+      };
+      let length = 0;
+      icons.forEach((name, index) => {
+        length += name.length + 1;
+        if (length >= maxLength && index > 0) {
+          results.push(item);
+          item = {
+            type,
+            provider,
+            prefix,
+            icons: []
+          };
+          length = name.length;
+        }
+        item.icons.push(name);
+      });
+      results.push(item);
+      return results;
+    };
+    send = (host, params, status) => {
+      if (!fetchModule) {
+        status.done(void 0, 424);
+        return;
+      }
+      let path = getPath(params.provider);
+      switch (params.type) {
+        case "icons": {
+          const prefix = params.prefix;
+          const icons = params.icons;
+          const iconsList = icons.join(",");
+          path += mergeParams(prefix + ".json", {
+            icons: iconsList
+          });
+          break;
+        }
+        case "custom": {
+          const uri = params.uri;
+          path += uri.slice(0, 1) === "/" ? uri.slice(1) : uri;
+          break;
+        }
+        default:
+          status.done(void 0, 400);
+          return;
+      }
+      let defaultError = 503;
+      fetchModule(host + path).then((response) => {
+        if (response.status !== 200) {
+          setTimeout(() => {
+            status.done(void 0, response.status);
+          });
+          return;
+        }
+        defaultError = 501;
+        return response.json();
+      }).then((data) => {
+        if (typeof data !== "object" || data === null) {
+          setTimeout(() => {
+            status.done(void 0, defaultError);
+          });
+          return;
+        }
+        setTimeout(() => {
+          status.done(data);
+        });
+      }).catch(() => {
+        status.done(void 0, defaultError);
+      });
+    };
+    fetchAPIModule = {
+      prepare,
+      send
+    };
+    callbacks = /* @__PURE__ */ Object.create(null);
+    pendingUpdates = /* @__PURE__ */ Object.create(null);
+    idCounter = 0;
+    defaultConfig = {
+      resources: [],
+      index: 0,
+      timeout: 2e3,
+      rotate: 750,
+      random: false,
+      dataAfterTimeout: false
+    };
+    redundancyCache = /* @__PURE__ */ Object.create(null);
+    cache = {};
+    pendingIcons = /* @__PURE__ */ Object.create(null);
+    iconsToLoad = /* @__PURE__ */ Object.create(null);
+    loaderFlags = /* @__PURE__ */ Object.create(null);
+    queueFlags = /* @__PURE__ */ Object.create(null);
+    errorsCache = /* @__PURE__ */ Object.create(null);
+    loadIcons = (icons, callback) => {
+      const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
+      const sortedIcons = sortIcons(cleanedIcons);
+      if (!sortedIcons.pending.length) {
+        let callCallback = true;
+        if (callback) {
+          setTimeout(() => {
+            if (callCallback) {
+              callback(sortedIcons.loaded, sortedIcons.missing, sortedIcons.pending, emptyCallback);
+            }
+          });
+        }
+        return () => {
+          callCallback = false;
+        };
+      }
+      const newIcons = /* @__PURE__ */ Object.create(null);
+      const sources = [];
+      let lastProvider, lastPrefix;
+      sortedIcons.pending.forEach((icon) => {
+        const provider = icon.provider;
+        const prefix = icon.prefix;
+        if (prefix === lastPrefix && provider === lastProvider) {
+          return;
+        }
+        lastProvider = provider;
+        lastPrefix = prefix;
+        sources.push({
+          provider,
+          prefix
+        });
+        if (pendingIcons[provider] === void 0) {
+          pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
+        }
+        const providerPendingIcons = pendingIcons[provider];
+        if (providerPendingIcons[prefix] === void 0) {
+          providerPendingIcons[prefix] = /* @__PURE__ */ Object.create(null);
+        }
+        if (newIcons[provider] === void 0) {
+          newIcons[provider] = /* @__PURE__ */ Object.create(null);
+        }
+        const providerNewIcons = newIcons[provider];
+        if (providerNewIcons[prefix] === void 0) {
+          providerNewIcons[prefix] = [];
+        }
+      });
+      const time = Date.now();
+      sortedIcons.pending.forEach((icon) => {
+        const provider = icon.provider;
+        const prefix = icon.prefix;
+        const name = icon.name;
+        const pendingQueue = pendingIcons[provider][prefix];
+        if (pendingQueue[name] === void 0) {
+          pendingQueue[name] = time;
+          newIcons[provider][prefix].push(name);
+        }
+      });
+      sources.forEach((source) => {
+        const provider = source.provider;
+        const prefix = source.prefix;
+        if (newIcons[provider][prefix].length) {
+          loadNewIcons(provider, prefix, newIcons[provider][prefix]);
+        }
+      });
+      return callback ? storeCallback(callback, sortedIcons, sources) : emptyCallback;
+    };
+    cacheVersion = "iconify2";
+    cachePrefix = "iconify";
+    countKey = cachePrefix + "-count";
+    versionKey = cachePrefix + "-version";
+    hour = 36e5;
+    cacheExpiration = 168;
+    config2 = {
+      local: true,
+      session: true
+    };
+    loaded = false;
+    count = {
+      local: 0,
+      session: 0
+    };
+    emptyList = {
+      local: [],
+      session: []
+    };
+    _window = typeof window === "undefined" ? {} : window;
+    loadCache = () => {
+      if (loaded) {
+        return;
+      }
+      loaded = true;
+      const minTime = Math.floor(Date.now() / hour) - cacheExpiration;
+      function load2(key) {
+        const func = getGlobal(key);
+        if (!func) {
+          return;
+        }
+        const getItem = (index) => {
+          const name = cachePrefix + index;
+          const item = func.getItem(name);
+          if (typeof item !== "string") {
+            return false;
+          }
+          let valid = true;
+          try {
+            const data = JSON.parse(item);
+            if (typeof data !== "object" || typeof data.cached !== "number" || data.cached < minTime || typeof data.provider !== "string" || typeof data.data !== "object" || typeof data.data.prefix !== "string") {
+              valid = false;
+            } else {
+              const provider = data.provider;
+              const prefix = data.data.prefix;
+              const storage2 = getStorage(provider, prefix);
+              valid = addIconSet(storage2, data.data).length > 0;
+            }
+          } catch (err) {
+            valid = false;
+          }
+          if (!valid) {
+            func.removeItem(name);
+          }
+          return valid;
+        };
+        try {
+          const version = func.getItem(versionKey);
+          if (version !== cacheVersion) {
+            if (version) {
+              destroyCache(func);
+            }
+            initCache(func, key);
+            return;
+          }
+          let total = getCount(func);
+          for (let i2 = total - 1; i2 >= 0; i2--) {
+            if (!getItem(i2)) {
+              if (i2 === total - 1) {
+                total--;
+              } else {
+                emptyList[key].push(i2);
+              }
+            }
+          }
+          setCount(func, key, total);
+        } catch (err) {
+        }
+      }
+      for (const key in config2) {
+        load2(key);
+      }
+    };
+    storeCache = (provider, data) => {
+      if (!loaded) {
+        loadCache();
+      }
+      function store(key) {
+        if (!config2[key]) {
+          return false;
+        }
+        const func = getGlobal(key);
+        if (!func) {
+          return false;
+        }
+        let index = emptyList[key].shift();
+        if (index === void 0) {
+          index = count[key];
+          if (!setCount(func, key, index + 1)) {
+            return false;
+          }
+        }
+        try {
+          const item = {
+            cached: Math.floor(Date.now() / hour),
+            provider,
+            data
+          };
+          func.setItem(cachePrefix + index, JSON.stringify(item));
+        } catch (err) {
+          return false;
+        }
+        return true;
+      }
+      if (!store("local")) {
+        store("session");
+      }
+    };
+    separator = /[\s,]+/;
+    svgDefaults = {
+      "xmlns": "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "aria-hidden": true,
+      "role": "img"
+    };
+    allowSimpleNames(true);
+    setAPIModule("", fetchAPIModule);
+    if (typeof document !== "undefined" && typeof window !== "undefined") {
+      cache.store = storeCache;
+      loadCache();
+      const _window2 = window;
+      if (_window2.IconifyPreload !== void 0) {
+        const preload = _window2.IconifyPreload;
+        const err = "Invalid IconifyPreload syntax.";
+        if (typeof preload === "object" && preload !== null) {
+          (preload instanceof Array ? preload : [preload]).forEach((item) => {
+            try {
+              if (typeof item !== "object" || item === null || item instanceof Array || typeof item.icons !== "object" || typeof item.prefix !== "string" || !addCollection(item)) {
+                console.error(err);
+              }
+            } catch (e3) {
+              console.error(err);
+            }
+          });
+        }
+      }
+      if (_window2.IconifyProviders !== void 0) {
+        const providers = _window2.IconifyProviders;
+        if (typeof providers === "object" && providers !== null) {
+          for (let key in providers) {
+            const err = "IconifyProviders[" + key + "] is invalid.";
+            try {
+              const value = providers[key];
+              if (typeof value !== "object" || !value || value.resources === void 0) {
+                continue;
+              }
+              if (!addAPIProvider(key, value)) {
+                console.error(err);
+              }
+            } catch (e3) {
+              console.error(err);
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
+// .svelte-kit/output/server/chunks/UserAddress-3a6b70e4.js
+var css, UserAddress;
+var init_UserAddress_3a6b70e4 = __esm({
+  ".svelte-kit/output/server/chunks/UserAddress-3a6b70e4.js"() {
+    init_shims();
+    init_app_ce278dac();
     css = {
       code: ".led-green.svelte-bnzski{position:relative;display:inline-block;top:0px;margin-right:0.5em;background-color:var(--primary);width:14px;height:14px;border-radius:14px}",
       map: null
@@ -20745,12 +22701,254 @@ var init_UserAddress_2f245373 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-e2b60078.js
-var draftFloat, theme;
-var init_stores_e2b60078 = __esm({
-  ".svelte-kit/output/server/chunks/stores-e2b60078.js"() {
+// .svelte-kit/output/server/chunks/stores-949b1b48.js
+var Icon, css$4, Tab1, css$3, Modal_1, HorizontalSpace, css$2, Dialog_1, css$1, Tab2, css2, Tab3, Tab4, draftFloat, tabs, theme, tab1data, tokens, selectedToken, collections, modal, dialog;
+var init_stores_949b1b48 = __esm({
+  ".svelte-kit/output/server/chunks/stores-949b1b48.js"() {
     init_shims();
-    init_stores_8213c399();
+    init_app_ce278dac();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_index_6ebc447e();
+    Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      const state = {
+        name: "",
+        loading: null,
+        destroyed: false
+      };
+      let mounted = false;
+      let data;
+      const onLoad = (icon) => {
+        if (typeof $$props.onLoad === "function") {
+          $$props.onLoad(icon);
+        }
+        const dispatch = createEventDispatcher();
+        dispatch("load", { icon });
+      };
+      function loaded2() {
+      }
+      onDestroy(() => {
+        state.destroyed = true;
+        if (state.loading) {
+          state.loading.abort();
+          state.loading = null;
+        }
+      });
+      {
+        {
+          const iconData = checkIconState($$props.icon, state, mounted, loaded2, onLoad);
+          data = iconData ? generateIcon(iconData.data, $$props) : null;
+          if (data && iconData.classes) {
+            data.attributes["class"] = (typeof $$props["class"] === "string" ? $$props["class"] + " " : "") + iconData.classes.join(" ");
+          }
+        }
+      }
+      return `${data !== null ? `<svg${spread([escape_object(data.attributes)], {})}><!-- HTML_TAG_START -->${data.body}<!-- HTML_TAG_END --></svg>` : ``}`;
+    });
+    css$4 = {
+      code: "textarea.svelte-19lnoss{border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px}.menu-icon-container.svelte-19lnoss{display:flex;height:100%;width:6%;justify-content:center;align-items:center}.alignment-icon.svelte-19lnoss{width:33.3%;height:100%;display:flex;justify-content:center;align-items:center}.alignment-container.svelte-19lnoss{display:flex;width:20%;height:100%;justify-content:space-between;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-type-container.svelte-19lnoss{display:flex;width:34%;height:100%;align-items:center;justify-content:space-between;border-right:1px solid var(--form-element-border-color);padding-left:0.5rem;padding-right:0.5rem}.text-icons-container.svelte-19lnoss{display:flex;width:40%;height:100%;justify-content:start;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-icon.svelte-19lnoss{display:flex;height:100%;width:1.8rem;justify-content:center;align-items:center}.textarea-header.svelte-19lnoss{display:flex;width:100%;height:1.6rem;border:1px solid var(--form-element-border-color);border-bottom:none;border-top-right-radius:6px;border-top-left-radius:6px;margin-top:3px}",
+      map: null
+    };
+    Tab1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { tab1val } = $$props;
+      tab1data.subscribe((val) => tab1val = val);
+      let name = tab1val.name;
+      let description = tab1val.description;
+      createEventDispatcher();
+      if ($$props.tab1val === void 0 && $$bindings.tab1val && tab1val !== void 0)
+        $$bindings.tab1val(tab1val);
+      $$result.css.add(css$4);
+      return `<div><header><h3 class="${"mt-1"}">Tab 1</h3>
+        <p>Something about Tab 1</p></header>
+
+    <div><div style="${"width:100%"}"><h3 class="${"mt-1"}">Name</h3>
+            <input id="${"name"}" placeholder="${"My awesome project"}"${add_attribute("value", name ? name : null, 0)}></div>
+            <h3 class="${"mt-1"}">Description</h3>
+            <div class="${"textarea-header svelte-19lnoss"}"><section class="${"text-icons-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:bold", height: 20 }, {}, {})}</div>
+                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:italic", height: 19 }, {}, {})}</div>
+                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:underline-outlined",
+        height: 20
+      }, {}, {})}</div>
+                    <div style="${"width: 8px;"}"></div>
+                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "ooui:underline-a", height: 16 }, {}, {})}
+                        ${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:chevron-down",
+        height: 14
+      }, {}, {})}</div></section>
+                <section class="${"text-type-container svelte-19lnoss"}"><div><span style="${"font-weight: 300; font-size:16px"}">Normal Text</span></div>
+                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:chevron-down",
+        height: 18
+      }, {}, {})}</div></section>
+                <section class="${"alignment-container svelte-19lnoss"}"><div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-left",
+        height: 18
+      }, {}, {})}</div>
+                    <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-center",
+        height: 18
+      }, {}, {})}</div>
+                    <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-right",
+        height: 18
+      }, {}, {})}</div></section>
+                <section class="${"menu-icon-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "carbon:overflow-menu-vertical",
+        height: 22
+      }, {}, {})}</div></section></div>
+            <textarea id="${"description"}" rows="${"4"}" placeholder="${"My awesome project it\xB4s ..."}" class="${"svelte-19lnoss"}">${escape2(description ? description : null)}</textarea></div>
+    
+</div>`;
+    });
+    css$3 = {
+      code: "header.svelte-ukirbf{display:flex;flex-direction:row;height:14%;width:100%;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-ukirbf{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-ukirbf{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#modal.svelte-ukirbf{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:60%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
+      map: null
+    };
+    Modal_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_modal;
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let Modal;
+      modal.subscribe((val) => Modal = val);
+      $$result.css.add(css$3);
+      $$unsubscribe_modal();
+      return `<div id="${"background"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none")}" class="${"svelte-ukirbf"}"></div>
+<main id="${"modal"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none") + ";"}" class="${"svelte-ukirbf"}"><header class="${"svelte-ukirbf"}"><div><h3>Modal Title</h3></div>
+    <div>
+      <div>${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:close-circle-outlined",
+        height: "1.4rem",
+        color: "lightgrey"
+      }, {}, {})}</div></div></header>
+  <div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Input 1</h3>
+      <input placeholder="${"Input 1"}"></div>
+    
+    <div style="${"width:80%"}"><h3 class="${"mt-0"}">Input 2</h3>
+      <input placeholder="${"Input 2"}"></div></div>
+  <footer class="${"svelte-ukirbf"}"><div style="${"cursor: pointer;"}">ACTION 2
+
+    </div></footer>
+</main>`;
+    });
+    HorizontalSpace = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { value } = $$props;
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      return `<main style="${"width: " + escape2(value)}"></main>`;
+    });
+    css$2 = {
+      code: "header.svelte-1r665vk{display:flex;flex-direction:row;height:16%;width:100%;justify-content:space-between;align-items:center;padding-right:1rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-1r665vk{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-1r665vk{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#dialog.svelte-1r665vk{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:48%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
+      map: null
+    };
+    Dialog_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_tokens;
+      let $dialog, $$unsubscribe_dialog;
+      $$unsubscribe_tokens = subscribe(tokens, (value) => value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
+      let { id } = $$props;
+      let amount;
+      let dialogValue;
+      console.log("id", id);
+      dialog.subscribe((val) => {
+        dialogValue = val;
+        console.log("dialogValue", dialogValue);
+      });
+      tokens.subscribe((val) => val);
+      selectedToken.subscribe((val) => val);
+      createEventDispatcher();
+      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
+        $$bindings.id(id);
+      $$result.css.add(css$2);
+      $$unsubscribe_tokens();
+      $$unsubscribe_dialog();
+      return `<div id="${"background"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none")}" class="${"svelte-1r665vk"}"></div>
+<main id="${"dialog"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none") + ";"}" class="${"svelte-1r665vk"}"><header class="${"svelte-1r665vk"}"><div><h3>Dialog title</h3></div>
+<div>
+  <div>${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:close-circle-outlined",
+        height: "1.4rem",
+        color: "lightgrey"
+      }, {}, {})}</div></div></header>
+<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Amount</h3>
+  <input type="${"number"}" placeholder="${"0"}"${add_attribute("value", amount, 0)}></div>
+<div style="${"width:80%"}"></div></div>
+<footer class="${"svelte-1r665vk"}"><div style="${"cursor: pointer;"}">ACTION 2
+
+</div></footer>
+</main>`;
+    });
+    css$1 = {
+      code: ".amount-container.svelte-hqqxxh{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-hqqxxh{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-hqqxxh{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-hqqxxh{position:relative;display:flex;width:28%;height:100%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-hqqxxh{position:relative;display:flex;width:18%;height:100%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-hqqxxh{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-hqqxxh{margin:0;padding:0}ul.svelte-hqqxxh{margin:0;padding:0}.secondary-btn.svelte-hqqxxh{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-hqqxxh:hover{background:rgba(218, 4, 106, 0.1)}.custom-container.svelte-hqqxxh{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-hqqxxh{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-hqqxxh{height:100%;width:100%}",
+      map: null
+    };
+    Tab2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_tokens;
+      let $$unsubscribe_selectedToken;
+      let $$unsubscribe_dialog;
+      let $$unsubscribe_modal;
+      $$unsubscribe_tokens = subscribe(tokens, (value) => value);
+      $$unsubscribe_selectedToken = subscribe(selectedToken, (value) => value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => value);
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let hoveredId;
+      let tokensValue;
+      let tokenId;
+      modal.subscribe((val) => val);
+      tokens.subscribe((val) => {
+        tokensValue = val;
+        console.log("tokensVal", tokensValue);
+      });
+      createEventDispatcher();
+      $$result.css.add(css$1);
+      $$unsubscribe_tokens();
+      $$unsubscribe_selectedToken();
+      $$unsubscribe_dialog();
+      $$unsubscribe_modal();
+      return `${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
+${validate_component(Dialog_1, "Dialog").$$render($$result, { tokenId }, {}, {})}
+<main class="${"container svelte-hqqxxh"}"><header><h3 class="${"mt-1"}">Tokens</h3>
+        <p>Something about the Tokens</p></header>
+    <div class="${"tokens-container mt-2 svelte-hqqxxh"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-hqqxxh"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-hqqxxh"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-hqqxxh"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2rem; height:100%;"}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                    <div>${escape2(label)}</div>
+                    ${amount !== 0 ? `<div class="${"amount-container svelte-hqqxxh"}">${escape2(amount)}
+                        <div class="${"icon-container svelte-hqqxxh"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
+                    </div>` : `<div></div>`}</div>
+                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${selected ? "checked" : ""}></div>
+            </li>`;
+      })}</ul>
+        <footer class="${"custom-container svelte-hqqxxh"}"><div class="${"secondary-btn svelte-hqqxxh"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-outlined",
+        height: "1.2rem"
+      }, {}, {})}</div>
+                ${validate_component(HorizontalSpace, "HorizontalSpace").$$render($$result, { value: "0.3rem" }, {}, {})}
+                <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
+    });
+    css2 = {
+      code: ".collection-inactive.svelte-k74214{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center}.collection-active.svelte-k74214{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer}main.svelte-k74214{margin:0;padding:0}ul.svelte-k74214{margin:0;padding:0}li.svelte-k74214{margin:0;padding:0}.collections-container.svelte-k74214{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-k74214{height:100%;width:100%}",
+      map: null
+    };
+    Tab3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      createEventDispatcher();
+      let hoveredId;
+      let collectionsValue;
+      collections.subscribe((val) => collectionsValue = val);
+      $$result.css.add(css2);
+      return `
+<main class="${"container svelte-k74214"}"><header><h3 class="${"mt-1"}">Collections</h3>
+        <p>Something about the Collections</p></header>
+
+        <div class="${"collections-container mt-1 svelte-k74214"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-k74214"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-k74214"}"><div style="${"display:flex; width: 80%; height: 100%; align-items:center"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 4rem; height:100%;"}"><img style="${"height:2rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                        <div>${escape2(label)}
+                        </div></div>
+                    <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${collectionsValue[id].selected ? "checked" : ""}></div>
+                </li>`;
+      })}</ul></div></main>
+`;
+    });
+    Tab4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `tab 4`;
+    });
     draftFloat = writable2({
       name: "",
       description: "",
@@ -20765,16 +22963,111 @@ var init_stores_e2b60078 = __esm({
       claimCode: "",
       transferrable: true
     });
+    tabs = writable2([
+      {
+        label: "Content",
+        value: 0,
+        component: Tab1,
+        icon: "ic:outline-subtitles"
+      },
+      {
+        label: "Tokens",
+        value: 1,
+        component: Tab2,
+        icon: "icomoon-free:coin-dollar"
+      },
+      {
+        label: "Tab 3",
+        value: 2,
+        component: Tab3,
+        icon: "fluent:collections-add-24-regular"
+      },
+      {
+        label: "Tab 4",
+        value: 3,
+        component: Tab4,
+        icon: "fa:diamond"
+      },
+      {
+        label: "Tab 5",
+        value: 4,
+        component: Tab4,
+        icon: "bi:card-image"
+      },
+      {
+        label: "Tab 5",
+        value: 5,
+        component: Tab4,
+        icon: "ic:outline-subtitles"
+      },
+      {
+        label: "Tab 5",
+        value: 6,
+        component: Tab4,
+        icon: "ic:outline-subtitles"
+      }
+    ]);
     theme = writable2(null);
+    tab1data = writable2({
+      name: "",
+      description: ""
+    });
+    tokens = writable2([
+      {
+        id: 0,
+        label: "FLOW",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
+        selected: true,
+        amount: 0
+      },
+      {
+        id: 1,
+        label: "FUSD",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
+        selected: false,
+        amount: 0
+      }
+    ]);
+    selectedToken = writable2(0);
+    collections = writable2([
+      {
+        id: 0,
+        label: "Basic Beasts",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618a0cea8665abc4610c4ca6_basic_beasts_o5telf.png",
+        selected: false
+      },
+      {
+        id: 1,
+        label: "Ballerz",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618b83df2183ef7f2902c886_thumbnail_ballerz_jwtdpb.jpg",
+        selected: false
+      },
+      {
+        id: 2,
+        label: "Flovatar",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/619efc34fe0b49bb68dc20b8_flovatar_5-01_1_bo3h2k.png",
+        selected: false
+      }
+    ]);
+    modal = writable2({
+      title: "",
+      action: "",
+      opened: false
+    });
+    dialog = writable2({
+      title: "",
+      action: "",
+      opened: false
+    });
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-ddd4eeba.js
+// .svelte-kit/output/server/chunks/stores-55c3f9e5.js
 var getStores, page;
-var init_stores_ddd4eeba = __esm({
-  ".svelte-kit/output/server/chunks/stores-ddd4eeba.js"() {
+var init_stores_55c3f9e5 = __esm({
+  ".svelte-kit/output/server/chunks/stores-55c3f9e5.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     getStores = () => {
       const stores = getContext("__svelte__");
       return {
@@ -20802,33 +23095,35 @@ var init_stores_ddd4eeba = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-248d929d.js
-var layout_248d929d_exports = {};
-__export(layout_248d929d_exports, {
+// .svelte-kit/output/server/chunks/__layout-315d01b0.js
+var layout_315d01b0_exports = {};
+__export(layout_315d01b0_exports, {
   default: () => _layout
 });
-var import_onflow_fcl_esm2, css$3, ConnectWallet, css$2, Header, css$1, Transaction, css2, _layout;
-var init_layout_248d929d = __esm({
-  ".svelte-kit/output/server/chunks/__layout-248d929d.js"() {
+var import_onflow_fcl_esm2, css$32, ConnectWallet, css$22, Header, css$12, Transaction, css3, _layout;
+var init_layout_315d01b0 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-315d01b0.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_8213c399();
+    init_app_ce278dac();
+    init_stores_fdad96d2();
     import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_UserAddress_2f245373();
-    init_stores_e2b60078();
-    init_stores_ddd4eeba();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_UserAddress_3a6b70e4();
+    init_stores_949b1b48();
+    init_stores_55c3f9e5();
     init_ssr();
-    css$3 = {
+    init_index_6ebc447e();
+    css$32 = {
       code: "a.svelte-nbcav7{padding:8px 14px}",
       map: null
     };
     ConnectWallet = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css$3);
+      $$result.css.add(css$32);
       return `<a role="${"button"}" href="${"/"}" class="${"contrast small-button svelte-nbcav7"}">Connect Wallet</a>`;
     });
-    css$2 = {
-      code: "li.svelte-bq95g1{margin-right:1rem}h1.svelte-bq95g1{font-size:1.2rem}.outline.svelte-bq95g1{padding:6px 14px}img.svelte-bq95g1{height:auto;max-width:160px}.theme-toggle.svelte-bq95g1{padding:0;height:45px;width:45px;background-color:var(--primary-focus);border-radius:50%;display:inline-block;text-align:center;justify-content:center;display:flex;vertical-align:middle;align-items:center}@media screen and (max-width: 500px){img.svelte-bq95g1{max-width:100px}}",
+    css$22 = {
+      code: "li.svelte-bq95g1{margin-right:1rem}.outline.svelte-bq95g1{padding:6px 14px}.theme-toggle.svelte-bq95g1{padding:0;height:45px;width:45px;background-color:var(--primary-focus);border-radius:50%;display:inline-block;text-align:center;justify-content:center;display:flex;vertical-align:middle;align-items:center}@media screen and (max-width: 500px){}",
       map: null
     };
     Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -20836,11 +23131,12 @@ var init_layout_248d929d = __esm({
       let $user, $$unsubscribe_user;
       $$unsubscribe_theme = subscribe(theme, (value) => value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$result.css.add(css$2);
+      $$result.css.add(css$22);
       $$unsubscribe_theme();
       $$unsubscribe_user();
       return `<nav class="${"container"}"><ul><li class="${"svelte-bq95g1"}">
-      <h1 class="${"svelte-bq95g1"}"><a href="${"/"}"><img src="${"/logo-testnet.png"}" alt="${"Emerald City FLOAT"}" class="${"svelte-bq95g1"}"></a></h1>
+      <h3>LOGO</h3>
+      
       </li></ul>
   <ul>
     <li class="${"svelte-bq95g1"}"><a class="${"theme-toggle svelte-bq95g1"}" href="${"/"}"><svg xmlns="${"http://www.w3.org/2000/svg"}" width="${"16"}" height="${"16"}" fill="${"currentColor"}" class="${"bi bi-moon-fill"}" viewBox="${"0 0 16 16"}"><path d="${"M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"}"></path></svg></a></li>
@@ -20851,7 +23147,7 @@ var init_layout_248d929d = __esm({
         abbreviated: true
       }, {}, {})}</a>` : `${validate_component(ConnectWallet, "ConnectWallet").$$render($$result, {}, {}, {})}`}</li></ul></nav>`;
     });
-    css$1 = {
+    css$12 = {
       code: "article.svelte-11j8u0c{padding:1rem}progress.svelte-11j8u0c{margin-top:1em}small.svelte-11j8u0c{opacity:0.8}",
       map: null
     };
@@ -20862,7 +23158,7 @@ var init_layout_248d929d = __esm({
       $$unsubscribe_transactionInProgress = subscribe(transactionInProgress, (value) => $transactionInProgress = value);
       $$unsubscribe_transactionStatus = subscribe(transactionStatus, (value) => $transactionStatus = value);
       $$unsubscribe_txId = subscribe(txId, (value) => $txId = value);
-      $$result.css.add(css$1);
+      $$result.css.add(css$12);
       $$unsubscribe_transactionInProgress();
       $$unsubscribe_transactionStatus();
       $$unsubscribe_txId();
@@ -20888,7 +23184,7 @@ var init_layout_248d929d = __esm({
       <span><kbd>Expired</kbd><br><small class="${"svelte-11j8u0c"}">The transaction was submitted past its expiration block height.</small></span>` : `<span data-theme="${"invalid"}">Unexpected parameters were passed into the transaction.</span>`}`}`}`}`}`}
     </article>` : ``}`;
     });
-    css2 = {
+    css3 = {
       code: ".graffle.svelte-j5rx0t.svelte-j5rx0t{position:relative;display:flex;justify-content:center;align-items:center}img.graffle.svelte-j5rx0t.svelte-j5rx0t{position:relative;top:-5px;width:100px;height:auto;margin-left:5px}footer.svelte-j5rx0t.svelte-j5rx0t{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10px}p.svelte-j5rx0t.svelte-j5rx0t{font-size:0.7rem}footer.svelte-j5rx0t a.svelte-j5rx0t{font-weight:bold}@media(min-width: 480px){footer.svelte-j5rx0t.svelte-j5rx0t{padding:10px 0}}",
       map: null
     };
@@ -20896,7 +23192,7 @@ var init_layout_248d929d = __esm({
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
       console.log($page.path);
-      $$result.css.add(css2);
+      $$result.css.add(css3);
       $$unsubscribe_page();
       return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}
 
@@ -20916,9 +23212,9 @@ var init_layout_248d929d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-67c86850.js
-var error_67c86850_exports = {};
-__export(error_67c86850_exports, {
+// .svelte-kit/output/server/chunks/__error-5cb2451f.js
+var error_5cb2451f_exports = {};
+__export(error_5cb2451f_exports, {
   default: () => _error,
   load: () => load
 });
@@ -20928,33 +23224,16 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_67c86850 = __esm({
-  ".svelte-kit/output/server/chunks/__error-67c86850.js"() {
+var init_error_5cb2451f = __esm({
+  ".svelte-kit/output/server/chunks/__error-5cb2451f.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
       if ($$props.title === void 0 && $$bindings.title && title !== void 0)
         $$bindings.title(title);
       return `<h1>Error ${escape2(title)}</h1>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/CheckAddress-22425111.js
-var CheckAddress;
-var init_CheckAddress_22425111 = __esm({
-  ".svelte-kit/output/server/chunks/CheckAddress-22425111.js"() {
-    init_shims();
-    init_app_990e780d();
-    CheckAddress = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let address;
-      return `<div class="${"input-button-group"}"><input type="${"text"}" id="${"address"}" name="${"address"}" placeholder="${"0x00000000000"}"${add_attribute("value", address, 0)}>
-  <a href="${"/" + escape2(address)}" role="${"button"}"${add_classes("".trim())}>View</a></div>
-<small>Paste in a Flow address.</small>
-  
-  `;
     });
   }
 });
@@ -20968,51 +23247,88 @@ var init_constants_358452f5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-73c6454b.js
-var index_73c6454b_exports = {};
-__export(index_73c6454b_exports, {
+// .svelte-kit/output/server/chunks/index-19ffd089.js
+var index_19ffd089_exports = {};
+__export(index_19ffd089_exports, {
   default: () => Routes
 });
-var css3, Routes;
-var init_index_73c6454b = __esm({
-  ".svelte-kit/output/server/chunks/index-73c6454b.js"() {
+var css4, Routes;
+var init_index_19ffd089 = __esm({
+  ".svelte-kit/output/server/chunks/index-19ffd089.js"() {
     init_shims();
-    init_app_990e780d();
-    init_CheckAddress_22425111();
+    init_app_ce278dac();
+    init_stores_949b1b48();
     init_constants_358452f5();
     init_ssr();
-    css3 = {
-      code: "h1.svelte-nsw41l{text-align:center}.tag-line.svelte-nsw41l{font-weight:300;font-size:1.2rem;margin-top:30px;display:block}.island.svelte-nsw41l{width:30vw;max-width:400px}",
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_index_6ebc447e();
+    css4 = {
+      code: "ul.svelte-1mpff2m{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-1mpff2m::-webkit-scrollbar{display:none}li.svelte-1mpff2m{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:25%;height:100%;min-width:25%;cursor:pointer}li.active.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(218, 4, 106, 0.1);margin:0;padding:0;width:25%;height:100%;min-width:25%}.inactive-tab.svelte-1mpff2m:hover{background:var(--form-element-border-color)}.tabbar.svelte-1mpff2m{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;height:100%;width:20%}",
       map: null
     };
     Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css3);
+      let $$unsubscribe_tabs;
+      $$unsubscribe_tabs = subscribe(tabs, (value) => value);
+      let tabsValue;
+      let activeTabValue = 0;
+      tabs.subscribe((value) => {
+        tabsValue = value;
+      });
+      console.log("store tabs", tabsValue);
+      $$result.css.add(css4);
+      $$unsubscribe_tabs();
       return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
 
 
 
-<div class="${"grid"}"><a href="${"/live"}"><div class="${"text-center"}"><img class="${"island svelte-nsw41l"}" src="${"/island.png"}" alt="${"FLOAT Logo"}"></div></a>
-  <div class="${"mt-2 mb-2 text-center"}"><h1 class="${"svelte-nsw41l"}">Welcome to FLOAT</h1>
-    <small>A service by <a href="${"https://discord.gg/emeraldcity"}" target="${"_blank"}"><img style="${"height:20px;width:auto;margin-right:4px;"}" src="${"/emeraldcitylogo.png"}" alt="${"Emerald Logo"}">Emerald City DAO</a></small>
-    <span class="${"tag-line svelte-nsw41l"}">Unlock a unique identifier to show that you attended an event.</span>
 
-    <div class="${"grid mt-2 no-break align-center"}"><a role="${"button"}" href="${"#findAddress"}" class="${"outline small-button mb-1"}">Find your event</a>
-      <a role="${"button"}" href="${"/create"}" class="${"small-button mb-1"}">Create an event</a></div></div></div>
 
-<article><h2 id="${"findAddress"}">View FLOATs from an Address</h2>
-  ${validate_component(CheckAddress, "CheckAddress").$$render($$result, {}, {}, {})}</article>`;
+<article><main class="${"tabbar svelte-1mpff2m"}"><div class="${"chevron-wrapper svelte-1mpff2m"}"><div class="${"chevron-icon"}">${validate_component(Icon, "Icon").$$render($$result, {
+        class: "chevron-icon",
+        icon: "akar-icons:circle-chevron-left",
+        height: 36,
+        color: "lightgrey"
+      }, {}, {})}</div></div>
+    <ul class="${"svelte-1mpff2m"}">${each(tabsValue, (item, i2) => {
+        return `<li class="${escape2(null_to_empty(activeTabValue === item.value ? "active" : "inactive-tab")) + " svelte-1mpff2m"}">${validate_component(Icon, "Icon").$$render($$result, {
+          icon: item.icon,
+          height: 30,
+          color: tabsValue[i2].done ? "#85DFB4" : activeTabValue === item.value ? "var(--primary)" : "lightgrey"
+        }, {}, {})}
+        </li>`;
+      })}</ul>
+    <div class="${"chevron-wrapper svelte-1mpff2m"}"><div class="${"chevron-icon"}">${validate_component(Icon, "Icon").$$render($$result, {
+        class: "chevron-icon",
+        icon: "akar-icons:circle-chevron-right",
+        height: 36,
+        color: "lightgrey"
+      }, {}, {})}</div></div></main>
+
+  
+  ${each(tabsValue, (item) => {
+        return `${activeTabValue == item.value ? `<div class="${"tab-content-container"}">
+        
+        ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, {}, {}, {})}</div>
+      <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
+      </footer>` : ``}`;
+      })}
+
+  
+  
+</article>`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/Float-e1b4e5b8.js
-var fcl, getFLOATEvent, getFLOATEvents, getFLOATs, Loading, css4, Float;
-var init_Float_e1b4e5b8 = __esm({
-  ".svelte-kit/output/server/chunks/Float-e1b4e5b8.js"() {
+// .svelte-kit/output/server/chunks/Float-575e6678.js
+var fcl, getFLOATEvent, getFLOATEvents, getFLOATs, Loading, css5, Float;
+var init_Float_575e6678 = __esm({
+  ".svelte-kit/output/server/chunks/Float-575e6678.js"() {
     init_shims();
     fcl = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_app_990e780d();
+    init_app_ce278dac();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
     getFLOATEvent = async (addr, id) => {
       try {
         let queryResult = await fcl.query({
@@ -21116,7 +23432,7 @@ var init_Float_e1b4e5b8 = __esm({
     Loading = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `<article aria-busy="${"true"}"></article>`;
     });
-    css4 = {
+    css5 = {
       code: ".host.svelte-61bxp3{font-family:monospace}.credit.svelte-61bxp3{font-size:0.7rem;display:block;line-height:1}p.svelte-61bxp3{margin-top:10px;margin-bottom:10px}",
       map: null
     };
@@ -21130,7 +23446,7 @@ var init_Float_e1b4e5b8 = __esm({
         $$bindings.preview(preview);
       if ($$props.individual === void 0 && $$bindings.individual && individual !== void 0)
         $$bindings.individual(individual);
-      $$result.css.add(css4);
+      $$result.css.add(css5);
       return `${individual ? `<a class="${"no-style"}" href="${"/" + escape2(float?.eventHost) + "/" + escape2(float?.eventId) + "/" + escape2(float?.serial)}"><article class="${"card"}"><img src="${"https://ipfs.infura.io/ipfs/" + escape2(float?.eventMetadata.image)}" alt="${escape2(float?.eventMetadata.name) + " Image"}">
       <h1>${escape2(float?.eventMetadata.name)}</h1>
       <p class="${"svelte-61bxp3"}"><small><span class="${"credit svelte-61bxp3"}">Created by</span>
@@ -21148,7 +23464,7 @@ var init_Float_e1b4e5b8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/AccountContents-f436d5bf.js
+// .svelte-kit/output/server/chunks/AccountContents-84989581.js
 function getEventsArray(floatEventsObj) {
   if (floatEventsObj && Object.keys(floatEventsObj)?.length > 0) {
     return Object.values(floatEventsObj);
@@ -21156,13 +23472,13 @@ function getEventsArray(floatEventsObj) {
     return [];
   }
 }
-var css5, Event, AccountContents;
-var init_AccountContents_f436d5bf = __esm({
-  ".svelte-kit/output/server/chunks/AccountContents-f436d5bf.js"() {
+var css6, Event, AccountContents;
+var init_AccountContents_84989581 = __esm({
+  ".svelte-kit/output/server/chunks/AccountContents-84989581.js"() {
     init_shims();
-    init_app_990e780d();
-    init_Float_e1b4e5b8();
-    css5 = {
+    init_app_ce278dac();
+    init_Float_575e6678();
+    css6 = {
       code: ".host.svelte-mj8iyj{font-family:monospace}.credit.svelte-mj8iyj{font-size:0.7rem;display:block;line-height:1}p.svelte-mj8iyj{margin-top:10px;margin-bottom:10px}",
       map: null
     };
@@ -21170,7 +23486,7 @@ var init_AccountContents_f436d5bf = __esm({
       let { floatEvent = {} } = $$props;
       if ($$props.floatEvent === void 0 && $$bindings.floatEvent && floatEvent !== void 0)
         $$bindings.floatEvent(floatEvent);
-      $$result.css.add(css5);
+      $$result.css.add(css6);
       return `<a class="${"no-style"}" href="${"/" + escape2(floatEvent?.host) + "/" + escape2(floatEvent?.id)}"><article class="${"card"}">${floatEvent?.image ? `<img src="${"https://ipfs.infura.io/ipfs/" + escape2(floatEvent?.image)}" alt="${escape2(floatEvent.name) + " Image"}">` : ``}
     <h1>${escape2(floatEvent?.name)}</h1>
     <p class="${"svelte-mj8iyj"}"><small><span class="${"credit svelte-mj8iyj"}">Created by</span>
@@ -21223,24 +23539,26 @@ var init_AccountContents_f436d5bf = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/account-bf784190.js
-var account_bf784190_exports = {};
-__export(account_bf784190_exports, {
+// .svelte-kit/output/server/chunks/account-aa6707c8.js
+var account_aa6707c8_exports = {};
+__export(account_aa6707c8_exports, {
   default: () => Account
 });
 var import_onflow_fcl_esm3, Account;
-var init_account_bf784190 = __esm({
-  ".svelte-kit/output/server/chunks/account-bf784190.js"() {
+var init_account_aa6707c8 = __esm({
+  ".svelte-kit/output/server/chunks/account-aa6707c8.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_8213c399();
+    init_app_ce278dac();
+    init_stores_fdad96d2();
     import_onflow_fcl_esm3 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
     init_constants_358452f5();
-    init_AccountContents_f436d5bf();
-    init_UserAddress_2f245373();
+    init_AccountContents_84989581();
+    init_UserAddress_3a6b70e4();
     init_ssr();
-    init_Float_e1b4e5b8();
+    init_index_6ebc447e();
+    init_Float_575e6678();
     Account = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
@@ -21259,12 +23577,12 @@ var init_account_bf784190 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/LibLoader-548de518.js
+// .svelte-kit/output/server/chunks/LibLoader-350f148b.js
 var LibLoader;
-var init_LibLoader_548de518 = __esm({
-  ".svelte-kit/output/server/chunks/LibLoader-548de518.js"() {
+var init_LibLoader_350f148b = __esm({
+  ".svelte-kit/output/server/chunks/LibLoader-350f148b.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     LibLoader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       createEventDispatcher();
       let { url } = $$props;
@@ -21279,24 +23597,26 @@ var init_LibLoader_548de518 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/create-a494dbc0.js
-var create_a494dbc0_exports = {};
-__export(create_a494dbc0_exports, {
+// .svelte-kit/output/server/chunks/create-68325922.js
+var create_68325922_exports = {};
+__export(create_68325922_exports, {
   default: () => Create
 });
-var import_onflow_fcl_esm4, css6, Create;
-var init_create_a494dbc0 = __esm({
-  ".svelte-kit/output/server/chunks/create-a494dbc0.js"() {
+var import_onflow_fcl_esm4, css7, Create;
+var init_create_68325922 = __esm({
+  ".svelte-kit/output/server/chunks/create-68325922.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_8213c399();
+    init_app_ce278dac();
+    init_stores_fdad96d2();
     import_onflow_fcl_esm4 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_stores_e2b60078();
+    init_stores_949b1b48();
     init_constants_358452f5();
-    init_LibLoader_548de518();
+    init_LibLoader_350f148b();
     init_ssr();
-    css6 = {
+    init_index_6ebc447e();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    css7 = {
       code: ".outline.svelte-44wbyu.svelte-44wbyu{text-align:left}.outline.svelte-44wbyu span.svelte-44wbyu{display:block;font-size:0.75rem;line-height:1.2;font-weight:400;opacity:0.6}xmp.svelte-44wbyu.svelte-44wbyu{position:relative;width:100%;font-size:12px;padding:10px;overflow:scroll;border-radius:5px;color:white}.xmp-dark.svelte-44wbyu.svelte-44wbyu{background:rgb(56, 232, 198, 0.25)}.xmp-light.svelte-44wbyu.svelte-44wbyu{background:rgb(27, 40, 50)}h5.svelte-44wbyu.svelte-44wbyu{margin-bottom:5px}.error.svelte-44wbyu.svelte-44wbyu{background-color:red;border-color:white;color:white;opacity:1}",
       map: null
     };
@@ -21346,7 +23666,7 @@ transaction(eventId: UInt64, recipient: Address) {
 	}
 }
 	`;
-      $$result.css.add(css6);
+      $$result.css.add(css7);
       $$unsubscribe_draftFloat();
       $$unsubscribe_theme();
       $$unsubscribe_user();
@@ -21430,24 +23750,24 @@ ${validate_component(LibLoader, "LibLoader").$$render($$result, {
   }
 });
 
-// .svelte-kit/output/server/chunks/about-0047cbb1.js
-var about_0047cbb1_exports = {};
-__export(about_0047cbb1_exports, {
+// .svelte-kit/output/server/chunks/about-1bc33dc1.js
+var about_1bc33dc1_exports = {};
+__export(about_1bc33dc1_exports, {
   default: () => About
 });
-var css7, About;
-var init_about_0047cbb1 = __esm({
-  ".svelte-kit/output/server/chunks/about-0047cbb1.js"() {
+var css8, About;
+var init_about_1bc33dc1 = __esm({
+  ".svelte-kit/output/server/chunks/about-1bc33dc1.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     init_constants_358452f5();
     init_ssr();
-    css7 = {
+    css8 = {
       code: "video.svelte-1hwcgvn{width:100%;margin-bottom:25px}.twitter.svelte-1hwcgvn{color:rgb(29 155 239)}.discord.svelte-1hwcgvn{color:rgb(88 101 242)}.youtube.svelte-1hwcgvn{color:rgb(255, 0, 0)}",
       map: null
     };
     About = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css7);
+      $$result.css.add(css8);
       return `${$$result.head += `${$$result.title = `<title>About ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
 
 <div class="${"container"}"><h1>A Flow-enabled proof of attendance platform.</h1>
@@ -21492,16 +23812,16 @@ var init_about_0047cbb1 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-2bf4cca7.js
-var index_2bf4cca7_exports = {};
-__export(index_2bf4cca7_exports, {
+// .svelte-kit/output/server/chunks/index-df395dc0.js
+var index_df395dc0_exports = {};
+__export(index_df395dc0_exports, {
   default: () => Claim
 });
 var Claim;
-var init_index_2bf4cca7 = __esm({
-  ".svelte-kit/output/server/chunks/index-2bf4cca7.js"() {
+var init_index_df395dc0 = __esm({
+  ".svelte-kit/output/server/chunks/index-df395dc0.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     init_ssr();
     Claim = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `URL not recognized.`;
@@ -21509,18 +23829,18 @@ var init_index_2bf4cca7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/live-881ece91.js
-var live_881ece91_exports = {};
-__export(live_881ece91_exports, {
+// .svelte-kit/output/server/chunks/live-c66f3b76.js
+var live_c66f3b76_exports = {};
+__export(live_c66f3b76_exports, {
   default: () => Live
 });
-var css$12, Lantern, css8, Live;
-var init_live_881ece91 = __esm({
-  ".svelte-kit/output/server/chunks/live-881ece91.js"() {
+var css$13, Lantern, css9, Live;
+var init_live_c66f3b76 = __esm({
+  ".svelte-kit/output/server/chunks/live-c66f3b76.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     init_ssr();
-    css$12 = {
+    css$13 = {
       code: ".lantern.svelte-htfji2{position:absolute;color:lightblue;top:100vh;opacity:1;display:block;animation-name:svelte-htfji2-slide;animation-fill-mode:forwards;animation-duration:5s;animation-iteration-count:1;animation-timing-function:ease-in}img.lantern.svelte-htfji2{width:60px;height:60px;object-fit:cover;border-radius:100%;box-shadow:0px 0px 5px 5px #38e8c6}@keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}@-webkit-keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}",
       map: null
     };
@@ -21528,16 +23848,16 @@ var init_live_881ece91 = __esm({
       let { ipfsHash } = $$props;
       if ($$props.ipfsHash === void 0 && $$bindings.ipfsHash && ipfsHash !== void 0)
         $$bindings.ipfsHash(ipfsHash);
-      $$result.css.add(css$12);
+      $$result.css.add(css$13);
       return `<img class="${"lantern svelte-htfji2"}" style="${"left: " + escape2(Math.floor(Math.random() * (90 - 10 + 1)) + 10) + "vw;"}" src="${"https://ipfs.infura.io/ipfs/" + escape2(ipfsHash)}" alt="${"lantern"}">`;
     });
-    css8 = {
+    css9 = {
       code: "div.svelte-uww0j{text-align:center}.island.svelte-uww0j{position:relative;width:50%;animation:8s svelte-uww0j-float linear infinite}@keyframes svelte-uww0j-float{0%{transform:translateY(0)}23%{transform:translateY(19px)}25%{transform:translateY(20px)}28%{transform:translateY(20px)}50%{transform:translateY(0)}73%{transform:translateY(-19px)}75%{transform:translateY(-20px)}78%{transform:translateY(-20px)}100%{transform:translateY(0)}}",
       map: null
     };
     Live = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let claimedEvents = {};
-      $$result.css.add(css8);
+      $$result.css.add(css9);
       return `
 
 <div id="${"spawner"}" class="${"svelte-uww0j"}"><img class="${"island svelte-uww0j"}" src="${"/island.png"}" alt="${"FLOATing island"}">
@@ -21549,12 +23869,12 @@ var init_live_881ece91 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Meta-7313af9d.js
+// .svelte-kit/output/server/chunks/Meta-d18014ad.js
 var Meta;
-var init_Meta_7313af9d = __esm({
-  ".svelte-kit/output/server/chunks/Meta-7313af9d.js"() {
+var init_Meta_d18014ad = __esm({
+  ".svelte-kit/output/server/chunks/Meta-d18014ad.js"() {
     init_shims();
-    init_app_990e780d();
+    init_app_ce278dac();
     init_constants_358452f5();
     Meta = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -21574,25 +23894,33 @@ var init_Meta_7313af9d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-b0958dd8.js
-var index_b0958dd8_exports = {};
-__export(index_b0958dd8_exports, {
+// .svelte-kit/output/server/chunks/index-f7702241.js
+var index_f7702241_exports = {};
+__export(index_f7702241_exports, {
   default: () => U5Baddressu5D
 });
-var import_onflow_fcl_esm5, U5Baddressu5D;
-var init_index_b0958dd8 = __esm({
-  ".svelte-kit/output/server/chunks/index-b0958dd8.js"() {
+var import_onflow_fcl_esm5, CheckAddress, U5Baddressu5D;
+var init_index_f7702241 = __esm({
+  ".svelte-kit/output/server/chunks/index-f7702241.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_ddd4eeba();
-    init_Meta_7313af9d();
-    init_AccountContents_f436d5bf();
-    init_CheckAddress_22425111();
+    init_app_ce278dac();
+    init_stores_55c3f9e5();
+    init_Meta_d18014ad();
+    init_AccountContents_84989581();
     init_ssr();
     init_constants_358452f5();
-    init_Float_e1b4e5b8();
+    init_Float_575e6678();
     import_onflow_fcl_esm5 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    CheckAddress = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let address;
+      return `<div class="${"input-button-group"}"><input type="${"text"}" id="${"address"}" name="${"address"}" placeholder="${"0x00000000000"}"${add_attribute("value", address, 0)}>
+  <a href="${"/" + escape2(address)}" role="${"button"}"${add_classes("".trim())}>View</a></div>
+<small>Paste in a Flow address.</small>
+  
+  `;
+    });
     U5Baddressu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
@@ -21613,25 +23941,27 @@ var init_index_b0958dd8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-ce7ec6c2.js
-var index_ce7ec6c2_exports = {};
-__export(index_ce7ec6c2_exports, {
+// .svelte-kit/output/server/chunks/index-177da1fd.js
+var index_177da1fd_exports = {};
+__export(index_177da1fd_exports, {
   default: () => U5BeventIdu5D
 });
-var import_onflow_fcl_esm6, Countdown, css$32, globalLabels$3, Sort, globalLabels$2, Search, Row, css$22, globalLabels$1, Pagination, css$13, globalLabels, Table, page2, pageSize, ClaimsTable, css9, U5BeventIdu5D;
-var init_index_ce7ec6c2 = __esm({
-  ".svelte-kit/output/server/chunks/index-ce7ec6c2.js"() {
+var import_onflow_fcl_esm6, Countdown, css$33, globalLabels$3, Sort, globalLabels$2, Search, Row, css$23, globalLabels$1, Pagination, css$14, globalLabels, Table, page2, pageSize, ClaimsTable, css10, U5BeventIdu5D;
+var init_index_177da1fd = __esm({
+  ".svelte-kit/output/server/chunks/index-177da1fd.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_ddd4eeba();
-    init_stores_8213c399();
+    init_app_ce278dac();
+    init_stores_55c3f9e5();
+    init_stores_fdad96d2();
     init_constants_358452f5();
-    init_Float_e1b4e5b8();
-    init_LibLoader_548de518();
-    init_Meta_7313af9d();
+    init_Float_575e6678();
+    init_LibLoader_350f148b();
+    init_Meta_d18014ad();
     init_ssr();
+    init_index_6ebc447e();
     import_onflow_fcl_esm6 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
     Countdown = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { unix } = $$props;
       let countdownString = "";
@@ -21643,7 +23973,7 @@ var init_index_ce7ec6c2 = __esm({
       }, {}, {})}
 <span>${escape2(countdownString)}</span>`;
     });
-    css$32 = {
+    css$33 = {
       code: ".sort.svelte-36rrah{right:0;cursor:pointer;position:absolute;padding:0 0.25em;color:inherit}",
       map: null
     };
@@ -21664,7 +23994,7 @@ var init_index_ce7ec6c2 = __esm({
         $$bindings.key(key);
       if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
         $$bindings.labels(labels);
-      $$result.css.add(css$32);
+      $$result.css.add(css$33);
       return `<span class="${"sort svelte-36rrah"}">${dir === "asc" ? `<span${add_attribute("title", labels.asc.title, 0)}><!-- HTML_TAG_START -->${labels.asc.html}<!-- HTML_TAG_END --></span>` : `${dir === "desc" ? `<span${add_attribute("title", labels.desc.title, 0)}><!-- HTML_TAG_START -->${labels.desc.html}<!-- HTML_TAG_END --></span>` : `<span${add_attribute("title", labels.unsorted.title, 0)}><!-- HTML_TAG_START -->${labels.unsorted.html}<!-- HTML_TAG_END --></span>`}`}</span>`;
     });
     Search = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -21704,7 +24034,7 @@ var init_index_ce7ec6c2 = __esm({
         (index % 2 !== 0 ? "odd" : "") + " " + (index % 2 === 0 ? "even" : "")
       ].join(" ").trim()}">${slots.default ? slots.default({}) : ``}</tr>`;
     });
-    css$22 = {
+    css$23 = {
       code: "div.svelte-1j1cxhu{display:flex}button.svelte-1j1cxhu{margin-left:5px;font-size:0.8rem;padding:0.5rem 0.5rem}",
       map: null
     };
@@ -21714,7 +24044,7 @@ var init_index_ce7ec6c2 = __esm({
       getContext("state");
       let { complete = true } = $$props;
       let { buttons = [-2, -1, 0, 1, 2] } = $$props;
-      let { count } = $$props;
+      let { count: count2 } = $$props;
       let { page: page22 = 0 } = $$props;
       let { pageSize: pageSize2 } = $$props;
       let { serverSide = false } = $$props;
@@ -21729,8 +24059,8 @@ var init_index_ce7ec6c2 = __esm({
         $$bindings.complete(complete);
       if ($$props.buttons === void 0 && $$bindings.buttons && buttons !== void 0)
         $$bindings.buttons(buttons);
-      if ($$props.count === void 0 && $$bindings.count && count !== void 0)
-        $$bindings.count(count);
+      if ($$props.count === void 0 && $$bindings.count && count2 !== void 0)
+        $$bindings.count(count2);
       if ($$props.page === void 0 && $$bindings.page && page22 !== void 0)
         $$bindings.page(page22);
       if ($$props.pageSize === void 0 && $$bindings.pageSize && pageSize2 !== void 0)
@@ -21739,8 +24069,8 @@ var init_index_ce7ec6c2 = __esm({
         $$bindings.serverSide(serverSide);
       if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
         $$bindings.labels(labels);
-      $$result.css.add(css$22);
-      pageCount = Math.floor(count / pageSize2);
+      $$result.css.add(css$23);
+      pageCount = Math.floor(count2 / pageSize2);
       return `<div class="${"svelte-1j1cxhu"}">${complete ? `<button class="${"outline svelte-1j1cxhu"}" ${page22 === 0 ? "disabled" : ""}>${escape2(labels.first)}</button>` : ``}
 
     <button class="${"outline svelte-1j1cxhu"}" ${page22 === 0 ? "disabled" : ""}>${escape2(labels.previous)}</button>
@@ -21752,7 +24082,7 @@ var init_index_ce7ec6c2 = __esm({
 
   ${complete ? `<button class="${"outline svelte-1j1cxhu"}" ${page22 >= pageCount ? "disabled" : ""}>${escape2(labels.last)}</button>` : ``}</div>`;
     });
-    css$13 = {
+    css$14 = {
       code: ".table.svelte-s34j0i{width:100%;border-collapse:collapse}.table.svelte-s34j0i th,.table.svelte-s34j0i td{position:relative}",
       map: null
     };
@@ -21802,7 +24132,7 @@ var init_index_ce7ec6c2 = __esm({
         $$bindings.serverSide(serverSide);
       if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
         $$bindings.labels(labels);
-      $$result.css.add(css$13);
+      $$result.css.add(css$14);
       filteredRows = rows;
       visibleRows = filteredRows.slice(pageIndex, pageIndex + pageSize2);
       return `${slots.top ? slots.top({ rows: visibleRows }) : `
@@ -21851,7 +24181,7 @@ ${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
         }
       })}`;
     });
-    css9 = {
+    css10 = {
       code: ".container.svelte-3qqfmq.svelte-3qqfmq{text-align:center}blockquote.svelte-3qqfmq.svelte-3qqfmq{text-align:left}.secondary.outline.svelte-3qqfmq.svelte-3qqfmq{font-weight:300}p.svelte-3qqfmq.svelte-3qqfmq{margin-bottom:0px}.muted.svelte-3qqfmq.svelte-3qqfmq{font-size:0.7rem;opacity:0.7}.toggle.svelte-3qqfmq.svelte-3qqfmq{margin-top:15px;margin-bottom:0px;position:relative;display:flex;justify-content:space-around;height:auto}.toggle.svelte-3qqfmq button.svelte-3qqfmq{width:30%}.red.svelte-3qqfmq.svelte-3qqfmq{border-color:red;color:red}.small.svelte-3qqfmq.svelte-3qqfmq{position:relative;width:125px;font-size:13px;padding:5px;left:50%;transform:translateX(-50%)}.error.svelte-3qqfmq.svelte-3qqfmq{background-color:red;border-color:white;color:white;opacity:1}.claimed-badge.svelte-3qqfmq.svelte-3qqfmq{width:250px;margin:0 auto;padding:0.3rem 0.5rem;border:1px solid var(--green);border-radius:100px;color:var(--green);font-size:0.7rem}",
       map: null
     };
@@ -21867,7 +24197,7 @@ ${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
       $$unsubscribe_floatClaimedStatus = subscribe(floatClaimedStatus, (value) => $floatClaimedStatus = value);
       let floatEvent = getFLOATEvent($page.params.address, $page.params.eventId);
       let claimCode = "";
-      $$result.css.add(css9);
+      $$result.css.add(css10);
       currentUnixTime = +new Date() / 1e3;
       $$unsubscribe_page();
       $$unsubscribe_user();
@@ -21964,24 +24294,25 @@ ${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/_serial_-e80bd6a8.js
-var serial_e80bd6a8_exports = {};
-__export(serial_e80bd6a8_exports, {
+// .svelte-kit/output/server/chunks/_serial_-b4d5be85.js
+var serial_b4d5be85_exports = {};
+__export(serial_b4d5be85_exports, {
   default: () => U5Bserialu5D
 });
-var import_onflow_fcl_esm7, css10, U5Bserialu5D;
-var init_serial_e80bd6a8 = __esm({
-  ".svelte-kit/output/server/chunks/_serial_-e80bd6a8.js"() {
+var import_onflow_fcl_esm7, css11, U5Bserialu5D;
+var init_serial_b4d5be85 = __esm({
+  ".svelte-kit/output/server/chunks/_serial_-b4d5be85.js"() {
     init_shims();
-    init_app_990e780d();
-    init_stores_ddd4eeba();
-    init_Float_e1b4e5b8();
-    init_Meta_7313af9d();
+    init_app_ce278dac();
+    init_stores_55c3f9e5();
+    init_Float_575e6678();
+    init_Meta_d18014ad();
     init_ssr();
     import_onflow_fcl_esm7 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
+    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
     init_constants_358452f5();
-    css10 = {
+    css11 = {
       code: "article.svelte-1ld3buq{text-align:center;align-items:center}",
       map: null
     };
@@ -21999,7 +24330,7 @@ var init_serial_e80bd6a8 = __esm({
           }
         });
       });
-      $$result.css.add(css10);
+      $$result.css.add(css11);
       $$unsubscribe_page();
       return `${function(__value) {
         if (is_promise(__value)) {
@@ -22039,7 +24370,7 @@ var init_serial_e80bd6a8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/app-990e780d.js
+// .svelte-kit/output/server/chunks/app-ce278dac.js
 function noop3() {
 }
 function is_promise(value) {
@@ -22057,11 +24388,11 @@ function run_all(fns) {
 function safe_not_equal2(a2, b2) {
   return a2 != a2 ? b2 == b2 : a2 !== b2 || (a2 && typeof a2 === "object" || typeof a2 === "function");
 }
-function subscribe(store, ...callbacks) {
+function subscribe(store, ...callbacks2) {
   if (store == null) {
     return noop3;
   }
-  const unsub = store.subscribe(...callbacks);
+  const unsub = store.subscribe(...callbacks2);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
 function null_to_empty(value) {
@@ -22080,13 +24411,16 @@ function get_current_component() {
     throw new Error("Function called outside component initialization");
   return current_component;
 }
+function onDestroy(fn) {
+  get_current_component().$$.on_destroy.push(fn);
+}
 function createEventDispatcher() {
   const component = get_current_component();
   return (type, detail) => {
-    const callbacks = component.$$.callbacks[type];
-    if (callbacks) {
+    const callbacks2 = component.$$.callbacks[type];
+    if (callbacks2) {
       const event = custom_event(type, detail);
-      callbacks.slice().forEach((fn) => {
+      callbacks2.slice().forEach((fn) => {
         fn.call(component, event);
       });
     }
@@ -22098,8 +24432,74 @@ function setContext(key, context) {
 function getContext(key) {
   return get_current_component().$$.context.get(key);
 }
+function spread(args, attrs_to_add) {
+  const attributes = Object.assign({}, ...args);
+  if (attrs_to_add) {
+    const classes_to_add = attrs_to_add.classes;
+    const styles_to_add = attrs_to_add.styles;
+    if (classes_to_add) {
+      if (attributes.class == null) {
+        attributes.class = classes_to_add;
+      } else {
+        attributes.class += " " + classes_to_add;
+      }
+    }
+    if (styles_to_add) {
+      if (attributes.style == null) {
+        attributes.style = style_object_to_string(styles_to_add);
+      } else {
+        attributes.style = style_object_to_string(merge_ssr_styles(attributes.style, styles_to_add));
+      }
+    }
+  }
+  let str = "";
+  Object.keys(attributes).forEach((name) => {
+    if (invalid_attribute_name_character.test(name))
+      return;
+    const value = attributes[name];
+    if (value === true)
+      str += " " + name;
+    else if (boolean_attributes.has(name.toLowerCase())) {
+      if (value)
+        str += " " + name;
+    } else if (value != null) {
+      str += ` ${name}="${value}"`;
+    }
+  });
+  return str;
+}
+function merge_ssr_styles(style_attribute, style_directive) {
+  const style_object = {};
+  for (const individual_style of style_attribute.split(";")) {
+    const colon_index = individual_style.indexOf(":");
+    const name = individual_style.slice(0, colon_index).trim();
+    const value = individual_style.slice(colon_index + 1).trim();
+    if (!name)
+      continue;
+    style_object[name] = value;
+  }
+  for (const name in style_directive) {
+    const value = style_directive[name];
+    if (value) {
+      style_object[name] = value;
+    } else {
+      delete style_object[name];
+    }
+  }
+  return style_object;
+}
 function escape2(html) {
   return String(html).replace(/["'&<>]/g, (match) => escaped2[match]);
+}
+function escape_attribute_value(value) {
+  return typeof value === "string" ? escape2(value) : value;
+}
+function escape_object(obj) {
+  const result = {};
+  for (const key in obj) {
+    result[key] = escape_attribute_value(obj[key]);
+  }
+  return result;
 }
 function each(items, fn) {
   let str = "";
@@ -22158,6 +24558,9 @@ function add_attribute(name, value, boolean) {
 function add_classes(classes) {
   return classes ? ` class="${classes}"` : "";
 }
+function style_object_to_string(style_object) {
+  return Object.keys(style_object).filter((key) => style_object[key]).map((key) => `${key}: ${style_object[key]};`).join(" ");
+}
 function afterUpdate() {
 }
 function set_paths(paths) {
@@ -22174,9 +24577,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-c74429ac.js",
+      file: assets + "/_app/start-ce1b1d62.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-c74429ac.js", assets + "/_app/chunks/vendor-44e19924.js"]
+      js: [assets + "/_app/start-ce1b1d62.js", assets + "/_app/chunks/vendor-d28e1e71.js"]
     },
     fetched: void 0,
     floc: false,
@@ -22213,15 +24616,15 @@ async function load_component(file) {
     styles
   };
 }
-function render(request, {
+function render2(request, {
   prerender
 } = {}) {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var current_component, boolean_attributes, escaped2, missing_component, on_destroy, css11, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_990e780d = __esm({
-  ".svelte-kit/output/server/chunks/app-990e780d.js"() {
+var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css12, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_ce278dac = __esm({
+  ".svelte-kit/output/server/chunks/app-ce278dac.js"() {
     init_shims();
     init_ssr();
     Promise.resolve();
@@ -22251,6 +24654,7 @@ var init_app_990e780d = __esm({
       "reversed",
       "selected"
     ]);
+    invalid_attribute_name_character = /[\s'">/=\u{FDD0}-\u{FDEF}\u{FFFE}\u{FFFF}\u{1FFFE}\u{1FFFF}\u{2FFFE}\u{2FFFF}\u{3FFFE}\u{3FFFF}\u{4FFFE}\u{4FFFF}\u{5FFFE}\u{5FFFF}\u{6FFFE}\u{6FFFF}\u{7FFFE}\u{7FFFF}\u{8FFFE}\u{8FFFF}\u{9FFFE}\u{9FFFF}\u{AFFFE}\u{AFFFF}\u{BFFFE}\u{BFFFF}\u{CFFFE}\u{CFFFF}\u{DFFFE}\u{DFFFF}\u{EFFFE}\u{EFFFF}\u{FFFFE}\u{FFFFF}\u{10FFFE}\u{10FFFF}]/u;
     escaped2 = {
       '"': "&quot;",
       "'": "&#39;",
@@ -22261,7 +24665,7 @@ var init_app_990e780d = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css11 = {
+    css12 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
@@ -22286,7 +24690,7 @@ var init_app_990e780d = __esm({
         $$bindings.props_1(props_1);
       if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
         $$bindings.props_2(props_2);
-      $$result.css.add(css11);
+      $$result.css.add(css12);
       {
         stores.page.set(page3);
       }
@@ -22307,9 +24711,10 @@ ${``}`;
     });
     base = "";
     assets = "";
-    user_hooks = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null
-    }, Symbol.toStringTag, { value: "Module" }));
+    user_hooks = /* @__PURE__ */ Object.freeze({
+      __proto__: null,
+      [Symbol.toStringTag]: "Module"
+    });
     template = ({ head, body }) => '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="utf-8" />\n  <meta name="description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  <link rel="icon" href="/favicon.png" />\n  <meta name="viewport" content="width=device-width, initial-scale=1" />\n  \n  <meta property="og:image" content="http://floats.city/social-card.png">\n  <meta property="twitter:image" content="http://floats.city/social-card.png">\n  <meta name="twitter:card" content="summary_large_image">\n  <meta property="og:title" content="FLOATs by Emerald City DAO">\n  <meta property="og:type" content="article" />\n  <meta property="og:url" content="https://floats.city">\n  \n  <!--  Non-Essential, But Recommended -->\n  <meta property="og:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO">\n  <meta property="og:site_name" content="FLOATs.city">\n  <meta name="twitter:image:alt" content="FLOATs.city">\n  \n  <meta name="twitter:title" content="FLOATs by Emerald City DAO" />\n  <meta name="twitter:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  <meta name="twitter:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  \n  <!--  Non-Essential, But Required for Analytics -->\n  <meta name="twitter:site" content="@emerald_dao">\n\n  ' + head + '\n</head>\n<body>\n  \n  <div id="svelte">' + body + "</div>\n</body>\n</html>\n";
     options = null;
     default_settings = { paths: { "base": "", "assets": "" } };
@@ -22392,19 +24797,19 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_248d929d(), layout_248d929d_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_67c86850(), error_67c86850_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_73c6454b(), index_73c6454b_exports)),
-      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_bf784190(), account_bf784190_exports)),
-      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_a494dbc0(), create_a494dbc0_exports)),
-      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_0047cbb1(), about_0047cbb1_exports)),
-      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_2bf4cca7(), index_2bf4cca7_exports)),
-      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_881ece91(), live_881ece91_exports)),
-      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_b0958dd8(), index_b0958dd8_exports)),
-      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_ce7ec6c2(), index_ce7ec6c2_exports)),
-      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_e80bd6a8(), serial_e80bd6a8_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_315d01b0(), layout_315d01b0_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_5cb2451f(), error_5cb2451f_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_19ffd089(), index_19ffd089_exports)),
+      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_aa6707c8(), account_aa6707c8_exports)),
+      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_68325922(), create_68325922_exports)),
+      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_1bc33dc1(), about_1bc33dc1_exports)),
+      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_df395dc0(), index_df395dc0_exports)),
+      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_c66f3b76(), live_c66f3b76_exports)),
+      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_f7702241(), index_f7702241_exports)),
+      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_177da1fd(), index_177da1fd_exports)),
+      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_b4d5be85(), serial_b4d5be85_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-dbbc5e71.js", "css": ["assets/pages/__layout.svelte-39d71968.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-dbbc5e71.js", "chunks/vendor-44e19924.js", "chunks/actions-5a0281a3.js", "chunks/UserAddress-b2966bb9.js", "chunks/stores-bd45e8e2.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-49000ff8.js", "css": [], "js": ["pages/__error.svelte-49000ff8.js", "chunks/vendor-44e19924.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-f6563bc2.js", "css": ["assets/pages/index.svelte-77c8ff83.css"], "js": ["pages/index.svelte-f6563bc2.js", "chunks/vendor-44e19924.js", "chunks/CheckAddress-ef93ad5a.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-b2ec2599.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-b2ec2599.js", "chunks/vendor-44e19924.js", "chunks/actions-5a0281a3.js", "chunks/constants-358452f5.js", "chunks/AccountContents-d5047ff6.js", "chunks/Loading-04e0a376.js", "chunks/Float-4a1ca74a.js", "chunks/UserAddress-b2966bb9.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-a64fd7ec.js", "css": ["assets/pages/create.svelte-88355eb7.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-a64fd7ec.js", "chunks/vendor-44e19924.js", "chunks/actions-5a0281a3.js", "chunks/constants-358452f5.js", "chunks/LibLoader-99fa7df4.js", "chunks/Float-4a1ca74a.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-21b02f69.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-21b02f69.js", "chunks/vendor-44e19924.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-746e61da.js", "css": [], "js": ["pages/claim/index.svelte-746e61da.js", "chunks/vendor-44e19924.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-a0e09c55.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-a0e09c55.js", "chunks/vendor-44e19924.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-beadb8b5.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/index.svelte-beadb8b5.js", "chunks/vendor-44e19924.js", "chunks/stores-bd45e8e2.js", "chunks/Meta-4757849b.js", "chunks/constants-358452f5.js", "chunks/AccountContents-d5047ff6.js", "chunks/Loading-04e0a376.js", "chunks/Float-4a1ca74a.js", "chunks/actions-5a0281a3.js", "chunks/CheckAddress-ef93ad5a.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-fad775a8.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-fad775a8.js", "chunks/vendor-44e19924.js", "chunks/stores-bd45e8e2.js", "chunks/actions-5a0281a3.js", "chunks/constants-358452f5.js", "chunks/Loading-04e0a376.js", "chunks/Float-4a1ca74a.js", "chunks/LibLoader-99fa7df4.js", "chunks/Meta-4757849b.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-4c677e4f.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-4c677e4f.js", "chunks/vendor-44e19924.js", "chunks/stores-bd45e8e2.js", "chunks/Loading-04e0a376.js", "chunks/Float-4a1ca74a.js", "chunks/actions-5a0281a3.js", "chunks/Meta-4757849b.js", "chunks/constants-358452f5.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-ab2ff7ec.js", "css": ["assets/pages/__layout.svelte-a4b26655.css", "assets/stores-022b5479.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-ab2ff7ec.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/UserAddress-fd26c925.js", "chunks/stores-e0ce53ee.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-a85bde46.js", "css": [], "js": ["pages/__error.svelte-a85bde46.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-34fee7cf.js", "css": ["assets/pages/index.svelte-10dbea1e.css", "assets/stores-022b5479.css"], "js": ["pages/index.svelte-34fee7cf.js", "chunks/vendor-d28e1e71.js", "chunks/constants-358452f5.js", "chunks/stores-a999c3f7.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-7d5ca814.js", "css": ["assets/stores-022b5479.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-7d5ca814.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/AccountContents-865c03f9.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/UserAddress-fd26c925.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-f1111a1e.js", "css": ["assets/pages/create.svelte-88355eb7.css", "assets/stores-022b5479.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-f1111a1e.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/LibLoader-2123bf89.js", "chunks/Float-f8ce8fb3.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-b5be04e0.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-b5be04e0.js", "chunks/vendor-d28e1e71.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-26f66983.js", "css": [], "js": ["pages/claim/index.svelte-26f66983.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-8ba6d647.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-8ba6d647.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-612d630a.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-022b5479.css"], "js": ["pages/_address_/index.svelte-612d630a.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/Meta-5c427305.js", "chunks/constants-358452f5.js", "chunks/AccountContents-865c03f9.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-a09c5f78.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-022b5479.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-a09c5f78.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/LibLoader-2123bf89.js", "chunks/Meta-5c427305.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-6baa6cfb.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-022b5479.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-6baa6cfb.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/Meta-5c427305.js", "chunks/constants-358452f5.js"], "styles": [] } };
   }
 });
 
@@ -22458,7 +24863,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_990e780d();
+init_app_ce278dac();
 
 // .svelte-kit/vercel/entry.js
 init();
@@ -22471,7 +24876,7 @@ var entry_default = async (req, res) => {
     res.statusCode = err.status || 400;
     return res.end(err.reason || "Invalid request body");
   }
-  const rendered = await render({
+  const rendered = await render2({
     method: req.method,
     headers: req.headers,
     path: pathname,

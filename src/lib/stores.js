@@ -91,7 +91,7 @@ export const tokens = writable([
     imgUrl:
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
     selected: false,
-    amount: 0,
+    amount:0,
   },
   {
     id: 1,
@@ -99,9 +99,12 @@ export const tokens = writable([
     imgUrl:
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
     selected: false,
-    amount: 0,
+    amount:0,
   },
 ]);
+
+export const selectedToken = writable(0)
+
 
 export const collections = writable([
   {
@@ -130,6 +133,13 @@ export const collections = writable([
 export const modal = writable({
   title: "",
   action: "",
+  opened: false
+})
+
+export const dialog = writable({
+  title: "",
+  action: "",
+  opened: false
 })
 
 

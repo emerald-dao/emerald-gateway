@@ -1,42 +1,64 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
-    import { modal, tokens } from "../stores"
+    import {  onMount } from 'svelte';
+    import { dialog, tokens, selectedToken } from "../stores"
     import VerticalSpace from "../components/VerticalSpace.svelte"
     import Icon from "@iconify/svelte"
+import Dialog from './dialog.svelte';
 
-    export let isOpenDialog;
-    export let id;
+    // export let dialog.opened;
     let isHovered;
     let tokensVal;
-    let amount = 0
+    let dialogValue
+    let selectedVal
+	let amountInput
+	// this works here, but not in Sapper:
+
+
+    dialog.subscribe(val => {
+      dialogValue = val
+      console.log("dialogValue", dialogValue )
+    })
 
     tokens.subscribe(val => tokensVal = val)
+    selectedToken.subscribe(val => selectedVal = val)
 
-
-    const handleChange = (e) => $tokens[id].amount = e.target.value  
+    
+    const handleChange = (e) => $tokens[selectedVal].amount = e.target.value  
     
 
-    const dispatch = createEventDispatcher();
 
 
     function closeDialog() {
-    isOpenDialog = false;
+      $dialog.opened = false
     isHovered = false;
-    dispatch('closeDialog', { isOpenDialog });
+
+    
 }
 
-const handleClick = () => isOpenDialog = false
+// const closeDialog = () => dialog.opened = false
+  const handleClose = () => {
+    console.log("tokens", $tokens)
+    if(tokensVal[selectedVal].amount > 0) {
+      closeDialog()
+    } else {
+      $tokens[selectedVal].selected = false
+    closeDialog()
+    }
 
+   
+  }
+
+  // onMount(() => )
 
 
 </script>
 
 <div
 id="background"
-style="--display: {isOpenDialog ? 'block' : 'none'}"
+style="--display: {$dialog.opened ? 'block' : 'none'}"
 on:click={closeDialog}
 />
-<main id="dialog" style="--display: {isOpenDialog ? 'block' : 'none'};">
+<main id="dialog" style="--display: {$dialog.opened ? 'block' : 'none'};">
 <header>
 <div>
   <h3>Dialog title</h3>
@@ -44,7 +66,7 @@ on:click={closeDialog}
 <div>
   <!-- svelte-ignore missing-declaration -->
   <div
-    on:click={handleClick}
+    on:click={closeDialog}
     on:pointerenter={() => (isHovered = !isHovered)}
     on:pointerleave={() => (isHovered = !isHovered)}
   >
@@ -62,13 +84,18 @@ on:click={closeDialog}
   align-items:center">
   <div style="width:80%">
   <h3>Amount</h3>
-  <input type="number" placeholder="0" value={amount ? amount : 0} on:change={handleChange}  />
+  {#if $tokens[selectedVal].amount === 0 }
+  <input bind:this={amountInput} type="number" placeholder={0}  on:change={handleChange}  />
+    {:else}
+    <input bind:this={amountInput} type="number"  bind:value={$tokens[selectedVal].amount} on:change={handleChange}  />
+
+  {/if}
 </div>
 <div style="width:80%">
 </div>
 </div>
 <footer >
-<div style="cursor: pointer;" on:click={handleClick}>
+<div style="cursor: pointer;" on:click={handleClose}>
 ACTION 2
 
 </div>

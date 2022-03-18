@@ -1,41 +1,48 @@
 <script>
         import { createEventDispatcher } from 'svelte';
-        import { modal, tokens } from "../stores"
+        import { modal} from "$lib/stores"
         import VerticalSpace from "../components/VerticalSpace.svelte"
         import Icon from "@iconify/svelte"
 
-        export let isOpenModal;
+        let Modal
+
+        modal.subscribe(val => Modal = val)
+
+        // export let Modal.opened;
         let isHovered;
 
-        const dispatch = createEventDispatcher();
+        // const dispatch = createEventDispatcher();
 
 
         function closeModal() {
-        isOpenModal = false;
-        isHovered = false;
-        dispatch('closeModal', { isOpenModal });
+          console.log("closing")
+        // Modal.opened = false;
+        // isHovered = false;
+        $modal.opened = false
+        // dispatch('closeModal', { Modal.opened });
     }
 
-    const handleClick = () => isOpenModal = false
 
 </script>
 
 <div
   id="background"
-  style="--display: {isOpenModal ? 'block' : 'none'}"
+  style="--display: {Modal.opened ? 'block' : 'none'}"
   on:click={closeModal}
 />
-<main id="modal" style="--display: {isOpenModal ? 'block' : 'none'};">
+<main id="modal" style="--display: {Modal.opened ? 'block' : 'none'};">
   <header>
     <div>
       <h3>Modal Title</h3>
     </div>
     <div>
-      <!-- svelte-ignore missing-declaration -->
-      <div
-        on:click={handleClick}
-        on:pointerenter={() => (isHovered = !isHovered)}
+      <!-- <div
+      on:click={closeModal}
+      on:pointerenter={() => (isHovered = !isHovered)}
         on:pointerleave={() => (isHovered = !isHovered)}
+      > -->
+      <div
+      on:click={closeModal}
       >
         <Icon
           icon="ant-design:close-circle-outlined"
@@ -60,7 +67,9 @@
     </div>
   </div>
   <footer >
-    <div style="cursor: pointer;" on:click={handleClick}>
+    <div style="cursor: pointer;"
+    on:click={closeModal}
+    >
     ACTION 2
 
     </div>
