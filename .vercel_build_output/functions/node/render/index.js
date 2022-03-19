@@ -6676,7 +6676,7 @@ var init_ssr = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-6ebc447e.js
+// .svelte-kit/output/server/chunks/index-fdec2cb1.js
 function writable2(value, start = noop3) {
   let stop;
   const subscribers = /* @__PURE__ */ new Set();
@@ -6719,20 +6719,20 @@ function writable2(value, start = noop3) {
   return { set, update, subscribe: subscribe2 };
 }
 var subscriber_queue2;
-var init_index_6ebc447e = __esm({
-  ".svelte-kit/output/server/chunks/index-6ebc447e.js"() {
+var init_index_fdec2cb1 = __esm({
+  ".svelte-kit/output/server/chunks/index-fdec2cb1.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     subscriber_queue2 = [];
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-fdad96d2.js
+// .svelte-kit/output/server/chunks/stores-a3db8d6f.js
 var user, transactionStatus, txId, transactionInProgress, eventCreationInProgress, eventCreatedStatus, floatClaimingInProgress, floatClaimedStatus;
-var init_stores_fdad96d2 = __esm({
-  ".svelte-kit/output/server/chunks/stores-fdad96d2.js"() {
+var init_stores_a3db8d6f = __esm({
+  ".svelte-kit/output/server/chunks/stores-a3db8d6f.js"() {
     init_shims();
-    init_index_6ebc447e();
+    init_index_fdec2cb1();
     user = writable2(null);
     transactionStatus = writable2(null);
     txId = writable2(null);
@@ -20730,7 +20730,7 @@ var init_config_860ef6b7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-69149cfb.js
+// .svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-8ff82521.js
 function fullIcon(data) {
   return { ...iconDefaults, ...data };
 }
@@ -22183,8 +22183,8 @@ function generateIcon(icon, props) {
   return icon ? render(icon, props) : null;
 }
 var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config2, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults;
-var init_Tab3_svelte_svelte_type_style_lang_69149cfb = __esm({
-  ".svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-69149cfb.js"() {
+var init_Tab3_svelte_svelte_type_style_lang_8ff82521 = __esm({
+  ".svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-8ff82521.js"() {
     init_shims();
     matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
     iconDefaults = Object.freeze({
@@ -22677,12 +22677,12 @@ var init_Tab3_svelte_svelte_type_style_lang_69149cfb = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/UserAddress-3a6b70e4.js
+// .svelte-kit/output/server/chunks/UserAddress-a8b0f42e.js
 var css, UserAddress;
-var init_UserAddress_3a6b70e4 = __esm({
-  ".svelte-kit/output/server/chunks/UserAddress-3a6b70e4.js"() {
+var init_UserAddress_a8b0f42e = __esm({
+  ".svelte-kit/output/server/chunks/UserAddress-a8b0f42e.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     css = {
       code: ".led-green.svelte-bnzski{position:relative;display:inline-block;top:0px;margin-right:0.5em;background-color:var(--primary);width:14px;height:14px;border-radius:14px}",
       map: null
@@ -22701,14 +22701,14 @@ var init_UserAddress_3a6b70e4 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-949b1b48.js
-var Icon, css$4, Tab1, css$3, Modal_1, HorizontalSpace, css$2, Dialog_1, css$1, Tab2, css2, Tab3, Tab4, draftFloat, tabs, theme, tab1data, tokens, selectedToken, collections, modal, dialog;
-var init_stores_949b1b48 = __esm({
-  ".svelte-kit/output/server/chunks/stores-949b1b48.js"() {
+// .svelte-kit/output/server/chunks/stores-c19e8521.js
+var Icon, css$4, Tab1, css$3, Modal_1, HorizontalSpace, css$2, Dialog, css$1, Tab2, css2, Tab3, Tab4, draftFloat, tabs, theme, tab1data, tokens, selectedToken, collections, modal, dialog;
+var init_stores_c19e8521 = __esm({
+  ".svelte-kit/output/server/chunks/stores-c19e8521.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
-    init_index_6ebc447e();
+    init_app_f7bd2c19();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
+    init_index_fdec2cb1();
     Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       const state = {
         name: "",
@@ -22839,24 +22839,20 @@ var init_stores_949b1b48 = __esm({
       code: "header.svelte-1r665vk{display:flex;flex-direction:row;height:16%;width:100%;justify-content:space-between;align-items:center;padding-right:1rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-1r665vk{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-1r665vk{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#dialog.svelte-1r665vk{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:48%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
       map: null
     };
-    Dialog_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_tokens;
+    Dialog = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $tokens, $$unsubscribe_tokens;
       let $dialog, $$unsubscribe_dialog;
-      $$unsubscribe_tokens = subscribe(tokens, (value) => value);
+      $$unsubscribe_tokens = subscribe(tokens, (value) => $tokens = value);
       $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
-      let { id } = $$props;
-      let amount;
       let dialogValue;
-      console.log("id", id);
+      let selectedVal;
+      let amountInput;
       dialog.subscribe((val) => {
         dialogValue = val;
         console.log("dialogValue", dialogValue);
       });
       tokens.subscribe((val) => val);
-      selectedToken.subscribe((val) => val);
-      createEventDispatcher();
-      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
-        $$bindings.id(id);
+      selectedToken.subscribe((val) => selectedVal = val);
       $$result.css.add(css$2);
       $$unsubscribe_tokens();
       $$unsubscribe_dialog();
@@ -22869,7 +22865,7 @@ var init_stores_949b1b48 = __esm({
         color: "lightgrey"
       }, {}, {})}</div></div></header>
 <div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Amount</h3>
-  <input type="${"number"}" placeholder="${"0"}"${add_attribute("value", amount, 0)}></div>
+  ${$tokens[selectedVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $tokens[selectedVal].amount, 0)}>`}</div>
 <div style="${"width:80%"}"></div></div>
 <footer class="${"svelte-1r665vk"}"><div style="${"cursor: pointer;"}">ACTION 2
 
@@ -22877,7 +22873,7 @@ var init_stores_949b1b48 = __esm({
 </main>`;
     });
     css$1 = {
-      code: ".amount-container.svelte-hqqxxh{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-hqqxxh{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-hqqxxh{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-hqqxxh{position:relative;display:flex;width:28%;height:100%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-hqqxxh{position:relative;display:flex;width:18%;height:100%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-hqqxxh{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-hqqxxh{margin:0;padding:0}ul.svelte-hqqxxh{margin:0;padding:0}.secondary-btn.svelte-hqqxxh{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-hqqxxh:hover{background:rgba(218, 4, 106, 0.1)}.custom-container.svelte-hqqxxh{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-hqqxxh{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-hqqxxh{height:100%;width:100%}",
+      code: ".amount-container.svelte-1d4df8r{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1d4df8r{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1d4df8r{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-1d4df8r{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-1d4df8r{position:relative;display:flex;width:20%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1d4df8r{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1d4df8r{margin:0;padding:0}ul.svelte-1d4df8r{margin:0;padding:0}li.svelte-1d4df8r{margin:0;padding:0}.secondary-btn.svelte-1d4df8r{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1d4df8r:hover{background:rgba(218, 4, 106, 0.1)}.custom-container.svelte-1d4df8r{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1d4df8r{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1d4df8r{height:100%;width:100%}",
       map: null
     };
     Tab2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -22891,7 +22887,6 @@ var init_stores_949b1b48 = __esm({
       $$unsubscribe_modal = subscribe(modal, (value) => value);
       let hoveredId;
       let tokensValue;
-      let tokenId;
       modal.subscribe((val) => val);
       tokens.subscribe((val) => {
         tokensValue = val;
@@ -22904,19 +22899,19 @@ var init_stores_949b1b48 = __esm({
       $$unsubscribe_dialog();
       $$unsubscribe_modal();
       return `${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
-${validate_component(Dialog_1, "Dialog").$$render($$result, { tokenId }, {}, {})}
-<main class="${"container svelte-hqqxxh"}"><header><h3 class="${"mt-1"}">Tokens</h3>
+${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
+<main class="${"container svelte-1d4df8r"}"><header><h3 class="${"mt-1"}">Tokens</h3>
         <p>Something about the Tokens</p></header>
-    <div class="${"tokens-container mt-2 svelte-hqqxxh"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-hqqxxh"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-hqqxxh"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-hqqxxh"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2rem; height:100%;"}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
-                    <div>${escape2(label)}</div>
-                    ${amount !== 0 ? `<div class="${"amount-container svelte-hqqxxh"}">${escape2(amount)}
-                        <div class="${"icon-container svelte-hqqxxh"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
+    <div class="${"tokens-container mt-2 svelte-1d4df8r"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-1d4df8r"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-1d4df8r"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-1d4df8r"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                    <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
+                    ${amount !== 0 ? `<div class="${"amount-container svelte-1d4df8r"}">${escape2(amount)}
+                        <div class="${"icon-container svelte-1d4df8r"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
                     </div>` : `<div></div>`}</div>
-                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${selected ? "checked" : ""}></div>
+                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", selected, 1)}></div>
             </li>`;
       })}</ul>
-        <footer class="${"custom-container svelte-hqqxxh"}"><div class="${"secondary-btn svelte-hqqxxh"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
+        <footer class="${"custom-container svelte-1d4df8r"}"><div class="${"secondary-btn svelte-1d4df8r"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
         icon: "ant-design:plus-circle-outlined",
         height: "1.2rem"
       }, {}, {})}</div>
@@ -22924,25 +22919,28 @@ ${validate_component(Dialog_1, "Dialog").$$render($$result, { tokenId }, {}, {})
                 <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
     });
     css2 = {
-      code: ".collection-inactive.svelte-k74214{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center}.collection-active.svelte-k74214{display:flex;height:20%;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer}main.svelte-k74214{margin:0;padding:0}ul.svelte-k74214{margin:0;padding:0}li.svelte-k74214{margin:0;padding:0}.collections-container.svelte-k74214{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-k74214{height:100%;width:100%}",
+      code: ".collection-container-inactive.svelte-6gdvm{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:1rem}.collection-inactive.svelte-6gdvm{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-6gdvm{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}main.svelte-6gdvm{margin:0;padding:0}ul.svelte-6gdvm{margin:0;padding:0}li.svelte-6gdvm{margin:0;padding:0}.collections-container.svelte-6gdvm{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-6gdvm{height:100%;width:100%}",
       map: null
     };
     Tab3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_collections;
+      $$unsubscribe_collections = subscribe(collections, (value) => value);
       createEventDispatcher();
       let hoveredId;
       let collectionsValue;
       collections.subscribe((val) => collectionsValue = val);
       $$result.css.add(css2);
+      $$unsubscribe_collections();
       return `
-<main class="${"container svelte-k74214"}"><header><h3 class="${"mt-1"}">Collections</h3>
+<main class="${"container svelte-6gdvm"}"><header><h3 class="${"mt-1"}">Collections</h3>
         <p>Something about the Collections</p></header>
 
-        <div class="${"collections-container mt-1 svelte-k74214"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-k74214"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-k74214"}"><div style="${"display:flex; width: 80%; height: 100%; align-items:center"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 4rem; height:100%;"}"><img style="${"height:2rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
-                        <div>${escape2(label)}
-                        </div></div>
-                    <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${collectionsValue[id].selected ? "checked" : ""}></div>
-                </li>`;
+    <div class="${"collections-container mt-2 svelte-6gdvm"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-6gdvm"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-6gdvm"}"><div class="${"collection-container-inactive svelte-6gdvm"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img style="${"height:2.6rem; width:2.6rem; border-radius: 50px; object-fit:fill"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                    <div>${escape2(label)}
+                    </div></div>
+                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${collectionsValue[id].selected ? "checked" : ""}></div>
+            </li>`;
       })}</ul></div></main>
 `;
     });
@@ -23017,7 +23015,7 @@ ${validate_component(Dialog_1, "Dialog").$$render($$result, { tokenId }, {}, {})
         id: 0,
         label: "FLOW",
         imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
-        selected: true,
+        selected: false,
         amount: 0
       },
       {
@@ -23062,12 +23060,12 @@ ${validate_component(Dialog_1, "Dialog").$$render($$result, { tokenId }, {}, {})
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-55c3f9e5.js
+// .svelte-kit/output/server/chunks/stores-c5b13799.js
 var getStores, page;
-var init_stores_55c3f9e5 = __esm({
-  ".svelte-kit/output/server/chunks/stores-55c3f9e5.js"() {
+var init_stores_c5b13799 = __esm({
+  ".svelte-kit/output/server/chunks/stores-c5b13799.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     getStores = () => {
       const stores = getContext("__svelte__");
       return {
@@ -23095,25 +23093,25 @@ var init_stores_55c3f9e5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-315d01b0.js
-var layout_315d01b0_exports = {};
-__export(layout_315d01b0_exports, {
+// .svelte-kit/output/server/chunks/__layout-a4e402d7.js
+var layout_a4e402d7_exports = {};
+__export(layout_a4e402d7_exports, {
   default: () => _layout
 });
 var import_onflow_fcl_esm2, css$32, ConnectWallet, css$22, Header, css$12, Transaction, css3, _layout;
-var init_layout_315d01b0 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-315d01b0.js"() {
+var init_layout_a4e402d7 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-a4e402d7.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_fdad96d2();
+    init_app_f7bd2c19();
+    init_stores_a3db8d6f();
     import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
-    init_UserAddress_3a6b70e4();
-    init_stores_949b1b48();
-    init_stores_55c3f9e5();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
+    init_UserAddress_a8b0f42e();
+    init_stores_c19e8521();
+    init_stores_c5b13799();
     init_ssr();
-    init_index_6ebc447e();
+    init_index_fdec2cb1();
     css$32 = {
       code: "a.svelte-nbcav7{padding:8px 14px}",
       map: null
@@ -23212,9 +23210,9 @@ var init_layout_315d01b0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-5cb2451f.js
-var error_5cb2451f_exports = {};
-__export(error_5cb2451f_exports, {
+// .svelte-kit/output/server/chunks/__error-80aeea94.js
+var error_80aeea94_exports = {};
+__export(error_80aeea94_exports, {
   default: () => _error,
   load: () => load
 });
@@ -23224,10 +23222,10 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_5cb2451f = __esm({
-  ".svelte-kit/output/server/chunks/__error-5cb2451f.js"() {
+var init_error_80aeea94 = __esm({
+  ".svelte-kit/output/server/chunks/__error-80aeea94.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23247,21 +23245,21 @@ var init_constants_358452f5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-19ffd089.js
-var index_19ffd089_exports = {};
-__export(index_19ffd089_exports, {
+// .svelte-kit/output/server/chunks/index-455e830f.js
+var index_455e830f_exports = {};
+__export(index_455e830f_exports, {
   default: () => Routes
 });
 var css4, Routes;
-var init_index_19ffd089 = __esm({
-  ".svelte-kit/output/server/chunks/index-19ffd089.js"() {
+var init_index_455e830f = __esm({
+  ".svelte-kit/output/server/chunks/index-455e830f.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_949b1b48();
+    init_app_f7bd2c19();
+    init_stores_c19e8521();
     init_constants_358452f5();
     init_ssr();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
-    init_index_6ebc447e();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
+    init_index_fdec2cb1();
     css4 = {
       code: "ul.svelte-1mpff2m{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-1mpff2m::-webkit-scrollbar{display:none}li.svelte-1mpff2m{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:25%;height:100%;min-width:25%;cursor:pointer}li.active.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(218, 4, 106, 0.1);margin:0;padding:0;width:25%;height:100%;min-width:25%}.inactive-tab.svelte-1mpff2m:hover{background:var(--form-element-border-color)}.tabbar.svelte-1mpff2m{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;height:100%;width:20%}",
       map: null
@@ -23320,15 +23318,15 @@ var init_index_19ffd089 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Float-575e6678.js
+// .svelte-kit/output/server/chunks/Float-1ddaeee8.js
 var fcl, getFLOATEvent, getFLOATEvents, getFLOATs, Loading, css5, Float;
-var init_Float_575e6678 = __esm({
-  ".svelte-kit/output/server/chunks/Float-575e6678.js"() {
+var init_Float_1ddaeee8 = __esm({
+  ".svelte-kit/output/server/chunks/Float-1ddaeee8.js"() {
     init_shims();
     fcl = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_app_ce278dac();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_app_f7bd2c19();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     getFLOATEvent = async (addr, id) => {
       try {
         let queryResult = await fcl.query({
@@ -23464,7 +23462,7 @@ var init_Float_575e6678 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/AccountContents-84989581.js
+// .svelte-kit/output/server/chunks/AccountContents-48554073.js
 function getEventsArray(floatEventsObj) {
   if (floatEventsObj && Object.keys(floatEventsObj)?.length > 0) {
     return Object.values(floatEventsObj);
@@ -23473,11 +23471,11 @@ function getEventsArray(floatEventsObj) {
   }
 }
 var css6, Event, AccountContents;
-var init_AccountContents_84989581 = __esm({
-  ".svelte-kit/output/server/chunks/AccountContents-84989581.js"() {
+var init_AccountContents_48554073 = __esm({
+  ".svelte-kit/output/server/chunks/AccountContents-48554073.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_Float_575e6678();
+    init_app_f7bd2c19();
+    init_Float_1ddaeee8();
     css6 = {
       code: ".host.svelte-mj8iyj{font-family:monospace}.credit.svelte-mj8iyj{font-size:0.7rem;display:block;line-height:1}p.svelte-mj8iyj{margin-top:10px;margin-bottom:10px}",
       map: null
@@ -23539,26 +23537,26 @@ var init_AccountContents_84989581 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/account-aa6707c8.js
-var account_aa6707c8_exports = {};
-__export(account_aa6707c8_exports, {
+// .svelte-kit/output/server/chunks/account-ddfd2439.js
+var account_ddfd2439_exports = {};
+__export(account_ddfd2439_exports, {
   default: () => Account
 });
 var import_onflow_fcl_esm3, Account;
-var init_account_aa6707c8 = __esm({
-  ".svelte-kit/output/server/chunks/account-aa6707c8.js"() {
+var init_account_ddfd2439 = __esm({
+  ".svelte-kit/output/server/chunks/account-ddfd2439.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_fdad96d2();
+    init_app_f7bd2c19();
+    init_stores_a3db8d6f();
     import_onflow_fcl_esm3 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     init_constants_358452f5();
-    init_AccountContents_84989581();
-    init_UserAddress_3a6b70e4();
+    init_AccountContents_48554073();
+    init_UserAddress_a8b0f42e();
     init_ssr();
-    init_index_6ebc447e();
-    init_Float_575e6678();
+    init_index_fdec2cb1();
+    init_Float_1ddaeee8();
     Account = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
@@ -23577,12 +23575,12 @@ var init_account_aa6707c8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/LibLoader-350f148b.js
+// .svelte-kit/output/server/chunks/LibLoader-aa5103e4.js
 var LibLoader;
-var init_LibLoader_350f148b = __esm({
-  ".svelte-kit/output/server/chunks/LibLoader-350f148b.js"() {
+var init_LibLoader_aa5103e4 = __esm({
+  ".svelte-kit/output/server/chunks/LibLoader-aa5103e4.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     LibLoader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       createEventDispatcher();
       let { url } = $$props;
@@ -23597,25 +23595,25 @@ var init_LibLoader_350f148b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/create-68325922.js
-var create_68325922_exports = {};
-__export(create_68325922_exports, {
+// .svelte-kit/output/server/chunks/create-e5844ccd.js
+var create_e5844ccd_exports = {};
+__export(create_e5844ccd_exports, {
   default: () => Create
 });
 var import_onflow_fcl_esm4, css7, Create;
-var init_create_68325922 = __esm({
-  ".svelte-kit/output/server/chunks/create-68325922.js"() {
+var init_create_e5844ccd = __esm({
+  ".svelte-kit/output/server/chunks/create-e5844ccd.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_fdad96d2();
+    init_app_f7bd2c19();
+    init_stores_a3db8d6f();
     import_onflow_fcl_esm4 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_stores_949b1b48();
+    init_stores_c19e8521();
     init_constants_358452f5();
-    init_LibLoader_350f148b();
+    init_LibLoader_aa5103e4();
     init_ssr();
-    init_index_6ebc447e();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_index_fdec2cb1();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     css7 = {
       code: ".outline.svelte-44wbyu.svelte-44wbyu{text-align:left}.outline.svelte-44wbyu span.svelte-44wbyu{display:block;font-size:0.75rem;line-height:1.2;font-weight:400;opacity:0.6}xmp.svelte-44wbyu.svelte-44wbyu{position:relative;width:100%;font-size:12px;padding:10px;overflow:scroll;border-radius:5px;color:white}.xmp-dark.svelte-44wbyu.svelte-44wbyu{background:rgb(56, 232, 198, 0.25)}.xmp-light.svelte-44wbyu.svelte-44wbyu{background:rgb(27, 40, 50)}h5.svelte-44wbyu.svelte-44wbyu{margin-bottom:5px}.error.svelte-44wbyu.svelte-44wbyu{background-color:red;border-color:white;color:white;opacity:1}",
       map: null
@@ -23750,16 +23748,16 @@ ${validate_component(LibLoader, "LibLoader").$$render($$result, {
   }
 });
 
-// .svelte-kit/output/server/chunks/about-1bc33dc1.js
-var about_1bc33dc1_exports = {};
-__export(about_1bc33dc1_exports, {
+// .svelte-kit/output/server/chunks/about-7cdf8953.js
+var about_7cdf8953_exports = {};
+__export(about_7cdf8953_exports, {
   default: () => About
 });
 var css8, About;
-var init_about_1bc33dc1 = __esm({
-  ".svelte-kit/output/server/chunks/about-1bc33dc1.js"() {
+var init_about_7cdf8953 = __esm({
+  ".svelte-kit/output/server/chunks/about-7cdf8953.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     init_constants_358452f5();
     init_ssr();
     css8 = {
@@ -23812,16 +23810,16 @@ var init_about_1bc33dc1 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-df395dc0.js
-var index_df395dc0_exports = {};
-__export(index_df395dc0_exports, {
+// .svelte-kit/output/server/chunks/index-1d28975d.js
+var index_1d28975d_exports = {};
+__export(index_1d28975d_exports, {
   default: () => Claim
 });
 var Claim;
-var init_index_df395dc0 = __esm({
-  ".svelte-kit/output/server/chunks/index-df395dc0.js"() {
+var init_index_1d28975d = __esm({
+  ".svelte-kit/output/server/chunks/index-1d28975d.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     init_ssr();
     Claim = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `URL not recognized.`;
@@ -23829,16 +23827,16 @@ var init_index_df395dc0 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/live-c66f3b76.js
-var live_c66f3b76_exports = {};
-__export(live_c66f3b76_exports, {
+// .svelte-kit/output/server/chunks/live-ecb788a8.js
+var live_ecb788a8_exports = {};
+__export(live_ecb788a8_exports, {
   default: () => Live
 });
 var css$13, Lantern, css9, Live;
-var init_live_c66f3b76 = __esm({
-  ".svelte-kit/output/server/chunks/live-c66f3b76.js"() {
+var init_live_ecb788a8 = __esm({
+  ".svelte-kit/output/server/chunks/live-ecb788a8.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     init_ssr();
     css$13 = {
       code: ".lantern.svelte-htfji2{position:absolute;color:lightblue;top:100vh;opacity:1;display:block;animation-name:svelte-htfji2-slide;animation-fill-mode:forwards;animation-duration:5s;animation-iteration-count:1;animation-timing-function:ease-in}img.lantern.svelte-htfji2{width:60px;height:60px;object-fit:cover;border-radius:100%;box-shadow:0px 0px 5px 5px #38e8c6}@keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}@-webkit-keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}",
@@ -23869,12 +23867,12 @@ var init_live_c66f3b76 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Meta-d18014ad.js
+// .svelte-kit/output/server/chunks/Meta-a87be58f.js
 var Meta;
-var init_Meta_d18014ad = __esm({
-  ".svelte-kit/output/server/chunks/Meta-d18014ad.js"() {
+var init_Meta_a87be58f = __esm({
+  ".svelte-kit/output/server/chunks/Meta-a87be58f.js"() {
     init_shims();
-    init_app_ce278dac();
+    init_app_f7bd2c19();
     init_constants_358452f5();
     Meta = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23894,25 +23892,25 @@ var init_Meta_d18014ad = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-f7702241.js
-var index_f7702241_exports = {};
-__export(index_f7702241_exports, {
+// .svelte-kit/output/server/chunks/index-6302bacf.js
+var index_6302bacf_exports = {};
+__export(index_6302bacf_exports, {
   default: () => U5Baddressu5D
 });
 var import_onflow_fcl_esm5, CheckAddress, U5Baddressu5D;
-var init_index_f7702241 = __esm({
-  ".svelte-kit/output/server/chunks/index-f7702241.js"() {
+var init_index_6302bacf = __esm({
+  ".svelte-kit/output/server/chunks/index-6302bacf.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_55c3f9e5();
-    init_Meta_d18014ad();
-    init_AccountContents_84989581();
+    init_app_f7bd2c19();
+    init_stores_c5b13799();
+    init_Meta_a87be58f();
+    init_AccountContents_48554073();
     init_ssr();
     init_constants_358452f5();
-    init_Float_575e6678();
+    init_Float_1ddaeee8();
     import_onflow_fcl_esm5 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     CheckAddress = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let address;
       return `<div class="${"input-button-group"}"><input type="${"text"}" id="${"address"}" name="${"address"}" placeholder="${"0x00000000000"}"${add_attribute("value", address, 0)}>
@@ -23941,27 +23939,27 @@ var init_index_f7702241 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-177da1fd.js
-var index_177da1fd_exports = {};
-__export(index_177da1fd_exports, {
+// .svelte-kit/output/server/chunks/index-12cdc655.js
+var index_12cdc655_exports = {};
+__export(index_12cdc655_exports, {
   default: () => U5BeventIdu5D
 });
 var import_onflow_fcl_esm6, Countdown, css$33, globalLabels$3, Sort, globalLabels$2, Search, Row, css$23, globalLabels$1, Pagination, css$14, globalLabels, Table, page2, pageSize, ClaimsTable, css10, U5BeventIdu5D;
-var init_index_177da1fd = __esm({
-  ".svelte-kit/output/server/chunks/index-177da1fd.js"() {
+var init_index_12cdc655 = __esm({
+  ".svelte-kit/output/server/chunks/index-12cdc655.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_55c3f9e5();
-    init_stores_fdad96d2();
+    init_app_f7bd2c19();
+    init_stores_c5b13799();
+    init_stores_a3db8d6f();
     init_constants_358452f5();
-    init_Float_575e6678();
-    init_LibLoader_350f148b();
-    init_Meta_d18014ad();
+    init_Float_1ddaeee8();
+    init_LibLoader_aa5103e4();
+    init_Meta_a87be58f();
     init_ssr();
-    init_index_6ebc447e();
+    init_index_fdec2cb1();
     import_onflow_fcl_esm6 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     Countdown = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { unix } = $$props;
       let countdownString = "";
@@ -24294,23 +24292,23 @@ ${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/_serial_-b4d5be85.js
-var serial_b4d5be85_exports = {};
-__export(serial_b4d5be85_exports, {
+// .svelte-kit/output/server/chunks/_serial_-613bf545.js
+var serial_613bf545_exports = {};
+__export(serial_613bf545_exports, {
   default: () => U5Bserialu5D
 });
 var import_onflow_fcl_esm7, css11, U5Bserialu5D;
-var init_serial_b4d5be85 = __esm({
-  ".svelte-kit/output/server/chunks/_serial_-b4d5be85.js"() {
+var init_serial_613bf545 = __esm({
+  ".svelte-kit/output/server/chunks/_serial_-613bf545.js"() {
     init_shims();
-    init_app_ce278dac();
-    init_stores_55c3f9e5();
-    init_Float_575e6678();
-    init_Meta_d18014ad();
+    init_app_f7bd2c19();
+    init_stores_c5b13799();
+    init_Float_1ddaeee8();
+    init_Meta_a87be58f();
     init_ssr();
     import_onflow_fcl_esm7 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_69149cfb();
+    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     init_constants_358452f5();
     css11 = {
       code: "article.svelte-1ld3buq{text-align:center;align-items:center}",
@@ -24370,7 +24368,7 @@ var init_serial_b4d5be85 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/app-ce278dac.js
+// .svelte-kit/output/server/chunks/app-f7bd2c19.js
 function noop3() {
 }
 function is_promise(value) {
@@ -24577,9 +24575,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-ce1b1d62.js",
+      file: assets + "/_app/start-cde89e1e.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-ce1b1d62.js", assets + "/_app/chunks/vendor-d28e1e71.js"]
+      js: [assets + "/_app/start-cde89e1e.js", assets + "/_app/chunks/vendor-ff177ec3.js"]
     },
     fetched: void 0,
     floc: false,
@@ -24623,8 +24621,8 @@ function render2(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css12, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_ce278dac = __esm({
-  ".svelte-kit/output/server/chunks/app-ce278dac.js"() {
+var init_app_f7bd2c19 = __esm({
+  ".svelte-kit/output/server/chunks/app-f7bd2c19.js"() {
     init_shims();
     init_ssr();
     Promise.resolve();
@@ -24797,19 +24795,19 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_315d01b0(), layout_315d01b0_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_5cb2451f(), error_5cb2451f_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_19ffd089(), index_19ffd089_exports)),
-      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_aa6707c8(), account_aa6707c8_exports)),
-      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_68325922(), create_68325922_exports)),
-      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_1bc33dc1(), about_1bc33dc1_exports)),
-      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_df395dc0(), index_df395dc0_exports)),
-      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_c66f3b76(), live_c66f3b76_exports)),
-      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_f7702241(), index_f7702241_exports)),
-      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_177da1fd(), index_177da1fd_exports)),
-      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_b4d5be85(), serial_b4d5be85_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_a4e402d7(), layout_a4e402d7_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_80aeea94(), error_80aeea94_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_455e830f(), index_455e830f_exports)),
+      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_ddfd2439(), account_ddfd2439_exports)),
+      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_e5844ccd(), create_e5844ccd_exports)),
+      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_7cdf8953(), about_7cdf8953_exports)),
+      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_1d28975d(), index_1d28975d_exports)),
+      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_ecb788a8(), live_ecb788a8_exports)),
+      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_6302bacf(), index_6302bacf_exports)),
+      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_12cdc655(), index_12cdc655_exports)),
+      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_613bf545(), serial_613bf545_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-ab2ff7ec.js", "css": ["assets/pages/__layout.svelte-a4b26655.css", "assets/stores-022b5479.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-ab2ff7ec.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/UserAddress-fd26c925.js", "chunks/stores-e0ce53ee.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-a85bde46.js", "css": [], "js": ["pages/__error.svelte-a85bde46.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-34fee7cf.js", "css": ["assets/pages/index.svelte-10dbea1e.css", "assets/stores-022b5479.css"], "js": ["pages/index.svelte-34fee7cf.js", "chunks/vendor-d28e1e71.js", "chunks/constants-358452f5.js", "chunks/stores-a999c3f7.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-7d5ca814.js", "css": ["assets/stores-022b5479.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-7d5ca814.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/AccountContents-865c03f9.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/UserAddress-fd26c925.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-f1111a1e.js", "css": ["assets/pages/create.svelte-88355eb7.css", "assets/stores-022b5479.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-f1111a1e.js", "chunks/vendor-d28e1e71.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/LibLoader-2123bf89.js", "chunks/Float-f8ce8fb3.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-b5be04e0.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-b5be04e0.js", "chunks/vendor-d28e1e71.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-26f66983.js", "css": [], "js": ["pages/claim/index.svelte-26f66983.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-8ba6d647.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-8ba6d647.js", "chunks/vendor-d28e1e71.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-612d630a.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-022b5479.css"], "js": ["pages/_address_/index.svelte-612d630a.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/Meta-5c427305.js", "chunks/constants-358452f5.js", "chunks/AccountContents-865c03f9.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-a09c5f78.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-022b5479.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-a09c5f78.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/constants-358452f5.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/LibLoader-2123bf89.js", "chunks/Meta-5c427305.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-6baa6cfb.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-022b5479.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-6baa6cfb.js", "chunks/vendor-d28e1e71.js", "chunks/stores-e0ce53ee.js", "chunks/Loading-798c8669.js", "chunks/Float-f8ce8fb3.js", "chunks/actions-4dc9fff7.js", "chunks/stores-a999c3f7.js", "chunks/Meta-5c427305.js", "chunks/constants-358452f5.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-0216296f.js", "css": ["assets/pages/__layout.svelte-e8e46778.css", "assets/stores-53f2d04d.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-0216296f.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/UserAddress-83b2644a.js", "chunks/stores-5a205454.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-59868692.js", "css": [], "js": ["pages/__error.svelte-59868692.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-fe741cb7.js", "css": ["assets/pages/index.svelte-10dbea1e.css", "assets/stores-53f2d04d.css"], "js": ["pages/index.svelte-fe741cb7.js", "chunks/vendor-ff177ec3.js", "chunks/constants-358452f5.js", "chunks/stores-ce4ff439.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-15d7e16b.js", "css": ["assets/stores-53f2d04d.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-15d7e16b.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/AccountContents-265f660b.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/UserAddress-83b2644a.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-18412874.js", "css": ["assets/pages/create.svelte-88355eb7.css", "assets/stores-53f2d04d.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-18412874.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/LibLoader-aaeb1fa6.js", "chunks/Float-365f8d6a.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-e895671f.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-e895671f.js", "chunks/vendor-ff177ec3.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-0ad8e8a6.js", "css": [], "js": ["pages/claim/index.svelte-0ad8e8a6.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-bcff5979.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-bcff5979.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-98aa63c5.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-53f2d04d.css"], "js": ["pages/_address_/index.svelte-98aa63c5.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/Meta-24bd7e43.js", "chunks/constants-358452f5.js", "chunks/AccountContents-265f660b.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-9bb841e8.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-53f2d04d.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-9bb841e8.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/LibLoader-aaeb1fa6.js", "chunks/Meta-24bd7e43.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-99adf4c2.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-53f2d04d.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-99adf4c2.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/Meta-24bd7e43.js", "chunks/constants-358452f5.js"], "styles": [] } };
   }
 });
 
@@ -24863,7 +24861,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_ce278dac();
+init_app_f7bd2c19();
 
 // .svelte-kit/vercel/entry.js
 init();

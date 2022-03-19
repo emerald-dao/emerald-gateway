@@ -3,7 +3,6 @@
     import { dialog, tokens, selectedToken } from "../stores"
     import VerticalSpace from "../components/VerticalSpace.svelte"
     import Icon from "@iconify/svelte"
-import Dialog from './dialog.svelte';
 
     // export let dialog.opened;
     let isHovered;
