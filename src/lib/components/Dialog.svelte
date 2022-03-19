@@ -55,7 +55,7 @@
 <div
 id="background"
 style="--display: {$dialog.opened ? 'block' : 'none'}"
-on:click={closeDialog}
+on:click={handleClose}
 />
 <main id="dialog" style="--display: {$dialog.opened ? 'block' : 'none'};">
 <header>
@@ -65,7 +65,7 @@ on:click={closeDialog}
 <div>
   <!-- svelte-ignore missing-declaration -->
   <div
-    on:click={closeDialog}
+    on:click={handleClose}
     on:pointerenter={() => (isHovered = !isHovered)}
     on:pointerleave={() => (isHovered = !isHovered)}
   >

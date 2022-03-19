@@ -6676,7 +6676,7 @@ var init_ssr = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-fdec2cb1.js
+// .svelte-kit/output/server/chunks/index-af55a9bb.js
 function writable2(value, start = noop3) {
   let stop;
   const subscribers = /* @__PURE__ */ new Set();
@@ -6719,20 +6719,20 @@ function writable2(value, start = noop3) {
   return { set, update, subscribe: subscribe2 };
 }
 var subscriber_queue2;
-var init_index_fdec2cb1 = __esm({
-  ".svelte-kit/output/server/chunks/index-fdec2cb1.js"() {
+var init_index_af55a9bb = __esm({
+  ".svelte-kit/output/server/chunks/index-af55a9bb.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     subscriber_queue2 = [];
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-a3db8d6f.js
+// .svelte-kit/output/server/chunks/stores-9982a29a.js
 var user, transactionStatus, txId, transactionInProgress, eventCreationInProgress, eventCreatedStatus, floatClaimingInProgress, floatClaimedStatus;
-var init_stores_a3db8d6f = __esm({
-  ".svelte-kit/output/server/chunks/stores-a3db8d6f.js"() {
+var init_stores_9982a29a = __esm({
+  ".svelte-kit/output/server/chunks/stores-9982a29a.js"() {
     init_shims();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     user = writable2(null);
     transactionStatus = writable2(null);
     txId = writable2(null);
@@ -22677,12 +22677,12 @@ var init_Tab3_svelte_svelte_type_style_lang_8ff82521 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/UserAddress-a8b0f42e.js
+// .svelte-kit/output/server/chunks/UserAddress-a10ebe45.js
 var css, UserAddress;
-var init_UserAddress_a8b0f42e = __esm({
-  ".svelte-kit/output/server/chunks/UserAddress-a8b0f42e.js"() {
+var init_UserAddress_a10ebe45 = __esm({
+  ".svelte-kit/output/server/chunks/UserAddress-a10ebe45.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     css = {
       code: ".led-green.svelte-bnzski{position:relative;display:inline-block;top:0px;margin-right:0.5em;background-color:var(--primary);width:14px;height:14px;border-radius:14px}",
       map: null
@@ -22701,14 +22701,14 @@ var init_UserAddress_a8b0f42e = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-c19e8521.js
+// .svelte-kit/output/server/chunks/stores-85b2d1de.js
 var Icon, css$4, Tab1, css$3, Modal_1, HorizontalSpace, css$2, Dialog, css$1, Tab2, css2, Tab3, Tab4, draftFloat, tabs, theme, tab1data, tokens, selectedToken, collections, modal, dialog;
-var init_stores_c19e8521 = __esm({
-  ".svelte-kit/output/server/chunks/stores-c19e8521.js"() {
+var init_stores_85b2d1de = __esm({
+  ".svelte-kit/output/server/chunks/stores-85b2d1de.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       const state = {
         name: "",
@@ -22749,56 +22749,57 @@ var init_stores_c19e8521 = __esm({
       map: null
     };
     Tab1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_tab1data;
+      $$unsubscribe_tab1data = subscribe(tab1data, (value) => value);
       let { tab1val } = $$props;
       tab1data.subscribe((val) => tab1val = val);
       let name = tab1val.name;
       let description = tab1val.description;
-      createEventDispatcher();
       if ($$props.tab1val === void 0 && $$bindings.tab1val && tab1val !== void 0)
         $$bindings.tab1val(tab1val);
       $$result.css.add(css$4);
+      $$unsubscribe_tab1data();
       return `<div><header><h3 class="${"mt-1"}">Tab 1</h3>
         <p>Something about Tab 1</p></header>
 
     <div><div style="${"width:100%"}"><h3 class="${"mt-1"}">Name</h3>
             <input id="${"name"}" placeholder="${"My awesome project"}"${add_attribute("value", name ? name : null, 0)}></div>
-            <h3 class="${"mt-1"}">Description</h3>
-            <div class="${"textarea-header svelte-19lnoss"}"><section class="${"text-icons-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:bold", height: 20 }, {}, {})}</div>
-                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:italic", height: 19 }, {}, {})}</div>
-                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        <h3 class="${"mt-1"}">Description</h3>
+        <div class="${"textarea-header svelte-19lnoss"}"><section class="${"text-icons-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:bold", height: 20 }, {}, {})}</div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:italic", height: 19 }, {}, {})}</div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "ant-design:underline-outlined",
         height: 20
       }, {}, {})}</div>
-                    <div style="${"width: 8px;"}"></div>
-                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "ooui:underline-a", height: 16 }, {}, {})}
-                        ${validate_component(Icon, "Icon").$$render($$result, {
+                <div style="${"width: 8px;"}"></div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "ooui:underline-a", height: 16 }, {}, {})}
+                    ${validate_component(Icon, "Icon").$$render($$result, {
         icon: "akar-icons:chevron-down",
         height: 14
       }, {}, {})}</div></section>
-                <section class="${"text-type-container svelte-19lnoss"}"><div><span style="${"font-weight: 300; font-size:16px"}">Normal Text</span></div>
-                    <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+            <section class="${"text-type-container svelte-19lnoss"}"><div><span style="${"font-weight: 300; font-size:16px"}">Normal Text</span></div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "akar-icons:chevron-down",
         height: 18
       }, {}, {})}</div></section>
-                <section class="${"alignment-container svelte-19lnoss"}"><div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+            <section class="${"alignment-container svelte-19lnoss"}"><div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "akar-icons:text-align-left",
         height: 18
       }, {}, {})}</div>
-                    <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "akar-icons:text-align-center",
         height: 18
       }, {}, {})}</div>
-                    <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "akar-icons:text-align-right",
         height: 18
       }, {}, {})}</div></section>
-                <section class="${"menu-icon-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+            <section class="${"menu-icon-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "carbon:overflow-menu-vertical",
         height: 22
       }, {}, {})}</div></section></div>
-            <textarea id="${"description"}" rows="${"4"}" placeholder="${"My awesome project it\xB4s ..."}" class="${"svelte-19lnoss"}">${escape2(description ? description : null)}</textarea></div>
-    
-</div>`;
+        <textarea id="${"description"}" rows="${"4"}" placeholder="${"My awesome project it\xB4s ..."}" class="${"svelte-19lnoss"}">${escape2(description ? description : null)}</textarea></div>
+            </div>`;
     });
     css$3 = {
       code: "header.svelte-ukirbf{display:flex;flex-direction:row;height:14%;width:100%;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-ukirbf{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-ukirbf{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#modal.svelte-ukirbf{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:60%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
@@ -22873,7 +22874,7 @@ var init_stores_c19e8521 = __esm({
 </main>`;
     });
     css$1 = {
-      code: ".amount-container.svelte-1d4df8r{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1d4df8r{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1d4df8r{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-1d4df8r{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-1d4df8r{position:relative;display:flex;width:20%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1d4df8r{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1d4df8r{margin:0;padding:0}ul.svelte-1d4df8r{margin:0;padding:0}li.svelte-1d4df8r{margin:0;padding:0}.secondary-btn.svelte-1d4df8r{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1d4df8r:hover{background:rgba(218, 4, 106, 0.1)}.custom-container.svelte-1d4df8r{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1d4df8r{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1d4df8r{height:100%;width:100%}",
+      code: ".amount-container.svelte-1t9x261{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1t9x261{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1t9x261{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-1t9x261{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-1t9x261{position:relative;display:flex;width:20%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1t9x261{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1t9x261{margin:0;padding:0}ul.svelte-1t9x261{margin:0;padding:0}li.svelte-1t9x261{margin:0;padding:0}.secondary-btn.svelte-1t9x261{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1t9x261:hover{background:rgba(56, 232, 198, 0.1)}.custom-container.svelte-1t9x261{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1t9x261{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1t9x261{height:100%;width:100%}",
       map: null
     };
     Tab2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -22900,18 +22901,18 @@ var init_stores_c19e8521 = __esm({
       $$unsubscribe_modal();
       return `${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
 ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
-<main class="${"container svelte-1d4df8r"}"><header><h3 class="${"mt-1"}">Tokens</h3>
+<main class="${"container svelte-1t9x261"}"><header><h3 class="${"mt-1"}">Tokens</h3>
         <p>Something about the Tokens</p></header>
-    <div class="${"tokens-container mt-2 svelte-1d4df8r"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-1d4df8r"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-1d4df8r"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-1d4df8r"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+    <div class="${"tokens-container mt-2 svelte-1t9x261"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-1t9x261"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-1t9x261"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-1t9x261"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
                     <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
-                    ${amount !== 0 ? `<div class="${"amount-container svelte-1d4df8r"}">${escape2(amount)}
-                        <div class="${"icon-container svelte-1d4df8r"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
+                    ${amount !== 0 ? `<div class="${"amount-container svelte-1t9x261"}">${escape2(amount)}
+                        <div class="${"icon-container svelte-1t9x261"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
                     </div>` : `<div></div>`}</div>
                 <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", selected, 1)}></div>
             </li>`;
       })}</ul>
-        <footer class="${"custom-container svelte-1d4df8r"}"><div class="${"secondary-btn svelte-1d4df8r"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
+        <footer class="${"custom-container svelte-1t9x261"}"><div class="${"secondary-btn svelte-1t9x261"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
         icon: "ant-design:plus-circle-outlined",
         height: "1.2rem"
       }, {}, {})}</div>
@@ -22919,7 +22920,7 @@ ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
                 <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
     });
     css2 = {
-      code: ".collection-container-inactive.svelte-6gdvm{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:1rem}.collection-inactive.svelte-6gdvm{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-6gdvm{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(218, 4, 106, 0.1);cursor:pointer;padding-left:3%}main.svelte-6gdvm{margin:0;padding:0}ul.svelte-6gdvm{margin:0;padding:0}li.svelte-6gdvm{margin:0;padding:0}.collections-container.svelte-6gdvm{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-6gdvm{height:100%;width:100%}",
+      code: ".collection-container-inactive.svelte-y0qazc{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:1rem}.collection-inactive.svelte-y0qazc{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-y0qazc{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}main.svelte-y0qazc{margin:0;padding:0}ul.svelte-y0qazc{margin:0;padding:0}li.svelte-y0qazc{margin:0;padding:0}.collections-container.svelte-y0qazc{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-y0qazc{height:100%;width:100%}",
       map: null
     };
     Tab3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -22932,11 +22933,11 @@ ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
       $$result.css.add(css2);
       $$unsubscribe_collections();
       return `
-<main class="${"container svelte-6gdvm"}"><header><h3 class="${"mt-1"}">Collections</h3>
+<main class="${"container svelte-y0qazc"}"><header><h3 class="${"mt-1"}">Collections</h3>
         <p>Something about the Collections</p></header>
 
-    <div class="${"collections-container mt-2 svelte-6gdvm"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-6gdvm"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-6gdvm"}"><div class="${"collection-container-inactive svelte-6gdvm"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img style="${"height:2.6rem; width:2.6rem; border-radius: 50px; object-fit:fill"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+    <div class="${"collections-container mt-2 svelte-y0qazc"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-y0qazc"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-y0qazc"}"><div class="${"collection-container-inactive svelte-y0qazc"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img style="${"height:2.6rem; width:2.6rem; border-radius: 50px; object-fit:fill"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
                     <div>${escape2(label)}
                     </div></div>
                 <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${collectionsValue[id].selected ? "checked" : ""}></div>
@@ -23060,12 +23061,12 @@ ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-c5b13799.js
+// .svelte-kit/output/server/chunks/stores-50472bcb.js
 var getStores, page;
-var init_stores_c5b13799 = __esm({
-  ".svelte-kit/output/server/chunks/stores-c5b13799.js"() {
+var init_stores_50472bcb = __esm({
+  ".svelte-kit/output/server/chunks/stores-50472bcb.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     getStores = () => {
       const stores = getContext("__svelte__");
       return {
@@ -23093,25 +23094,25 @@ var init_stores_c5b13799 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-a4e402d7.js
-var layout_a4e402d7_exports = {};
-__export(layout_a4e402d7_exports, {
+// .svelte-kit/output/server/chunks/__layout-267661ca.js
+var layout_267661ca_exports = {};
+__export(layout_267661ca_exports, {
   default: () => _layout
 });
 var import_onflow_fcl_esm2, css$32, ConnectWallet, css$22, Header, css$12, Transaction, css3, _layout;
-var init_layout_a4e402d7 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-a4e402d7.js"() {
+var init_layout_267661ca = __esm({
+  ".svelte-kit/output/server/chunks/__layout-267661ca.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_a3db8d6f();
+    init_app_31f4847e();
+    init_stores_9982a29a();
     import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_UserAddress_a8b0f42e();
-    init_stores_c19e8521();
-    init_stores_c5b13799();
+    init_UserAddress_a10ebe45();
+    init_stores_85b2d1de();
+    init_stores_50472bcb();
     init_ssr();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     css$32 = {
       code: "a.svelte-nbcav7{padding:8px 14px}",
       map: null
@@ -23210,9 +23211,9 @@ var init_layout_a4e402d7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-80aeea94.js
-var error_80aeea94_exports = {};
-__export(error_80aeea94_exports, {
+// .svelte-kit/output/server/chunks/__error-3792ad3f.js
+var error_3792ad3f_exports = {};
+__export(error_3792ad3f_exports, {
   default: () => _error,
   load: () => load
 });
@@ -23222,10 +23223,10 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_80aeea94 = __esm({
-  ".svelte-kit/output/server/chunks/__error-80aeea94.js"() {
+var init_error_3792ad3f = __esm({
+  ".svelte-kit/output/server/chunks/__error-3792ad3f.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23245,23 +23246,23 @@ var init_constants_358452f5 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-455e830f.js
-var index_455e830f_exports = {};
-__export(index_455e830f_exports, {
+// .svelte-kit/output/server/chunks/index-0a46f72a.js
+var index_0a46f72a_exports = {};
+__export(index_0a46f72a_exports, {
   default: () => Routes
 });
 var css4, Routes;
-var init_index_455e830f = __esm({
-  ".svelte-kit/output/server/chunks/index-455e830f.js"() {
+var init_index_0a46f72a = __esm({
+  ".svelte-kit/output/server/chunks/index-0a46f72a.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_c19e8521();
+    init_app_31f4847e();
+    init_stores_85b2d1de();
     init_constants_358452f5();
     init_ssr();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     css4 = {
-      code: "ul.svelte-1mpff2m{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-1mpff2m::-webkit-scrollbar{display:none}li.svelte-1mpff2m{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:25%;height:100%;min-width:25%;cursor:pointer}li.active.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(218, 4, 106, 0.1);margin:0;padding:0;width:25%;height:100%;min-width:25%}.inactive-tab.svelte-1mpff2m:hover{background:var(--form-element-border-color)}.tabbar.svelte-1mpff2m{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-1mpff2m{display:flex;justify-content:center;align-items:center;height:100%;width:20%}",
+      code: "ul.svelte-1qb8znc{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-1qb8znc::-webkit-scrollbar{display:none}li.svelte-1qb8znc{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:25%;height:100%;min-width:25%;cursor:pointer}li.active.svelte-1qb8znc{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(56, 232, 198, 0.1);margin:0;padding:0;width:25%;height:100%;min-width:25%}.inactive-tab.svelte-1qb8znc:hover{background:var(--form-element-border-color)}.chevron-icon.svelte-1qb8znc{cursor:pointer}.chevron-icon-disabled.svelte-1qb8znc{opacity:0.5}.tabbar.svelte-1qb8znc{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-1qb8znc{display:flex;justify-content:center;align-items:center;height:100%;width:20%}",
       map: null
     };
     Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -23277,55 +23278,54 @@ var init_index_455e830f = __esm({
       $$unsubscribe_tabs();
       return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
 
+    
 
+    
 
-
-
-<article><main class="${"tabbar svelte-1mpff2m"}"><div class="${"chevron-wrapper svelte-1mpff2m"}"><div class="${"chevron-icon"}">${validate_component(Icon, "Icon").$$render($$result, {
+    <article><main class="${"tabbar svelte-1qb8znc"}"><div class="${"chevron-wrapper svelte-1qb8znc"}"><div class="${escape2(null_to_empty("chevron-icon-disabled")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
         class: "chevron-icon",
         icon: "akar-icons:circle-chevron-left",
         height: 36,
         color: "lightgrey"
       }, {}, {})}</div></div>
-    <ul class="${"svelte-1mpff2m"}">${each(tabsValue, (item, i2) => {
-        return `<li class="${escape2(null_to_empty(activeTabValue === item.value ? "active" : "inactive-tab")) + " svelte-1mpff2m"}">${validate_component(Icon, "Icon").$$render($$result, {
+                        <ul class="${"svelte-1qb8znc"}">${each(tabsValue, (item, i2) => {
+        return `<li class="${escape2(null_to_empty(activeTabValue === item.value ? "active" : "inactive-tab")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
           icon: item.icon,
           height: 30,
           color: tabsValue[i2].done ? "#85DFB4" : activeTabValue === item.value ? "var(--primary)" : "lightgrey"
         }, {}, {})}
-        </li>`;
+                                    </li>`;
       })}</ul>
-    <div class="${"chevron-wrapper svelte-1mpff2m"}"><div class="${"chevron-icon"}">${validate_component(Icon, "Icon").$$render($$result, {
+                                    <div class="${"chevron-wrapper svelte-1qb8znc"}"><div class="${escape2(null_to_empty("chevron-icon")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
         class: "chevron-icon",
         icon: "akar-icons:circle-chevron-right",
         height: 36,
         color: "lightgrey"
       }, {}, {})}</div></div></main>
 
-  
-  ${each(tabsValue, (item) => {
+                                                
+                                                ${each(tabsValue, (item) => {
         return `${activeTabValue == item.value ? `<div class="${"tab-content-container"}">
-        
-        ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, {}, {}, {})}</div>
-      <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
-      </footer>` : ``}`;
+                                                    
+                                                    ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, {}, {}, {})}</div>
+                                                <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
+                                                            </footer>` : ``}`;
       })}
 
-  
-  
-</article>`;
+                                                       
+                                                            </article>`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/Float-1ddaeee8.js
+// .svelte-kit/output/server/chunks/Float-bba22cfa.js
 var fcl, getFLOATEvent, getFLOATEvents, getFLOATs, Loading, css5, Float;
-var init_Float_1ddaeee8 = __esm({
-  ".svelte-kit/output/server/chunks/Float-1ddaeee8.js"() {
+var init_Float_bba22cfa = __esm({
+  ".svelte-kit/output/server/chunks/Float-bba22cfa.js"() {
     init_shims();
     fcl = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     getFLOATEvent = async (addr, id) => {
       try {
@@ -23462,7 +23462,7 @@ var init_Float_1ddaeee8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/AccountContents-48554073.js
+// .svelte-kit/output/server/chunks/AccountContents-cf0c9326.js
 function getEventsArray(floatEventsObj) {
   if (floatEventsObj && Object.keys(floatEventsObj)?.length > 0) {
     return Object.values(floatEventsObj);
@@ -23471,11 +23471,11 @@ function getEventsArray(floatEventsObj) {
   }
 }
 var css6, Event, AccountContents;
-var init_AccountContents_48554073 = __esm({
-  ".svelte-kit/output/server/chunks/AccountContents-48554073.js"() {
+var init_AccountContents_cf0c9326 = __esm({
+  ".svelte-kit/output/server/chunks/AccountContents-cf0c9326.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_Float_1ddaeee8();
+    init_app_31f4847e();
+    init_Float_bba22cfa();
     css6 = {
       code: ".host.svelte-mj8iyj{font-family:monospace}.credit.svelte-mj8iyj{font-size:0.7rem;display:block;line-height:1}p.svelte-mj8iyj{margin-top:10px;margin-bottom:10px}",
       map: null
@@ -23537,26 +23537,26 @@ var init_AccountContents_48554073 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/account-ddfd2439.js
-var account_ddfd2439_exports = {};
-__export(account_ddfd2439_exports, {
+// .svelte-kit/output/server/chunks/account-2901f1a2.js
+var account_2901f1a2_exports = {};
+__export(account_2901f1a2_exports, {
   default: () => Account
 });
 var import_onflow_fcl_esm3, Account;
-var init_account_ddfd2439 = __esm({
-  ".svelte-kit/output/server/chunks/account-ddfd2439.js"() {
+var init_account_2901f1a2 = __esm({
+  ".svelte-kit/output/server/chunks/account-2901f1a2.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_a3db8d6f();
+    init_app_31f4847e();
+    init_stores_9982a29a();
     import_onflow_fcl_esm3 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     init_constants_358452f5();
-    init_AccountContents_48554073();
-    init_UserAddress_a8b0f42e();
+    init_AccountContents_cf0c9326();
+    init_UserAddress_a10ebe45();
     init_ssr();
-    init_index_fdec2cb1();
-    init_Float_1ddaeee8();
+    init_index_af55a9bb();
+    init_Float_bba22cfa();
     Account = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $user, $$unsubscribe_user;
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
@@ -23575,12 +23575,12 @@ var init_account_ddfd2439 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/LibLoader-aa5103e4.js
+// .svelte-kit/output/server/chunks/LibLoader-2f5402ca.js
 var LibLoader;
-var init_LibLoader_aa5103e4 = __esm({
-  ".svelte-kit/output/server/chunks/LibLoader-aa5103e4.js"() {
+var init_LibLoader_2f5402ca = __esm({
+  ".svelte-kit/output/server/chunks/LibLoader-2f5402ca.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     LibLoader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       createEventDispatcher();
       let { url } = $$props;
@@ -23595,27 +23595,27 @@ var init_LibLoader_aa5103e4 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/create-e5844ccd.js
-var create_e5844ccd_exports = {};
-__export(create_e5844ccd_exports, {
+// .svelte-kit/output/server/chunks/create-1ae939e7.js
+var create_1ae939e7_exports = {};
+__export(create_1ae939e7_exports, {
   default: () => Create
 });
 var import_onflow_fcl_esm4, css7, Create;
-var init_create_e5844ccd = __esm({
-  ".svelte-kit/output/server/chunks/create-e5844ccd.js"() {
+var init_create_1ae939e7 = __esm({
+  ".svelte-kit/output/server/chunks/create-1ae939e7.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_a3db8d6f();
+    init_app_31f4847e();
+    init_stores_9982a29a();
     import_onflow_fcl_esm4 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
-    init_stores_c19e8521();
+    init_stores_85b2d1de();
     init_constants_358452f5();
-    init_LibLoader_aa5103e4();
+    init_LibLoader_2f5402ca();
     init_ssr();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
     css7 = {
-      code: ".outline.svelte-44wbyu.svelte-44wbyu{text-align:left}.outline.svelte-44wbyu span.svelte-44wbyu{display:block;font-size:0.75rem;line-height:1.2;font-weight:400;opacity:0.6}xmp.svelte-44wbyu.svelte-44wbyu{position:relative;width:100%;font-size:12px;padding:10px;overflow:scroll;border-radius:5px;color:white}.xmp-dark.svelte-44wbyu.svelte-44wbyu{background:rgb(56, 232, 198, 0.25)}.xmp-light.svelte-44wbyu.svelte-44wbyu{background:rgb(27, 40, 50)}h5.svelte-44wbyu.svelte-44wbyu{margin-bottom:5px}.error.svelte-44wbyu.svelte-44wbyu{background-color:red;border-color:white;color:white;opacity:1}",
+      code: ".outline.svelte-1d4h73c.svelte-1d4h73c{text-align:left}.outline.svelte-1d4h73c span.svelte-1d4h73c{display:block;font-size:0.75rem;line-height:1.2;font-weight:400;opacity:0.6}xmp.svelte-1d4h73c.svelte-1d4h73c{position:relative;width:100%;font-size:12px;padding:10px;overflow:scroll;border-radius:5px;color:white}.xmp-dark.svelte-1d4h73c.svelte-1d4h73c{background:rgb(56, 232, 198,, 0.25)}.xmp-light.svelte-1d4h73c.svelte-1d4h73c{background:rgb(27, 40, 50)}h5.svelte-1d4h73c.svelte-1d4h73c{margin-bottom:5px}.error.svelte-1d4h73c.svelte-1d4h73c{background-color:red;border-color:white;color:white;opacity:1}",
       map: null
     };
     Create = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -23696,32 +23696,32 @@ ${validate_component(LibLoader, "LibLoader").$$render($$result, {
     <h3 class="${"mb-1"}">Configure your FLOAT</h3>
 
     
-    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-44wbyu", !$draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Transferrable
-        <span class="${"svelte-44wbyu"}">This FLOAT can be transferred to other accounts.</span></button>
-      <button class="${["outline svelte-44wbyu", $draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Non-Transferrable
-        <span class="${"svelte-44wbyu"}">This FLOAT <strong>cannot</strong> be transferred to others (i.e. soul-bound).</span></button></div>
+    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", !$draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Transferrable
+        <span class="${"svelte-1d4h73c"}">This FLOAT can be transferred to other accounts.</span></button>
+      <button class="${["outline svelte-1d4h73c", $draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Non-Transferrable
+        <span class="${"svelte-1d4h73c"}">This FLOAT <strong>cannot</strong> be transferred to others (i.e. soul-bound).</span></button></div>
 
-    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-44wbyu", !$draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Claimable
-        <span class="${"svelte-44wbyu"}">Users can mint their own FLOAT based on the parameters defined below.</span></button>
-      <button class="${["outline svelte-44wbyu", $draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Not Claimable
-        <span class="${"svelte-44wbyu"}">You will be responsible for distributing the FLOAT to accounts in
+    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", !$draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Claimable
+        <span class="${"svelte-1d4h73c"}">Users can mint their own FLOAT based on the parameters defined below.</span></button>
+      <button class="${["outline svelte-1d4h73c", $draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Not Claimable
+        <span class="${"svelte-1d4h73c"}">You will be responsible for distributing the FLOAT to accounts in
           your own custom transactions.</span></button></div>
 
     ${$draftFloat.claimable ? `
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-44wbyu", $draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Unlimited Quantity
-          <span class="${"svelte-44wbyu"}">Select this if you don&#39;t want your FLOAT to have a limited
+      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Unlimited Quantity
+          <span class="${"svelte-1d4h73c"}">Select this if you don&#39;t want your FLOAT to have a limited
             quantity.</span></button>
-        <button class="${["outline svelte-44wbyu", !$draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Limited Quantity
-          <span class="${"svelte-44wbyu"}">You can set the maximum number of times the FLOAT can be minted.</span></button></div>
+        <button class="${["outline svelte-1d4h73c", !$draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Limited Quantity
+          <span class="${"svelte-1d4h73c"}">You can set the maximum number of times the FLOAT can be minted.</span></button></div>
       ${$draftFloat.quantity ? `<label for="${"quantity"}">How many can be claimed?
           <input type="${"number"}" name="${"quantity"}" min="${"1"}" placeholder="${"ex. 100"}"${add_attribute("value", $draftFloat.quantity, 0)}></label>
         <hr>` : ``}
 
       
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-44wbyu", $draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">No Time Limit
-          <span class="${"svelte-44wbyu"}">Can be minted at any point in the future.</span></button>
-        <button class="${["outline svelte-44wbyu", !$draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">Time Limit
-          <span class="${"svelte-44wbyu"}">Can only be minted between a specific time interval.</span></button></div>
+      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">No Time Limit
+          <span class="${"svelte-1d4h73c"}">Can be minted at any point in the future.</span></button>
+        <button class="${["outline svelte-1d4h73c", !$draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">Time Limit
+          <span class="${"svelte-1d4h73c"}">Can only be minted between a specific time interval.</span></button></div>
       ${$draftFloat.timelock ? `<div class="${"grid"}">
           <label for="${"start"}">Start (${escape2(timezone)})
             <input type="${"datetime-local"}" id="${"start"}" name="${"start"}"${add_attribute("value", $draftFloat.startTime, 0)}></label>
@@ -23732,32 +23732,32 @@ ${validate_component(LibLoader, "LibLoader").$$render($$result, {
         <hr>` : ``}
 
       
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-44wbyu", $draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Anyone Can Claim
-          <span class="${"svelte-44wbyu"}">Your FLOAT can be minted freely by anyone that knows its address.</span></button>
-        <button class="${["outline svelte-44wbyu", !$draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Use Claim Code
-          <span class="${"svelte-44wbyu"}">Your FLOAT can only be minted if people know the claim code.</span></button></div>
+      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Anyone Can Claim
+          <span class="${"svelte-1d4h73c"}">Your FLOAT can be minted freely by anyone that knows its address.</span></button>
+        <button class="${["outline svelte-1d4h73c", !$draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Use Claim Code
+          <span class="${"svelte-1d4h73c"}">Your FLOAT can only be minted if people know the claim code.</span></button></div>
       ${$draftFloat.claimCodeEnabled ? `<label for="${"claimCode"}">Enter a claim code (Note: it is case-sensitive)
           <input type="${"text"}" name="${"claimCode"}" placeholder="${"ex. mySecretCode"}"${add_attribute("value", $draftFloat.claimCode, 0)}></label>
-        <hr>` : ``}` : `<h5 class="${"svelte-44wbyu"}">This is how you would distribute your FLOAT to a user in Cadence:</h5>
-      <xmp class="${escape2(null_to_empty($theme === "light" ? "xmp-light" : "xmp-dark")) + " svelte-44wbyu"}">${escape2(distributeCode)}</xmp>`}
+        <hr>` : ``}` : `<h5 class="${"svelte-1d4h73c"}">This is how you would distribute your FLOAT to a user in Cadence:</h5>
+      <xmp class="${escape2(null_to_empty($theme === "light" ? "xmp-light" : "xmp-dark")) + " svelte-1d4h73c"}">${escape2(distributeCode)}</xmp>`}
 
     <footer>${!$user?.loggedIn ? `<div class="${"mt-2 mb-2"}"><button class="${"contrast small-button"}">Connect Wallet</button></div>` : `${$eventCreationInProgress ? `<button aria-busy="${"true"}" disabled>Creating FLOAT</button>` : `${$eventCreatedStatus.success ? `<a role="${"button"}" class="${"d-block"}" href="${"/account"}" style="${"display:block"}">Event created successfully!
-        </a>` : `${!$eventCreatedStatus.success && $eventCreatedStatus.error ? `<button class="${"error svelte-44wbyu"}" disabled>${escape2($eventCreatedStatus.error)}</button>` : `<button>Create FLOAT</button>`}`}`}`}</footer></article>
+        </a>` : `${!$eventCreatedStatus.success && $eventCreatedStatus.error ? `<button class="${"error svelte-1d4h73c"}" disabled>${escape2($eventCreatedStatus.error)}</button>` : `<button>Create FLOAT</button>`}`}`}`}</footer></article>
 </div>`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/about-7cdf8953.js
-var about_7cdf8953_exports = {};
-__export(about_7cdf8953_exports, {
+// .svelte-kit/output/server/chunks/about-14a3211b.js
+var about_14a3211b_exports = {};
+__export(about_14a3211b_exports, {
   default: () => About
 });
 var css8, About;
-var init_about_7cdf8953 = __esm({
-  ".svelte-kit/output/server/chunks/about-7cdf8953.js"() {
+var init_about_14a3211b = __esm({
+  ".svelte-kit/output/server/chunks/about-14a3211b.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_constants_358452f5();
     init_ssr();
     css8 = {
@@ -23810,16 +23810,16 @@ var init_about_7cdf8953 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-1d28975d.js
-var index_1d28975d_exports = {};
-__export(index_1d28975d_exports, {
+// .svelte-kit/output/server/chunks/index-46d808ce.js
+var index_46d808ce_exports = {};
+__export(index_46d808ce_exports, {
   default: () => Claim
 });
 var Claim;
-var init_index_1d28975d = __esm({
-  ".svelte-kit/output/server/chunks/index-1d28975d.js"() {
+var init_index_46d808ce = __esm({
+  ".svelte-kit/output/server/chunks/index-46d808ce.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_ssr();
     Claim = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `URL not recognized.`;
@@ -23827,16 +23827,16 @@ var init_index_1d28975d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/live-ecb788a8.js
-var live_ecb788a8_exports = {};
-__export(live_ecb788a8_exports, {
+// .svelte-kit/output/server/chunks/live-09b939eb.js
+var live_09b939eb_exports = {};
+__export(live_09b939eb_exports, {
   default: () => Live
 });
 var css$13, Lantern, css9, Live;
-var init_live_ecb788a8 = __esm({
-  ".svelte-kit/output/server/chunks/live-ecb788a8.js"() {
+var init_live_09b939eb = __esm({
+  ".svelte-kit/output/server/chunks/live-09b939eb.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_ssr();
     css$13 = {
       code: ".lantern.svelte-htfji2{position:absolute;color:lightblue;top:100vh;opacity:1;display:block;animation-name:svelte-htfji2-slide;animation-fill-mode:forwards;animation-duration:5s;animation-iteration-count:1;animation-timing-function:ease-in}img.lantern.svelte-htfji2{width:60px;height:60px;object-fit:cover;border-radius:100%;box-shadow:0px 0px 5px 5px #38e8c6}@keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}@-webkit-keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}",
@@ -23867,12 +23867,12 @@ var init_live_ecb788a8 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Meta-a87be58f.js
+// .svelte-kit/output/server/chunks/Meta-f9e303da.js
 var Meta;
-var init_Meta_a87be58f = __esm({
-  ".svelte-kit/output/server/chunks/Meta-a87be58f.js"() {
+var init_Meta_f9e303da = __esm({
+  ".svelte-kit/output/server/chunks/Meta-f9e303da.js"() {
     init_shims();
-    init_app_f7bd2c19();
+    init_app_31f4847e();
     init_constants_358452f5();
     Meta = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23892,22 +23892,22 @@ var init_Meta_a87be58f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-6302bacf.js
-var index_6302bacf_exports = {};
-__export(index_6302bacf_exports, {
+// .svelte-kit/output/server/chunks/index-0e7f9456.js
+var index_0e7f9456_exports = {};
+__export(index_0e7f9456_exports, {
   default: () => U5Baddressu5D
 });
 var import_onflow_fcl_esm5, CheckAddress, U5Baddressu5D;
-var init_index_6302bacf = __esm({
-  ".svelte-kit/output/server/chunks/index-6302bacf.js"() {
+var init_index_0e7f9456 = __esm({
+  ".svelte-kit/output/server/chunks/index-0e7f9456.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_c5b13799();
-    init_Meta_a87be58f();
-    init_AccountContents_48554073();
+    init_app_31f4847e();
+    init_stores_50472bcb();
+    init_Meta_f9e303da();
+    init_AccountContents_cf0c9326();
     init_ssr();
     init_constants_358452f5();
-    init_Float_1ddaeee8();
+    init_Float_bba22cfa();
     import_onflow_fcl_esm5 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
@@ -23939,24 +23939,24 @@ var init_index_6302bacf = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-12cdc655.js
-var index_12cdc655_exports = {};
-__export(index_12cdc655_exports, {
+// .svelte-kit/output/server/chunks/index-6faed9b2.js
+var index_6faed9b2_exports = {};
+__export(index_6faed9b2_exports, {
   default: () => U5BeventIdu5D
 });
 var import_onflow_fcl_esm6, Countdown, css$33, globalLabels$3, Sort, globalLabels$2, Search, Row, css$23, globalLabels$1, Pagination, css$14, globalLabels, Table, page2, pageSize, ClaimsTable, css10, U5BeventIdu5D;
-var init_index_12cdc655 = __esm({
-  ".svelte-kit/output/server/chunks/index-12cdc655.js"() {
+var init_index_6faed9b2 = __esm({
+  ".svelte-kit/output/server/chunks/index-6faed9b2.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_c5b13799();
-    init_stores_a3db8d6f();
+    init_app_31f4847e();
+    init_stores_50472bcb();
+    init_stores_9982a29a();
     init_constants_358452f5();
-    init_Float_1ddaeee8();
-    init_LibLoader_aa5103e4();
-    init_Meta_a87be58f();
+    init_Float_bba22cfa();
+    init_LibLoader_2f5402ca();
+    init_Meta_f9e303da();
     init_ssr();
-    init_index_fdec2cb1();
+    init_index_af55a9bb();
     import_onflow_fcl_esm6 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
     init_Tab3_svelte_svelte_type_style_lang_8ff82521();
@@ -24292,19 +24292,19 @@ ${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
   }
 });
 
-// .svelte-kit/output/server/chunks/_serial_-613bf545.js
-var serial_613bf545_exports = {};
-__export(serial_613bf545_exports, {
+// .svelte-kit/output/server/chunks/_serial_-6391cba1.js
+var serial_6391cba1_exports = {};
+__export(serial_6391cba1_exports, {
   default: () => U5Bserialu5D
 });
 var import_onflow_fcl_esm7, css11, U5Bserialu5D;
-var init_serial_613bf545 = __esm({
-  ".svelte-kit/output/server/chunks/_serial_-613bf545.js"() {
+var init_serial_6391cba1 = __esm({
+  ".svelte-kit/output/server/chunks/_serial_-6391cba1.js"() {
     init_shims();
-    init_app_f7bd2c19();
-    init_stores_c5b13799();
-    init_Float_1ddaeee8();
-    init_Meta_a87be58f();
+    init_app_31f4847e();
+    init_stores_50472bcb();
+    init_Float_bba22cfa();
+    init_Meta_f9e303da();
     init_ssr();
     import_onflow_fcl_esm7 = __toModule(require_fcl_cjs());
     init_config_860ef6b7();
@@ -24368,7 +24368,7 @@ var init_serial_613bf545 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/app-f7bd2c19.js
+// .svelte-kit/output/server/chunks/app-31f4847e.js
 function noop3() {
 }
 function is_promise(value) {
@@ -24575,9 +24575,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-cde89e1e.js",
+      file: assets + "/_app/start-76044a3b.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-cde89e1e.js", assets + "/_app/chunks/vendor-ff177ec3.js"]
+      js: [assets + "/_app/start-76044a3b.js", assets + "/_app/chunks/vendor-2b38a6d6.js"]
     },
     fetched: void 0,
     floc: false,
@@ -24621,8 +24621,8 @@ function render2(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css12, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_f7bd2c19 = __esm({
-  ".svelte-kit/output/server/chunks/app-f7bd2c19.js"() {
+var init_app_31f4847e = __esm({
+  ".svelte-kit/output/server/chunks/app-31f4847e.js"() {
     init_shims();
     init_ssr();
     Promise.resolve();
@@ -24795,19 +24795,19 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_a4e402d7(), layout_a4e402d7_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_80aeea94(), error_80aeea94_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_455e830f(), index_455e830f_exports)),
-      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_ddfd2439(), account_ddfd2439_exports)),
-      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_e5844ccd(), create_e5844ccd_exports)),
-      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_7cdf8953(), about_7cdf8953_exports)),
-      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_1d28975d(), index_1d28975d_exports)),
-      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_ecb788a8(), live_ecb788a8_exports)),
-      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_6302bacf(), index_6302bacf_exports)),
-      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_12cdc655(), index_12cdc655_exports)),
-      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_613bf545(), serial_613bf545_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_267661ca(), layout_267661ca_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_3792ad3f(), error_3792ad3f_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_0a46f72a(), index_0a46f72a_exports)),
+      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_2901f1a2(), account_2901f1a2_exports)),
+      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_1ae939e7(), create_1ae939e7_exports)),
+      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_14a3211b(), about_14a3211b_exports)),
+      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_46d808ce(), index_46d808ce_exports)),
+      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_09b939eb(), live_09b939eb_exports)),
+      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_0e7f9456(), index_0e7f9456_exports)),
+      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_6faed9b2(), index_6faed9b2_exports)),
+      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_6391cba1(), serial_6391cba1_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-0216296f.js", "css": ["assets/pages/__layout.svelte-e8e46778.css", "assets/stores-53f2d04d.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-0216296f.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/UserAddress-83b2644a.js", "chunks/stores-5a205454.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-59868692.js", "css": [], "js": ["pages/__error.svelte-59868692.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-fe741cb7.js", "css": ["assets/pages/index.svelte-10dbea1e.css", "assets/stores-53f2d04d.css"], "js": ["pages/index.svelte-fe741cb7.js", "chunks/vendor-ff177ec3.js", "chunks/constants-358452f5.js", "chunks/stores-ce4ff439.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-15d7e16b.js", "css": ["assets/stores-53f2d04d.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-15d7e16b.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/AccountContents-265f660b.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/UserAddress-83b2644a.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-18412874.js", "css": ["assets/pages/create.svelte-88355eb7.css", "assets/stores-53f2d04d.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-18412874.js", "chunks/vendor-ff177ec3.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/LibLoader-aaeb1fa6.js", "chunks/Float-365f8d6a.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-e895671f.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-e895671f.js", "chunks/vendor-ff177ec3.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-0ad8e8a6.js", "css": [], "js": ["pages/claim/index.svelte-0ad8e8a6.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-bcff5979.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-bcff5979.js", "chunks/vendor-ff177ec3.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-98aa63c5.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-53f2d04d.css"], "js": ["pages/_address_/index.svelte-98aa63c5.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/Meta-24bd7e43.js", "chunks/constants-358452f5.js", "chunks/AccountContents-265f660b.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-9bb841e8.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-53f2d04d.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-9bb841e8.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/constants-358452f5.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/LibLoader-aaeb1fa6.js", "chunks/Meta-24bd7e43.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-99adf4c2.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-53f2d04d.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-99adf4c2.js", "chunks/vendor-ff177ec3.js", "chunks/stores-5a205454.js", "chunks/Loading-cc7b16e5.js", "chunks/Float-365f8d6a.js", "chunks/actions-42e23408.js", "chunks/stores-ce4ff439.js", "chunks/Meta-24bd7e43.js", "chunks/constants-358452f5.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-407ca28b.js", "css": ["assets/pages/__layout.svelte-e8e46778.css", "assets/stores-f514e5d1.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-407ca28b.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/UserAddress-d0e0ef5e.js", "chunks/stores-0a26e7b3.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-90357f7c.js", "css": [], "js": ["pages/__error.svelte-90357f7c.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-aab3d46a.js", "css": ["assets/pages/index.svelte-077525cb.css", "assets/stores-f514e5d1.css"], "js": ["pages/index.svelte-aab3d46a.js", "chunks/vendor-2b38a6d6.js", "chunks/constants-358452f5.js", "chunks/stores-1a1c8456.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-056949cf.js", "css": ["assets/stores-f514e5d1.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-056949cf.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/AccountContents-f8ca9783.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/UserAddress-d0e0ef5e.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-b37f24c2.js", "css": ["assets/pages/create.svelte-4c49840d.css", "assets/stores-f514e5d1.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-b37f24c2.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/LibLoader-f077cfca.js", "chunks/Float-0a981fca.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-a85a9476.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-a85a9476.js", "chunks/vendor-2b38a6d6.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-78a2961b.js", "css": [], "js": ["pages/claim/index.svelte-78a2961b.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-5e980695.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-5e980695.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-cb905b0b.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-f514e5d1.css"], "js": ["pages/_address_/index.svelte-cb905b0b.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/Meta-d56b7633.js", "chunks/constants-358452f5.js", "chunks/AccountContents-f8ca9783.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-dbfe44fb.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-f514e5d1.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-dbfe44fb.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/LibLoader-f077cfca.js", "chunks/Meta-d56b7633.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-4ecb4d15.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-f514e5d1.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-4ecb4d15.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/Meta-d56b7633.js", "chunks/constants-358452f5.js"], "styles": [] } };
   }
 });
 
@@ -24861,7 +24861,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_f7bd2c19();
+init_app_31f4847e();
 
 // .svelte-kit/vercel/entry.js
 init();

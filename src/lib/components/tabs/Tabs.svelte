@@ -15,7 +15,7 @@ import {
 
 // state
 export let items = [];
-export let activeTabValue = 1;
+export let activeTabValue;
 let isHovered = {
     right: false,
     left: false
@@ -74,13 +74,24 @@ const handleClick = tabValue => () => (activeTabValue = tabValue);
 <!-- TabsList -->
 <main class="main-container">
     <section class="tab-list-container">
+        
+
         <div class="chevron-wrapper" on:click={() => handleAction("decrement")}>
             <div
-                class="chevron-icon"
+                class={activeTabValue === 0 ? "chevron-icon-disabled" : "chevron-icon"}
                 on:pointerenter={() => (isHovered.left = !isHovered.left)}
                 on:pointerleave={() => (isHovered.left = !isHovered.left)}
                 >
                 <Icon
+                class="chevron-icon"
+                icon="akar-icons:circle-chevron-left"
+                height={36}
+                color={isHovered.left ? "var(--primary)" : "lightgrey"}
+                />
+                
+                
+                <Icon
+                    disabled={true}
                     class="chevron-icon"
                     icon="akar-icons:circle-chevron-left"
                     height={36}
@@ -197,7 +208,7 @@ li.active {
     background-color: #fff;
     border-bottom: 2px solid var(--primary);
     color: var(--primary);
-    background-color: rgba(218, 4, 106, 0.1);
+    background-color: rgba(56, 232, 198, 0.1);
     margin: 0;
     padding: 0;
     width: 20%;
@@ -211,6 +222,9 @@ li.active {
 
 .chevron-icon {
     cursor: pointer;
+}
+.chevron-icon-disabled {
+    opacity: 0.5;
 }
 
 .tab-content-container {

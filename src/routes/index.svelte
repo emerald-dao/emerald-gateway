@@ -1,28 +1,38 @@
 <script>
-  import Icon from "@iconify/svelte"
+import Icon from "@iconify/svelte"
 
-  import CheckAddress from '$lib/components/CheckAddress.svelte';
-  import CreateProject from '$lib/components/CreateProject.svelte';
-  import { PAGE_TITLE_EXTENSION } from '$lib/constants';
-  import { handleTokenSelection, handleCollectionSelection,  } from "$lib/components/tabs/utils"
+import CheckAddress from '$lib/components/CheckAddress.svelte';
+import CreateProject from '$lib/components/CreateProject.svelte';
+import {
+    PAGE_TITLE_EXTENSION
+} from '$lib/constants';
+import {
+    handleTokenSelection,
+    handleCollectionSelection,
+} from "$lib/components/tabs/utils"
 
-  import { tabs, tokens, collections } from '$lib/stores';
+import {
+    tabs,
+    tokens,
+    collections
+} from '$lib/stores';
 
-  let tabsValue
-  let activeTabValue = 0
-  let isHovered = {right: false, left: false}
-
-
+let tabsValue
+let activeTabValue = 0
+let isHovered = {
+    right: false,
+    left: false
+}
 
 // logic
-  tabs.subscribe(value => {
-		tabsValue = value;
-	});
+tabs.subscribe(value => {
+    tabsValue = value;
+});
 
-  console.log("store tabs", tabsValue)
+console.log("store tabs", tabsValue)
 
-  const handleEvent = msg => {
-console.log("handling")
+const handleEvent = msg => {
+    console.log("handling")
     switch (activeTabValue) {
         case 0:
             $tabs[activeTabValue].done = true
@@ -41,133 +51,131 @@ console.log("handling")
             break;
     }
 
+    // console.log("msg", msg.detail.event) 
+    // const event = msg.detail.event
+    // const id = msg.detail.id
 
-// console.log("msg", msg.detail.event) 
-// const event = msg.detail.event
-// const id = msg.detail.id
+    // switch (event) {
+    //   case "selectToken":
+    //   handleTokenSelection($tokens, id)
+    //     break;
 
-// switch (event) {
-//   case "selectToken":
-//   handleTokenSelection($tokens, id)
-//     break;
-    
-//   case "selectCollection":
-//   handleCollectionSelection($collections, id)
-//     break;
+    //   case "selectCollection":
+    //   handleCollectionSelection($collections, id)
+    //     break;
 
-//   case "continue":
-//     $tabs[id].done = true
-//     handleAction("increment")
+    //   case "continue":
+    //     $tabs[id].done = true
+    //     handleAction("increment")
 
-//     break;
+    //     break;
 
-//   default:
-//     break;
+    //   default:
+    //     break;
 }
 
-  const handleAction = action => action === "increment" ? activeTabValue ++ : activeTabValue --
-	const handleClick = tabValue => () => (activeTabValue = tabValue);
+const handleAction = action => {
+    if (activeTabValue === 0 && action === "decrement" || activeTabValue === 3 && action === "increment") {
+      return
+    } else {
+        action === "increment" ? activeTabValue++ : activeTabValue--
 
-
+    }
+}
+const handleClick = tabValue => () => (activeTabValue = tabValue);
 </script>
 
 <svelte:head>
-  <title>Home {PAGE_TITLE_EXTENSION}</title>
-</svelte:head>
+    <title>Home {PAGE_TITLE_EXTENSION}</title>
+    </svelte:head>
 
-<!-- <video autoplay muted loop id="myVideo">
+    <!-- <video autoplay muted loop id="myVideo">
   <source src="island.mp4" type="video/mp4" />
-</video> -->
+    </video> -->
 
-<!-- <div class="grid">
-  
+    <!-- <div class="grid">
 
     <
-</div> -->
+    </div> -->
 
-<article>
-  <main class="tabbar">
-    <div class="chevron-wrapper" on:click={() => handleAction("decrement")}>
-      <div
-        class="chevron-icon"
-        on:pointerenter={() => (isHovered.left = !isHovered.left)}
-        on:pointerleave={() => (isHovered.left = !isHovered.left)}
-      >
-        <Icon
-          class="chevron-icon"
-          icon="akar-icons:circle-chevron-left"
-          height={36}
-          color={isHovered.left ? "var(--primary)" : "lightgrey"}
-        />
-      </div>
-    </div>
-    <ul>
-      {#each tabsValue as item, i}
-        <li
-          class={activeTabValue === item.value ? "active" : "inactive-tab"}
-          on:click={handleClick(item.value)}
-        >
-          <Icon
-            icon={item.icon}
-            height={30}
-            color={tabsValue[i].done
-              ? "#85DFB4"
-              : activeTabValue === item.value
-              ? "var(--primary)"
-              : "lightgrey"}
-          />
-        </li>
-      {/each}
-    </ul>
-    <div class="chevron-wrapper" on:click={() => handleAction("increment")}>
-      <div
-        class="chevron-icon"
-        on:pointerenter={() => (isHovered.right = !isHovered.right)}
-        on:pointerleave={() => (isHovered.right = !isHovered.right)}
-      >
-        <Icon
-          class="chevron-icon"
-          icon="akar-icons:circle-chevron-right"
-          height={36}
-          color={isHovered.right ? "var(--primary)" : "lightgrey"}
-        />
-      </div>
-    </div>
-  </main>
+    <article>
+        <main class="tabbar">
+            <div class="chevron-wrapper" on:click={() => handleAction("decrement")}>
+                <div
+                    class={activeTabValue === 0 ? "chevron-icon-disabled" : "chevron-icon"}
+                    on:pointerenter={() => (isHovered.left = !isHovered.left)}
+                    on:pointerleave={() => (isHovered.left = !isHovered.left)}
+                    >
+                    <Icon
+                        class="chevron-icon"
+                        icon="akar-icons:circle-chevron-left"
+                        height={36}
+                        color={isHovered.left && activeTabValue !== 0 ? "var(--primary)" : "lightgrey"}
+                        />
+                        </div>
+                        </div>
+                        <ul>
+                            {#each tabsValue as item, i}
+                            <li
+                                class={activeTabValue === item.value ? "active" : "inactive-tab"}
+                                on:click={handleClick(item.value)}
+                                >
+                                <Icon
+                                    icon={item.icon}
+                                    height={30}
+                                    color={tabsValue[i].done
+                                    ? "#85DFB4"
+                                    : activeTabValue === item.value
+                                    ? "var(--primary)"
+                                    : "lightgrey"}
+                                    />
+                                    </li>
+                                    {/each}
+                                    </ul>
+                                    <div class="chevron-wrapper" on:click={() => handleAction("increment")}>
+                                        <div
+                                        class={activeTabValue === 3 ? "chevron-icon-disabled" : "chevron-icon"}
+                                        on:pointerenter={() => (isHovered.right = !isHovered.right)}
+                                            on:pointerleave={() => (isHovered.right = !isHovered.right)}
+                                            >
+                                            <Icon
+                                                class="chevron-icon"
+                                                icon="akar-icons:circle-chevron-right"
+                                                height={36}
+                                                color={isHovered.right && activeTabValue !== 3 ? "var(--primary)" : "lightgrey"}
+                                                />
+                                                </div>
+                                                </div>
+                                                </main>
 
-  <!-- TabContent -->
-  {#each tabsValue as item}
-    {#if activeTabValue == item.value}
-      <div class="tab-content-container" >
-      <!-- <div class="tab-content-container" in:fade={{ duration: 1000 }}> -->
-        <!-- <svelte:component this={item.component} on:message={handleEvent} /> -->
-        <svelte:component this={item.component}  />
-      </div>
-      <footer>
-        <div class="mt-0 mb-0 pl-1">
-          <button class="contrast small-button" 
-          on:click={handleEvent}
-          >Continue</button
-          >
-        </div>
-      </footer>
-    {/if}
-  {/each}
+                                                <!-- TabContent -->
+                                                {#each tabsValue as item}
+                                                {#if activeTabValue == item.value}
+                                                <div class="tab-content-container" >
+                                                    <!-- <div class="tab-content-container" in:fade={{ duration: 1000 }}> -->
+                                                    <!-- <svelte:component this={item.component} on:message={handleEvent} /> -->
+                                                    <svelte:component this={item.component}  />
+                                                </div>
+                                                <footer>
+                                                    <div class="mt-0 mb-0 pl-1">
+                                                        <button class="contrast small-button"
+                                                            on:click={handleEvent}
+                                                            >Continue</button
+                                                            >
+                                                            </div>
+                                                            </footer>
+                                                            {/if}
+                                                            {/each}
 
-  <!-- <div class="grid no-break mb-1">
-    <div>div 1</div>
-    <div>div 1</div>
-  </div> -->
-  <!-- <h2 id="findAddress">View FLOATs from an Address</h2>
-  <CheckAddress /> -->
-</article>
+                                                       
+                                                            </article>
 
 <style>
-  h1 {
+h1 {
     text-align: center;
-  }
+}
 
-  ul {
+ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -180,13 +188,13 @@ console.log("handling")
     border-radius: 9px;
     background: rgba(255, 255, 255, 0.08);
     list-style: none;
-  }
+}
 
-  ul::-webkit-scrollbar {
+ul::-webkit-scrollbar {
     display: none;
-  }
+}
 
-  li {
+li {
     margin: 0;
     padding: 0;
     display: flex;
@@ -196,9 +204,9 @@ console.log("handling")
     height: 100%;
     min-width: 25%;
     cursor: pointer;
-  }
+}
 
-  li.active {
+li.active {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,44 +214,52 @@ console.log("handling")
     background-color: #fff;
     border-bottom: 2px solid var(--primary);
     color: var(--primary);
-    background-color: rgba(218, 4, 106, 0.1);
+    background-color: rgba(56, 232, 198, 0.1);
     margin: 0;
     padding: 0;
     width: 25%;
     height: 100%;
     min-width: 25%;
-  }
+}
 
-  .inactive-tab:hover {
+.inactive-tab:hover {
     background: var(--form-element-border-color);
-  }
+}
 
-  .tabbar {
+.chevron-icon {
+    cursor: pointer;
+}
+
+.chevron-icon-disabled {
+    opacity: 0.5;
+}
+
+.tabbar {
     margin-top: -6%;
     height: 3rem;
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .tag-line {
+.tag-line {
     font-weight: 300;
     font-size: 1.2rem;
     margin-top: 30px;
     display: block;
-  }
+}
 
-  .island {
+.island {
     width: 30vw;
     max-width: 400px;
-  }
+}
 
-  .chevron-wrapper {
+.chevron-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 20%;
-  }
+}
 </style>

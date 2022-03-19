@@ -1,1 +1,0 @@
-import{S as n,i as o,s as c,e as l,c as h,a as u,d as s,b as m,f as d,G as e}from"./vendor-ff177ec3.js";function f(r){let a;return{c(){a=l("article"),this.h()},l(t){a=h(t,"ARTICLE",{"aria-busy":!0}),u(a).forEach(s),this.h()},h(){m(a,"aria-busy","true")},m(t,i){d(t,a,i)},p:e,i:e,o:e,d(t){t&&s(a)}}}class _ extends n{constructor(a){super();o(this,a,null,f,c,{})}}export{_ as L};

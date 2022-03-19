@@ -74,9 +74,6 @@ export const tabs = writable ([{
 }
 ]);
 
-
-
-
 export const theme = writable(null);
 
 export const tab1data = writable({

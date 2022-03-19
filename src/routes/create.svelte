@@ -410,7 +410,7 @@ transaction(eventId: UInt64, recipient: Address) {
   }
 
   .xmp-dark {
-    background: rgb(56, 232, 198, 0.25);
+    background: rgb(56, 232, 198,, 0.25);
   }
 
   .xmp-light {

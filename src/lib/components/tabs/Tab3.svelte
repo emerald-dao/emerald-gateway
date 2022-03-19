@@ -155,7 +155,7 @@ const handlePointerLeave = id => hoveredId = null
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(218, 4, 106, 0.1);
+    background-color: rgba(56, 232, 198, 0.1);
     cursor: pointer;
     padding-left: 3%;
 
