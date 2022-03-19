@@ -101,7 +101,7 @@ const handlePointerLeave = id => hoveredId = null
                     class={amount ? "token-container-active" : "token-container-inactive"}
                     >
                     <div
-                        style="display:flex; justify-content:center; align-items:center; width: 2rem; height:100%;"
+                        style="display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "
                         >
                         <img
                             style="height:100%; border-radius: 50px; object-fit:cover"
@@ -109,7 +109,7 @@ const handlePointerLeave = id => hoveredId = null
                             alt="logo"
                             />
                     </div>
-                    <div  >
+                    <div style="margin-right: 1rem;"  >
                         {label}
                     </div>
                     {#if amount !== 0}
@@ -168,7 +168,7 @@ const handlePointerLeave = id => hoveredId = null
 
 .token-inactive {
     display: flex;
-    height: 20%;
+    height: 3.5rem;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -178,7 +178,7 @@ const handlePointerLeave = id => hoveredId = null
 
 .token-active {
     display: flex;
-    height: 20%;
+    height: 3.5rem;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -190,8 +190,8 @@ const handlePointerLeave = id => hoveredId = null
 .token-container-active {
     position: relative;
     display: flex;
-    width: 28%;
-    height: 100%;
+    width: 30%;
+    height: 70%;
     justify-content: space-between;
     border-radius: 50px;
     align-items: center;
@@ -202,13 +202,14 @@ const handlePointerLeave = id => hoveredId = null
 .token-container-inactive {
     position: relative;
     display: flex;
-    width: 18%;
-    height: 100%;
+    width: 20%;
+    height: 70%;
     justify-content: space-between;
     border-radius: 50px;
     align-items: center;
     background-color: #252E37;
     font-weight: bold;
+
 }
 
 .icon-container {
@@ -234,6 +235,12 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+li{
+        margin: 0;
+        padding: 0;
+    }
+
 
 textarea {
     border-top-left-radius: 0px;
