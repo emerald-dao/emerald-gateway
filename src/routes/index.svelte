@@ -14,11 +14,13 @@ import {
 import {
     tabs,
     tokens,
-    collections
+    collections,
+    activeTabVal,
 } from '$lib/stores';
+import Dialog from "$lib/components/Dialog.svelte";
 
 let tabsValue
-let activeTabValue = 0
+let activeTabValue;
 let isHovered = {
     right: false,
     left: false
@@ -29,10 +31,9 @@ tabs.subscribe(value => {
     tabsValue = value;
 });
 
-console.log("store tabs", tabsValue)
+activeTabVal.subscribe(val =>  activeTabValue = val)
 
 const handleEvent = msg => {
-    console.log("handling")
     switch (activeTabValue) {
         case 0:
             $tabs[activeTabValue].done = true
@@ -50,56 +51,27 @@ const handleEvent = msg => {
         default:
             break;
     }
-
-    // console.log("msg", msg.detail.event) 
-    // const event = msg.detail.event
-    // const id = msg.detail.id
-
-    // switch (event) {
-    //   case "selectToken":
-    //   handleTokenSelection($tokens, id)
-    //     break;
-
-    //   case "selectCollection":
-    //   handleCollectionSelection($collections, id)
-    //     break;
-
-    //   case "continue":
-    //     $tabs[id].done = true
-    //     handleAction("increment")
-
-    //     break;
-
-    //   default:
-    //     break;
 }
 
 const handleAction = action => {
     if (activeTabValue === 0 && action === "decrement" || activeTabValue === 3 && action === "increment") {
-      return
+        return
     } else {
         action === "increment" ? activeTabValue++ : activeTabValue--
 
     }
 }
-const handleClick = tabValue => () => (activeTabValue = tabValue);
+const handleClick = tabValue => () => ($activeTabVal = tabValue);
 </script>
 
 <svelte:head>
     <title>Home {PAGE_TITLE_EXTENSION}</title>
     </svelte:head>
 
-    <!-- <video autoplay muted loop id="myVideo">
-  <source src="island.mp4" type="video/mp4" />
-    </video> -->
-
-    <!-- <div class="grid">
-
-    <
-    </div> -->
-
+    <Dialog />
     <article>
-        <main class="tabbar">
+        <main class="main-container">
+            <!-- TabBar -->
             <div class="chevron-wrapper" on:click={() => handleAction("decrement")}>
                 <div
                     class={activeTabValue === 0 ? "chevron-icon-disabled" : "chevron-icon"}
@@ -122,7 +94,7 @@ const handleClick = tabValue => () => (activeTabValue = tabValue);
                                 >
                                 <Icon
                                     icon={item.icon}
-                                    height={30}
+                                    height={i === 3 ? 26 : 30}
                                     color={tabsValue[i].done
                                     ? "#85DFB4"
                                     : activeTabValue === item.value
@@ -134,8 +106,8 @@ const handleClick = tabValue => () => (activeTabValue = tabValue);
                                     </ul>
                                     <div class="chevron-wrapper" on:click={() => handleAction("increment")}>
                                         <div
-                                        class={activeTabValue === 3 ? "chevron-icon-disabled" : "chevron-icon"}
-                                        on:pointerenter={() => (isHovered.right = !isHovered.right)}
+                                            class={activeTabValue === 3 ? "chevron-icon-disabled" : "chevron-icon"}
+                                            on:pointerenter={() => (isHovered.right = !isHovered.right)}
                                             on:pointerleave={() => (isHovered.right = !isHovered.right)}
                                             >
                                             <Icon
@@ -167,7 +139,6 @@ const handleClick = tabValue => () => (activeTabValue = tabValue);
                                                             {/if}
                                                             {/each}
 
-                                                       
                                                             </article>
 
 <style>
@@ -234,7 +205,7 @@ li.active {
     opacity: 0.5;
 }
 
-.tabbar {
+.main-container {
     margin-top: -6%;
     height: 3rem;
     display: flex;

@@ -2,8 +2,9 @@ import Tab1 from "$lib/components/tabs/Tab1.svelte"
 import Tab2 from "$lib/components/tabs/Tab2.svelte"
 import Tab3 from "$lib/components/tabs/Tab3.svelte"
 import Tab4 from "$lib/components/tabs/Tab4.svelte"
+// import { openDialog } from "./utils"
 
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 
 export const draftFloat = writable({
   name: '',
@@ -19,6 +20,10 @@ export const draftFloat = writable({
   claimCode: '',
   transferrable: true,
 });
+
+export const activeTabVal = writable(0)
+
+activeTabVal.subscribe(val => console.log("active tab val", val))
 
 export const tabs = writable ([{
   label: "Content",
@@ -101,6 +106,7 @@ export const tokens = writable([
 ]);
 
 export const selectedToken = writable(0)
+export const selectedCollection= writable(0)
 
 
 export const collections = writable([
@@ -110,6 +116,7 @@ export const collections = writable([
     imgUrl:
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618a0cea8665abc4610c4ca6_basic_beasts_o5telf.png",
     selected: false,
+    amount:0
   },
   {
     id: 1,
@@ -117,6 +124,7 @@ export const collections = writable([
     imgUrl:
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618b83df2183ef7f2902c886_thumbnail_ballerz_jwtdpb.jpg",
     selected: false,
+    amount:0
   },
   {
     id: 2,
@@ -124,6 +132,7 @@ export const collections = writable([
     imgUrl:
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/619efc34fe0b49bb68dc20b8_flovatar_5-01_1_bo3h2k.png",
     selected: false,
+    amount:0
   },
 ]);
 
@@ -133,13 +142,21 @@ export const modal = writable({
   opened: false
 })
 
+//Dialog
 export const dialog = writable({
   title: "",
   action: "",
-  opened: false
+  opened: false,
 })
 
+export const dialogS = derived(dialog, $dialog => console.log("dialog state", $dialog));
 
-// draftFloat.subscribe((value) => {
-//   console.log(value)
-// })
+
+// export const handleEdit = (id) => {
+//       console.log("id cole", id)
+
+
+//       console.log("selectedCollection", selectedCollection)
+//   }
+
+  

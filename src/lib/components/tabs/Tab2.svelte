@@ -3,37 +3,31 @@ import {
     fly
 } from 'svelte/transition';
 import {
-    getContext
-} from 'svelte';
-import {
-    tokens, modal, dialog, selectedToken
+    tokens,
+    modal,
+    dialog,
+    selectedToken
 } from '../../stores';
-import {
-    createEventDispatcher
-} from 'svelte';
 
 import {
     handleEvent
 } from './utils';
-// import Popup from '../Popup.svelte';
+
 import Modal from '../Modal.svelte';
 import HorizontalSpace from "../HorizontalSpace.svelte";
 import PrimaryBtn from "../PrimaryBtn.svelte"
 import Icon from "@iconify/svelte";
-import Dialog from '../Dialog.svelte';
-// import { modal } from '../../stores.js';
+// import Dialog from '../Dialog.svelte';
+import TabHeader from './TabHeader.svelte';
 
 let hoveredId;
-// let isOpenModal = false;
 let tokensValue;
 let ModalVal
 
-modal.subscribe(val => ModalVal= val)
+modal.subscribe(val => ModalVal = val)
 tokens.subscribe(val => {
     tokensValue = val
-    console.log("tokensVal",  tokensValue)
 })
-const dispatch = createEventDispatcher();
 
 function openModal() {
     $modal.opened = true
@@ -43,19 +37,17 @@ function openDialog() {
     $dialog.opened = true
 }
 
-function closeModal() {
-    $modal.opened = false
-}
+// function closeModal() {
+//     $modal.opened = false
+// }
 
-function closeDialog() {
-    $dialog.opened = false
+// function closeDialog() {
+//     $dialog.opened = false
+// }
 
-}
-
-const handleEdit = (id) =>  {
+const handleEdit = (id) => {
     $selectedToken = id
     openDialog()
-
 }
 
 const handleSelection = (id) => {
@@ -64,18 +56,16 @@ const handleSelection = (id) => {
     $tokens[id].selected = true
     console.log("tokens val", tokensValue)
 
-
     // check store state
     const tokenAmount = $tokens[id].amount
-    if(tokenAmount === 0) {
-              openDialog()
+    if (tokenAmount === 0) {
+        openDialog()
     } else {
-  //reset token amount and selection state
-  $tokens[id].amount = 0
-    $tokens[id].selected = false
+        //reset token amount and selection state
+        $tokens[id].amount = 0
+        $tokens[id].selected = false
     }
 
-  
 }
 
 const handlePointerEnter = id => hoveredId = id
@@ -83,12 +73,9 @@ const handlePointerLeave = id => hoveredId = null
 </script>
 
 <Modal   />
-<Dialog  />
+<!-- <Dialog  /> -->
 <main class="container">
-    <header>
-        <h3 class="mt-1">Tokens</h3>
-        <p>Something about the Tokens</p>
-    </header>
+    <TabHeader title={"Tokens"} subtitle={"Something about the tokens"} />
     <div class="tokens-container mt-2">
         <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
             {#each tokensValue as { id, label, amount,  imgUrl, selected }, i}
@@ -104,7 +91,7 @@ const handlePointerLeave = id => hoveredId = null
                         style="display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "
                         >
                         <img
-                            style="height:100%; border-radius: 50px; object-fit:cover"
+                            style="height:96%; border-radius: 50px; object-fit:cover"
                             src={imgUrl}
                             alt="logo"
                             />
@@ -114,43 +101,42 @@ const handlePointerLeave = id => hoveredId = null
                     </div>
                     {#if amount !== 0}
                     <div class="amount-container"
-                    on:click={() => handleEdit(id)}
-                    >
+                        on:click={() => handleEdit(id)}
+                        >
                         {amount}
                         <div class="icon-container">
                             <Icon icon="akar-icons:edit" s/>
 
-                        </div>
-                    </div>
-                    {:else}
-                    <div></div>
-                    {/if}
+                                </div>
+                                </div>
+                                {:else}
+                                <div></div>
+                                {/if}
 
-                </div>
-                <div
-                    style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
-                    >
+                                </div>
+                                <div
+                                    style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
+                                    >
 
-                    <input
-                        type="checkbox"
-                        on:click={() => handleSelection(id)}
-                        bind:checked={selected}
-                    />
-                </div>
-            </li>
-            {/each}
-        </ul>
-        <footer class="custom-container">
-            <div class="secondary-btn" on:click={openModal}>
-                <div>
-                    <Icon icon="ant-design:plus-circle-outlined" height={"1.2rem"} />
-                </div>
-                <HorizontalSpace value="0.3rem" />
-                <div>ADD CUSTOM TOKEN</div>
-            </div>
-        </footer>
-
-        </main>
+                                    <input
+                                        type="checkbox"
+                                        on:click={() => handleSelection(id)}
+                                    bind:checked={selected}
+                                    />
+                                </div>
+                                </li>
+                                {/each}
+                                </ul>
+                                <footer class="custom-container">
+                                    <div class="secondary-btn" on:click={openModal}>
+                                        <div>
+                                            <Icon icon="ant-design:plus-circle-outlined" height={"1.2rem"} />
+                                        </div>
+                                        <HorizontalSpace value="0.3rem" />
+                                        <div>ADD CUSTOM TOKEN</div>
+                                    </div>
+                                </footer>
+                                </main>
 
 <style>
 .amount-container {
@@ -216,13 +202,13 @@ const handlePointerLeave = id => hoveredId = null
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color:var(--primary);
+    background-color: var(--primary);
     border-radius: 100px;
     position: absolute;
     top: -0.6rem;
     right: 0px;
-    height:1.2rem;
-    width:1.2rem;
+    height: 1.2rem;
+    width: 1.2rem;
     padding: 0.2rem;
 }
 
@@ -236,11 +222,10 @@ ul {
     padding: 0;
 }
 
-li{
-        margin: 0;
-        padding: 0;
-    }
-
+li {
+    margin: 0;
+    padding: 0;
+}
 
 textarea {
     border-top-left-radius: 0px;

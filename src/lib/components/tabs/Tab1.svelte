@@ -7,6 +7,7 @@ import {
 import {
     handleEvent
 } from "./utils"
+import TabHeader from "./TabHeader.svelte";
 
 export let tab1val
 
@@ -21,21 +22,15 @@ const handleChange = (e) => {
 
     if (id === "name") {
         $tab1data.name = val
-        console.log("tab1data", $tab1data)
     } else {
         $tab1data.description = val
-        console.log("newData", $tab1data)
     }
 
 }
 </script>
 
 <div >
-    <header>
-        <h3 class="mt-1">Tab 1</h3>
-        <p>Something about Tab 1</p>
-    </header>
-
+    <TabHeader title={"Tab 1"} subtitle={"Something about tab 1"} />
     <div >
         <div style="width:100%">
             <h3 class="mt-1">Name</h3>
