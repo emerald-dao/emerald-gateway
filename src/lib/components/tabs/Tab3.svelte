@@ -19,6 +19,7 @@ import {
     handleEvent
 } from './utils';
 
+
 const dispatch = createEventDispatcher();
 
 import Modal from '../Modal.svelte';
@@ -89,6 +90,16 @@ const handleSelection = (id) => {
 <main class="container">
     <TabHeader title={"Collections"} subtitle={"Something about the collections"} />
     <div class="collections-container mt-2">
+        <header class="flex-align">
+
+            <div style="margin-right:1rem">
+                <Icon icon="akar-icons:search" />
+            </div>
+                <div class="mt-1"  >
+                    <input   placeholder="Search..."  />
+
+                </div>
+        </header>
         <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
             <!-- {#each collectionsValue as { id, label, imgUrl, amount, selected }, i} -->
             {#each collectionsValue as collection, i}
@@ -105,18 +116,57 @@ const handleSelection = (id) => {
                 <input
                     type="checkbox"
                     on:click={() => handleSelection(collection.id)}
-                bind:checked={collection.selected}
+                    bind:checked={collection.selected}
                 />
             </div>
             </li>
             {/each}
         </ul>
-
     </div>
-
 </main>
 
 <style>
+.input-container {
+    display: flex;
+    height: 1rem;
+    widows: 100%;
+    justify-content: center;
+}
+
+input {
+    margin:0;
+    padding: 0;
+}
+
+.search-input{
+    height: 1rem;
+    max-height: 0.5rem;
+    padding: 0;
+    margin: 0;
+}
+  
+ .icon-container{
+     width: 2rem;
+     height:100%;
+ }   
+
+.searchbar {
+    display: flex;
+    align-items: center;
+    width: 12rem;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+}
+
+header {
+    border-bottom: 1px solid var(--form-element-border-color);
+    /* height:3.6rem; */
+    margin: 0;
+    padding: 0.5rem;
+    
+}
+
 .collection-inactive {
     display: flex;
     height: 3.5rem;
@@ -158,7 +208,7 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 13rem;
+    height: 26rem;
     border: 2px solid var(--form-element-border-color);
     width: 100%;
     border-radius: 9px;

@@ -222,6 +222,12 @@ main {
   margin-right:auto;
 }
 
+.flex-align{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .cards {
   
 }

@@ -136,6 +136,8 @@ export const collections = writable([
   },
 ]);
 
+export const searchVal = writable(" ")
+
 export const modal = writable({
   title: "",
   action: "",
@@ -148,6 +150,7 @@ export const dialog = writable({
   action: "",
   opened: false,
 })
+
 
 export const dialogS = derived(dialog, $dialog => console.log("dialog state", $dialog));
 
