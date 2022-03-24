@@ -19,7 +19,6 @@ import {
     handleEvent
 } from './utils';
 
-
 const dispatch = createEventDispatcher();
 
 import Modal from '../Modal.svelte';
@@ -29,11 +28,13 @@ import TabHeader from "./TabHeader.svelte"
 import CollectionComponent from "./CollectionComponent.svelte"
 
 import Icon from "@iconify/svelte";
+import SearchComponent from './SearchComponent.svelte';
 
 let hoveredId;
 let selectedId;
 let isOpenModal = false;
 let collectionsValue;
+let searchVal;
 
 collections.subscribe(val => collectionsValue = val)
 
@@ -84,24 +85,31 @@ const handleSelection = (id) => {
     }
 
 }
+
+// Query results
+let filteredCollections = [];
+
+// For Search Input
+let searchTerm = "";
+// // resets language menu if search input is used
+// $: if (searchTerm) selectedLang = ""; 
+
+const searchCollections = () => {
+    return filteredCollections = collectionsValue.filter(collection => {
+        let collectionLabel = collection.label.toLowerCase();
+        return collectionLabel.includes(searchTerm.toLowerCase())
+    });
+}
 </script>
 
 <!-- <Dialog /> -->
 <main class="container">
     <TabHeader title={"Collections"} subtitle={"Something about the collections"} />
-    <div class="collections-container mt-2">
-        <header class="flex-align">
-
-            <div style="margin-right:1rem">
-                <Icon icon="akar-icons:search" />
-            </div>
-                <div class="mt-1"  >
-                    <input   placeholder="Search..."  />
-
-                </div>
-        </header>
-        <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
-            <!-- {#each collectionsValue as { id, label, imgUrl, amount, selected }, i} -->
+     <div class="collections-container mt-2">
+        <SearchComponent bind:searchTerm on:input={searchCollections} />
+        {#if !searchTerm && filteredCollections.length === 0}
+        <!-- <div>no results then</div> -->
+          <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
             {#each collectionsValue as collection, i}
             <li
                 class={hoveredId === collection.id ? "collection-active" : "collection-inactive"}
@@ -122,49 +130,44 @@ const handleSelection = (id) => {
             </li>
             {/each}
         </ul>
+	{:else if filteredCollections.length > 0}
+
+    <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
+
+{#each filteredCollections as collection}
+
+<li
+class={hoveredId === collection.id ? "collection-active" : "collection-inactive"}
+on:pointerenter={() => handlePointerEnter(collection.id)}
+on:pointerleave={() => handlePointerLeave(collection.id)}
+>
+<CollectionComponent {...collection} dialog={$dialog} selectedCollection={$selectedCollection}  />
+
+<div
+style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
+>
+<input
+    type="checkbox"
+    on:click={() => handleSelection(collection.id)}
+    bind:checked={collection.selected}
+/>
+</div>
+</li>
+{/each}	
+</ul>
+
+        {/if}
+
     </div>
 </main>
 
 <style>
-.input-container {
-    display: flex;
-    height: 1rem;
-    widows: 100%;
-    justify-content: center;
-}
-
-input {
-    margin:0;
-    padding: 0;
-}
-
-.search-input{
-    height: 1rem;
-    max-height: 0.5rem;
-    padding: 0;
-    margin: 0;
-}
-  
- .icon-container{
-     width: 2rem;
-     height:100%;
- }   
-
-.searchbar {
-    display: flex;
-    align-items: center;
-    width: 12rem;
-    height: 2rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-}
-
 header {
     border-bottom: 1px solid var(--form-element-border-color);
     /* height:3.6rem; */
     margin: 0;
     padding: 0.5rem;
-    
+
 }
 
 .collection-inactive {
@@ -220,3 +223,25 @@ li {
     width: 100%;
 }
 </style>
+
+  <!-- <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
+            {#each collectionsValue as collection, i}
+            <li
+                class={hoveredId === collection.id ? "collection-active" : "collection-inactive"}
+                on:pointerenter={() => handlePointerEnter(collection.id)}
+                on:pointerleave={() => handlePointerLeave(collection.id)}
+                >
+                <CollectionComponent {...collection} dialog={$dialog} selectedCollection={$selectedCollection}  />
+
+            <div
+                style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
+                >
+                <input
+                    type="checkbox"
+                    on:click={() => handleSelection(collection.id)}
+                    bind:checked={collection.selected}
+                />
+            </div>
+            </li>
+            {/each}
+        </ul> -->
