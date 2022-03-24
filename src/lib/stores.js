@@ -152,7 +152,7 @@ export const dialog = writable({
 })
 
 
-export const dialogS = derived(dialog, $dialog => console.log("dialog state", $dialog));
+// export const dialogS = derived(dialog, $dialog => console.log("dialog state", $dialog));
 
 
 // export const handleEdit = (id) => {

@@ -72,10 +72,11 @@ const handleSelection = (id) => {
     // update token 
     $selectedCollection = id
     $collections[id].selected = true
-    console.log("collections val", collectionsValue)
+    // console.log("collections val", collectionsValue)
 
     // check store state
     const collectionAmount = $collections[id].amount
+
     if (collectionAmount === 0) {
         openDialog()
     } else {
@@ -116,7 +117,7 @@ const searchCollections = () => {
                 on:pointerenter={() => handlePointerEnter(collection.id)}
                 on:pointerleave={() => handlePointerLeave(collection.id)}
                 >
-                <CollectionComponent {...collection} dialog={$dialog} selectedCollection={$selectedCollection}  />
+                <CollectionComponent {...collection}  selectedCollection={selectedCollection}  />
 
             <div
                 style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"

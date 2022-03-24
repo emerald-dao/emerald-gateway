@@ -12,6 +12,7 @@
 // let callParentFunction = functionProp();
     const handleEdit = id => {
         $selectedCollection = id
+
         $dialog.opened = true
     }
 

@@ -40,13 +40,14 @@ const handleChange = (e) => activeTabValue === 1 ?  $tokens[selectedVal].amount 
 function closeDialog() {
     $dialog.opened = false
     isHovered = false;
-
 }
 
 // const closeDialog = () => dialog.opened = false
 const handleClose = () => {
     // console.log("tokens", $tokens)
+    console.log("activeTabValue", activeTabValue)
   switch (activeTabValue) {
+      
     case 1:
     if (tokensVal[selectedVal].amount > 0) {
         closeDialog()
@@ -60,7 +61,9 @@ const handleClose = () => {
     if (collectionsVal[selectedCollectionVal].amount > 0) {
         closeDialog()
     } else {
-        $tokens[selectedCollectionVal].selected = false
+        console.log("its zero")
+
+        $collections[selectedCollectionVal].selected = false
         closeDialog()
     }
       break;

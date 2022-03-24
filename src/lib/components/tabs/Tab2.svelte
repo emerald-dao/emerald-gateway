@@ -64,7 +64,7 @@ const handleSelection = (id) => {
         //reset token amount and selection state
         $tokens[id].amount = 0
         $tokens[id].selected = false
-    }
+    }   
 
 }
 
