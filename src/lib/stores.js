@@ -2,6 +2,7 @@ import Tab1 from "$lib/components/tabs/Tab1.svelte"
 import Tab2 from "$lib/components/tabs/Tab2.svelte"
 import Tab3 from "$lib/components/tabs/Tab3.svelte"
 import Tab4 from "$lib/components/tabs/Tab4.svelte"
+import Tab5 from "$lib/components/tabs/Tab5.svelte"
 // import { openDialog } from "./utils"
 
 import { writable, derived } from 'svelte/store';
@@ -58,10 +59,8 @@ export const tabs = writable ([{
 {
   label: "Tab 5",
   value: 4,
-  component: Tab4,
-
-  icon: "bi:card-image"
-
+  component: Tab5,
+  icon: "radix-icons:discord-logo"
 },
 {
   label: "Tab 5",
@@ -141,7 +140,8 @@ export const searchVal = writable(" ")
 export const modal = writable({
   title: "",
   action: "",
-  opened: false
+  opened: false,
+  content:"custom-token"
 })
 
 //Dialog
@@ -151,15 +151,16 @@ export const dialog = writable({
   opened: false,
 })
 
-
-// export const dialogS = derived(dialog, $dialog => console.log("dialog state", $dialog));
-
-
-// export const handleEdit = (id) => {
-//       console.log("id cole", id)
-
-
-//       console.log("selectedCollection", selectedCollection)
-//   }
-
-  
+export const emeraldIdVerif = writable(false)
+export const discordVerif = writable({
+  active: false,
+  serverId: "",
+  servers: [
+    {id:0,
+    label:"server 1"}
+  ],
+  roles: [
+    {id:0,
+    label:"role 1"}
+  ],
+})

@@ -18,6 +18,7 @@ import {
     activeTabVal,
 } from '$lib/stores';
 import Dialog from "$lib/components/Dialog.svelte";
+import Modal from "$lib/components/Modal.svelte";
 
 let tabsValue
 let activeTabValue;
@@ -69,6 +70,7 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
     </svelte:head>
 
     <Dialog />
+    <Modal />
     <article>
         <main class="main-container">
             <!-- TabBar -->
@@ -106,7 +108,7 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                                     </ul>
                                     <div class="chevron-wrapper" on:click={() => handleAction("increment")}>
                                         <div
-                                            class={activeTabValue === 3 ? "chevron-icon-disabled" : "chevron-icon"}
+                                            class={activeTabValue === 4 ? "chevron-icon-disabled" : "chevron-icon"}
                                             on:pointerenter={() => (isHovered.right = !isHovered.right)}
                                             on:pointerleave={() => (isHovered.right = !isHovered.right)}
                                             >

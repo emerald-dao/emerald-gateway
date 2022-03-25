@@ -80,9 +80,7 @@
       </svg>
     </a>
     </li>
-    <li><a href="/projects">Your Projects</a></li>
-    <li><a href="/whitelists">Whitelists</a></li>
-    
+    <li><a href="/projects">Your Projects</a></li>    
     <li>
       {#if $user?.loggedIn}
       <a href="/account" role="button" class="outline">
