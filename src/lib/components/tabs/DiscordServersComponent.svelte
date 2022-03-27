@@ -1,45 +1,96 @@
 <script>
-    import Icon from "@iconify/svelte"
+import { modal, discordVerif } from "$lib/stores";
+import Icon from "@iconify/svelte"
 
-    export let servers
+export let servers
+
+function handleSelection(i) {
+    console.log("i", i)
+    console.log("handling")
+    $discordVerif.selectedId = i 
+    $modal.content = "discord-verif"
+    $discordVerif.editing = true 
+    $modal.opened = true
+    
+}
+
+function removeServer(id) {
+		$discordVerif.servers = $discordVerif.servers.filter(function(value, index, arr){ 
+			if (value.id != id) return value;
+		});
+	}
+
 </script>
 
-    <ul >
-        {#each servers as server }
-            <li class="role-container">
+<h3 class="mt-2">Discord Servers</h3>
+<ul class="mt-2">
+    {#each servers as server, i}
+    <li class="role-container">
+        <div class="role" on:click={() => handleSelection(i)}>
+            {server.label}
+            <div class="edit-icon-container">
+                <Icon color="white" icon="akar-icons:edit" />
 
-                <div class="role">{server.label}</div>
-                <div class="icon-container">
-                    <Icon icon="ant-design:minus-circle-twotone" />
-                </div>
-            </li>
-        {/each}
-    </ul>
-   
+            </div>
+        </div>
+        <div class="icon-container" on:click={() => removeServer(server.id)}>
+            <Icon height="80%" icon="ant-design:minus-circle-twotone" />
+        </div>
+    </li>
+    {/each}
+</ul>
 
 <style>
-    ul{
-        list-style-type: none;
-        width: 100%;
-    }
+.edit-icon-container {
+    position: absolute;
+    top: -0.8rem;
+    right: -0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5865F2;
+    border-radius: 100px;
+    height: 1.4rem;
+    width: 1.4rem;
+    padding: 0.2rem;
+}
 
-    li{
-        display: flex;
-        height: 3rem;
-    }
+ul {
+    list-style-type: none;
+    width: 100%;
 
-    .role-container{
-        display: flex;
-        width: 80%;
-    }
-    .role{
-        display: flex;
-        align-items: center;
-        padding-left: 1rem;
-        background: #252E37;
-        width: 80%;
-        border-radius: 9px;
-        height: 100%;
+    margin-top: 0.9rem;
+    padding: 0;
+}
 
-    }
+li {
+    display: flex;
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+}
+
+.icon-container {
+    height: 100%;
+}
+
+.role-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #5865F2;
+}
+
+.role {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    background: #252E37;
+    width: 50%;
+    border-radius: 9px;
+    height: 100%;
+}
 </style>

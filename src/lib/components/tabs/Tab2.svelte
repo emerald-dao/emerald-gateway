@@ -105,7 +105,7 @@ const handlePointerLeave = id => hoveredId = null
                         >
                         {amount}
                         <div class="icon-container">
-                            <Icon icon="akar-icons:edit" s/>
+                            <Icon icon="akar-icons:edit" />
 
                                 </div>
                                 </div>

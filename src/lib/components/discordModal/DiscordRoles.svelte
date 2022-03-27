@@ -1,45 +1,24 @@
 <script>
-    import Icon from "@iconify/svelte"
+import {
+    discordVerif
+} from "$lib/stores";
 
-    export let roles
+import LocalRolesComponent from "./LocalRolesComponent.svelte";
+import ServerRolesComponent from "./ServerRolesComponent.svelte";
+
+export let localRoles
+
+let DiscordVerif
+discordVerif.subscribe(val => DiscordVerif = val)
+// console.log("DiscordVerif.servers[DiscordVerif.selectedId].roles", DiscordVerif.servers[DiscordVerif.selectedId].roles.length)
+
+console.log("localRoles", localRoles)
 </script>
 
-    <ul >
-        {#each roles as role }
-            <li class="role-container">
+{#if DiscordVerif.editing}
+<ServerRolesComponent />
+{:else}
+<LocalRolesComponent localRoles={localRoles} />
 
-                <div class="role">{role.label}</div>
-                <div class="icon-container">
-                    <Icon icon="ant-design:minus-circle-twotone" />
-                </div>
-            </li>
-        {/each}
-    </ul>
-   
+{/if}
 
-<style>
-    ul{
-        list-style-type: none;
-        width: 100%;
-    }
-
-    li{
-        display: flex;
-        height: 3rem;
-    }
-
-    .role-container{
-        display: flex;
-        width: 80%;
-    }
-    .role{
-        display: flex;
-        align-items: center;
-        padding-left: 1rem;
-        background: #252E37;
-        width: 80%;
-        border-radius: 9px;
-        height: 100%;
-
-    }
-</style>

@@ -1,8 +1,5 @@
 <script>
 import {
-    createEventDispatcher
-} from 'svelte';
-import {
     modal,
     discordVerif
 } from "$lib/stores"
@@ -14,6 +11,10 @@ import CustomTokenContent from './modals/customToken/CustomTokenContent.svelte';
 let Modal
 let DiscordVerif
 
+let localRoles = []
+$: localRoles && console.log("changed")
+let serverId = ""
+let roleName = ""
 
 modal.subscribe(val => Modal = val)
 discordVerif.subscribe(val => DiscordVerif = val)
@@ -25,26 +26,80 @@ let isHovered;
 
 function closeModal() {
     console.log("closing")
-    // Modal.opened = false;
-    // isHovered = false;
     $modal.opened = false
-    // dispatch('closeModal', { Modal.opened });
 }
 
 function addServer() {
-    $discordVerif.servers = [...$discordVerif.servers, {
-        id: 1,
-        label: DiscordVerif.serverId
-    }];
+    console.log("localRoles", localRoles)
 
+    $discordVerif.servers = [...$discordVerif.servers, {
+        id: DiscordVerif.servers.length,
+        label: serverId,
+        roles: localRoles
+    }];
+}
+
+function handleMessage(event) {
+    // alert(event.detail.text);
+    const data = event.detail.data
+    addRole(data)
+}
+
+const handleIdChange = ({
+    detail
+}) => {
+    // validation here
+    // alert(detail)
+    serverId = detail
+}
+
+const handleRoleChange = ({
+    detail
+}) => {
+    // validation here
+    // alert(detail)
+    roleName = detail
+}
+
+const addRole = (data) => {
+
+    // check if the user it´s editing or creating a server
+    if (DiscordVerif.editing) {
+        // update store
+        $discordVerif.servers[DiscordVerif.selectedId].roles = [...$discordVerif.servers[DiscordVerif.selectedId].roles, {
+            label: roleName,
+        }];
+    } else {
+        // update local state 
+        console.log("added role")
+        localRoles.push({
+            label: roleName
+        })
+        localRoles = localRoles
+    }
+
+};
+
+function resetLocalState() {
+    localRoles = []
+    serverId = ""
+    roleName = ""
 }
 
 function handleSave() {
+    console.log("serverId", serverId)
 
-    addServer()
-    closeModal()
+    if (DiscordVerif.editing) {
+        closeModal()
+        // update store
+        $discordVerif.editing = false
+    } else {
+        // creating 
+        addServer()
+        resetLocalState()
+        closeModal()
+    }
 
-    
 }
 </script>
 
@@ -58,7 +113,7 @@ function handleSave() {
                 <h3>Modal Title</h3>
             </div>
             <div>
-                <div
+                <!-- <div
                     on:click={closeModal}
                     >
                     <Icon
@@ -66,27 +121,41 @@ function handleSave() {
                         height={"1.4rem"}
                         color={isHovered ? "var(--primary)" : "lightgrey"}
                         />
-                        </div>
-                        </div>
-                        </header>
-                        <div class="content">
-                            {#if Modal.content === "custom-token" }
-                            <CustomTokenContent />
-                            {:else}
-                            <DiscordVerifContent  />
-                            {/if}
-                        </div>
-                       
+                </div> -->
+            </div>
+        </header>
+        <div class="content">
+            {#if Modal.content === "custom-token" }
+            <CustomTokenContent />
+            {:else}
+            <DiscordVerifContent
+                localRoles={localRoles}
+                serverId={serverId}
+                roleName={roleName}
+                on:child-blur={handleIdChange}
+                on:role-change={handleRoleChange}
+                on:message={handleMessage}
+                />
 
-                        <footer >
-                            <div style="cursor: pointer;"
-                                on:click={handleSave}
-                                >
-                                ACTION 2
+                {/if}
+                </div>
 
-                            </div>
-                        </footer>
-                        </main>
+                <footer >
+                    <div  style="cursor: pointer; color:red"
+                        on:click={handleSave}
+                        >
+                        CANCEL
+
+                    </div>
+                    <div  style="cursor: pointer;     color: #5865F2;
+                        "
+                        on:click={handleSave}
+                        >
+                        SAVE
+
+                    </div>
+                </footer>
+                </main>
 
 <style>
 header {
@@ -99,7 +168,8 @@ header {
     padding-right: 2rem;
     padding-left: 2rem;
 
-    border-bottom: 2px solid var(--form-element-border-color);
+    border-bottom: 2px solid  #5865F2;
+
 }
 
 .content {
@@ -118,12 +188,14 @@ section {
 footer {
     color: var(--primary);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding-right: 2rem;
+    padding-left: 2rem;
     height: 12%;
     width: 100%;
-    border-top: 2px solid var(--form-element-border-color);
+    border-top: 2px solid #5865F2;
+;
 }
 
 #background {
@@ -149,6 +221,7 @@ footer {
     height: 80%;
     width: 42%;
     border-radius: 20px;
-    border: 2px solid var(--form-element-border-color);
+    border: 2px solid  #5865F2;
+
 }
 </style>

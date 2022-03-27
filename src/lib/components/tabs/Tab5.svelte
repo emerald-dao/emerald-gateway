@@ -27,10 +27,14 @@ function openModal() {
 
 
 
+function handleAddServer() {
+    $modal.content = "discord-verif"
+    openModal()
+}
 </script>
 
 <div >
-    <TabHeader title={"Emerald ID"} subtitle={"Something about Emerald ID"} />
+    <TabHeader title={"Discord Verification"} subtitle={"Something about the Discord verification"} />
     <button  class={discordVal?.active ? "discord-active flex-align" : "discord-inactive outline mb-1 flex-align"}
         on:click={handleEvent}
         >
@@ -39,7 +43,12 @@ function openModal() {
             <Icon height="100%"  icon="radix-icons:discord-logo" color={discordVal?.active ? "black" : "#5865F2" } />
         </div>
     </button>
+
+    {#if discordVal.servers }
     <DiscordServersComponent servers={discordVal.servers} />
+    <button on:click={handleAddServer} style="width: 50%;" class="discord-active mt-1">Add Server</button>
+    {/if}
+
 </div>
 
     

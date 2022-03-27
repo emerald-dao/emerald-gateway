@@ -153,14 +153,12 @@ export const dialog = writable({
 
 export const emeraldIdVerif = writable(false)
 export const discordVerif = writable({
-  active: false,
+  selectedId: 0,
   serverId: "",
+  active: false,
+  editing: false,
   servers: [
-    {id:0,
-    label:"server 1"}
-  ],
-  roles: [
-    {id:0,
-    label:"role 1"}
-  ],
+  ]
+  ,
+  
 })
