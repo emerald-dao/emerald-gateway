@@ -1,6 +1,5 @@
 <script>
 import Icon from "@iconify/svelte"
-
 import CheckAddress from '$lib/components/CheckAddress.svelte';
 import CreateProject from '$lib/components/CreateProject.svelte';
 import {
@@ -19,6 +18,7 @@ import {
 } from '$lib/stores';
 import Dialog from "$lib/components/Dialog.svelte";
 import Modal from "$lib/components/Modal.svelte";
+import EmeraldIdIcon from "$lib/components/tabs/EmeraldIdIcon.svelte";
 
 let tabsValue
 let activeTabValue;
@@ -58,16 +58,30 @@ const handleEvent = msg => {
     }
 }
 
-const handleAction = action => {
+const autoScroll = (target) => {
+    console.log("scrolling")
+    const el = document.querySelector(`#tab${activeTabValue}`);
+    if (!el) return;
+    el.scrollIntoView({
+      behavior: "smooth"
+    });
+}
+
+const handleAction = (action) => {
     if (activeTabValue === 0 && action === "decrement" || activeTabValue === 4 && action === "increment") {
         return
     } else {
         action === "increment" ? activeTabValue++ : activeTabValue--
+        autoScroll()
 
     }
 }
 const handleClick = tabValue => () => ($activeTabVal = tabValue);
 </script>
+
+
+
+
 
 <svelte:head>
     <title>Home {PAGE_TITLE_EXTENSION}</title>
@@ -95,18 +109,27 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                         <ul>
                             {#each tabsValue as item, i}
                             <li
+                                id={`tab${i}`}
                                 class={activeTabValue === item.value ? "active" : "inactive-tab"}
                                 on:click={handleClick(item.value)}
                                 >
+                                {#if i === 3}
+                                <div style="padding: 2rem;">
+                                    <EmeraldIdIcon color={activeTabValue === 3 ? "var(--primary)"  :"white"} />
+                                </div>
+                                {:else}
                                 <Icon
-                                    icon={item.icon}
-                                    height={i === 3 ? 26 : 30}
-                                    color={tabsValue[i].done
-                                    ? "#85DFB4"
-                                    : activeTabValue === item.value
-                                    ? "var(--primary)"
-                                    : "lightgrey"}
-                                    />
+                                icon={item.icon}
+                                height={i === 3 ? 26 : 30}
+                                color={tabsValue[i].done
+                                ? "#85DFB4"
+                                : activeTabValue === item.value
+                                ? "var(--primary)"
+                                : "lightgrey"}
+                                />
+                                    
+                                {/if}
+                               
                                     </li>
                                     {/each}
                                     </ul>

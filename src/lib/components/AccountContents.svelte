@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   import Loading from '$lib/components/common/Loading.svelte';
   import Float from '$lib/components/Float.svelte';
   import Event from '$lib/components/Event.svelte';
@@ -51,4 +51,4 @@
     {/if}
   {/await}
   
-</div>
+</div> -->

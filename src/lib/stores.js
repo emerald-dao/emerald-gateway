@@ -37,7 +37,6 @@ export const tabs = writable ([{
   label: "Tokens",
   value: 1,
   component: Tab2,
-  // icon: "ant-design:link-outlined",
   icon: "icomoon-free:coin-dollar"
 
 },
@@ -45,7 +44,6 @@ export const tabs = writable ([{
   label: "Tab 3",
   value: 2,
   component: Tab3,
-  // icon: "icomoon-free:coin-dollar",
   icon: "fluent:collections-add-24-regular"
 
 },
@@ -157,8 +155,5 @@ export const discordVerif = writable({
   serverId: "",
   active: false,
   editing: false,
-  servers: [
-  ]
-  ,
-  
+  servers: [],
 })

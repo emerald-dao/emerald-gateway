@@ -124,7 +124,8 @@ function handleCancel() {
     id="background"
     style="--display: {Modal.opened ? 'block' : 'none'}"
     />
-    <main id="modal" style="--display: {Modal.opened ? 'block' : 'none'};">
+    <main id="modal" style="--display: {Modal.opened ? 'block' : 'none'};
+     --border: {Modal.content === "custom-token" ? "2px solid var(--primary)" : "2px solid #5865F2" }">
         <header>
             <div>
                 <h3>Modal Title</h3>
@@ -190,7 +191,7 @@ function handleCancel() {
     height: 2.4rem;
     width: 5rem;
     cursor: pointer;
-    color: #5865F2
+    color: var(--border)
 }
 
 .save:hover {
@@ -207,8 +208,7 @@ header {
     align-items: center;
     padding-right: 2rem;
     padding-left: 2rem;
-
-    border-bottom: 2px solid #5865F2;
+    border-bottom: var(--border);
 }
 
 .content {
@@ -233,7 +233,7 @@ footer {
     padding-left: 2rem;
     height: 12%;
     width: 100%;
-    border-top: 2px solid #5865F2;
+    border-top: var(--border);
     ;
 }
 
@@ -245,7 +245,7 @@ footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 #modal {
@@ -256,11 +256,11 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #141e26;
-    filter: drop-shadow(0 0 20px #333);
+    /* filter: drop-shadow(0 0 20px #333); */
     height: 80%;
     width: 48%;
     border-radius: 20px;
-    border: 2px solid #5865F2;
+    border: var(--border)
 
 }
 </style>
