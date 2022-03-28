@@ -17,7 +17,7 @@ console.log("localRoles", localRoles)
 </script>
 
 {#if DiscordVerif.editing}
-<ServerRolesComponent />
+<ServerRolesComponent dispatch={dispatch} />
 {:else}
 <LocalRolesComponent dispatch={dispatch} localRoles={localRoles} />
 
