@@ -48,6 +48,10 @@ const handleEvent = msg => {
             $tabs[activeTabValue].done = true
             handleAction("increment")
             break;
+        case 3:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
 
         default:
             break;
@@ -55,7 +59,7 @@ const handleEvent = msg => {
 }
 
 const handleAction = action => {
-    if (activeTabValue === 0 && action === "decrement" || activeTabValue === 3 && action === "increment") {
+    if (activeTabValue === 0 && action === "decrement" || activeTabValue === 4 && action === "increment") {
         return
     } else {
         action === "increment" ? activeTabValue++ : activeTabValue--

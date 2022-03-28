@@ -2,6 +2,15 @@
 import Icon from "@iconify/svelte"
 
 export let localRoles
+export let dispatch
+
+function handleRemoval(idx) {
+    dispatch("message", {
+        action: "removal",
+        data: idx
+    })
+}
+
 </script>
 
 {#if localRoles === []}
@@ -9,10 +18,10 @@ export let localRoles
 
 {:else}
 <ul >
-    {#each localRoles as role }
+    {#each localRoles as role, i}
     <li class="role-container">
         <div class="role">{role.label}
-            <div class="icon-container">
+            <div class="icon-container" on:click={() => handleRemoval(i)}>
                 <Icon icon="ant-design:minus-circle-twotone" height="3rem" />
             </div>
         </div>
@@ -23,16 +32,27 @@ export let localRoles
 {/if}
 
 <style>
+
+    .icon-container{
+        height:3rem;
+    }
+    .icon-container:hover{
+        color: red;
+        height: 3rem;
+        cursor: pointer;
+    }
+
     ul {
         list-style-type: none;
-        width: 100%;
+        width: 99.5%;
         display: flex;
+        flex-direction: column;
         margin: 0;
         padding: 0;
     }
     
     li {
-        margin: 0;
+        margin-top: 0.3rem;
         padding: 0;
         display: flex;
         width: 100%;
@@ -52,7 +72,7 @@ export let localRoles
         align-items: center;
         padding-left: 1rem;
         background: #252E37;
-        width: 70%;
+        width: 100%;
         border-radius: 50px;
         height: 100%;
     }

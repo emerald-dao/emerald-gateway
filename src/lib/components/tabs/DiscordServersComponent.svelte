@@ -15,6 +15,7 @@ function handleSelection(i) {
 }
 
 function removeServer(id) {
+    alert("handling")
 		$discordVerif.servers = $discordVerif.servers.filter(function(value, index, arr){ 
 			if (value.id != id) return value;
 		});
@@ -25,15 +26,15 @@ function removeServer(id) {
 <h3 class="mt-2">Discord Servers</h3>
 <ul class="mt-2">
     {#each servers as server, i}
-    <li class="role-container">
-        <div class="role" on:click={() => handleSelection(i)}>
+    <li class="server-container" >
+        <div class="server" on:click={() => handleSelection(i)}>
             {server.label}
             <div class="edit-icon-container">
                 <Icon color="white" icon="akar-icons:edit" />
 
             </div>
         </div>
-        <div class="icon-container" on:click={() => removeServer(server.id)}>
+        <div class="icon-container flex-align" on:click={() => removeServer(server.id)}>
             <Icon height="80%" icon="ant-design:minus-circle-twotone" />
         </div>
     </li>
@@ -55,6 +56,10 @@ function removeServer(id) {
     padding: 0.2rem;
 }
 
+.edit-icon-container:hover {
+    cursor: pointer;
+}
+
 ul {
     list-style-type: none;
     width: 100%;
@@ -66,23 +71,39 @@ ul {
 li {
     display: flex;
     height: 3rem;
-    margin: 0;
+    margin-top: 1rem;
     padding: 0;
 }
 
 .icon-container {
     height: 100%;
+    color: lightslategrey;
 }
 
-.role-container {
+.icon-container:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.server-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     color: #5865F2;
+    
+}
+.server-container:hover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: #5865F2;
+    background-color: rgba(88, 101, 242, 0.1);
+    border-radius: 12px;
 }
 
-.role {
+.server {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -92,5 +113,9 @@ li {
     width: 50%;
     border-radius: 9px;
     height: 100%;
+}
+
+.server:hover {
+    cursor: pointer;
 }
 </style>

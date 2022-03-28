@@ -14,7 +14,7 @@ export let emeraldIdVal
 emeraldIdVerif.subscribe(val => emeraldIdVal = val)
 
 const handleEvent = (e) => {
-    $emeraldIdVerif = true
+    $emeraldIdVerif = !emeraldIdVal
 }
 </script>
 

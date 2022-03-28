@@ -40,9 +40,14 @@ function addServer() {
 }
 
 function handleMessage(event) {
-    // alert(event.detail.text);
     const data = event.detail.data
-    addRole(data)
+    const action = event.detail.action
+    if (action === "removal") {
+        // alert(data);
+        removeRole(data)
+    } else {
+        addRole(data)
+    }
 }
 
 const handleIdChange = ({
@@ -80,6 +85,14 @@ const addRole = (data) => {
 
 };
 
+const removeRole = (index) => {
+    localRoles = [
+        ...localRoles.slice(0, index),
+        ...localRoles.slice(index + 1, localRoles.length)
+    ];
+
+}
+
 function resetLocalState() {
     localRoles = []
     serverId = ""
@@ -99,7 +112,11 @@ function handleSave() {
         resetLocalState()
         closeModal()
     }
+}
 
+function handleCancel() {
+    resetLocalState()
+    closeModal()
 }
 </script>
 
@@ -141,14 +158,13 @@ function handleSave() {
                 </div>
 
                 <footer >
-                    <div  style="cursor: pointer; color:red"
-                        on:click={handleSave}
+                    <div  class="cancel flex-align"
+                        on:click={handleCancel}
                         >
                         CANCEL
 
                     </div>
-                    <div  style="cursor: pointer;     color: #5865F2;
-                        "
+                    <div  class="save flex-align"
                         on:click={handleSave}
                         >
                         SAVE
@@ -158,6 +174,30 @@ function handleSave() {
                 </main>
 
 <style>
+.cancel {
+    height: 2.4rem;
+    width: 5rem;
+    cursor: pointer;
+    color: red
+}
+
+.cancel:hover {
+    background-color: rgba(255, 0, 61, 0.1);
+    border-radius: 6px;
+}
+
+.save {
+    height: 2.4rem;
+    width: 5rem;
+    cursor: pointer;
+    color: #5865F2
+}
+
+.save:hover {
+    background-color: rgba(88, 101, 242, 0.1);
+    border-radius: 6px;
+}
+
 header {
     display: flex;
     flex-direction: row;
@@ -168,8 +208,7 @@ header {
     padding-right: 2rem;
     padding-left: 2rem;
 
-    border-bottom: 2px solid  #5865F2;
-
+    border-bottom: 2px solid #5865F2;
 }
 
 .content {
@@ -195,7 +234,7 @@ footer {
     height: 12%;
     width: 100%;
     border-top: 2px solid #5865F2;
-;
+    ;
 }
 
 #background {
@@ -219,9 +258,9 @@ footer {
     background: #141e26;
     filter: drop-shadow(0 0 20px #333);
     height: 80%;
-    width: 42%;
+    width: 48%;
     border-radius: 20px;
-    border: 2px solid  #5865F2;
+    border: 2px solid #5865F2;
 
 }
 </style>

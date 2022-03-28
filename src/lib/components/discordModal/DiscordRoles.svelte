@@ -7,6 +7,7 @@ import LocalRolesComponent from "./LocalRolesComponent.svelte";
 import ServerRolesComponent from "./ServerRolesComponent.svelte";
 
 export let localRoles
+export let dispatch
 
 let DiscordVerif
 discordVerif.subscribe(val => DiscordVerif = val)
@@ -18,7 +19,7 @@ console.log("localRoles", localRoles)
 {#if DiscordVerif.editing}
 <ServerRolesComponent />
 {:else}
-<LocalRolesComponent localRoles={localRoles} />
+<LocalRolesComponent dispatch={dispatch} localRoles={localRoles} />
 
 {/if}
 
