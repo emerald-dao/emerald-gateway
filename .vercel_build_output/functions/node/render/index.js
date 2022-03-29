@@ -4712,15 +4712,15 @@ var init_install_fetch = __esm({
       }
       forEach(a2, b2) {
         x("forEach", arguments, 1);
-        for (var [c2, d3] of this)
-          a2.call(b2, d3, c2, this);
+        for (var [c2, d2] of this)
+          a2.call(b2, d2, c2, this);
       }
       set(...a2) {
         x("set", arguments, 2);
         var b2 = [], c2 = true;
         a2 = f3(...a2);
-        this.#d.forEach((d3) => {
-          d3[0] === a2[0] ? c2 && (c2 = !b2.push(a2)) : b2.push(d3);
+        this.#d.forEach((d2) => {
+          d2[0] === a2[0] ? c2 && (c2 = !b2.push(a2)) : b2.push(d2);
         });
         c2 && b2.push(a2);
         this.#d = b2;
@@ -5781,9 +5781,9 @@ async function render_response({
   page_config,
   status,
   error: error2,
-  page: page3
+  page: page2
 }) {
-  const css13 = new Set(options2.entry.css);
+  const css7 = new Set(options2.entry.css);
   const js = new Set(options2.entry.js);
   const styles = new Set();
   const serialized_data = [];
@@ -5796,7 +5796,7 @@ async function render_response({
   if (page_config.ssr) {
     branch.forEach(({ node, loaded: loaded2, fetched, uses_credentials }) => {
       if (node.css)
-        node.css.forEach((url) => css13.add(url));
+        node.css.forEach((url) => css7.add(url));
       if (node.js)
         node.js.forEach((url) => js.add(url));
       if (node.styles)
@@ -5814,7 +5814,7 @@ async function render_response({
         navigating: writable(null),
         session
       },
-      page: page3,
+      page: page2,
       components: branch.map(({ node }) => node.module.default)
     };
     for (let i2 = 0; i2 < branch.length; i2 += 1) {
@@ -5839,7 +5839,7 @@ async function render_response({
     js.clear();
   const links = options2.amp ? styles.size > 0 || rendered.css.code.length > 0 ? `<style amp-custom>${Array.from(styles).concat(rendered.css.code).join("\n")}</style>` : "" : [
     ...Array.from(js).map((dep) => `<link rel="modulepreload" href="${dep}">`),
-    ...Array.from(css13).map((dep) => `<link rel="stylesheet" href="${dep}">`)
+    ...Array.from(css7).map((dep) => `<link rel="stylesheet" href="${dep}">`)
   ].join("\n		");
   let init2 = "";
   if (options2.amp) {
@@ -5857,7 +5857,7 @@ async function render_response({
 				session: ${try_serialize($session, (error3) => {
       throw new Error(`Failed to serialize session data: ${error3.message}`);
     })},
-				host: ${page3 && page3.host ? s$1(page3.host) : "location.host"},
+				host: ${page2 && page2.host ? s$1(page2.host) : "location.host"},
 				route: ${!!page_config.router},
 				spa: ${!page_config.ssr},
 				trailing_slash: ${s$1(options2.trailing_slash)},
@@ -5868,12 +5868,12 @@ async function render_response({
 						${(branch || []).map(({ node }) => `import(${s$1(node.entry)})`).join(",\n						")}
 					],
 					page: {
-						host: ${page3 && page3.host ? s$1(page3.host) : "location.host"}, // TODO this is redundant
-						path: ${page3 && page3.path ? try_serialize(page3.path, (error3) => {
+						host: ${page2 && page2.host ? s$1(page2.host) : "location.host"}, // TODO this is redundant
+						path: ${page2 && page2.path ? try_serialize(page2.path, (error3) => {
       throw new Error(`Failed to serialize page.path: ${error3.message}`);
     }) : null},
-						query: new URLSearchParams(${page3 && page3.query ? s$1(page3.query.toString()) : ""}),
-						params: ${page3 && page3.params ? try_serialize(page3.params, (error3) => {
+						query: new URLSearchParams(${page2 && page2.query ? s$1(page2.query.toString()) : ""}),
+						params: ${page2 && page2.params ? try_serialize(page2.params, (error3) => {
       throw new Error(`Failed to serialize page.params: ${error3.message}`);
     }) : null}
 					}
@@ -5987,7 +5987,7 @@ async function load_node({
   options: options2,
   state,
   route,
-  page: page3,
+  page: page2,
   node,
   $session,
   stuff,
@@ -6002,7 +6002,7 @@ async function load_node({
   const fetched = [];
   let set_cookie_headers = [];
   let loaded2;
-  const page_proxy = new Proxy(page3, {
+  const page_proxy = new Proxy(page2, {
     get: (target, prop, receiver) => {
       if (prop === "query" && prerender_enabled) {
         throw new Error("Cannot access query on a page with prerendering enabled");
@@ -6041,11 +6041,11 @@ async function load_node({
         const prefix = options2.paths.assets || options2.paths.base;
         const filename = (resolved.startsWith(prefix) ? resolved.slice(prefix.length) : resolved).slice(1);
         const filename_html = `${filename}/index.html`;
-        const asset = options2.manifest.assets.find((d3) => d3.file === filename || d3.file === filename_html);
+        const asset = options2.manifest.assets.find((d2) => d2.file === filename || d2.file === filename_html);
         if (asset) {
           response = options2.read ? new Response(options2.read(asset.file), {
             headers: asset.type ? { "content-type": asset.type } : {}
-          }) : await fetch(`http://${page3.host}/${asset.file}`, opts);
+          }) : await fetch(`http://${page2.host}/${asset.file}`, opts);
         } else if (is_root_relative(resolved)) {
           const relative = resolved;
           const headers = {
@@ -6166,7 +6166,7 @@ async function load_node({
 async function respond_with_error({ request, options: options2, state, $session, status, error: error2 }) {
   const default_layout = await options2.load_component(options2.manifest.layout);
   const default_error = await options2.load_component(options2.manifest.error);
-  const page3 = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -6177,7 +6177,7 @@ async function respond_with_error({ request, options: options2, state, $session,
     options: options2,
     state,
     route: null,
-    page: page3,
+    page: page2,
     node: default_layout,
     $session,
     stuff: {},
@@ -6192,7 +6192,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       options: options2,
       state,
       route: null,
-      page: page3,
+      page: page2,
       node: default_error,
       $session,
       stuff: loaded2 ? loaded2.stuff : {},
@@ -6215,7 +6215,7 @@ async function respond_with_error({ request, options: options2, state, $session,
       status,
       error: error2,
       branch,
-      page: page3
+      page: page2
     });
   } catch (err) {
     const error3 = coalesce_to_error(err);
@@ -6389,7 +6389,7 @@ async function render_page(request, route, match, options2, state) {
     };
   }
   const params = route.params(match);
-  const page3 = {
+  const page2 = {
     host: request.host,
     path: request.path,
     query: request.query,
@@ -6402,7 +6402,7 @@ async function render_page(request, route, match, options2, state) {
     state,
     $session,
     route,
-    page: page3
+    page: page2
   });
   if (response) {
     return response;
@@ -6676,7 +6676,1990 @@ var init_ssr = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-af55a9bb.js
+// .svelte-kit/output/server/chunks/Icon-d8bf2219.js
+function fullIcon(data) {
+  return { ...iconDefaults, ...data };
+}
+function mergeIconData(icon, alias) {
+  const result = { ...icon };
+  for (const key in iconDefaults) {
+    const prop = key;
+    if (alias[prop] !== void 0) {
+      const value = alias[prop];
+      if (result[prop] === void 0) {
+        result[prop] = value;
+        continue;
+      }
+      switch (prop) {
+        case "rotate":
+          result[prop] = (result[prop] + value) % 4;
+          break;
+        case "hFlip":
+        case "vFlip":
+          result[prop] = value !== result[prop];
+          break;
+        default:
+          result[prop] = value;
+      }
+    }
+  }
+  return result;
+}
+function getIconData$1(data, name, full = false) {
+  function getIcon(name2, iteration) {
+    var _a, _b, _c, _d;
+    if (data.icons[name2] !== void 0) {
+      return Object.assign({}, data.icons[name2]);
+    }
+    if (iteration > 5) {
+      return null;
+    }
+    if (((_a = data.aliases) == null ? void 0 : _a[name2]) !== void 0) {
+      const item = (_b = data.aliases) == null ? void 0 : _b[name2];
+      const result2 = getIcon(item.parent, iteration + 1);
+      if (result2) {
+        return mergeIconData(result2, item);
+      }
+      return result2;
+    }
+    if (iteration === 0 && ((_c = data.chars) == null ? void 0 : _c[name2]) !== void 0) {
+      return getIcon((_d = data.chars) == null ? void 0 : _d[name2], iteration + 1);
+    }
+    return null;
+  }
+  const result = getIcon(name, 0);
+  if (result) {
+    for (const key in iconDefaults) {
+      if (result[key] === void 0 && data[key] !== void 0) {
+        result[key] = data[key];
+      }
+    }
+  }
+  return result && full ? fullIcon(result) : result;
+}
+function validateIconProps(item, fix) {
+  for (const key in item) {
+    const attr = key;
+    const value = item[attr];
+    const type = typeof value;
+    if (type === "undefined") {
+      delete item[attr];
+      continue;
+    }
+    switch (key) {
+      case "body":
+      case "parent":
+        if (type !== "string") {
+          return key;
+        }
+        break;
+      case "hFlip":
+      case "vFlip":
+      case "hidden":
+        if (type !== "boolean") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+        break;
+      case "width":
+      case "height":
+      case "left":
+      case "top":
+      case "rotate":
+      case "inlineHeight":
+      case "inlineTop":
+      case "verticalAlign":
+        if (type !== "number") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+        break;
+      default:
+        if (type === "object") {
+          if (fix) {
+            delete item[attr];
+          } else {
+            return key;
+          }
+        }
+    }
+  }
+  return null;
+}
+function validateIconSet(obj, options2) {
+  const fix = !!(options2 == null ? void 0 : options2.fix);
+  if (typeof obj !== "object" || obj === null || typeof obj.icons !== "object" || !obj.icons) {
+    throw new Error("Bad icon set");
+  }
+  const data = obj;
+  if (typeof (options2 == null ? void 0 : options2.prefix) === "string") {
+    data.prefix = options2.prefix;
+  } else if (typeof data.prefix !== "string" || !data.prefix.match(matchName)) {
+    throw new Error("Invalid prefix");
+  }
+  if (typeof (options2 == null ? void 0 : options2.provider) === "string") {
+    data.provider = options2.provider;
+  } else if (data.provider !== void 0) {
+    const value = data.provider;
+    if (typeof value !== "string" || value !== "" && !value.match(matchName)) {
+      if (fix) {
+        delete data.provider;
+      } else {
+        throw new Error("Invalid provider");
+      }
+    }
+  }
+  const icons = data.icons;
+  Object.keys(icons).forEach((name) => {
+    if (!name.match(matchName)) {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid icon name: "${name}"`);
+    }
+    const item = icons[name];
+    if (typeof item !== "object" || item === null || typeof item.body !== "string") {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid icon: "${name}"`);
+    }
+    const key = typeof item.parent === "string" ? "parent" : validateIconProps(item, fix);
+    if (key !== null) {
+      if (fix) {
+        delete icons[name];
+        return;
+      }
+      throw new Error(`Invalid property "${key}" in icon "${name}"`);
+    }
+  });
+  if (!Object.keys(data.icons).length) {
+    throw new Error("Icon set is empty");
+  }
+  if (data.aliases !== void 0) {
+    if (typeof data.aliases !== "object" || data.aliases === null) {
+      if (fix) {
+        delete data.aliases;
+      } else {
+        throw new Error("Invalid aliases list");
+      }
+    }
+  }
+  if (typeof data.aliases === "object") {
+    let validateAlias = function(name, iteration) {
+      if (validatedAliases.has(name)) {
+        return !failedAliases.has(name);
+      }
+      const item = aliases[name];
+      if (iteration > 5 || typeof item !== "object" || item === null || typeof item.parent !== "string" || !name.match(matchName)) {
+        if (fix) {
+          delete aliases[name];
+          failedAliases.add(name);
+          return false;
+        }
+        throw new Error(`Invalid icon alias: "${name}"`);
+      }
+      const parent = item.parent;
+      if (data.icons[parent] === void 0) {
+        if (aliases[parent] === void 0 || !validateAlias(parent, iteration + 1)) {
+          if (fix) {
+            delete aliases[name];
+            failedAliases.add(name);
+            return false;
+          }
+          throw new Error(`Missing parent icon for alias "${name}`);
+        }
+      }
+      if (fix && item.body !== void 0) {
+        delete item.body;
+      }
+      const key = item.body !== void 0 ? "body" : validateIconProps(item, fix);
+      if (key !== null) {
+        if (fix) {
+          delete aliases[name];
+          failedAliases.add(name);
+          return false;
+        }
+        throw new Error(`Invalid property "${key}" in alias "${name}"`);
+      }
+      validatedAliases.add(name);
+      return true;
+    };
+    const aliases = data.aliases;
+    const validatedAliases = /* @__PURE__ */ new Set();
+    const failedAliases = /* @__PURE__ */ new Set();
+    Object.keys(aliases).forEach((name) => {
+      validateAlias(name, 0);
+    });
+    if (fix && !Object.keys(data.aliases).length) {
+      delete data.aliases;
+    }
+  }
+  Object.keys(iconDefaults).forEach((prop) => {
+    const expectedType = typeof iconDefaults[prop];
+    const actualType = typeof data[prop];
+    if (actualType !== "undefined" && actualType !== expectedType) {
+      throw new Error(`Invalid value type for "${prop}"`);
+    }
+  });
+  if (data.chars !== void 0) {
+    if (typeof data.chars !== "object" || data.chars === null) {
+      if (fix) {
+        delete data.chars;
+      } else {
+        throw new Error("Invalid characters map");
+      }
+    }
+  }
+  if (typeof data.chars === "object") {
+    const chars2 = data.chars;
+    Object.keys(chars2).forEach((char) => {
+      var _a;
+      if (!char.match(matchChar) || typeof chars2[char] !== "string") {
+        if (fix) {
+          delete chars2[char];
+          return;
+        }
+        throw new Error(`Invalid character "${char}"`);
+      }
+      const target = chars2[char];
+      if (data.icons[target] === void 0 && ((_a = data.aliases) == null ? void 0 : _a[target]) === void 0) {
+        if (fix) {
+          delete chars2[char];
+          return;
+        }
+        throw new Error(`Character "${char}" points to missing icon "${target}"`);
+      }
+    });
+    if (fix && !Object.keys(data.chars).length) {
+      delete data.chars;
+    }
+  }
+  return data;
+}
+function isVariation(item) {
+  for (const key in iconDefaults) {
+    if (item[key] !== void 0) {
+      return true;
+    }
+  }
+  return false;
+}
+function parseIconSet(data, callback, options2) {
+  options2 = options2 || {};
+  const names = [];
+  if (typeof data !== "object" || typeof data.icons !== "object") {
+    return names;
+  }
+  const validate = options2.validate;
+  if (validate !== false) {
+    try {
+      validateIconSet(data, typeof validate === "object" ? validate : { fix: true });
+    } catch (err) {
+      return names;
+    }
+  }
+  if (data.not_found instanceof Array) {
+    data.not_found.forEach((name) => {
+      callback(name, null);
+      names.push(name);
+    });
+  }
+  const icons = data.icons;
+  Object.keys(icons).forEach((name) => {
+    const iconData = getIconData$1(data, name, true);
+    if (iconData) {
+      callback(name, iconData);
+      names.push(name);
+    }
+  });
+  const parseAliases = options2.aliases || "all";
+  if (parseAliases !== "none" && typeof data.aliases === "object") {
+    const aliases = data.aliases;
+    Object.keys(aliases).forEach((name) => {
+      if (parseAliases === "variations" && isVariation(aliases[name])) {
+        return;
+      }
+      const iconData = getIconData$1(data, name, true);
+      if (iconData) {
+        callback(name, iconData);
+        names.push(name);
+      }
+    });
+  }
+  return names;
+}
+function newStorage(provider, prefix) {
+  return {
+    provider,
+    prefix,
+    icons: /* @__PURE__ */ Object.create(null),
+    missing: /* @__PURE__ */ Object.create(null)
+  };
+}
+function getStorage(provider, prefix) {
+  if (storage$1[provider] === void 0) {
+    storage$1[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerStorage = storage$1[provider];
+  if (providerStorage[prefix] === void 0) {
+    providerStorage[prefix] = newStorage(provider, prefix);
+  }
+  return providerStorage[prefix];
+}
+function addIconSet(storage2, data) {
+  const t2 = Date.now();
+  return parseIconSet(data, (name, icon) => {
+    if (icon) {
+      storage2.icons[name] = icon;
+    } else {
+      storage2.missing[name] = t2;
+    }
+  });
+}
+function addIconToStorage(storage2, name, icon) {
+  try {
+    if (typeof icon.body === "string") {
+      storage2.icons[name] = Object.freeze(fullIcon(icon));
+      return true;
+    }
+  } catch (err) {
+  }
+  return false;
+}
+function getIconFromStorage(storage2, name) {
+  const value = storage2.icons[name];
+  return value === void 0 ? null : value;
+}
+function allowSimpleNames(allow) {
+  if (typeof allow === "boolean") {
+    simpleNames = allow;
+  }
+  return simpleNames;
+}
+function getIconData(name) {
+  const icon = typeof name === "string" ? stringToIcon(name, true, simpleNames) : name;
+  return icon ? getIconFromStorage(getStorage(icon.provider, icon.prefix), icon.name) : null;
+}
+function addIcon(name, data) {
+  const icon = stringToIcon(name, true, simpleNames);
+  if (!icon) {
+    return false;
+  }
+  const storage2 = getStorage(icon.provider, icon.prefix);
+  return addIconToStorage(storage2, icon.name, data);
+}
+function addCollection(data, provider) {
+  if (typeof data !== "object") {
+    return false;
+  }
+  if (typeof provider !== "string") {
+    provider = typeof data.provider === "string" ? data.provider : "";
+  }
+  if (simpleNames && provider === "" && (typeof data.prefix !== "string" || data.prefix === "")) {
+    let added = false;
+    parseIconSet(data, (name, icon) => {
+      if (icon && addIcon(name, icon)) {
+        added = true;
+      }
+    }, {
+      validate: {
+        fix: true,
+        prefix: ""
+      }
+    });
+    return added;
+  }
+  if (typeof data.prefix !== "string" || !validateIcon({
+    provider,
+    prefix: data.prefix,
+    name: "a"
+  })) {
+    return false;
+  }
+  const storage2 = getStorage(provider, data.prefix);
+  return !!addIconSet(storage2, data);
+}
+function mergeCustomisations(defaults2, item) {
+  const result = {};
+  for (const key in defaults2) {
+    const attr = key;
+    result[attr] = defaults2[attr];
+    if (item[attr] === void 0) {
+      continue;
+    }
+    const value = item[attr];
+    switch (attr) {
+      case "inline":
+      case "slice":
+        if (typeof value === "boolean") {
+          result[attr] = value;
+        }
+        break;
+      case "hFlip":
+      case "vFlip":
+        if (value === true) {
+          result[attr] = !result[attr];
+        }
+        break;
+      case "hAlign":
+      case "vAlign":
+        if (typeof value === "string" && value !== "") {
+          result[attr] = value;
+        }
+        break;
+      case "width":
+      case "height":
+        if (typeof value === "string" && value !== "" || typeof value === "number" && value || value === null) {
+          result[attr] = value;
+        }
+        break;
+      case "rotate":
+        if (typeof value === "number") {
+          result[attr] += value;
+        }
+        break;
+    }
+  }
+  return result;
+}
+function calculateSize(size, ratio, precision) {
+  if (ratio === 1) {
+    return size;
+  }
+  precision = precision === void 0 ? 100 : precision;
+  if (typeof size === "number") {
+    return Math.ceil(size * ratio * precision) / precision;
+  }
+  if (typeof size !== "string") {
+    return size;
+  }
+  const oldParts = size.split(unitsSplit);
+  if (oldParts === null || !oldParts.length) {
+    return size;
+  }
+  const newParts = [];
+  let code = oldParts.shift();
+  let isNumber = unitsTest.test(code);
+  while (true) {
+    if (isNumber) {
+      const num = parseFloat(code);
+      if (isNaN(num)) {
+        newParts.push(code);
+      } else {
+        newParts.push(Math.ceil(num * ratio * precision) / precision);
+      }
+    } else {
+      newParts.push(code);
+    }
+    code = oldParts.shift();
+    if (code === void 0) {
+      return newParts.join("");
+    }
+    isNumber = !isNumber;
+  }
+}
+function preserveAspectRatio(props) {
+  let result = "";
+  switch (props.hAlign) {
+    case "left":
+      result += "xMin";
+      break;
+    case "right":
+      result += "xMax";
+      break;
+    default:
+      result += "xMid";
+  }
+  switch (props.vAlign) {
+    case "top":
+      result += "YMin";
+      break;
+    case "bottom":
+      result += "YMax";
+      break;
+    default:
+      result += "YMid";
+  }
+  result += props.slice ? " slice" : " meet";
+  return result;
+}
+function iconToSVG(icon, customisations) {
+  const box = {
+    left: icon.left,
+    top: icon.top,
+    width: icon.width,
+    height: icon.height
+  };
+  let body = icon.body;
+  [icon, customisations].forEach((props) => {
+    const transformations = [];
+    const hFlip = props.hFlip;
+    const vFlip = props.vFlip;
+    let rotation = props.rotate;
+    if (hFlip) {
+      if (vFlip) {
+        rotation += 2;
+      } else {
+        transformations.push("translate(" + (box.width + box.left) + " " + (0 - box.top) + ")");
+        transformations.push("scale(-1 1)");
+        box.top = box.left = 0;
+      }
+    } else if (vFlip) {
+      transformations.push("translate(" + (0 - box.left) + " " + (box.height + box.top) + ")");
+      transformations.push("scale(1 -1)");
+      box.top = box.left = 0;
+    }
+    let tempValue;
+    if (rotation < 0) {
+      rotation -= Math.floor(rotation / 4) * 4;
+    }
+    rotation = rotation % 4;
+    switch (rotation) {
+      case 1:
+        tempValue = box.height / 2 + box.top;
+        transformations.unshift("rotate(90 " + tempValue + " " + tempValue + ")");
+        break;
+      case 2:
+        transformations.unshift("rotate(180 " + (box.width / 2 + box.left) + " " + (box.height / 2 + box.top) + ")");
+        break;
+      case 3:
+        tempValue = box.width / 2 + box.left;
+        transformations.unshift("rotate(-90 " + tempValue + " " + tempValue + ")");
+        break;
+    }
+    if (rotation % 2 === 1) {
+      if (box.left !== 0 || box.top !== 0) {
+        tempValue = box.left;
+        box.left = box.top;
+        box.top = tempValue;
+      }
+      if (box.width !== box.height) {
+        tempValue = box.width;
+        box.width = box.height;
+        box.height = tempValue;
+      }
+    }
+    if (transformations.length) {
+      body = '<g transform="' + transformations.join(" ") + '">' + body + "</g>";
+    }
+  });
+  let width, height;
+  if (customisations.width === null && customisations.height === null) {
+    height = "1em";
+    width = calculateSize(height, box.width / box.height);
+  } else if (customisations.width !== null && customisations.height !== null) {
+    width = customisations.width;
+    height = customisations.height;
+  } else if (customisations.height !== null) {
+    height = customisations.height;
+    width = calculateSize(height, box.width / box.height);
+  } else {
+    width = customisations.width;
+    height = calculateSize(width, box.height / box.width);
+  }
+  if (width === "auto") {
+    width = box.width;
+  }
+  if (height === "auto") {
+    height = box.height;
+  }
+  width = typeof width === "string" ? width : width + "";
+  height = typeof height === "string" ? height : height + "";
+  const result = {
+    attributes: {
+      width,
+      height,
+      preserveAspectRatio: preserveAspectRatio(customisations),
+      viewBox: box.left + " " + box.top + " " + box.width + " " + box.height
+    },
+    body
+  };
+  if (customisations.inline) {
+    result.inline = true;
+  }
+  return result;
+}
+function replaceIDs(body, prefix = randomPrefix) {
+  const ids = [];
+  let match;
+  while (match = regex.exec(body)) {
+    ids.push(match[1]);
+  }
+  if (!ids.length) {
+    return body;
+  }
+  ids.forEach((id) => {
+    const newID = typeof prefix === "function" ? prefix(id) : prefix + counter++;
+    const escapedID = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    body = body.replace(new RegExp('([#;"])(' + escapedID + ')([")]|\\.[a-z])', "g"), "$1" + newID + "$3");
+  });
+  return body;
+}
+function setAPIModule(provider, item) {
+  storage[provider] = item;
+}
+function getAPIModule(provider) {
+  return storage[provider] || storage[""];
+}
+function createAPIConfig(source) {
+  let resources;
+  if (typeof source.resources === "string") {
+    resources = [source.resources];
+  } else {
+    resources = source.resources;
+    if (!(resources instanceof Array) || !resources.length) {
+      return null;
+    }
+  }
+  const result = {
+    resources,
+    path: source.path === void 0 ? "/" : source.path,
+    maxURL: source.maxURL ? source.maxURL : 500,
+    rotate: source.rotate ? source.rotate : 750,
+    timeout: source.timeout ? source.timeout : 5e3,
+    random: source.random === true,
+    index: source.index ? source.index : 0,
+    dataAfterTimeout: source.dataAfterTimeout !== false
+  };
+  return result;
+}
+function addAPIProvider(provider, customConfig) {
+  const config22 = createAPIConfig(customConfig);
+  if (config22 === null) {
+    return false;
+  }
+  configStorage[provider] = config22;
+  return true;
+}
+function getAPIConfig(provider) {
+  return configStorage[provider];
+}
+function calculateMaxLength(provider, prefix) {
+  const config22 = getAPIConfig(provider);
+  if (!config22) {
+    return 0;
+  }
+  let result;
+  if (!config22.maxURL) {
+    result = 0;
+  } else {
+    let maxHostLength = 0;
+    config22.resources.forEach((item) => {
+      const host = item;
+      maxHostLength = Math.max(maxHostLength, host.length);
+    });
+    const url = mergeParams(prefix + ".json", {
+      icons: ""
+    });
+    result = config22.maxURL - maxHostLength - config22.path.length - url.length;
+  }
+  const cacheKey = provider + ":" + prefix;
+  pathCache[provider] = config22.path;
+  maxLengthCache[cacheKey] = result;
+  return result;
+}
+function getPath(provider) {
+  if (typeof provider === "string") {
+    if (pathCache[provider] === void 0) {
+      const config22 = getAPIConfig(provider);
+      if (!config22) {
+        return "/";
+      }
+      pathCache[provider] = config22.path;
+    }
+    return pathCache[provider];
+  }
+  return "/";
+}
+function sortIcons(icons) {
+  const result = {
+    loaded: [],
+    missing: [],
+    pending: []
+  };
+  const storage2 = /* @__PURE__ */ Object.create(null);
+  icons.sort((a2, b2) => {
+    if (a2.provider !== b2.provider) {
+      return a2.provider.localeCompare(b2.provider);
+    }
+    if (a2.prefix !== b2.prefix) {
+      return a2.prefix.localeCompare(b2.prefix);
+    }
+    return a2.name.localeCompare(b2.name);
+  });
+  let lastIcon = {
+    provider: "",
+    prefix: "",
+    name: ""
+  };
+  icons.forEach((icon) => {
+    if (lastIcon.name === icon.name && lastIcon.prefix === icon.prefix && lastIcon.provider === icon.provider) {
+      return;
+    }
+    lastIcon = icon;
+    const provider = icon.provider;
+    const prefix = icon.prefix;
+    const name = icon.name;
+    if (storage2[provider] === void 0) {
+      storage2[provider] = /* @__PURE__ */ Object.create(null);
+    }
+    const providerStorage = storage2[provider];
+    if (providerStorage[prefix] === void 0) {
+      providerStorage[prefix] = getStorage(provider, prefix);
+    }
+    const localStorage = providerStorage[prefix];
+    let list;
+    if (localStorage.icons[name] !== void 0) {
+      list = result.loaded;
+    } else if (prefix === "" || localStorage.missing[name] !== void 0) {
+      list = result.missing;
+    } else {
+      list = result.pending;
+    }
+    const item = {
+      provider,
+      prefix,
+      name
+    };
+    list.push(item);
+  });
+  return result;
+}
+function removeCallback(sources, id) {
+  sources.forEach((source) => {
+    const provider = source.provider;
+    if (callbacks[provider] === void 0) {
+      return;
+    }
+    const providerCallbacks = callbacks[provider];
+    const prefix = source.prefix;
+    const items = providerCallbacks[prefix];
+    if (items) {
+      providerCallbacks[prefix] = items.filter((row) => row.id !== id);
+    }
+  });
+}
+function updateCallbacks(provider, prefix) {
+  if (pendingUpdates[provider] === void 0) {
+    pendingUpdates[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerPendingUpdates = pendingUpdates[provider];
+  if (!providerPendingUpdates[prefix]) {
+    providerPendingUpdates[prefix] = true;
+    setTimeout(() => {
+      providerPendingUpdates[prefix] = false;
+      if (callbacks[provider] === void 0 || callbacks[provider][prefix] === void 0) {
+        return;
+      }
+      const items = callbacks[provider][prefix].slice(0);
+      if (!items.length) {
+        return;
+      }
+      const storage2 = getStorage(provider, prefix);
+      let hasPending = false;
+      items.forEach((item) => {
+        const icons = item.icons;
+        const oldLength = icons.pending.length;
+        icons.pending = icons.pending.filter((icon) => {
+          if (icon.prefix !== prefix) {
+            return true;
+          }
+          const name = icon.name;
+          if (storage2.icons[name] !== void 0) {
+            icons.loaded.push({
+              provider,
+              prefix,
+              name
+            });
+          } else if (storage2.missing[name] !== void 0) {
+            icons.missing.push({
+              provider,
+              prefix,
+              name
+            });
+          } else {
+            hasPending = true;
+            return true;
+          }
+          return false;
+        });
+        if (icons.pending.length !== oldLength) {
+          if (!hasPending) {
+            removeCallback([
+              {
+                provider,
+                prefix
+              }
+            ], item.id);
+          }
+          item.callback(icons.loaded.slice(0), icons.missing.slice(0), icons.pending.slice(0), item.abort);
+        }
+      });
+    });
+  }
+}
+function storeCallback(callback, icons, pendingSources) {
+  const id = idCounter++;
+  const abort = removeCallback.bind(null, pendingSources, id);
+  if (!icons.pending.length) {
+    return abort;
+  }
+  const item = {
+    id,
+    icons,
+    callback,
+    abort
+  };
+  pendingSources.forEach((source) => {
+    const provider = source.provider;
+    const prefix = source.prefix;
+    if (callbacks[provider] === void 0) {
+      callbacks[provider] = /* @__PURE__ */ Object.create(null);
+    }
+    const providerCallbacks = callbacks[provider];
+    if (providerCallbacks[prefix] === void 0) {
+      providerCallbacks[prefix] = [];
+    }
+    providerCallbacks[prefix].push(item);
+  });
+  return abort;
+}
+function listToIcons(list, validate = true, simpleNames2 = false) {
+  const result = [];
+  list.forEach((item) => {
+    const icon = typeof item === "string" ? stringToIcon(item, false, simpleNames2) : item;
+    if (!validate || validateIcon(icon, simpleNames2)) {
+      result.push({
+        provider: icon.provider,
+        prefix: icon.prefix,
+        name: icon.name
+      });
+    }
+  });
+  return result;
+}
+function sendQuery(config22, payload, query, done, success) {
+  const resourcesCount = config22.resources.length;
+  const startIndex = config22.random ? Math.floor(Math.random() * resourcesCount) : config22.index;
+  let resources;
+  if (config22.random) {
+    let list = config22.resources.slice(0);
+    resources = [];
+    while (list.length > 1) {
+      const nextIndex = Math.floor(Math.random() * list.length);
+      resources.push(list[nextIndex]);
+      list = list.slice(0, nextIndex).concat(list.slice(nextIndex + 1));
+    }
+    resources = resources.concat(list);
+  } else {
+    resources = config22.resources.slice(startIndex).concat(config22.resources.slice(0, startIndex));
+  }
+  const startTime = Date.now();
+  let status = "pending";
+  let queriesSent = 0;
+  let lastError = void 0;
+  let timer = null;
+  let queue = [];
+  let doneCallbacks = [];
+  if (typeof done === "function") {
+    doneCallbacks.push(done);
+  }
+  function resetTimer() {
+    if (timer) {
+      clearTimeout(timer);
+      timer = null;
+    }
+  }
+  function abort() {
+    if (status === "pending") {
+      status = "aborted";
+    }
+    resetTimer();
+    queue.forEach((item) => {
+      if (item.abort) {
+        item.abort();
+      }
+      if (item.status === "pending") {
+        item.status = "aborted";
+      }
+    });
+    queue = [];
+  }
+  function subscribe2(callback, overwrite) {
+    if (overwrite) {
+      doneCallbacks = [];
+    }
+    if (typeof callback === "function") {
+      doneCallbacks.push(callback);
+    }
+  }
+  function getQueryStatus() {
+    return {
+      startTime,
+      payload,
+      status,
+      queriesSent,
+      queriesPending: queue.length,
+      subscribe: subscribe2,
+      abort
+    };
+  }
+  function failQuery() {
+    status = "failed";
+    doneCallbacks.forEach((callback) => {
+      callback(void 0, lastError);
+    });
+  }
+  function clearQueue() {
+    queue = queue.filter((item) => {
+      if (item.status === "pending") {
+        item.status = "aborted";
+      }
+      if (item.abort) {
+        item.abort();
+      }
+      return false;
+    });
+  }
+  function moduleResponse(item, data, error2) {
+    const isError = data === void 0;
+    queue = queue.filter((queued) => queued !== item);
+    switch (status) {
+      case "pending":
+        break;
+      case "failed":
+        if (isError || !config22.dataAfterTimeout) {
+          return;
+        }
+        break;
+      default:
+        return;
+    }
+    if (isError) {
+      if (error2 !== void 0) {
+        lastError = error2;
+      }
+      if (!queue.length) {
+        if (!resources.length) {
+          failQuery();
+        } else {
+          execNext();
+        }
+      }
+      return;
+    }
+    resetTimer();
+    clearQueue();
+    if (success && !config22.random) {
+      const index = config22.resources.indexOf(item.resource);
+      if (index !== -1 && index !== config22.index) {
+        success(index);
+      }
+    }
+    status = "completed";
+    doneCallbacks.forEach((callback) => {
+      callback(data);
+    });
+  }
+  function execNext() {
+    if (status !== "pending") {
+      return;
+    }
+    resetTimer();
+    const resource = resources.shift();
+    if (resource === void 0) {
+      if (queue.length) {
+        const timeout2 = typeof config22.timeout === "function" ? config22.timeout(startTime) : config22.timeout;
+        if (timeout2) {
+          timer = setTimeout(() => {
+            resetTimer();
+            if (status === "pending") {
+              clearQueue();
+              failQuery();
+            }
+          }, timeout2);
+          return;
+        }
+      }
+      failQuery();
+      return;
+    }
+    const item = {
+      getQueryStatus,
+      status: "pending",
+      resource,
+      done: (data, error2) => {
+        moduleResponse(item, data, error2);
+      }
+    };
+    queue.push(item);
+    queriesSent++;
+    const timeout = typeof config22.rotate === "function" ? config22.rotate(queriesSent, startTime) : config22.rotate;
+    timer = setTimeout(execNext, timeout);
+    query(resource, payload, item);
+  }
+  setTimeout(execNext);
+  return getQueryStatus;
+}
+function setConfig(config22) {
+  if (typeof config22 !== "object" || typeof config22.resources !== "object" || !(config22.resources instanceof Array) || !config22.resources.length) {
+    throw new Error("Invalid Reduncancy configuration");
+  }
+  const newConfig = /* @__PURE__ */ Object.create(null);
+  let key;
+  for (key in defaultConfig) {
+    if (config22[key] !== void 0) {
+      newConfig[key] = config22[key];
+    } else {
+      newConfig[key] = defaultConfig[key];
+    }
+  }
+  return newConfig;
+}
+function initRedundancy(cfg) {
+  const config22 = setConfig(cfg);
+  let queries = [];
+  function cleanup() {
+    queries = queries.filter((item) => item().status === "pending");
+  }
+  function query(payload, queryCallback, doneCallback) {
+    const query2 = sendQuery(config22, payload, queryCallback, (data, error2) => {
+      cleanup();
+      if (doneCallback) {
+        doneCallback(data, error2);
+      }
+    }, (newIndex) => {
+      config22.index = newIndex;
+    });
+    queries.push(query2);
+    return query2;
+  }
+  function find(callback) {
+    const result = queries.find((value) => {
+      return callback(value);
+    });
+    return result !== void 0 ? result : null;
+  }
+  const instance = {
+    query,
+    find,
+    setIndex: (index) => {
+      config22.index = index;
+    },
+    getIndex: () => config22.index,
+    cleanup
+  };
+  return instance;
+}
+function emptyCallback$1() {
+}
+function getRedundancyCache(provider) {
+  if (redundancyCache[provider] === void 0) {
+    const config22 = getAPIConfig(provider);
+    if (!config22) {
+      return;
+    }
+    const redundancy = initRedundancy(config22);
+    const cachedReundancy = {
+      config: config22,
+      redundancy
+    };
+    redundancyCache[provider] = cachedReundancy;
+  }
+  return redundancyCache[provider];
+}
+function sendAPIQuery(target, query, callback) {
+  let redundancy;
+  let send2;
+  if (typeof target === "string") {
+    const api = getAPIModule(target);
+    if (!api) {
+      callback(void 0, 424);
+      return emptyCallback$1;
+    }
+    send2 = api.send;
+    const cached = getRedundancyCache(target);
+    if (cached) {
+      redundancy = cached.redundancy;
+    }
+  } else {
+    const config22 = createAPIConfig(target);
+    if (config22) {
+      redundancy = initRedundancy(config22);
+      const moduleKey = target.resources ? target.resources[0] : "";
+      const api = getAPIModule(moduleKey);
+      if (api) {
+        send2 = api.send;
+      }
+    }
+  }
+  if (!redundancy || !send2) {
+    callback(void 0, 424);
+    return emptyCallback$1;
+  }
+  return redundancy.query(query, send2, callback)().abort;
+}
+function emptyCallback() {
+}
+function loadedNewIcons(provider, prefix) {
+  if (loaderFlags[provider] === void 0) {
+    loaderFlags[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerLoaderFlags = loaderFlags[provider];
+  if (!providerLoaderFlags[prefix]) {
+    providerLoaderFlags[prefix] = true;
+    setTimeout(() => {
+      providerLoaderFlags[prefix] = false;
+      updateCallbacks(provider, prefix);
+    });
+  }
+}
+function loadNewIcons(provider, prefix, icons) {
+  function err() {
+    const key = (provider === "" ? "" : "@" + provider + ":") + prefix;
+    const time = Math.floor(Date.now() / 6e4);
+    if (errorsCache[key] < time) {
+      errorsCache[key] = time;
+      console.error('Unable to retrieve icons for "' + key + '" because API is not configured properly.');
+    }
+  }
+  if (iconsToLoad[provider] === void 0) {
+    iconsToLoad[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerIconsToLoad = iconsToLoad[provider];
+  if (queueFlags[provider] === void 0) {
+    queueFlags[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerQueueFlags = queueFlags[provider];
+  if (pendingIcons[provider] === void 0) {
+    pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
+  }
+  const providerPendingIcons = pendingIcons[provider];
+  if (providerIconsToLoad[prefix] === void 0) {
+    providerIconsToLoad[prefix] = icons;
+  } else {
+    providerIconsToLoad[prefix] = providerIconsToLoad[prefix].concat(icons).sort();
+  }
+  if (!providerQueueFlags[prefix]) {
+    providerQueueFlags[prefix] = true;
+    setTimeout(() => {
+      providerQueueFlags[prefix] = false;
+      const icons2 = providerIconsToLoad[prefix];
+      delete providerIconsToLoad[prefix];
+      const api = getAPIModule(provider);
+      if (!api) {
+        err();
+        return;
+      }
+      const params = api.prepare(provider, prefix, icons2);
+      params.forEach((item) => {
+        sendAPIQuery(provider, item, (data, error2) => {
+          const storage2 = getStorage(provider, prefix);
+          if (typeof data !== "object") {
+            if (error2 !== 404) {
+              return;
+            }
+            const t2 = Date.now();
+            item.icons.forEach((name) => {
+              storage2.missing[name] = t2;
+            });
+          } else {
+            try {
+              const parsed = addIconSet(storage2, data);
+              if (!parsed.length) {
+                return;
+              }
+              const pending = providerPendingIcons[prefix];
+              parsed.forEach((name) => {
+                delete pending[name];
+              });
+              if (cache.store) {
+                cache.store(provider, data);
+              }
+            } catch (err2) {
+              console.error(err2);
+            }
+          }
+          loadedNewIcons(provider, prefix);
+        });
+      });
+    });
+  }
+}
+function getGlobal(key) {
+  const attr = key + "Storage";
+  try {
+    if (_window && _window[attr] && typeof _window[attr].length === "number") {
+      return _window[attr];
+    }
+  } catch (err) {
+  }
+  config[key] = false;
+  return null;
+}
+function setCount(storage2, key, value) {
+  try {
+    storage2.setItem(countKey, value + "");
+    count[key] = value;
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+function getCount(storage2) {
+  const count2 = storage2.getItem(countKey);
+  if (count2) {
+    const total = parseInt(count2);
+    return total ? total : 0;
+  }
+  return 0;
+}
+function initCache(storage2, key) {
+  try {
+    storage2.setItem(versionKey, cacheVersion);
+  } catch (err) {
+  }
+  setCount(storage2, key, 0);
+}
+function destroyCache(storage2) {
+  try {
+    const total = getCount(storage2);
+    for (let i2 = 0; i2 < total; i2++) {
+      storage2.removeItem(cachePrefix + i2);
+    }
+  } catch (err) {
+  }
+}
+function flipFromString(custom, flip) {
+  flip.split(separator).forEach((str) => {
+    const value = str.trim();
+    switch (value) {
+      case "horizontal":
+        custom.hFlip = true;
+        break;
+      case "vertical":
+        custom.vFlip = true;
+        break;
+    }
+  });
+}
+function alignmentFromString(custom, align) {
+  align.split(separator).forEach((str) => {
+    const value = str.trim();
+    switch (value) {
+      case "left":
+      case "center":
+      case "right":
+        custom.hAlign = value;
+        break;
+      case "top":
+      case "middle":
+      case "bottom":
+        custom.vAlign = value;
+        break;
+      case "slice":
+      case "crop":
+        custom.slice = true;
+        break;
+      case "meet":
+        custom.slice = false;
+    }
+  });
+}
+function rotateFromString(value, defaultValue = 0) {
+  const units = value.replace(/^-?[0-9.]*/, "");
+  function cleanup(value2) {
+    while (value2 < 0) {
+      value2 += 4;
+    }
+    return value2 % 4;
+  }
+  if (units === "") {
+    const num = parseInt(value);
+    return isNaN(num) ? 0 : cleanup(num);
+  } else if (units !== value) {
+    let split = 0;
+    switch (units) {
+      case "%":
+        split = 25;
+        break;
+      case "deg":
+        split = 90;
+    }
+    if (split) {
+      let num = parseFloat(value.slice(0, value.length - units.length));
+      if (isNaN(num)) {
+        return 0;
+      }
+      num = num / split;
+      return num % 1 === 0 ? cleanup(num) : 0;
+    }
+  }
+  return defaultValue;
+}
+function render(icon, props) {
+  const customisations = mergeCustomisations(defaults, props);
+  const componentProps = { ...svgDefaults };
+  let style = typeof props.style === "string" ? props.style : "";
+  for (let key in props) {
+    const value = props[key];
+    if (value === void 0) {
+      continue;
+    }
+    switch (key) {
+      case "icon":
+      case "style":
+      case "onLoad":
+        break;
+      case "inline":
+      case "hFlip":
+      case "vFlip":
+        customisations[key] = value === true || value === "true" || value === 1;
+        break;
+      case "flip":
+        if (typeof value === "string") {
+          flipFromString(customisations, value);
+        }
+        break;
+      case "align":
+        if (typeof value === "string") {
+          alignmentFromString(customisations, value);
+        }
+        break;
+      case "color":
+        style = style + (style.length > 0 && style.trim().slice(-1) !== ";" ? ";" : "") + "color: " + value + "; ";
+        break;
+      case "rotate":
+        if (typeof value === "string") {
+          customisations[key] = rotateFromString(value);
+        } else if (typeof value === "number") {
+          customisations[key] = value;
+        }
+        break;
+      case "ariaHidden":
+      case "aria-hidden":
+        if (value !== true && value !== "true") {
+          delete componentProps["aria-hidden"];
+        }
+        break;
+      default:
+        if (key.slice(0, 3) === "on:") {
+          break;
+        }
+        if (defaults[key] === void 0) {
+          componentProps[key] = value;
+        }
+    }
+  }
+  const item = iconToSVG(icon, customisations);
+  for (let key in item.attributes) {
+    componentProps[key] = item.attributes[key];
+  }
+  if (item.inline) {
+    style = "vertical-align: -0.125em; " + style;
+  }
+  if (style !== "") {
+    componentProps.style = style;
+  }
+  let localCounter = 0;
+  let id = props.id;
+  if (typeof id === "string") {
+    id = id.replace(/-/g, "_");
+  }
+  return {
+    attributes: componentProps,
+    body: replaceIDs(item.body, id ? () => id + "ID" + localCounter++ : "iconifySvelte")
+  };
+}
+function checkIconState(icon, state, mounted, callback, onload) {
+  function abortLoading() {
+    if (state.loading) {
+      state.loading.abort();
+      state.loading = null;
+    }
+  }
+  if (typeof icon === "object" && icon !== null && typeof icon.body === "string") {
+    state.name = "";
+    abortLoading();
+    return { data: fullIcon(icon) };
+  }
+  let iconName;
+  if (typeof icon !== "string" || (iconName = stringToIcon(icon, false, true)) === null) {
+    abortLoading();
+    return null;
+  }
+  const data = getIconData(iconName);
+  if (data === null) {
+    if (mounted && (!state.loading || state.loading.name !== icon)) {
+      abortLoading();
+      state.name = "";
+      state.loading = {
+        name: icon,
+        abort: loadIcons([iconName], callback)
+      };
+    }
+    return null;
+  }
+  abortLoading();
+  if (state.name !== icon) {
+    state.name = icon;
+    if (onload && !state.destroyed) {
+      onload(icon);
+    }
+  }
+  const classes = ["iconify"];
+  if (iconName.prefix !== "") {
+    classes.push("iconify--" + iconName.prefix);
+  }
+  if (iconName.provider !== "") {
+    classes.push("iconify--" + iconName.provider);
+  }
+  return { data, classes };
+}
+function generateIcon(icon, props) {
+  return icon ? render(icon, props) : null;
+}
+var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults, Icon;
+var init_Icon_d8bf2219 = __esm({
+  ".svelte-kit/output/server/chunks/Icon-d8bf2219.js"() {
+    init_shims();
+    init_app_d3d82645();
+    matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+    iconDefaults = Object.freeze({
+      left: 0,
+      top: 0,
+      width: 16,
+      height: 16,
+      rotate: 0,
+      vFlip: false,
+      hFlip: false
+    });
+    stringToIcon = (value, validate, allowSimpleName, provider = "") => {
+      const colonSeparated = value.split(":");
+      if (value.slice(0, 1) === "@") {
+        if (colonSeparated.length < 2 || colonSeparated.length > 3) {
+          return null;
+        }
+        provider = colonSeparated.shift().slice(1);
+      }
+      if (colonSeparated.length > 3 || !colonSeparated.length) {
+        return null;
+      }
+      if (colonSeparated.length > 1) {
+        const name2 = colonSeparated.pop();
+        const prefix = colonSeparated.pop();
+        const result = {
+          provider: colonSeparated.length > 0 ? colonSeparated[0] : provider,
+          prefix,
+          name: name2
+        };
+        return validate && !validateIcon(result) ? null : result;
+      }
+      const name = colonSeparated[0];
+      const dashSeparated = name.split("-");
+      if (dashSeparated.length > 1) {
+        const result = {
+          provider,
+          prefix: dashSeparated.shift(),
+          name: dashSeparated.join("-")
+        };
+        return validate && !validateIcon(result) ? null : result;
+      }
+      if (allowSimpleName && provider === "") {
+        const result = {
+          provider,
+          prefix: "",
+          name
+        };
+        return validate && !validateIcon(result, allowSimpleName) ? null : result;
+      }
+      return null;
+    };
+    validateIcon = (icon, allowSimpleName) => {
+      if (!icon) {
+        return false;
+      }
+      return !!((icon.provider === "" || icon.provider.match(matchName)) && (allowSimpleName && icon.prefix === "" || icon.prefix.match(matchName)) && icon.name.match(matchName));
+    };
+    matchChar = /^[a-f0-9]+(-[a-f0-9]+)*$/;
+    storageVersion = 1;
+    storage$1 = /* @__PURE__ */ Object.create(null);
+    try {
+      const w = window || self;
+      if ((w == null ? void 0 : w._iconifyStorage.version) === storageVersion) {
+        storage$1 = w._iconifyStorage.storage;
+      }
+    } catch (err) {
+    }
+    simpleNames = false;
+    defaults = Object.freeze({
+      inline: false,
+      width: null,
+      height: null,
+      hAlign: "center",
+      vAlign: "middle",
+      slice: false,
+      hFlip: false,
+      vFlip: false,
+      rotate: 0
+    });
+    unitsSplit = /(-?[0-9.]*[0-9]+[0-9.]*)/g;
+    unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
+    regex = /\sid="(\S+)"/g;
+    randomPrefix = "IconifyId" + Date.now().toString(16) + (Math.random() * 16777216 | 0).toString(16);
+    counter = 0;
+    storage = /* @__PURE__ */ Object.create(null);
+    configStorage = /* @__PURE__ */ Object.create(null);
+    fallBackAPISources = [
+      "https://api.simplesvg.com",
+      "https://api.unisvg.com"
+    ];
+    fallBackAPI = [];
+    while (fallBackAPISources.length > 0) {
+      if (fallBackAPISources.length === 1) {
+        fallBackAPI.push(fallBackAPISources.shift());
+      } else {
+        if (Math.random() > 0.5) {
+          fallBackAPI.push(fallBackAPISources.shift());
+        } else {
+          fallBackAPI.push(fallBackAPISources.pop());
+        }
+      }
+    }
+    configStorage[""] = createAPIConfig({
+      resources: ["https://api.iconify.design"].concat(fallBackAPI)
+    });
+    mergeParams = (base2, params) => {
+      let result = base2, hasParams = result.indexOf("?") !== -1;
+      function paramToString(value) {
+        switch (typeof value) {
+          case "boolean":
+            return value ? "true" : "false";
+          case "number":
+            return encodeURIComponent(value);
+          case "string":
+            return encodeURIComponent(value);
+          default:
+            throw new Error("Invalid parameter");
+        }
+      }
+      Object.keys(params).forEach((key) => {
+        let value;
+        try {
+          value = paramToString(params[key]);
+        } catch (err) {
+          return;
+        }
+        result += (hasParams ? "&" : "?") + encodeURIComponent(key) + "=" + value;
+        hasParams = true;
+      });
+      return result;
+    };
+    maxLengthCache = /* @__PURE__ */ Object.create(null);
+    pathCache = /* @__PURE__ */ Object.create(null);
+    detectFetch = () => {
+      let callback;
+      try {
+        callback = fetch;
+        if (typeof callback === "function") {
+          return callback;
+        }
+      } catch (err) {
+      }
+      try {
+        const chunk = String.fromCharCode(114) + String.fromCharCode(101);
+        const req = global[chunk + "qui" + chunk];
+        callback = req("cross-fetch");
+        if (typeof callback === "function") {
+          return callback;
+        }
+      } catch (err) {
+      }
+      return null;
+    };
+    fetchModule = detectFetch();
+    prepare = (provider, prefix, icons) => {
+      const results = [];
+      let maxLength = maxLengthCache[prefix];
+      if (maxLength === void 0) {
+        maxLength = calculateMaxLength(provider, prefix);
+      }
+      const type = "icons";
+      let item = {
+        type,
+        provider,
+        prefix,
+        icons: []
+      };
+      let length = 0;
+      icons.forEach((name, index) => {
+        length += name.length + 1;
+        if (length >= maxLength && index > 0) {
+          results.push(item);
+          item = {
+            type,
+            provider,
+            prefix,
+            icons: []
+          };
+          length = name.length;
+        }
+        item.icons.push(name);
+      });
+      results.push(item);
+      return results;
+    };
+    send = (host, params, status) => {
+      if (!fetchModule) {
+        status.done(void 0, 424);
+        return;
+      }
+      let path = getPath(params.provider);
+      switch (params.type) {
+        case "icons": {
+          const prefix = params.prefix;
+          const icons = params.icons;
+          const iconsList = icons.join(",");
+          path += mergeParams(prefix + ".json", {
+            icons: iconsList
+          });
+          break;
+        }
+        case "custom": {
+          const uri = params.uri;
+          path += uri.slice(0, 1) === "/" ? uri.slice(1) : uri;
+          break;
+        }
+        default:
+          status.done(void 0, 400);
+          return;
+      }
+      let defaultError = 503;
+      fetchModule(host + path).then((response) => {
+        if (response.status !== 200) {
+          setTimeout(() => {
+            status.done(void 0, response.status);
+          });
+          return;
+        }
+        defaultError = 501;
+        return response.json();
+      }).then((data) => {
+        if (typeof data !== "object" || data === null) {
+          setTimeout(() => {
+            status.done(void 0, defaultError);
+          });
+          return;
+        }
+        setTimeout(() => {
+          status.done(data);
+        });
+      }).catch(() => {
+        status.done(void 0, defaultError);
+      });
+    };
+    fetchAPIModule = {
+      prepare,
+      send
+    };
+    callbacks = /* @__PURE__ */ Object.create(null);
+    pendingUpdates = /* @__PURE__ */ Object.create(null);
+    idCounter = 0;
+    defaultConfig = {
+      resources: [],
+      index: 0,
+      timeout: 2e3,
+      rotate: 750,
+      random: false,
+      dataAfterTimeout: false
+    };
+    redundancyCache = /* @__PURE__ */ Object.create(null);
+    cache = {};
+    pendingIcons = /* @__PURE__ */ Object.create(null);
+    iconsToLoad = /* @__PURE__ */ Object.create(null);
+    loaderFlags = /* @__PURE__ */ Object.create(null);
+    queueFlags = /* @__PURE__ */ Object.create(null);
+    errorsCache = /* @__PURE__ */ Object.create(null);
+    loadIcons = (icons, callback) => {
+      const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
+      const sortedIcons = sortIcons(cleanedIcons);
+      if (!sortedIcons.pending.length) {
+        let callCallback = true;
+        if (callback) {
+          setTimeout(() => {
+            if (callCallback) {
+              callback(sortedIcons.loaded, sortedIcons.missing, sortedIcons.pending, emptyCallback);
+            }
+          });
+        }
+        return () => {
+          callCallback = false;
+        };
+      }
+      const newIcons = /* @__PURE__ */ Object.create(null);
+      const sources = [];
+      let lastProvider, lastPrefix;
+      sortedIcons.pending.forEach((icon) => {
+        const provider = icon.provider;
+        const prefix = icon.prefix;
+        if (prefix === lastPrefix && provider === lastProvider) {
+          return;
+        }
+        lastProvider = provider;
+        lastPrefix = prefix;
+        sources.push({
+          provider,
+          prefix
+        });
+        if (pendingIcons[provider] === void 0) {
+          pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
+        }
+        const providerPendingIcons = pendingIcons[provider];
+        if (providerPendingIcons[prefix] === void 0) {
+          providerPendingIcons[prefix] = /* @__PURE__ */ Object.create(null);
+        }
+        if (newIcons[provider] === void 0) {
+          newIcons[provider] = /* @__PURE__ */ Object.create(null);
+        }
+        const providerNewIcons = newIcons[provider];
+        if (providerNewIcons[prefix] === void 0) {
+          providerNewIcons[prefix] = [];
+        }
+      });
+      const time = Date.now();
+      sortedIcons.pending.forEach((icon) => {
+        const provider = icon.provider;
+        const prefix = icon.prefix;
+        const name = icon.name;
+        const pendingQueue = pendingIcons[provider][prefix];
+        if (pendingQueue[name] === void 0) {
+          pendingQueue[name] = time;
+          newIcons[provider][prefix].push(name);
+        }
+      });
+      sources.forEach((source) => {
+        const provider = source.provider;
+        const prefix = source.prefix;
+        if (newIcons[provider][prefix].length) {
+          loadNewIcons(provider, prefix, newIcons[provider][prefix]);
+        }
+      });
+      return callback ? storeCallback(callback, sortedIcons, sources) : emptyCallback;
+    };
+    cacheVersion = "iconify2";
+    cachePrefix = "iconify";
+    countKey = cachePrefix + "-count";
+    versionKey = cachePrefix + "-version";
+    hour = 36e5;
+    cacheExpiration = 168;
+    config = {
+      local: true,
+      session: true
+    };
+    loaded = false;
+    count = {
+      local: 0,
+      session: 0
+    };
+    emptyList = {
+      local: [],
+      session: []
+    };
+    _window = typeof window === "undefined" ? {} : window;
+    loadCache = () => {
+      if (loaded) {
+        return;
+      }
+      loaded = true;
+      const minTime = Math.floor(Date.now() / hour) - cacheExpiration;
+      function load2(key) {
+        const func = getGlobal(key);
+        if (!func) {
+          return;
+        }
+        const getItem = (index) => {
+          const name = cachePrefix + index;
+          const item = func.getItem(name);
+          if (typeof item !== "string") {
+            return false;
+          }
+          let valid = true;
+          try {
+            const data = JSON.parse(item);
+            if (typeof data !== "object" || typeof data.cached !== "number" || data.cached < minTime || typeof data.provider !== "string" || typeof data.data !== "object" || typeof data.data.prefix !== "string") {
+              valid = false;
+            } else {
+              const provider = data.provider;
+              const prefix = data.data.prefix;
+              const storage2 = getStorage(provider, prefix);
+              valid = addIconSet(storage2, data.data).length > 0;
+            }
+          } catch (err) {
+            valid = false;
+          }
+          if (!valid) {
+            func.removeItem(name);
+          }
+          return valid;
+        };
+        try {
+          const version = func.getItem(versionKey);
+          if (version !== cacheVersion) {
+            if (version) {
+              destroyCache(func);
+            }
+            initCache(func, key);
+            return;
+          }
+          let total = getCount(func);
+          for (let i2 = total - 1; i2 >= 0; i2--) {
+            if (!getItem(i2)) {
+              if (i2 === total - 1) {
+                total--;
+              } else {
+                emptyList[key].push(i2);
+              }
+            }
+          }
+          setCount(func, key, total);
+        } catch (err) {
+        }
+      }
+      for (const key in config) {
+        load2(key);
+      }
+    };
+    storeCache = (provider, data) => {
+      if (!loaded) {
+        loadCache();
+      }
+      function store(key) {
+        if (!config[key]) {
+          return false;
+        }
+        const func = getGlobal(key);
+        if (!func) {
+          return false;
+        }
+        let index = emptyList[key].shift();
+        if (index === void 0) {
+          index = count[key];
+          if (!setCount(func, key, index + 1)) {
+            return false;
+          }
+        }
+        try {
+          const item = {
+            cached: Math.floor(Date.now() / hour),
+            provider,
+            data
+          };
+          func.setItem(cachePrefix + index, JSON.stringify(item));
+        } catch (err) {
+          return false;
+        }
+        return true;
+      }
+      if (!store("local")) {
+        store("session");
+      }
+    };
+    separator = /[\s,]+/;
+    svgDefaults = {
+      "xmlns": "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink",
+      "aria-hidden": true,
+      "role": "img"
+    };
+    allowSimpleNames(true);
+    setAPIModule("", fetchAPIModule);
+    if (typeof document !== "undefined" && typeof window !== "undefined") {
+      cache.store = storeCache;
+      loadCache();
+      const _window2 = window;
+      if (_window2.IconifyPreload !== void 0) {
+        const preload = _window2.IconifyPreload;
+        const err = "Invalid IconifyPreload syntax.";
+        if (typeof preload === "object" && preload !== null) {
+          (preload instanceof Array ? preload : [preload]).forEach((item) => {
+            try {
+              if (typeof item !== "object" || item === null || item instanceof Array || typeof item.icons !== "object" || typeof item.prefix !== "string" || !addCollection(item)) {
+                console.error(err);
+              }
+            } catch (e3) {
+              console.error(err);
+            }
+          });
+        }
+      }
+      if (_window2.IconifyProviders !== void 0) {
+        const providers = _window2.IconifyProviders;
+        if (typeof providers === "object" && providers !== null) {
+          for (let key in providers) {
+            const err = "IconifyProviders[" + key + "] is invalid.";
+            try {
+              const value = providers[key];
+              if (typeof value !== "object" || !value || value.resources === void 0) {
+                continue;
+              }
+              if (!addAPIProvider(key, value)) {
+                console.error(err);
+              }
+            } catch (e3) {
+              console.error(err);
+            }
+          }
+        }
+      }
+    }
+    Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      const state = {
+        name: "",
+        loading: null,
+        destroyed: false
+      };
+      let mounted = false;
+      let data;
+      const onLoad = (icon) => {
+        if (typeof $$props.onLoad === "function") {
+          $$props.onLoad(icon);
+        }
+        const dispatch = createEventDispatcher();
+        dispatch("load", { icon });
+      };
+      function loaded2() {
+      }
+      onDestroy(() => {
+        state.destroyed = true;
+        if (state.loading) {
+          state.loading.abort();
+          state.loading = null;
+        }
+      });
+      {
+        {
+          const iconData = checkIconState($$props.icon, state, mounted, loaded2, onLoad);
+          data = iconData ? generateIcon(iconData.data, $$props) : null;
+          if (data && iconData.classes) {
+            data.attributes["class"] = (typeof $$props["class"] === "string" ? $$props["class"] + " " : "") + iconData.classes.join(" ");
+          }
+        }
+      }
+      return `${data !== null ? `<svg${spread([escape_object(data.attributes)], {})}><!-- HTML_TAG_START -->${data.body}<!-- HTML_TAG_END --></svg>` : ``}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/stores-572856a0.js
 function writable2(value, start = noop3) {
   let stop;
   const subscribers = /* @__PURE__ */ new Set();
@@ -6718,29 +8701,512 @@ function writable2(value, start = noop3) {
   }
   return { set, update, subscribe: subscribe2 };
 }
-var subscriber_queue2;
-var init_index_af55a9bb = __esm({
-  ".svelte-kit/output/server/chunks/index-af55a9bb.js"() {
+var subscriber_queue2, TabHeader, css$9, Tab1, HorizontalSpace, css$8, Tab2, css$7, CollectionComponent, css$6, SearchComponent, css$5, Tab3, css$4, Tab4, css$3, DiscordServersComponent, css$2, Tab5, css$1, TwitterAccountsComponent, css, Tab6, activeTabVal, tabs, theme, tab1data, tokens, selectedToken, selectedCollection, collections, modal, dialog, emeraldIdVerif, discordVerif, twitterVerif;
+var init_stores_572856a0 = __esm({
+  ".svelte-kit/output/server/chunks/stores-572856a0.js"() {
     init_shims();
-    init_app_31f4847e();
+    init_app_d3d82645();
+    init_Icon_d8bf2219();
     subscriber_queue2 = [];
-  }
-});
+    TabHeader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { title } = $$props;
+      let { subtitle } = $$props;
+      if ($$props.title === void 0 && $$bindings.title && title !== void 0)
+        $$bindings.title(title);
+      if ($$props.subtitle === void 0 && $$bindings.subtitle && subtitle !== void 0)
+        $$bindings.subtitle(subtitle);
+      return `<header><h3 class="${"mt-1"}">${escape2(title)}</h3>
+    <p>${escape2(subtitle)}</p>
+</header>`;
+    });
+    css$9 = {
+      code: "textarea.svelte-19lnoss{border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px}.menu-icon-container.svelte-19lnoss{display:flex;height:100%;width:6%;justify-content:center;align-items:center}.alignment-icon.svelte-19lnoss{width:33.3%;height:100%;display:flex;justify-content:center;align-items:center}.alignment-container.svelte-19lnoss{display:flex;width:20%;height:100%;justify-content:space-between;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-type-container.svelte-19lnoss{display:flex;width:34%;height:100%;align-items:center;justify-content:space-between;border-right:1px solid var(--form-element-border-color);padding-left:0.5rem;padding-right:0.5rem}.text-icons-container.svelte-19lnoss{display:flex;width:40%;height:100%;justify-content:start;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-icon.svelte-19lnoss{display:flex;height:100%;width:1.8rem;justify-content:center;align-items:center}.textarea-header.svelte-19lnoss{display:flex;width:100%;height:1.6rem;border:1px solid var(--form-element-border-color);border-bottom:none;border-top-right-radius:6px;border-top-left-radius:6px;margin-top:3px}",
+      map: null
+    };
+    Tab1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_tab1data;
+      $$unsubscribe_tab1data = subscribe(tab1data, (value) => value);
+      let { tab1val } = $$props;
+      let { mobile } = $$props;
+      console.log("mobile tab 1", mobile);
+      tab1data.subscribe((val) => tab1val = val);
+      let name = tab1val.name;
+      let description = tab1val.description;
+      if ($$props.tab1val === void 0 && $$bindings.tab1val && tab1val !== void 0)
+        $$bindings.tab1val(tab1val);
+      if ($$props.mobile === void 0 && $$bindings.mobile && mobile !== void 0)
+        $$bindings.mobile(mobile);
+      $$result.css.add(css$9);
+      $$unsubscribe_tab1data();
+      return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Tab 1",
+        subtitle: "Something about tab 1"
+      }, {}, {})}
+    <div><div style="${"width:100%"}"><h3 class="${"mt-1"}">Name</h3>
+            <input id="${"name"}" placeholder="${"My awesome project"}"${add_attribute("value", name ? name : null, 0)}></div>
+        <h3 class="${"mt-1"}">Description</h3>
+        <div class="${"textarea-header svelte-19lnoss"}">${mobile ? `<div></div>` : `<section class="${"text-icons-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:bold", height: 20 }, {}, {})}</div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:italic", height: 19 }, {}, {})}</div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:underline-outlined",
+        height: 20
+      }, {}, {})}</div>
+                <div style="${"width: 8px;"}"></div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "ooui:underline-a", height: 16 }, {}, {})}
+                    ${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:chevron-down",
+        height: 14
+      }, {}, {})}</div></section>
+            <section class="${"text-type-container svelte-19lnoss"}"><div><span style="${"font-weight: 300; font-size:16px"}">Normal Text</span></div>
+                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:chevron-down",
+        height: 18
+      }, {}, {})}</div></section>
+            <section class="${"alignment-container svelte-19lnoss"}"><div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-left",
+        height: 18
+      }, {}, {})}</div>
+                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-center",
+        height: 18
+      }, {}, {})}</div>
+                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "akar-icons:text-align-right",
+        height: 18
+      }, {}, {})}</div></section>
+            <section class="${"menu-icon-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "carbon:overflow-menu-vertical",
+        height: 22
+      }, {}, {})}</div></section>`}</div>
+        <textarea id="${"description"}" rows="${"4"}" placeholder="${"My awesome project it\xB4s ..."}" class="${"svelte-19lnoss"}">${escape2(description ? description : null)}</textarea></div>
+            </div>`;
+    });
+    HorizontalSpace = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { value } = $$props;
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      return `<main style="${"width: " + escape2(value)}"></main>`;
+    });
+    css$8 = {
+      code: ".amount-container.svelte-1khxnhk{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1khxnhk{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1khxnhk{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}.token-container.svelte-1khxnhk{position:relative;display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-mobile.svelte-1khxnhk{position:relative;display:flex;width:50%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1khxnhk{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1khxnhk{margin:0;padding:0}ul.svelte-1khxnhk{margin:0;padding:0}li.svelte-1khxnhk{margin:0;padding:0}.secondary-btn.svelte-1khxnhk{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1khxnhk:hover{background:rgba(56, 232, 198, 0.1)}.custom-container.svelte-1khxnhk{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1khxnhk{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1khxnhk{height:100%;width:100%}",
+      map: null
+    };
+    Tab2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let cssVarStyles;
+      let $$unsubscribe_tokens;
+      let $$unsubscribe_selectedToken;
+      let $$unsubscribe_dialog;
+      let $$unsubscribe_modal;
+      $$unsubscribe_tokens = subscribe(tokens, (value) => value);
+      $$unsubscribe_selectedToken = subscribe(selectedToken, (value) => value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => value);
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let { mobile } = $$props;
+      let hoveredId;
+      let tokensValue;
+      let styles = {
+        "mobile-width": "50%",
+        "active-width": "20%",
+        "inactive-width": "30%"
+      };
+      modal.subscribe((val) => val);
+      tokens.subscribe((val) => {
+        tokensValue = val;
+      });
+      if ($$props.mobile === void 0 && $$bindings.mobile && mobile !== void 0)
+        $$bindings.mobile(mobile);
+      $$result.css.add(css$8);
+      cssVarStyles = Object.entries(styles).map(([key, value]) => `--${key}:${value}`).join(";");
+      $$unsubscribe_tokens();
+      $$unsubscribe_selectedToken();
+      $$unsubscribe_dialog();
+      $$unsubscribe_modal();
+      return `<main class="${"container svelte-1khxnhk"}"${add_attribute("style", cssVarStyles, 0)}>${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Tokens",
+        subtitle: "Something about the tokens"
+      }, {}, {})}
+    <div class="${"tokens-container mt-2 svelte-1khxnhk"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-1khxnhk"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
+        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-1khxnhk"}"><div style="${"--width:" + escape2(amount ? "30%" : "20%")}" class="${escape2(null_to_empty(!mobile ? "token-container" : "token-container-mobile")) + " svelte-1khxnhk"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "}"><img style="${"height:100%; width:2.6rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                    <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
+                    ${amount !== 0 ? `<div class="${"amount-container svelte-1khxnhk"}">${escape2(amount)}
+                        <div class="${"icon-container svelte-1khxnhk"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit" }, {}, {})}</div>
+                                </div>` : `<div></div>`}</div>
+                                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", selected, 1)}></div>
+                                </li>`;
+      })}</ul>
+                                <footer class="${"custom-container svelte-1khxnhk"}"><div class="${"secondary-btn svelte-1khxnhk"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-outlined",
+        height: "1.2rem"
+      }, {}, {})}</div>
+                                        ${validate_component(HorizontalSpace, "HorizontalSpace").$$render($$result, { value: "0.3rem" }, {}, {})}
+                                        <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
+    });
+    css$7 = {
+      code: "img.svelte-1kk9tr5{max-width:2.4rem;min-width:2.4rem;height:100%;border-style:none;margin-left:-0.1rem;border-radius:50px}.label-active.svelte-1kk9tr5{margin-left:2rem;width:10rem;display:flex;justify-content:end}.label-inactive.svelte-1kk9tr5{width:10rem;display:flex;justify-content:end}.amount-container.svelte-1kk9tr5{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px;margin-left:1rem}.icon-container.svelte-1kk9tr5{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}.collection-container-active.svelte-1kk9tr5{position:relative;display:flex;width:16rem;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.collection-container-inactive.svelte-1kk9tr5{position:relative;display:flex;width:14rem;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:0.8rem}",
+      map: null
+    };
+    CollectionComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_dialog;
+      let $$unsubscribe_selectedCollection;
+      $$unsubscribe_dialog = subscribe(dialog, (value) => value);
+      $$unsubscribe_selectedCollection = subscribe(selectedCollection, (value) => value);
+      let { selected } = $$props;
+      let { amount } = $$props;
+      let { label } = $$props;
+      let { imgUrl } = $$props;
+      let { id } = $$props;
+      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
+        $$bindings.selected(selected);
+      if ($$props.amount === void 0 && $$bindings.amount && amount !== void 0)
+        $$bindings.amount(amount);
+      if ($$props.label === void 0 && $$bindings.label && label !== void 0)
+        $$bindings.label(label);
+      if ($$props.imgUrl === void 0 && $$bindings.imgUrl && imgUrl !== void 0)
+        $$bindings.imgUrl(imgUrl);
+      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
+        $$bindings.id(id);
+      $$result.css.add(css$7);
+      $$unsubscribe_dialog();
+      $$unsubscribe_selectedCollection();
+      return `<div class="${escape2(null_to_empty(amount ? "collection-container-active" : "collection-container-inactive")) + " svelte-1kk9tr5"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-1kk9tr5"}"></div>
+    <div class="${escape2(null_to_empty(amount ? "label-active" : "label-inactive")) + " svelte-1kk9tr5"}">${escape2(label)}</div>
+    ${amount ? `
+    <div class="${"amount-container svelte-1kk9tr5"}">${escape2(amount)}
+        <div class="${"icon-container svelte-1kk9tr5"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div></div>` : `<div></div>`}
+            </div>`;
+    });
+    css$6 = {
+      code: "header.svelte-1ombc6g{border-bottom:0.5px solid var(--form-element-border-color);margin:0;padding:0}input.svelte-1ombc6g{margin:0;padding:0;border-top-left-radius:0px;border-bottom-left-radius:0px}.icon-container.svelte-1ombc6g{width:2rem;height:3.1rem;border-top-left-radius:12px;border-bottom-left-radius:12px;border:1px solid var(--form-element-border-color)}",
+      map: null
+    };
+    SearchComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { searchTerm } = $$props;
+      if ($$props.searchTerm === void 0 && $$bindings.searchTerm && searchTerm !== void 0)
+        $$bindings.searchTerm(searchTerm);
+      $$result.css.add(css$6);
+      return `<header class="${"flex-align svelte-1ombc6g"}"><div class="${"icon-container flex-align svelte-1ombc6g"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:search" }, {}, {})}</div>
+    <div class="${"mt-1"}"><input type="${"text"}" id="${"search-field"}" placeholder="${"Search ..."}" autocomplete="${"off"}" class="${"svelte-1ombc6g"}"${add_attribute("value", searchTerm, 0)}></div>
+</header>`;
+    });
+    css$5 = {
+      code: ".collection-inactive.svelte-telswo{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-telswo{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}main.svelte-telswo{margin:0;padding:0}ul.svelte-telswo{margin:0;padding:0}li.svelte-telswo{margin:0;padding:0}.collections-container.svelte-telswo{display:flex;flex-direction:column;justify-content:space-between;height:26rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-telswo{height:100%;width:100%}",
+      map: null
+    };
+    Tab3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_collections;
+      let $dialog, $$unsubscribe_dialog;
+      let $selectedCollection, $$unsubscribe_selectedCollection;
+      $$unsubscribe_collections = subscribe(collections, (value) => value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
+      $$unsubscribe_selectedCollection = subscribe(selectedCollection, (value) => $selectedCollection = value);
+      createEventDispatcher();
+      let hoveredId;
+      let collectionsValue;
+      collections.subscribe((val) => collectionsValue = val);
+      let filteredCollections = [];
+      let searchTerm = "";
+      $$result.css.add(css$5);
+      let $$settled;
+      let $$rendered;
+      do {
+        $$settled = true;
+        $$rendered = `
+<main class="${"container svelte-telswo"}">${validate_component(TabHeader, "TabHeader").$$render($$result, {
+          title: "Collections",
+          subtitle: "Something about the collections"
+        }, {}, {})}
+     <div class="${"collections-container mt-2 svelte-telswo"}">${validate_component(SearchComponent, "SearchComponent").$$render($$result, { searchTerm }, {
+          searchTerm: ($$value) => {
+            searchTerm = $$value;
+            $$settled = false;
+          }
+        }, {})}
+        ${!searchTerm && filteredCollections.length === 0 ? `
+          <ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-telswo"}">${each(collectionsValue, (collection, i2) => {
+          return `<li class="${escape2(null_to_empty(hoveredId === collection.id ? "collection-active" : "collection-inactive")) + " svelte-telswo"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign(collection, { selectedCollection }), {}, {})}
 
-// .svelte-kit/output/server/chunks/stores-9982a29a.js
-var user, transactionStatus, txId, transactionInProgress, eventCreationInProgress, eventCreatedStatus, floatClaimingInProgress, floatClaimedStatus;
-var init_stores_9982a29a = __esm({
-  ".svelte-kit/output/server/chunks/stores-9982a29a.js"() {
-    init_shims();
-    init_index_af55a9bb();
-    user = writable2(null);
-    transactionStatus = writable2(null);
-    txId = writable2(null);
-    transactionInProgress = writable2(false);
-    eventCreationInProgress = writable2(false);
-    eventCreatedStatus = writable2(false);
-    floatClaimingInProgress = writable2(false);
-    floatClaimedStatus = writable2(false);
+            <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", collection.selected, 1)}></div>
+            </li>`;
+        })}</ul>` : `${filteredCollections.length > 0 ? `<ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-telswo"}">${each(filteredCollections, (collection) => {
+          return `<li class="${escape2(null_to_empty(hoveredId === collection.id ? "collection-active" : "collection-inactive")) + " svelte-telswo"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign(collection, { dialog: $dialog }, { selectedCollection: $selectedCollection }), {}, {})}
+
+<div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", collection.selected, 1)}></div>
+</li>`;
+        })}</ul>` : ``}`}</div></main>
+
+
+
+  `;
+      } while (!$$settled);
+      $$unsubscribe_collections();
+      $$unsubscribe_dialog();
+      $$unsubscribe_selectedCollection();
+      return $$rendered;
+    });
+    css$4 = {
+      code: ".logo.svelte-mc1wpv{object-fit:cover;height:2rem;margin-left:0.5rem}",
+      map: null
+    };
+    Tab4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_emeraldIdVerif;
+      $$unsubscribe_emeraldIdVerif = subscribe(emeraldIdVerif, (value) => value);
+      let { emeraldIdVal } = $$props;
+      emeraldIdVerif.subscribe((val) => emeraldIdVal = val);
+      if ($$props.emeraldIdVal === void 0 && $$bindings.emeraldIdVal && emeraldIdVal !== void 0)
+        $$bindings.emeraldIdVal(emeraldIdVal);
+      $$result.css.add(css$4);
+      $$unsubscribe_emeraldIdVerif();
+      return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Emerald ID",
+        subtitle: "Something about Emerald ID"
+      }, {}, {})}
+    <button${add_attribute("class", emeraldIdVal ? "flex-align" : "outline mb-1 flex-align", 0)}>Add Emerald ID Verification
+        <img class="${"logo svelte-mc1wpv"}" src="${"https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg"}"></button>
+</div>`;
+    });
+    css$3 = {
+      code: ".edit-icon-container.svelte-11iatjc{position:absolute;top:-0.8rem;right:-0.5rem;display:flex;align-items:center;justify-content:center;background-color:#5865F2;border-radius:100px;height:1.4rem;width:1.4rem;padding:0.2rem}.edit-icon-container.svelte-11iatjc:hover{cursor:pointer}ul.svelte-11iatjc{list-style-type:none;width:100%;margin-top:0.9rem;padding:0}li.svelte-11iatjc{display:flex;height:3rem;margin-top:1rem;padding:0}.icon-container.svelte-11iatjc{height:100%;color:lightslategrey}.icon-container.svelte-11iatjc:hover{color:red;cursor:pointer}.server-container.svelte-11iatjc{display:flex;justify-content:space-between;align-items:center;width:100%;color:#5865F2}.server-container.svelte-11iatjc:hover{display:flex;justify-content:space-between;align-items:center;width:100%;color:#5865F2;background-color:rgba(88, 101, 242, 0.1);border-radius:12px}.server.svelte-11iatjc{position:relative;display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:50%;border-radius:9px;height:100%}.server.svelte-11iatjc:hover{cursor:pointer}",
+      map: null
+    };
+    DiscordServersComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_discordVerif;
+      let $$unsubscribe_modal;
+      $$unsubscribe_discordVerif = subscribe(discordVerif, (value) => value);
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let { servers } = $$props;
+      if ($$props.servers === void 0 && $$bindings.servers && servers !== void 0)
+        $$bindings.servers(servers);
+      $$result.css.add(css$3);
+      $$unsubscribe_discordVerif();
+      $$unsubscribe_modal();
+      return `<h3 class="${"mt-2"}">Discord Servers</h3>
+<ul class="${"mt-2 svelte-11iatjc"}">${each(servers, (server, i2) => {
+        return `<li class="${"server-container svelte-11iatjc"}"><div class="${"server svelte-11iatjc"}">${escape2(server.label)}
+            <div class="${"edit-icon-container svelte-11iatjc"}">${validate_component(Icon, "Icon").$$render($$result, { color: "white", icon: "akar-icons:edit" }, {}, {})}
+
+            </div></div>
+        <div class="${"icon-container flex-align svelte-11iatjc"}">${validate_component(Icon, "Icon").$$render($$result, {
+          height: "80%",
+          icon: "ant-design:minus-circle-twotone"
+        }, {}, {})}</div>
+    </li>`;
+      })}
+</ul>`;
+    });
+    css$2 = {
+      code: ".discord-active.svelte-18xjoy9{color:white;border-color:#5865F2;background:#5865F2}.discord-inactive.svelte-18xjoy9{color:#5865F2;border-color:#5865F2;background:transparent;cursor:pointer}.logo.svelte-18xjoy9{object-fit:cover;height:2rem;margin-left:0.5rem}",
+      map: null
+    };
+    Tab5 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_modal;
+      let $$unsubscribe_discordVerif;
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      $$unsubscribe_discordVerif = subscribe(discordVerif, (value) => value);
+      let discordVal;
+      discordVerif.subscribe((val) => discordVal = val);
+      $$result.css.add(css$2);
+      $$unsubscribe_modal();
+      $$unsubscribe_discordVerif();
+      return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Discord Verification",
+        subtitle: "Something about the Discord verification"
+      }, {}, {})}
+    <button class="${escape2(null_to_empty(discordVal?.active ? "discord-active flex-align" : "discord-inactive outline mb-1 flex-align")) + " svelte-18xjoy9"}">Add Discord Verification
+        <div class="${"logo svelte-18xjoy9"}">${validate_component(Icon, "Icon").$$render($$result, {
+        height: "100%",
+        icon: "radix-icons:discord-logo",
+        color: discordVal?.active ? "white" : "#5865F2"
+      }, {}, {})}</div></button>
+
+    ${discordVal.active ? `${validate_component(DiscordServersComponent, "DiscordServersComponent").$$render($$result, { servers: discordVal.servers }, {}, {})}
+    <button style="${"width: 50%; display:flex"}" class="${"discord-inactive flex-align mt-0 svelte-18xjoy9"}"><span>Add Server</span> 
+       <div style="${"margin-left: 0.3rem;"}" class="${"flex-align"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-twotone",
+        height: "1.6rem"
+      }, {}, {})}</div></button>` : ``}
+
+</div>`;
+    });
+    css$1 = {
+      code: "input.svelte-1jf81m1:focus{border-color:#1DA1F2}.twitter-inactive.svelte-1jf81m1{color:#1DA1F2;border-color:#1DA1F2;background:transparent;cursor:pointer}.add-button.svelte-1jf81m1{margin-left:1rem;height:3rem}.account-input-container.svelte-1jf81m1{display:flex;justify-content:space-between;width:100%}.edit-icon-container.svelte-1jf81m1{position:absolute;top:-0.8rem;right:-0.5rem;display:flex;align-items:center;justify-content:center;background-color:#1DA1F2;border-radius:100px;height:1.4rem;width:1.4rem;padding:0.2rem}.edit-icon-container.svelte-1jf81m1:hover{cursor:pointer}ul.svelte-1jf81m1{list-style-type:none;width:100%;margin-top:0.9rem;padding:0}li.svelte-1jf81m1{display:flex;height:3rem;margin-top:1rem;padding:0}.icon-container.svelte-1jf81m1{height:100%;color:lightslategrey}.icon-container.svelte-1jf81m1:hover{color:red;cursor:pointer}.account-container.svelte-1jf81m1{display:flex;justify-content:space-between;align-items:center;width:100%;color:#1DA1F2}.account-container.svelte-1jf81m1:hover{display:flex;justify-content:space-between;align-items:center;width:100%;color:#1DA1F2;background-color:rgba(29 ,161, 242, 0.1);border-radius:12px}.account.svelte-1jf81m1{position:relative;display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:50%;border-radius:9px;height:100%}.account.svelte-1jf81m1:hover{cursor:pointer}",
+      map: null
+    };
+    TwitterAccountsComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_twitterVerif;
+      let $$unsubscribe_modal;
+      $$unsubscribe_twitterVerif = subscribe(twitterVerif, (value) => value);
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let { accounts } = $$props;
+      let accountHandle = "";
+      let TwitterVerif;
+      twitterVerif.subscribe((val) => TwitterVerif = val);
+      if ($$props.accounts === void 0 && $$bindings.accounts && accounts !== void 0)
+        $$bindings.accounts(accounts);
+      $$result.css.add(css$1);
+      $$unsubscribe_twitterVerif();
+      $$unsubscribe_modal();
+      return `<h3 class="${"mt-2"}">Twitter Accounts</h3>
+<div class="${"account-input-container svelte-1jf81m1"}"><input placeholder="${"@AccountHandle"}" class="${"svelte-1jf81m1"}"${add_attribute("value", accountHandle, 0)}>
+
+    <button style="${"width: 50%; display:flex"}" class="${"add-button twitter-inactive flex-align mt-0 svelte-1jf81m1"}"><span>Add Account</span>
+        <div style="${"margin-left: 0.3rem;"}" class="${"flex-align"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-twotone",
+        height: "1.6rem"
+      }, {}, {})}</div></button></div>
+                <ul class="${"mt-2 svelte-1jf81m1"}">${each(TwitterVerif.accounts, (account, i2) => {
+        return `<li class="${"account-container svelte-1jf81m1"}"><div class="${"account svelte-1jf81m1"}">${escape2(account.label)}
+                            <div class="${"edit-icon-container svelte-1jf81m1"}">${validate_component(Icon, "Icon").$$render($$result, { color: "white", icon: "akar-icons:edit" }, {}, {})}
+
+                            </div></div>
+                        <div class="${"icon-container flex-align svelte-1jf81m1"}">${validate_component(Icon, "Icon").$$render($$result, {
+          height: "80%",
+          icon: "ant-design:minus-circle-twotone"
+        }, {}, {})}</div>
+                    </li>`;
+      })}
+                </ul>`;
+    });
+    css = {
+      code: ".twitter-active.svelte-12582e3{color:white;border-color:#1DA1F2;background:#1DA1F2}.twitter-inactive.svelte-12582e3{color:#1DA1F2;border-color:#1DA1F2;background:transparent;cursor:pointer}.logo.svelte-12582e3{object-fit:cover;height:2rem;margin-left:0.5rem}",
+      map: null
+    };
+    Tab6 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_modal;
+      let $$unsubscribe_twitterVerif;
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      $$unsubscribe_twitterVerif = subscribe(twitterVerif, (value) => value);
+      let twitterVal;
+      twitterVerif.subscribe((val) => twitterVal = val);
+      $$result.css.add(css);
+      $$unsubscribe_modal();
+      $$unsubscribe_twitterVerif();
+      return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Twitter Verification",
+        subtitle: "Something about the twitter verification"
+      }, {}, {})}
+    <button class="${escape2(null_to_empty(twitterVal?.active ? "twitter-active flex-align" : "twitter-inactive outline mb-1 flex-align")) + " svelte-12582e3"}">Require Twitter Verification
+        <div class="${"logo svelte-12582e3"}">${validate_component(Icon, "Icon").$$render($$result, {
+        height: "100%",
+        icon: "radix-icons:twitter-logo",
+        color: twitterVal?.active ? "white" : "#1DA1F2"
+      }, {}, {})}</div></button>
+
+    ${twitterVal.active ? `${validate_component(TwitterAccountsComponent, "TwitterAccountsComponent").$$render($$result, { accounts: twitterVal.accounts }, {}, {})}` : ``}
+
+</div>`;
+    });
+    activeTabVal = writable2(0);
+    activeTabVal.subscribe((val) => console.log("active tab val", val));
+    tabs = writable2([
+      {
+        label: "Content",
+        value: 0,
+        component: Tab1,
+        icon: "ic:outline-subtitles"
+      },
+      {
+        label: "Tokens",
+        value: 1,
+        component: Tab2,
+        icon: "icomoon-free:coin-dollar"
+      },
+      {
+        label: "Tab 3",
+        value: 2,
+        component: Tab3,
+        icon: "fluent:collections-add-24-regular"
+      },
+      {
+        label: "Tab 4",
+        value: 3,
+        component: Tab4,
+        icon: "fa:diamond"
+      },
+      {
+        label: "Tab 5",
+        value: 4,
+        component: Tab5,
+        icon: "radix-icons:discord-logo"
+      },
+      {
+        label: "Tab 6",
+        value: 5,
+        component: Tab6,
+        icon: "radix-icons:twitter-logo"
+      }
+    ]);
+    theme = writable2(null);
+    tab1data = writable2({
+      name: "",
+      description: ""
+    });
+    tokens = writable2([
+      {
+        id: 0,
+        label: "FLOW",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
+        selected: false,
+        amount: 0
+      },
+      {
+        id: 1,
+        label: "FUSD",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
+        selected: false,
+        amount: 0
+      }
+    ]);
+    selectedToken = writable2(0);
+    selectedCollection = writable2(0);
+    collections = writable2([
+      {
+        id: 0,
+        label: "Basic Beasts",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618a0cea8665abc4610c4ca6_basic_beasts_o5telf.png",
+        selected: false,
+        amount: 0
+      },
+      {
+        id: 1,
+        label: "Ballerz",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618b83df2183ef7f2902c886_thumbnail_ballerz_jwtdpb.jpg",
+        selected: false,
+        amount: 0
+      },
+      {
+        id: 2,
+        label: "Flovatar",
+        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/619efc34fe0b49bb68dc20b8_flovatar_5-01_1_bo3h2k.png",
+        selected: false,
+        amount: 0
+      }
+    ]);
+    modal = writable2({
+      title: "",
+      action: "",
+      opened: false,
+      content: "custom-token"
+    });
+    dialog = writable2({
+      title: "",
+      action: "",
+      opened: false
+    });
+    emeraldIdVerif = writable2(false);
+    discordVerif = writable2({
+      selectedId: 0,
+      serverId: "",
+      active: false,
+      editing: false,
+      servers: []
+    });
+    twitterVerif = writable2({
+      selectedId: 0,
+      accountId: "",
+      active: false,
+      editing: false,
+      accounts: []
+    });
   }
 });
 
@@ -6862,12 +9328,12 @@ var require_actor = __commonJS({
         }
       }
       var a3 = new i2(), l2 = o.bind(null, a3, 2);
-      return (r3 === 0 ? c3.then(h2) : r3 === 1 ? f5.then(v2) : s4.then(d3)).then(void 0, l2), a3;
+      return (r3 === 0 ? c3.then(h2) : r3 === 1 ? f5.then(v2) : s4.then(d2)).then(void 0, l2), a3;
       function v2(r4) {
         f5 = r4;
         do {
           if (e4 && (s4 = e4()) && s4.then && !u(s4))
-            return void s4.then(d3).then(void 0, l2);
+            return void s4.then(d2).then(void 0, l2);
           if (!(c3 = n2()) || u(c3) && !c3.v)
             return void o(a3, 1, f5);
           if (c3.then)
@@ -6879,7 +9345,7 @@ var require_actor = __commonJS({
       function h2(n3) {
         n3 ? (f5 = t3()) && f5.then ? f5.then(v2).then(void 0, l2) : v2(f5) : o(a3, 1, f5);
       }
-      function d3() {
+      function d2() {
         (c3 = n2()) ? c3.then ? c3.then(h2).then(void 0, l2) : h2(c3) : o(a3, 1, f5);
       }
     }
@@ -15038,8 +17504,8 @@ var require_dist = __commonJS({
             else if (this.position === this.buffer.byteLength)
               this.buffer = e6, this.position = 0;
             else {
-              var u2 = this.buffer.byteLength - this.position, p = new Uint8Array(u2 + e6.byteLength), d3 = c2(this.buffer, this.position);
-              p.set(d3, 0);
+              var u2 = this.buffer.byteLength - this.position, p = new Uint8Array(u2 + e6.byteLength), d2 = c2(this.buffer, this.position);
+              p.set(d2, 0);
               var f4 = new Uint8Array(e6);
               p.set(f4, u2), this.buffer = p, this.position = 0;
             }
@@ -15379,11 +17845,11 @@ var require_dist = __commonJS({
             return p[e4];
           });
         }(s3);
-      var d3 = o(8);
-      for (var s3 in d3)
+      var d2 = o(8);
+      for (var s3 in d2)
         s3 !== "default" && function(e4) {
           o.d(t2, e4, function() {
-            return d3[e4];
+            return d2[e4];
           });
         }(s3);
       var f4 = o(17);
@@ -15651,7 +18117,7 @@ var require_grpc_web_client = __commonJS({
         function u(e5) {
           return e5.getUint32(1, false);
         }
-        function d3(e5, t4, r3) {
+        function d2(e5, t4, r3) {
           return e5.byteLength - t4 >= r3;
         }
         function c2(e5, t4, r3) {
@@ -15693,10 +18159,10 @@ var require_grpc_web_client = __commonJS({
               h2.set(l, p2), this.buffer = h2, this.position = 0;
             }
             for (; ; ) {
-              if (!d3(this.buffer, this.position, 5))
+              if (!d2(this.buffer, this.position, 5))
                 return s4;
               var g = c2(this.buffer, this.position, this.position + 5), b2 = new DataView(g.buffer, g.byteOffset, g.byteLength), y = u(b2);
-              if (!d3(this.buffer, this.position, 5 + y))
+              if (!d2(this.buffer, this.position, 5 + y))
                 return s4;
               var v = c2(this.buffer, this.position + 5, this.position + 5 + y);
               if (this.position += 5 + y, a2(b2))
@@ -15750,9 +18216,9 @@ var require_grpc_web_client = __commonJS({
         Object.defineProperty(t3, "__esModule", { value: true }), t3.client = void 0;
         var n = r2(65), o = r2(617), s3 = r2(8), i2 = r2(346), a2 = r2(57), u = r2(882);
         t3.client = function(e5, t4) {
-          return new d3(e5, t4);
+          return new d2(e5, t4);
         };
-        var d3 = function() {
+        var d2 = function() {
           function e5(e6, t4) {
             this.started = false, this.sentFirstMessage = false, this.completed = false, this.closed = false, this.finishedSending = false, this.onHeadersCallbacks = [], this.onMessageCallbacks = [], this.onEndCallbacks = [], this.parser = new o.ChunkParser(), this.methodDefinition = e6, this.props = t4, this.createTransport();
           }
@@ -15929,8 +18395,8 @@ var require_grpc_web_client = __commonJS({
       }, 607: function(e4, t3, r2) {
         "use strict";
         Object.defineProperty(t3, "__esModule", { value: true }), t3.grpc = void 0;
-        var n, o = r2(418), s3 = r2(57), i2 = r2(229), a2 = r2(540), u = r2(210), d3 = r2(859), c2 = r2(8), p = r2(938), h2 = r2(35), f4 = r2(934);
-        (n = t3.grpc || (t3.grpc = {})).setDefaultTransport = s3.setDefaultTransportFactory, n.CrossBrowserHttpTransport = d3.CrossBrowserHttpTransport, n.FetchReadableStreamTransport = i2.FetchReadableStreamTransport, n.XhrTransport = u.XhrTransport, n.WebsocketTransport = a2.WebsocketTransport, n.Code = c2.Code, n.Metadata = o.BrowserHeaders, n.client = function(e5, t4) {
+        var n, o = r2(418), s3 = r2(57), i2 = r2(229), a2 = r2(540), u = r2(210), d2 = r2(859), c2 = r2(8), p = r2(938), h2 = r2(35), f4 = r2(934);
+        (n = t3.grpc || (t3.grpc = {})).setDefaultTransport = s3.setDefaultTransportFactory, n.CrossBrowserHttpTransport = d2.CrossBrowserHttpTransport, n.FetchReadableStreamTransport = i2.FetchReadableStreamTransport, n.XhrTransport = u.XhrTransport, n.WebsocketTransport = a2.WebsocketTransport, n.Code = c2.Code, n.Metadata = o.BrowserHeaders, n.client = function(e5, t4) {
           return f4.client(e5, t4);
         }, n.invoke = p.invoke, n.unary = h2.unary;
       }, 938: function(e4, t3, r2) {
@@ -16054,7 +18520,7 @@ var require_grpc_web_client = __commonJS({
         t3.XhrTransport = function(e5) {
           return function(t4) {
             if (a2.detectMozXHRSupport())
-              return new d3(t4, e5);
+              return new d2(t4, e5);
             if (a2.detectXHROverrideMimeTypeSupport())
               return new u(t4, e5);
             throw new Error("This environment's XHR implementation cannot support binary transfer.");
@@ -16093,7 +18559,7 @@ var require_grpc_web_client = __commonJS({
           }, e5;
         }();
         t3.XHR = u;
-        var d3 = function(e5) {
+        var d2 = function(e5) {
           function t4() {
             return e5 !== null && e5.apply(this, arguments) || this;
           }
@@ -16119,7 +18585,7 @@ var require_grpc_web_client = __commonJS({
           }
           return t4;
         }
-        t3.MozChunkedArrayBufferXHR = d3, t3.stringToArrayBuffer = p;
+        t3.MozChunkedArrayBufferXHR = d2, t3.stringToArrayBuffer = p;
       }, 849: function(e4, t3) {
         "use strict";
         var r2;
@@ -16849,7 +19315,7 @@ var require_sdk = __commonJS({
         return e5.__proto__ = t4, e5;
       }, f4(e4, t3);
     }
-    function d3() {
+    function d2() {
       if (typeof Reflect == "undefined" || !Reflect.construct)
         return false;
       if (Reflect.construct.sham)
@@ -16864,7 +19330,7 @@ var require_sdk = __commonJS({
       }
     }
     function m2(e4, t3, n2) {
-      return m2 = d3() ? Reflect.construct : function(e5, t4, n3) {
+      return m2 = d2() ? Reflect.construct : function(e5, t4, n3) {
         var r3 = [null];
         r3.push.apply(r3, t4);
         var o2 = new (Function.bind.apply(e5, r3))();
@@ -17340,8 +19806,8 @@ var require_sdk = __commonJS({
                           throw console.error("Trouble applying payload signature", { acct: l2, ix: t4 }), e5;
                         }
                       }
-                      for (var d4 = 0, m3 = Object.values(t4.accounts); d4 < m3.length; d4++) {
-                        var p2 = m3[d4];
+                      for (var d3 = 0, m3 = Object.values(t4.accounts); d3 < m3.length; d3++) {
+                        var p2 = m3[d3];
                         try {
                           if (p2.role.payer && p2.signature != null) {
                             var g2 = new n.Transaction.Signature();
@@ -18884,7 +21350,7 @@ var require_types = __commonJS({
     }, function(t3) {
       return t3;
     });
-    var d3 = t2("UInt8", function(t3) {
+    var d2 = t2("UInt8", function(t3) {
       if (o(t3) && i2(t3))
         return { type: "UInt8", value: t3.toString() };
       c2("Expected integer for UInt8");
@@ -19135,7 +21601,7 @@ var require_types = __commonJS({
       }, function(t3) {
         return t3;
       });
-    }, exports2.UFix64 = W, exports2.UInt = a2, exports2.UInt128 = I, exports2.UInt16 = l, exports2.UInt256 = E, exports2.UInt32 = g, exports2.UInt64 = y, exports2.UInt8 = d3, exports2.Void = N, exports2.Word16 = S2, exports2.Word32 = F2, exports2.Word64 = A2, exports2.Word8 = b2, exports2._Array = C;
+    }, exports2.UFix64 = W, exports2.UInt = a2, exports2.UInt128 = I, exports2.UInt16 = l, exports2.UInt256 = E, exports2.UInt32 = g, exports2.UInt64 = y, exports2.UInt8 = d2, exports2.Void = N, exports2.Word16 = S2, exports2.Word32 = F2, exports2.Word64 = A2, exports2.Word8 = b2, exports2._Array = C;
   }
 });
 
@@ -19180,7 +21646,7 @@ var require_fcl = __commonJS({
     }
     var c2 = u(e3);
     var l = u(t2);
-    var d3 = u(i2);
+    var d2 = u(i2);
     var f4 = function(n2) {
       try {
         return Promise.resolve(e3.config().where(n2)).then(function(e4) {
@@ -19313,7 +21779,7 @@ var require_fcl = __commonJS({
       throw new Error("Invalid authn-refresh service");
     } };
     function L(e4) {
-      return d3.encode([e4.provider.address || e4.provider.name || "UNSPECIFIED", e4.id]).toString("hex");
+      return d2.encode([e4.provider.address || e4.provider.name || "UNSPECIFIED", e4.id]).toString("hex");
     }
     var F2 = function(e4) {
       try {
@@ -20054,9 +22520,9 @@ var require_fcl = __commonJS({
                 }()).then(function(c3) {
                   var l2 = T(o4.services, "authn-refresh");
                   return Promise.resolve(e3.config.get("fcl.warning.suppress.redir")).then(function(e4) {
-                    var d4;
+                    var d3;
                     function f5(e5) {
-                      if (d4)
+                      if (d3)
                         return e5;
                       var n2 = function(e6, n3) {
                         try {
@@ -20105,11 +22571,11 @@ var require_fcl = __commonJS({
                           }(0, function() {
                             return Promise.resolve(Ne()).then(function(e6) {
                               var n2 = t4(e6);
-                              return d4 = 1, n2;
+                              return d3 = 1, n2;
                             });
                           });
                         var e5 = t4(o4);
-                        return d4 = 1, e5;
+                        return d3 = 1, e5;
                       }
                     }();
                     return p2 && p2.then ? p2.then(f5) : f5(p2);
@@ -20713,12 +23179,46 @@ var require_fcl_cjs = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/config-860ef6b7.js
-var import_onflow_fcl_esm;
-var init_config_860ef6b7 = __esm({
-  ".svelte-kit/output/server/chunks/config-860ef6b7.js"() {
+// .svelte-kit/output/server/chunks/MediaQuery-dd0a8898.js
+var MediaQuery_dd0a8898_exports = {};
+__export(MediaQuery_dd0a8898_exports, {
+  default: () => MediaQuery
+});
+var MediaQuery;
+var init_MediaQuery_dd0a8898 = __esm({
+  ".svelte-kit/output/server/chunks/MediaQuery-dd0a8898.js"() {
     init_shims();
+    init_app_d3d82645();
+    init_ssr();
+    MediaQuery = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { query } = $$props;
+      let matches = false;
+      if ($$props.query === void 0 && $$bindings.query && query !== void 0)
+        $$bindings.query(query);
+      return `${slots.default ? slots.default({ matches }) : ``}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/__layout-89ec6763.js
+var layout_89ec6763_exports = {};
+__export(layout_89ec6763_exports, {
+  default: () => _layout
+});
+var import_onflow_fcl_esm, user, transactionStatus, txId, transactionInProgress, css$42, ConnectWallet, css$32, UserAddress, css$22, Header, css$12, Transaction, getStores, page, css2, _layout;
+var init_layout_89ec6763 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-89ec6763.js"() {
+    init_shims();
+    init_app_d3d82645();
+    init_Icon_d8bf2219();
+    init_stores_572856a0();
     import_onflow_fcl_esm = __toModule(require_fcl_cjs());
+    init_MediaQuery_dd0a8898();
+    init_ssr();
+    user = writable2(null);
+    transactionStatus = writable2(null);
+    txId = writable2(null);
+    transactionInProgress = writable2(false);
     (0, import_onflow_fcl_esm.config)({
       "accessNode.api": {}.VITE_ACCESS_NODE_API,
       "discovery.wallet": {}.VITE_DISCOVERY_WALLET,
@@ -20727,1963 +23227,15 @@ var init_config_860ef6b7 = __esm({
       "0xNFT": {}.VITE_CORE_CONTRACTS_ADDRESS,
       "0xMDV": {}.VITE_CORE_CONTRACTS_ADDRESS
     });
-  }
-});
-
-// .svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-8ff82521.js
-function fullIcon(data) {
-  return { ...iconDefaults, ...data };
-}
-function mergeIconData(icon, alias) {
-  const result = { ...icon };
-  for (const key in iconDefaults) {
-    const prop = key;
-    if (alias[prop] !== void 0) {
-      const value = alias[prop];
-      if (result[prop] === void 0) {
-        result[prop] = value;
-        continue;
-      }
-      switch (prop) {
-        case "rotate":
-          result[prop] = (result[prop] + value) % 4;
-          break;
-        case "hFlip":
-        case "vFlip":
-          result[prop] = value !== result[prop];
-          break;
-        default:
-          result[prop] = value;
-      }
-    }
-  }
-  return result;
-}
-function getIconData$1(data, name, full = false) {
-  function getIcon(name2, iteration) {
-    var _a, _b, _c, _d;
-    if (data.icons[name2] !== void 0) {
-      return Object.assign({}, data.icons[name2]);
-    }
-    if (iteration > 5) {
-      return null;
-    }
-    if (((_a = data.aliases) == null ? void 0 : _a[name2]) !== void 0) {
-      const item = (_b = data.aliases) == null ? void 0 : _b[name2];
-      const result2 = getIcon(item.parent, iteration + 1);
-      if (result2) {
-        return mergeIconData(result2, item);
-      }
-      return result2;
-    }
-    if (iteration === 0 && ((_c = data.chars) == null ? void 0 : _c[name2]) !== void 0) {
-      return getIcon((_d = data.chars) == null ? void 0 : _d[name2], iteration + 1);
-    }
-    return null;
-  }
-  const result = getIcon(name, 0);
-  if (result) {
-    for (const key in iconDefaults) {
-      if (result[key] === void 0 && data[key] !== void 0) {
-        result[key] = data[key];
-      }
-    }
-  }
-  return result && full ? fullIcon(result) : result;
-}
-function validateIconProps(item, fix) {
-  for (const key in item) {
-    const attr = key;
-    const value = item[attr];
-    const type = typeof value;
-    if (type === "undefined") {
-      delete item[attr];
-      continue;
-    }
-    switch (key) {
-      case "body":
-      case "parent":
-        if (type !== "string") {
-          return key;
-        }
-        break;
-      case "hFlip":
-      case "vFlip":
-      case "hidden":
-        if (type !== "boolean") {
-          if (fix) {
-            delete item[attr];
-          } else {
-            return key;
-          }
-        }
-        break;
-      case "width":
-      case "height":
-      case "left":
-      case "top":
-      case "rotate":
-      case "inlineHeight":
-      case "inlineTop":
-      case "verticalAlign":
-        if (type !== "number") {
-          if (fix) {
-            delete item[attr];
-          } else {
-            return key;
-          }
-        }
-        break;
-      default:
-        if (type === "object") {
-          if (fix) {
-            delete item[attr];
-          } else {
-            return key;
-          }
-        }
-    }
-  }
-  return null;
-}
-function validateIconSet(obj, options2) {
-  const fix = !!(options2 == null ? void 0 : options2.fix);
-  if (typeof obj !== "object" || obj === null || typeof obj.icons !== "object" || !obj.icons) {
-    throw new Error("Bad icon set");
-  }
-  const data = obj;
-  if (typeof (options2 == null ? void 0 : options2.prefix) === "string") {
-    data.prefix = options2.prefix;
-  } else if (typeof data.prefix !== "string" || !data.prefix.match(matchName)) {
-    throw new Error("Invalid prefix");
-  }
-  if (typeof (options2 == null ? void 0 : options2.provider) === "string") {
-    data.provider = options2.provider;
-  } else if (data.provider !== void 0) {
-    const value = data.provider;
-    if (typeof value !== "string" || value !== "" && !value.match(matchName)) {
-      if (fix) {
-        delete data.provider;
-      } else {
-        throw new Error("Invalid provider");
-      }
-    }
-  }
-  const icons = data.icons;
-  Object.keys(icons).forEach((name) => {
-    if (!name.match(matchName)) {
-      if (fix) {
-        delete icons[name];
-        return;
-      }
-      throw new Error(`Invalid icon name: "${name}"`);
-    }
-    const item = icons[name];
-    if (typeof item !== "object" || item === null || typeof item.body !== "string") {
-      if (fix) {
-        delete icons[name];
-        return;
-      }
-      throw new Error(`Invalid icon: "${name}"`);
-    }
-    const key = typeof item.parent === "string" ? "parent" : validateIconProps(item, fix);
-    if (key !== null) {
-      if (fix) {
-        delete icons[name];
-        return;
-      }
-      throw new Error(`Invalid property "${key}" in icon "${name}"`);
-    }
-  });
-  if (!Object.keys(data.icons).length) {
-    throw new Error("Icon set is empty");
-  }
-  if (data.aliases !== void 0) {
-    if (typeof data.aliases !== "object" || data.aliases === null) {
-      if (fix) {
-        delete data.aliases;
-      } else {
-        throw new Error("Invalid aliases list");
-      }
-    }
-  }
-  if (typeof data.aliases === "object") {
-    let validateAlias = function(name, iteration) {
-      if (validatedAliases.has(name)) {
-        return !failedAliases.has(name);
-      }
-      const item = aliases[name];
-      if (iteration > 5 || typeof item !== "object" || item === null || typeof item.parent !== "string" || !name.match(matchName)) {
-        if (fix) {
-          delete aliases[name];
-          failedAliases.add(name);
-          return false;
-        }
-        throw new Error(`Invalid icon alias: "${name}"`);
-      }
-      const parent = item.parent;
-      if (data.icons[parent] === void 0) {
-        if (aliases[parent] === void 0 || !validateAlias(parent, iteration + 1)) {
-          if (fix) {
-            delete aliases[name];
-            failedAliases.add(name);
-            return false;
-          }
-          throw new Error(`Missing parent icon for alias "${name}`);
-        }
-      }
-      if (fix && item.body !== void 0) {
-        delete item.body;
-      }
-      const key = item.body !== void 0 ? "body" : validateIconProps(item, fix);
-      if (key !== null) {
-        if (fix) {
-          delete aliases[name];
-          failedAliases.add(name);
-          return false;
-        }
-        throw new Error(`Invalid property "${key}" in alias "${name}"`);
-      }
-      validatedAliases.add(name);
-      return true;
+    css$42 = {
+      code: "a.svelte-nbcav7{padding:8px 14px}",
+      map: null
     };
-    const aliases = data.aliases;
-    const validatedAliases = /* @__PURE__ */ new Set();
-    const failedAliases = /* @__PURE__ */ new Set();
-    Object.keys(aliases).forEach((name) => {
-      validateAlias(name, 0);
+    ConnectWallet = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      $$result.css.add(css$42);
+      return `<a role="${"button"}" href="${"/"}" class="${"contrast small-button svelte-nbcav7"}">Connect Wallet</a>`;
     });
-    if (fix && !Object.keys(data.aliases).length) {
-      delete data.aliases;
-    }
-  }
-  Object.keys(iconDefaults).forEach((prop) => {
-    const expectedType = typeof iconDefaults[prop];
-    const actualType = typeof data[prop];
-    if (actualType !== "undefined" && actualType !== expectedType) {
-      throw new Error(`Invalid value type for "${prop}"`);
-    }
-  });
-  if (data.chars !== void 0) {
-    if (typeof data.chars !== "object" || data.chars === null) {
-      if (fix) {
-        delete data.chars;
-      } else {
-        throw new Error("Invalid characters map");
-      }
-    }
-  }
-  if (typeof data.chars === "object") {
-    const chars2 = data.chars;
-    Object.keys(chars2).forEach((char) => {
-      var _a;
-      if (!char.match(matchChar) || typeof chars2[char] !== "string") {
-        if (fix) {
-          delete chars2[char];
-          return;
-        }
-        throw new Error(`Invalid character "${char}"`);
-      }
-      const target = chars2[char];
-      if (data.icons[target] === void 0 && ((_a = data.aliases) == null ? void 0 : _a[target]) === void 0) {
-        if (fix) {
-          delete chars2[char];
-          return;
-        }
-        throw new Error(`Character "${char}" points to missing icon "${target}"`);
-      }
-    });
-    if (fix && !Object.keys(data.chars).length) {
-      delete data.chars;
-    }
-  }
-  return data;
-}
-function isVariation(item) {
-  for (const key in iconDefaults) {
-    if (item[key] !== void 0) {
-      return true;
-    }
-  }
-  return false;
-}
-function parseIconSet(data, callback, options2) {
-  options2 = options2 || {};
-  const names = [];
-  if (typeof data !== "object" || typeof data.icons !== "object") {
-    return names;
-  }
-  const validate = options2.validate;
-  if (validate !== false) {
-    try {
-      validateIconSet(data, typeof validate === "object" ? validate : { fix: true });
-    } catch (err) {
-      return names;
-    }
-  }
-  if (data.not_found instanceof Array) {
-    data.not_found.forEach((name) => {
-      callback(name, null);
-      names.push(name);
-    });
-  }
-  const icons = data.icons;
-  Object.keys(icons).forEach((name) => {
-    const iconData = getIconData$1(data, name, true);
-    if (iconData) {
-      callback(name, iconData);
-      names.push(name);
-    }
-  });
-  const parseAliases = options2.aliases || "all";
-  if (parseAliases !== "none" && typeof data.aliases === "object") {
-    const aliases = data.aliases;
-    Object.keys(aliases).forEach((name) => {
-      if (parseAliases === "variations" && isVariation(aliases[name])) {
-        return;
-      }
-      const iconData = getIconData$1(data, name, true);
-      if (iconData) {
-        callback(name, iconData);
-        names.push(name);
-      }
-    });
-  }
-  return names;
-}
-function newStorage(provider, prefix) {
-  return {
-    provider,
-    prefix,
-    icons: /* @__PURE__ */ Object.create(null),
-    missing: /* @__PURE__ */ Object.create(null)
-  };
-}
-function getStorage(provider, prefix) {
-  if (storage$1[provider] === void 0) {
-    storage$1[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerStorage = storage$1[provider];
-  if (providerStorage[prefix] === void 0) {
-    providerStorage[prefix] = newStorage(provider, prefix);
-  }
-  return providerStorage[prefix];
-}
-function addIconSet(storage2, data) {
-  const t2 = Date.now();
-  return parseIconSet(data, (name, icon) => {
-    if (icon) {
-      storage2.icons[name] = icon;
-    } else {
-      storage2.missing[name] = t2;
-    }
-  });
-}
-function addIconToStorage(storage2, name, icon) {
-  try {
-    if (typeof icon.body === "string") {
-      storage2.icons[name] = Object.freeze(fullIcon(icon));
-      return true;
-    }
-  } catch (err) {
-  }
-  return false;
-}
-function getIconFromStorage(storage2, name) {
-  const value = storage2.icons[name];
-  return value === void 0 ? null : value;
-}
-function allowSimpleNames(allow) {
-  if (typeof allow === "boolean") {
-    simpleNames = allow;
-  }
-  return simpleNames;
-}
-function getIconData(name) {
-  const icon = typeof name === "string" ? stringToIcon(name, true, simpleNames) : name;
-  return icon ? getIconFromStorage(getStorage(icon.provider, icon.prefix), icon.name) : null;
-}
-function addIcon(name, data) {
-  const icon = stringToIcon(name, true, simpleNames);
-  if (!icon) {
-    return false;
-  }
-  const storage2 = getStorage(icon.provider, icon.prefix);
-  return addIconToStorage(storage2, icon.name, data);
-}
-function addCollection(data, provider) {
-  if (typeof data !== "object") {
-    return false;
-  }
-  if (typeof provider !== "string") {
-    provider = typeof data.provider === "string" ? data.provider : "";
-  }
-  if (simpleNames && provider === "" && (typeof data.prefix !== "string" || data.prefix === "")) {
-    let added = false;
-    parseIconSet(data, (name, icon) => {
-      if (icon && addIcon(name, icon)) {
-        added = true;
-      }
-    }, {
-      validate: {
-        fix: true,
-        prefix: ""
-      }
-    });
-    return added;
-  }
-  if (typeof data.prefix !== "string" || !validateIcon({
-    provider,
-    prefix: data.prefix,
-    name: "a"
-  })) {
-    return false;
-  }
-  const storage2 = getStorage(provider, data.prefix);
-  return !!addIconSet(storage2, data);
-}
-function mergeCustomisations(defaults2, item) {
-  const result = {};
-  for (const key in defaults2) {
-    const attr = key;
-    result[attr] = defaults2[attr];
-    if (item[attr] === void 0) {
-      continue;
-    }
-    const value = item[attr];
-    switch (attr) {
-      case "inline":
-      case "slice":
-        if (typeof value === "boolean") {
-          result[attr] = value;
-        }
-        break;
-      case "hFlip":
-      case "vFlip":
-        if (value === true) {
-          result[attr] = !result[attr];
-        }
-        break;
-      case "hAlign":
-      case "vAlign":
-        if (typeof value === "string" && value !== "") {
-          result[attr] = value;
-        }
-        break;
-      case "width":
-      case "height":
-        if (typeof value === "string" && value !== "" || typeof value === "number" && value || value === null) {
-          result[attr] = value;
-        }
-        break;
-      case "rotate":
-        if (typeof value === "number") {
-          result[attr] += value;
-        }
-        break;
-    }
-  }
-  return result;
-}
-function calculateSize(size, ratio, precision) {
-  if (ratio === 1) {
-    return size;
-  }
-  precision = precision === void 0 ? 100 : precision;
-  if (typeof size === "number") {
-    return Math.ceil(size * ratio * precision) / precision;
-  }
-  if (typeof size !== "string") {
-    return size;
-  }
-  const oldParts = size.split(unitsSplit);
-  if (oldParts === null || !oldParts.length) {
-    return size;
-  }
-  const newParts = [];
-  let code = oldParts.shift();
-  let isNumber = unitsTest.test(code);
-  while (true) {
-    if (isNumber) {
-      const num = parseFloat(code);
-      if (isNaN(num)) {
-        newParts.push(code);
-      } else {
-        newParts.push(Math.ceil(num * ratio * precision) / precision);
-      }
-    } else {
-      newParts.push(code);
-    }
-    code = oldParts.shift();
-    if (code === void 0) {
-      return newParts.join("");
-    }
-    isNumber = !isNumber;
-  }
-}
-function preserveAspectRatio(props) {
-  let result = "";
-  switch (props.hAlign) {
-    case "left":
-      result += "xMin";
-      break;
-    case "right":
-      result += "xMax";
-      break;
-    default:
-      result += "xMid";
-  }
-  switch (props.vAlign) {
-    case "top":
-      result += "YMin";
-      break;
-    case "bottom":
-      result += "YMax";
-      break;
-    default:
-      result += "YMid";
-  }
-  result += props.slice ? " slice" : " meet";
-  return result;
-}
-function iconToSVG(icon, customisations) {
-  const box = {
-    left: icon.left,
-    top: icon.top,
-    width: icon.width,
-    height: icon.height
-  };
-  let body = icon.body;
-  [icon, customisations].forEach((props) => {
-    const transformations = [];
-    const hFlip = props.hFlip;
-    const vFlip = props.vFlip;
-    let rotation = props.rotate;
-    if (hFlip) {
-      if (vFlip) {
-        rotation += 2;
-      } else {
-        transformations.push("translate(" + (box.width + box.left) + " " + (0 - box.top) + ")");
-        transformations.push("scale(-1 1)");
-        box.top = box.left = 0;
-      }
-    } else if (vFlip) {
-      transformations.push("translate(" + (0 - box.left) + " " + (box.height + box.top) + ")");
-      transformations.push("scale(1 -1)");
-      box.top = box.left = 0;
-    }
-    let tempValue;
-    if (rotation < 0) {
-      rotation -= Math.floor(rotation / 4) * 4;
-    }
-    rotation = rotation % 4;
-    switch (rotation) {
-      case 1:
-        tempValue = box.height / 2 + box.top;
-        transformations.unshift("rotate(90 " + tempValue + " " + tempValue + ")");
-        break;
-      case 2:
-        transformations.unshift("rotate(180 " + (box.width / 2 + box.left) + " " + (box.height / 2 + box.top) + ")");
-        break;
-      case 3:
-        tempValue = box.width / 2 + box.left;
-        transformations.unshift("rotate(-90 " + tempValue + " " + tempValue + ")");
-        break;
-    }
-    if (rotation % 2 === 1) {
-      if (box.left !== 0 || box.top !== 0) {
-        tempValue = box.left;
-        box.left = box.top;
-        box.top = tempValue;
-      }
-      if (box.width !== box.height) {
-        tempValue = box.width;
-        box.width = box.height;
-        box.height = tempValue;
-      }
-    }
-    if (transformations.length) {
-      body = '<g transform="' + transformations.join(" ") + '">' + body + "</g>";
-    }
-  });
-  let width, height;
-  if (customisations.width === null && customisations.height === null) {
-    height = "1em";
-    width = calculateSize(height, box.width / box.height);
-  } else if (customisations.width !== null && customisations.height !== null) {
-    width = customisations.width;
-    height = customisations.height;
-  } else if (customisations.height !== null) {
-    height = customisations.height;
-    width = calculateSize(height, box.width / box.height);
-  } else {
-    width = customisations.width;
-    height = calculateSize(width, box.height / box.width);
-  }
-  if (width === "auto") {
-    width = box.width;
-  }
-  if (height === "auto") {
-    height = box.height;
-  }
-  width = typeof width === "string" ? width : width + "";
-  height = typeof height === "string" ? height : height + "";
-  const result = {
-    attributes: {
-      width,
-      height,
-      preserveAspectRatio: preserveAspectRatio(customisations),
-      viewBox: box.left + " " + box.top + " " + box.width + " " + box.height
-    },
-    body
-  };
-  if (customisations.inline) {
-    result.inline = true;
-  }
-  return result;
-}
-function replaceIDs(body, prefix = randomPrefix) {
-  const ids = [];
-  let match;
-  while (match = regex.exec(body)) {
-    ids.push(match[1]);
-  }
-  if (!ids.length) {
-    return body;
-  }
-  ids.forEach((id) => {
-    const newID = typeof prefix === "function" ? prefix(id) : prefix + counter++;
-    const escapedID = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    body = body.replace(new RegExp('([#;"])(' + escapedID + ')([")]|\\.[a-z])', "g"), "$1" + newID + "$3");
-  });
-  return body;
-}
-function setAPIModule(provider, item) {
-  storage[provider] = item;
-}
-function getAPIModule(provider) {
-  return storage[provider] || storage[""];
-}
-function createAPIConfig(source) {
-  let resources;
-  if (typeof source.resources === "string") {
-    resources = [source.resources];
-  } else {
-    resources = source.resources;
-    if (!(resources instanceof Array) || !resources.length) {
-      return null;
-    }
-  }
-  const result = {
-    resources,
-    path: source.path === void 0 ? "/" : source.path,
-    maxURL: source.maxURL ? source.maxURL : 500,
-    rotate: source.rotate ? source.rotate : 750,
-    timeout: source.timeout ? source.timeout : 5e3,
-    random: source.random === true,
-    index: source.index ? source.index : 0,
-    dataAfterTimeout: source.dataAfterTimeout !== false
-  };
-  return result;
-}
-function addAPIProvider(provider, customConfig) {
-  const config22 = createAPIConfig(customConfig);
-  if (config22 === null) {
-    return false;
-  }
-  configStorage[provider] = config22;
-  return true;
-}
-function getAPIConfig(provider) {
-  return configStorage[provider];
-}
-function calculateMaxLength(provider, prefix) {
-  const config22 = getAPIConfig(provider);
-  if (!config22) {
-    return 0;
-  }
-  let result;
-  if (!config22.maxURL) {
-    result = 0;
-  } else {
-    let maxHostLength = 0;
-    config22.resources.forEach((item) => {
-      const host = item;
-      maxHostLength = Math.max(maxHostLength, host.length);
-    });
-    const url = mergeParams(prefix + ".json", {
-      icons: ""
-    });
-    result = config22.maxURL - maxHostLength - config22.path.length - url.length;
-  }
-  const cacheKey = provider + ":" + prefix;
-  pathCache[provider] = config22.path;
-  maxLengthCache[cacheKey] = result;
-  return result;
-}
-function getPath(provider) {
-  if (typeof provider === "string") {
-    if (pathCache[provider] === void 0) {
-      const config22 = getAPIConfig(provider);
-      if (!config22) {
-        return "/";
-      }
-      pathCache[provider] = config22.path;
-    }
-    return pathCache[provider];
-  }
-  return "/";
-}
-function sortIcons(icons) {
-  const result = {
-    loaded: [],
-    missing: [],
-    pending: []
-  };
-  const storage2 = /* @__PURE__ */ Object.create(null);
-  icons.sort((a2, b2) => {
-    if (a2.provider !== b2.provider) {
-      return a2.provider.localeCompare(b2.provider);
-    }
-    if (a2.prefix !== b2.prefix) {
-      return a2.prefix.localeCompare(b2.prefix);
-    }
-    return a2.name.localeCompare(b2.name);
-  });
-  let lastIcon = {
-    provider: "",
-    prefix: "",
-    name: ""
-  };
-  icons.forEach((icon) => {
-    if (lastIcon.name === icon.name && lastIcon.prefix === icon.prefix && lastIcon.provider === icon.provider) {
-      return;
-    }
-    lastIcon = icon;
-    const provider = icon.provider;
-    const prefix = icon.prefix;
-    const name = icon.name;
-    if (storage2[provider] === void 0) {
-      storage2[provider] = /* @__PURE__ */ Object.create(null);
-    }
-    const providerStorage = storage2[provider];
-    if (providerStorage[prefix] === void 0) {
-      providerStorage[prefix] = getStorage(provider, prefix);
-    }
-    const localStorage = providerStorage[prefix];
-    let list;
-    if (localStorage.icons[name] !== void 0) {
-      list = result.loaded;
-    } else if (prefix === "" || localStorage.missing[name] !== void 0) {
-      list = result.missing;
-    } else {
-      list = result.pending;
-    }
-    const item = {
-      provider,
-      prefix,
-      name
-    };
-    list.push(item);
-  });
-  return result;
-}
-function removeCallback(sources, id) {
-  sources.forEach((source) => {
-    const provider = source.provider;
-    if (callbacks[provider] === void 0) {
-      return;
-    }
-    const providerCallbacks = callbacks[provider];
-    const prefix = source.prefix;
-    const items = providerCallbacks[prefix];
-    if (items) {
-      providerCallbacks[prefix] = items.filter((row) => row.id !== id);
-    }
-  });
-}
-function updateCallbacks(provider, prefix) {
-  if (pendingUpdates[provider] === void 0) {
-    pendingUpdates[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerPendingUpdates = pendingUpdates[provider];
-  if (!providerPendingUpdates[prefix]) {
-    providerPendingUpdates[prefix] = true;
-    setTimeout(() => {
-      providerPendingUpdates[prefix] = false;
-      if (callbacks[provider] === void 0 || callbacks[provider][prefix] === void 0) {
-        return;
-      }
-      const items = callbacks[provider][prefix].slice(0);
-      if (!items.length) {
-        return;
-      }
-      const storage2 = getStorage(provider, prefix);
-      let hasPending = false;
-      items.forEach((item) => {
-        const icons = item.icons;
-        const oldLength = icons.pending.length;
-        icons.pending = icons.pending.filter((icon) => {
-          if (icon.prefix !== prefix) {
-            return true;
-          }
-          const name = icon.name;
-          if (storage2.icons[name] !== void 0) {
-            icons.loaded.push({
-              provider,
-              prefix,
-              name
-            });
-          } else if (storage2.missing[name] !== void 0) {
-            icons.missing.push({
-              provider,
-              prefix,
-              name
-            });
-          } else {
-            hasPending = true;
-            return true;
-          }
-          return false;
-        });
-        if (icons.pending.length !== oldLength) {
-          if (!hasPending) {
-            removeCallback([
-              {
-                provider,
-                prefix
-              }
-            ], item.id);
-          }
-          item.callback(icons.loaded.slice(0), icons.missing.slice(0), icons.pending.slice(0), item.abort);
-        }
-      });
-    });
-  }
-}
-function storeCallback(callback, icons, pendingSources) {
-  const id = idCounter++;
-  const abort = removeCallback.bind(null, pendingSources, id);
-  if (!icons.pending.length) {
-    return abort;
-  }
-  const item = {
-    id,
-    icons,
-    callback,
-    abort
-  };
-  pendingSources.forEach((source) => {
-    const provider = source.provider;
-    const prefix = source.prefix;
-    if (callbacks[provider] === void 0) {
-      callbacks[provider] = /* @__PURE__ */ Object.create(null);
-    }
-    const providerCallbacks = callbacks[provider];
-    if (providerCallbacks[prefix] === void 0) {
-      providerCallbacks[prefix] = [];
-    }
-    providerCallbacks[prefix].push(item);
-  });
-  return abort;
-}
-function listToIcons(list, validate = true, simpleNames2 = false) {
-  const result = [];
-  list.forEach((item) => {
-    const icon = typeof item === "string" ? stringToIcon(item, false, simpleNames2) : item;
-    if (!validate || validateIcon(icon, simpleNames2)) {
-      result.push({
-        provider: icon.provider,
-        prefix: icon.prefix,
-        name: icon.name
-      });
-    }
-  });
-  return result;
-}
-function sendQuery(config22, payload, query2, done, success) {
-  const resourcesCount = config22.resources.length;
-  const startIndex = config22.random ? Math.floor(Math.random() * resourcesCount) : config22.index;
-  let resources;
-  if (config22.random) {
-    let list = config22.resources.slice(0);
-    resources = [];
-    while (list.length > 1) {
-      const nextIndex = Math.floor(Math.random() * list.length);
-      resources.push(list[nextIndex]);
-      list = list.slice(0, nextIndex).concat(list.slice(nextIndex + 1));
-    }
-    resources = resources.concat(list);
-  } else {
-    resources = config22.resources.slice(startIndex).concat(config22.resources.slice(0, startIndex));
-  }
-  const startTime = Date.now();
-  let status = "pending";
-  let queriesSent = 0;
-  let lastError = void 0;
-  let timer = null;
-  let queue = [];
-  let doneCallbacks = [];
-  if (typeof done === "function") {
-    doneCallbacks.push(done);
-  }
-  function resetTimer() {
-    if (timer) {
-      clearTimeout(timer);
-      timer = null;
-    }
-  }
-  function abort() {
-    if (status === "pending") {
-      status = "aborted";
-    }
-    resetTimer();
-    queue.forEach((item) => {
-      if (item.abort) {
-        item.abort();
-      }
-      if (item.status === "pending") {
-        item.status = "aborted";
-      }
-    });
-    queue = [];
-  }
-  function subscribe2(callback, overwrite) {
-    if (overwrite) {
-      doneCallbacks = [];
-    }
-    if (typeof callback === "function") {
-      doneCallbacks.push(callback);
-    }
-  }
-  function getQueryStatus() {
-    return {
-      startTime,
-      payload,
-      status,
-      queriesSent,
-      queriesPending: queue.length,
-      subscribe: subscribe2,
-      abort
-    };
-  }
-  function failQuery() {
-    status = "failed";
-    doneCallbacks.forEach((callback) => {
-      callback(void 0, lastError);
-    });
-  }
-  function clearQueue() {
-    queue = queue.filter((item) => {
-      if (item.status === "pending") {
-        item.status = "aborted";
-      }
-      if (item.abort) {
-        item.abort();
-      }
-      return false;
-    });
-  }
-  function moduleResponse(item, data, error2) {
-    const isError = data === void 0;
-    queue = queue.filter((queued) => queued !== item);
-    switch (status) {
-      case "pending":
-        break;
-      case "failed":
-        if (isError || !config22.dataAfterTimeout) {
-          return;
-        }
-        break;
-      default:
-        return;
-    }
-    if (isError) {
-      if (error2 !== void 0) {
-        lastError = error2;
-      }
-      if (!queue.length) {
-        if (!resources.length) {
-          failQuery();
-        } else {
-          execNext();
-        }
-      }
-      return;
-    }
-    resetTimer();
-    clearQueue();
-    if (success && !config22.random) {
-      const index = config22.resources.indexOf(item.resource);
-      if (index !== -1 && index !== config22.index) {
-        success(index);
-      }
-    }
-    status = "completed";
-    doneCallbacks.forEach((callback) => {
-      callback(data);
-    });
-  }
-  function execNext() {
-    if (status !== "pending") {
-      return;
-    }
-    resetTimer();
-    const resource = resources.shift();
-    if (resource === void 0) {
-      if (queue.length) {
-        const timeout2 = typeof config22.timeout === "function" ? config22.timeout(startTime) : config22.timeout;
-        if (timeout2) {
-          timer = setTimeout(() => {
-            resetTimer();
-            if (status === "pending") {
-              clearQueue();
-              failQuery();
-            }
-          }, timeout2);
-          return;
-        }
-      }
-      failQuery();
-      return;
-    }
-    const item = {
-      getQueryStatus,
-      status: "pending",
-      resource,
-      done: (data, error2) => {
-        moduleResponse(item, data, error2);
-      }
-    };
-    queue.push(item);
-    queriesSent++;
-    const timeout = typeof config22.rotate === "function" ? config22.rotate(queriesSent, startTime) : config22.rotate;
-    timer = setTimeout(execNext, timeout);
-    query2(resource, payload, item);
-  }
-  setTimeout(execNext);
-  return getQueryStatus;
-}
-function setConfig(config22) {
-  if (typeof config22 !== "object" || typeof config22.resources !== "object" || !(config22.resources instanceof Array) || !config22.resources.length) {
-    throw new Error("Invalid Reduncancy configuration");
-  }
-  const newConfig = /* @__PURE__ */ Object.create(null);
-  let key;
-  for (key in defaultConfig) {
-    if (config22[key] !== void 0) {
-      newConfig[key] = config22[key];
-    } else {
-      newConfig[key] = defaultConfig[key];
-    }
-  }
-  return newConfig;
-}
-function initRedundancy(cfg) {
-  const config22 = setConfig(cfg);
-  let queries = [];
-  function cleanup() {
-    queries = queries.filter((item) => item().status === "pending");
-  }
-  function query2(payload, queryCallback, doneCallback) {
-    const query22 = sendQuery(config22, payload, queryCallback, (data, error2) => {
-      cleanup();
-      if (doneCallback) {
-        doneCallback(data, error2);
-      }
-    }, (newIndex) => {
-      config22.index = newIndex;
-    });
-    queries.push(query22);
-    return query22;
-  }
-  function find(callback) {
-    const result = queries.find((value) => {
-      return callback(value);
-    });
-    return result !== void 0 ? result : null;
-  }
-  const instance = {
-    query: query2,
-    find,
-    setIndex: (index) => {
-      config22.index = index;
-    },
-    getIndex: () => config22.index,
-    cleanup
-  };
-  return instance;
-}
-function emptyCallback$1() {
-}
-function getRedundancyCache(provider) {
-  if (redundancyCache[provider] === void 0) {
-    const config22 = getAPIConfig(provider);
-    if (!config22) {
-      return;
-    }
-    const redundancy = initRedundancy(config22);
-    const cachedReundancy = {
-      config: config22,
-      redundancy
-    };
-    redundancyCache[provider] = cachedReundancy;
-  }
-  return redundancyCache[provider];
-}
-function sendAPIQuery(target, query2, callback) {
-  let redundancy;
-  let send2;
-  if (typeof target === "string") {
-    const api = getAPIModule(target);
-    if (!api) {
-      callback(void 0, 424);
-      return emptyCallback$1;
-    }
-    send2 = api.send;
-    const cached = getRedundancyCache(target);
-    if (cached) {
-      redundancy = cached.redundancy;
-    }
-  } else {
-    const config22 = createAPIConfig(target);
-    if (config22) {
-      redundancy = initRedundancy(config22);
-      const moduleKey = target.resources ? target.resources[0] : "";
-      const api = getAPIModule(moduleKey);
-      if (api) {
-        send2 = api.send;
-      }
-    }
-  }
-  if (!redundancy || !send2) {
-    callback(void 0, 424);
-    return emptyCallback$1;
-  }
-  return redundancy.query(query2, send2, callback)().abort;
-}
-function emptyCallback() {
-}
-function loadedNewIcons(provider, prefix) {
-  if (loaderFlags[provider] === void 0) {
-    loaderFlags[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerLoaderFlags = loaderFlags[provider];
-  if (!providerLoaderFlags[prefix]) {
-    providerLoaderFlags[prefix] = true;
-    setTimeout(() => {
-      providerLoaderFlags[prefix] = false;
-      updateCallbacks(provider, prefix);
-    });
-  }
-}
-function loadNewIcons(provider, prefix, icons) {
-  function err() {
-    const key = (provider === "" ? "" : "@" + provider + ":") + prefix;
-    const time = Math.floor(Date.now() / 6e4);
-    if (errorsCache[key] < time) {
-      errorsCache[key] = time;
-      console.error('Unable to retrieve icons for "' + key + '" because API is not configured properly.');
-    }
-  }
-  if (iconsToLoad[provider] === void 0) {
-    iconsToLoad[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerIconsToLoad = iconsToLoad[provider];
-  if (queueFlags[provider] === void 0) {
-    queueFlags[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerQueueFlags = queueFlags[provider];
-  if (pendingIcons[provider] === void 0) {
-    pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
-  }
-  const providerPendingIcons = pendingIcons[provider];
-  if (providerIconsToLoad[prefix] === void 0) {
-    providerIconsToLoad[prefix] = icons;
-  } else {
-    providerIconsToLoad[prefix] = providerIconsToLoad[prefix].concat(icons).sort();
-  }
-  if (!providerQueueFlags[prefix]) {
-    providerQueueFlags[prefix] = true;
-    setTimeout(() => {
-      providerQueueFlags[prefix] = false;
-      const icons2 = providerIconsToLoad[prefix];
-      delete providerIconsToLoad[prefix];
-      const api = getAPIModule(provider);
-      if (!api) {
-        err();
-        return;
-      }
-      const params = api.prepare(provider, prefix, icons2);
-      params.forEach((item) => {
-        sendAPIQuery(provider, item, (data, error2) => {
-          const storage2 = getStorage(provider, prefix);
-          if (typeof data !== "object") {
-            if (error2 !== 404) {
-              return;
-            }
-            const t2 = Date.now();
-            item.icons.forEach((name) => {
-              storage2.missing[name] = t2;
-            });
-          } else {
-            try {
-              const parsed = addIconSet(storage2, data);
-              if (!parsed.length) {
-                return;
-              }
-              const pending = providerPendingIcons[prefix];
-              parsed.forEach((name) => {
-                delete pending[name];
-              });
-              if (cache.store) {
-                cache.store(provider, data);
-              }
-            } catch (err2) {
-              console.error(err2);
-            }
-          }
-          loadedNewIcons(provider, prefix);
-        });
-      });
-    });
-  }
-}
-function getGlobal(key) {
-  const attr = key + "Storage";
-  try {
-    if (_window && _window[attr] && typeof _window[attr].length === "number") {
-      return _window[attr];
-    }
-  } catch (err) {
-  }
-  config2[key] = false;
-  return null;
-}
-function setCount(storage2, key, value) {
-  try {
-    storage2.setItem(countKey, value + "");
-    count[key] = value;
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-function getCount(storage2) {
-  const count2 = storage2.getItem(countKey);
-  if (count2) {
-    const total = parseInt(count2);
-    return total ? total : 0;
-  }
-  return 0;
-}
-function initCache(storage2, key) {
-  try {
-    storage2.setItem(versionKey, cacheVersion);
-  } catch (err) {
-  }
-  setCount(storage2, key, 0);
-}
-function destroyCache(storage2) {
-  try {
-    const total = getCount(storage2);
-    for (let i2 = 0; i2 < total; i2++) {
-      storage2.removeItem(cachePrefix + i2);
-    }
-  } catch (err) {
-  }
-}
-function flipFromString(custom, flip) {
-  flip.split(separator).forEach((str) => {
-    const value = str.trim();
-    switch (value) {
-      case "horizontal":
-        custom.hFlip = true;
-        break;
-      case "vertical":
-        custom.vFlip = true;
-        break;
-    }
-  });
-}
-function alignmentFromString(custom, align) {
-  align.split(separator).forEach((str) => {
-    const value = str.trim();
-    switch (value) {
-      case "left":
-      case "center":
-      case "right":
-        custom.hAlign = value;
-        break;
-      case "top":
-      case "middle":
-      case "bottom":
-        custom.vAlign = value;
-        break;
-      case "slice":
-      case "crop":
-        custom.slice = true;
-        break;
-      case "meet":
-        custom.slice = false;
-    }
-  });
-}
-function rotateFromString(value, defaultValue = 0) {
-  const units = value.replace(/^-?[0-9.]*/, "");
-  function cleanup(value2) {
-    while (value2 < 0) {
-      value2 += 4;
-    }
-    return value2 % 4;
-  }
-  if (units === "") {
-    const num = parseInt(value);
-    return isNaN(num) ? 0 : cleanup(num);
-  } else if (units !== value) {
-    let split = 0;
-    switch (units) {
-      case "%":
-        split = 25;
-        break;
-      case "deg":
-        split = 90;
-    }
-    if (split) {
-      let num = parseFloat(value.slice(0, value.length - units.length));
-      if (isNaN(num)) {
-        return 0;
-      }
-      num = num / split;
-      return num % 1 === 0 ? cleanup(num) : 0;
-    }
-  }
-  return defaultValue;
-}
-function render(icon, props) {
-  const customisations = mergeCustomisations(defaults, props);
-  const componentProps = { ...svgDefaults };
-  let style = typeof props.style === "string" ? props.style : "";
-  for (let key in props) {
-    const value = props[key];
-    if (value === void 0) {
-      continue;
-    }
-    switch (key) {
-      case "icon":
-      case "style":
-      case "onLoad":
-        break;
-      case "inline":
-      case "hFlip":
-      case "vFlip":
-        customisations[key] = value === true || value === "true" || value === 1;
-        break;
-      case "flip":
-        if (typeof value === "string") {
-          flipFromString(customisations, value);
-        }
-        break;
-      case "align":
-        if (typeof value === "string") {
-          alignmentFromString(customisations, value);
-        }
-        break;
-      case "color":
-        style = style + (style.length > 0 && style.trim().slice(-1) !== ";" ? ";" : "") + "color: " + value + "; ";
-        break;
-      case "rotate":
-        if (typeof value === "string") {
-          customisations[key] = rotateFromString(value);
-        } else if (typeof value === "number") {
-          customisations[key] = value;
-        }
-        break;
-      case "ariaHidden":
-      case "aria-hidden":
-        if (value !== true && value !== "true") {
-          delete componentProps["aria-hidden"];
-        }
-        break;
-      default:
-        if (key.slice(0, 3) === "on:") {
-          break;
-        }
-        if (defaults[key] === void 0) {
-          componentProps[key] = value;
-        }
-    }
-  }
-  const item = iconToSVG(icon, customisations);
-  for (let key in item.attributes) {
-    componentProps[key] = item.attributes[key];
-  }
-  if (item.inline) {
-    style = "vertical-align: -0.125em; " + style;
-  }
-  if (style !== "") {
-    componentProps.style = style;
-  }
-  let localCounter = 0;
-  let id = props.id;
-  if (typeof id === "string") {
-    id = id.replace(/-/g, "_");
-  }
-  return {
-    attributes: componentProps,
-    body: replaceIDs(item.body, id ? () => id + "ID" + localCounter++ : "iconifySvelte")
-  };
-}
-function checkIconState(icon, state, mounted, callback, onload) {
-  function abortLoading() {
-    if (state.loading) {
-      state.loading.abort();
-      state.loading = null;
-    }
-  }
-  if (typeof icon === "object" && icon !== null && typeof icon.body === "string") {
-    state.name = "";
-    abortLoading();
-    return { data: fullIcon(icon) };
-  }
-  let iconName;
-  if (typeof icon !== "string" || (iconName = stringToIcon(icon, false, true)) === null) {
-    abortLoading();
-    return null;
-  }
-  const data = getIconData(iconName);
-  if (data === null) {
-    if (mounted && (!state.loading || state.loading.name !== icon)) {
-      abortLoading();
-      state.name = "";
-      state.loading = {
-        name: icon,
-        abort: loadIcons([iconName], callback)
-      };
-    }
-    return null;
-  }
-  abortLoading();
-  if (state.name !== icon) {
-    state.name = icon;
-    if (onload && !state.destroyed) {
-      onload(icon);
-    }
-  }
-  const classes = ["iconify"];
-  if (iconName.prefix !== "") {
-    classes.push("iconify--" + iconName.prefix);
-  }
-  if (iconName.provider !== "") {
-    classes.push("iconify--" + iconName.provider);
-  }
-  return { data, classes };
-}
-function generateIcon(icon, props) {
-  return icon ? render(icon, props) : null;
-}
-var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config2, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults;
-var init_Tab3_svelte_svelte_type_style_lang_8ff82521 = __esm({
-  ".svelte-kit/output/server/chunks/Tab3.svelte_svelte_type_style_lang-8ff82521.js"() {
-    init_shims();
-    matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-    iconDefaults = Object.freeze({
-      left: 0,
-      top: 0,
-      width: 16,
-      height: 16,
-      rotate: 0,
-      vFlip: false,
-      hFlip: false
-    });
-    stringToIcon = (value, validate, allowSimpleName, provider = "") => {
-      const colonSeparated = value.split(":");
-      if (value.slice(0, 1) === "@") {
-        if (colonSeparated.length < 2 || colonSeparated.length > 3) {
-          return null;
-        }
-        provider = colonSeparated.shift().slice(1);
-      }
-      if (colonSeparated.length > 3 || !colonSeparated.length) {
-        return null;
-      }
-      if (colonSeparated.length > 1) {
-        const name2 = colonSeparated.pop();
-        const prefix = colonSeparated.pop();
-        const result = {
-          provider: colonSeparated.length > 0 ? colonSeparated[0] : provider,
-          prefix,
-          name: name2
-        };
-        return validate && !validateIcon(result) ? null : result;
-      }
-      const name = colonSeparated[0];
-      const dashSeparated = name.split("-");
-      if (dashSeparated.length > 1) {
-        const result = {
-          provider,
-          prefix: dashSeparated.shift(),
-          name: dashSeparated.join("-")
-        };
-        return validate && !validateIcon(result) ? null : result;
-      }
-      if (allowSimpleName && provider === "") {
-        const result = {
-          provider,
-          prefix: "",
-          name
-        };
-        return validate && !validateIcon(result, allowSimpleName) ? null : result;
-      }
-      return null;
-    };
-    validateIcon = (icon, allowSimpleName) => {
-      if (!icon) {
-        return false;
-      }
-      return !!((icon.provider === "" || icon.provider.match(matchName)) && (allowSimpleName && icon.prefix === "" || icon.prefix.match(matchName)) && icon.name.match(matchName));
-    };
-    matchChar = /^[a-f0-9]+(-[a-f0-9]+)*$/;
-    storageVersion = 1;
-    storage$1 = /* @__PURE__ */ Object.create(null);
-    try {
-      const w = window || self;
-      if ((w == null ? void 0 : w._iconifyStorage.version) === storageVersion) {
-        storage$1 = w._iconifyStorage.storage;
-      }
-    } catch (err) {
-    }
-    simpleNames = false;
-    defaults = Object.freeze({
-      inline: false,
-      width: null,
-      height: null,
-      hAlign: "center",
-      vAlign: "middle",
-      slice: false,
-      hFlip: false,
-      vFlip: false,
-      rotate: 0
-    });
-    unitsSplit = /(-?[0-9.]*[0-9]+[0-9.]*)/g;
-    unitsTest = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
-    regex = /\sid="(\S+)"/g;
-    randomPrefix = "IconifyId" + Date.now().toString(16) + (Math.random() * 16777216 | 0).toString(16);
-    counter = 0;
-    storage = /* @__PURE__ */ Object.create(null);
-    configStorage = /* @__PURE__ */ Object.create(null);
-    fallBackAPISources = [
-      "https://api.simplesvg.com",
-      "https://api.unisvg.com"
-    ];
-    fallBackAPI = [];
-    while (fallBackAPISources.length > 0) {
-      if (fallBackAPISources.length === 1) {
-        fallBackAPI.push(fallBackAPISources.shift());
-      } else {
-        if (Math.random() > 0.5) {
-          fallBackAPI.push(fallBackAPISources.shift());
-        } else {
-          fallBackAPI.push(fallBackAPISources.pop());
-        }
-      }
-    }
-    configStorage[""] = createAPIConfig({
-      resources: ["https://api.iconify.design"].concat(fallBackAPI)
-    });
-    mergeParams = (base2, params) => {
-      let result = base2, hasParams = result.indexOf("?") !== -1;
-      function paramToString(value) {
-        switch (typeof value) {
-          case "boolean":
-            return value ? "true" : "false";
-          case "number":
-            return encodeURIComponent(value);
-          case "string":
-            return encodeURIComponent(value);
-          default:
-            throw new Error("Invalid parameter");
-        }
-      }
-      Object.keys(params).forEach((key) => {
-        let value;
-        try {
-          value = paramToString(params[key]);
-        } catch (err) {
-          return;
-        }
-        result += (hasParams ? "&" : "?") + encodeURIComponent(key) + "=" + value;
-        hasParams = true;
-      });
-      return result;
-    };
-    maxLengthCache = /* @__PURE__ */ Object.create(null);
-    pathCache = /* @__PURE__ */ Object.create(null);
-    detectFetch = () => {
-      let callback;
-      try {
-        callback = fetch;
-        if (typeof callback === "function") {
-          return callback;
-        }
-      } catch (err) {
-      }
-      try {
-        const chunk = String.fromCharCode(114) + String.fromCharCode(101);
-        const req = global[chunk + "qui" + chunk];
-        callback = req("cross-fetch");
-        if (typeof callback === "function") {
-          return callback;
-        }
-      } catch (err) {
-      }
-      return null;
-    };
-    fetchModule = detectFetch();
-    prepare = (provider, prefix, icons) => {
-      const results = [];
-      let maxLength = maxLengthCache[prefix];
-      if (maxLength === void 0) {
-        maxLength = calculateMaxLength(provider, prefix);
-      }
-      const type = "icons";
-      let item = {
-        type,
-        provider,
-        prefix,
-        icons: []
-      };
-      let length = 0;
-      icons.forEach((name, index) => {
-        length += name.length + 1;
-        if (length >= maxLength && index > 0) {
-          results.push(item);
-          item = {
-            type,
-            provider,
-            prefix,
-            icons: []
-          };
-          length = name.length;
-        }
-        item.icons.push(name);
-      });
-      results.push(item);
-      return results;
-    };
-    send = (host, params, status) => {
-      if (!fetchModule) {
-        status.done(void 0, 424);
-        return;
-      }
-      let path = getPath(params.provider);
-      switch (params.type) {
-        case "icons": {
-          const prefix = params.prefix;
-          const icons = params.icons;
-          const iconsList = icons.join(",");
-          path += mergeParams(prefix + ".json", {
-            icons: iconsList
-          });
-          break;
-        }
-        case "custom": {
-          const uri = params.uri;
-          path += uri.slice(0, 1) === "/" ? uri.slice(1) : uri;
-          break;
-        }
-        default:
-          status.done(void 0, 400);
-          return;
-      }
-      let defaultError = 503;
-      fetchModule(host + path).then((response) => {
-        if (response.status !== 200) {
-          setTimeout(() => {
-            status.done(void 0, response.status);
-          });
-          return;
-        }
-        defaultError = 501;
-        return response.json();
-      }).then((data) => {
-        if (typeof data !== "object" || data === null) {
-          setTimeout(() => {
-            status.done(void 0, defaultError);
-          });
-          return;
-        }
-        setTimeout(() => {
-          status.done(data);
-        });
-      }).catch(() => {
-        status.done(void 0, defaultError);
-      });
-    };
-    fetchAPIModule = {
-      prepare,
-      send
-    };
-    callbacks = /* @__PURE__ */ Object.create(null);
-    pendingUpdates = /* @__PURE__ */ Object.create(null);
-    idCounter = 0;
-    defaultConfig = {
-      resources: [],
-      index: 0,
-      timeout: 2e3,
-      rotate: 750,
-      random: false,
-      dataAfterTimeout: false
-    };
-    redundancyCache = /* @__PURE__ */ Object.create(null);
-    cache = {};
-    pendingIcons = /* @__PURE__ */ Object.create(null);
-    iconsToLoad = /* @__PURE__ */ Object.create(null);
-    loaderFlags = /* @__PURE__ */ Object.create(null);
-    queueFlags = /* @__PURE__ */ Object.create(null);
-    errorsCache = /* @__PURE__ */ Object.create(null);
-    loadIcons = (icons, callback) => {
-      const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
-      const sortedIcons = sortIcons(cleanedIcons);
-      if (!sortedIcons.pending.length) {
-        let callCallback = true;
-        if (callback) {
-          setTimeout(() => {
-            if (callCallback) {
-              callback(sortedIcons.loaded, sortedIcons.missing, sortedIcons.pending, emptyCallback);
-            }
-          });
-        }
-        return () => {
-          callCallback = false;
-        };
-      }
-      const newIcons = /* @__PURE__ */ Object.create(null);
-      const sources = [];
-      let lastProvider, lastPrefix;
-      sortedIcons.pending.forEach((icon) => {
-        const provider = icon.provider;
-        const prefix = icon.prefix;
-        if (prefix === lastPrefix && provider === lastProvider) {
-          return;
-        }
-        lastProvider = provider;
-        lastPrefix = prefix;
-        sources.push({
-          provider,
-          prefix
-        });
-        if (pendingIcons[provider] === void 0) {
-          pendingIcons[provider] = /* @__PURE__ */ Object.create(null);
-        }
-        const providerPendingIcons = pendingIcons[provider];
-        if (providerPendingIcons[prefix] === void 0) {
-          providerPendingIcons[prefix] = /* @__PURE__ */ Object.create(null);
-        }
-        if (newIcons[provider] === void 0) {
-          newIcons[provider] = /* @__PURE__ */ Object.create(null);
-        }
-        const providerNewIcons = newIcons[provider];
-        if (providerNewIcons[prefix] === void 0) {
-          providerNewIcons[prefix] = [];
-        }
-      });
-      const time = Date.now();
-      sortedIcons.pending.forEach((icon) => {
-        const provider = icon.provider;
-        const prefix = icon.prefix;
-        const name = icon.name;
-        const pendingQueue = pendingIcons[provider][prefix];
-        if (pendingQueue[name] === void 0) {
-          pendingQueue[name] = time;
-          newIcons[provider][prefix].push(name);
-        }
-      });
-      sources.forEach((source) => {
-        const provider = source.provider;
-        const prefix = source.prefix;
-        if (newIcons[provider][prefix].length) {
-          loadNewIcons(provider, prefix, newIcons[provider][prefix]);
-        }
-      });
-      return callback ? storeCallback(callback, sortedIcons, sources) : emptyCallback;
-    };
-    cacheVersion = "iconify2";
-    cachePrefix = "iconify";
-    countKey = cachePrefix + "-count";
-    versionKey = cachePrefix + "-version";
-    hour = 36e5;
-    cacheExpiration = 168;
-    config2 = {
-      local: true,
-      session: true
-    };
-    loaded = false;
-    count = {
-      local: 0,
-      session: 0
-    };
-    emptyList = {
-      local: [],
-      session: []
-    };
-    _window = typeof window === "undefined" ? {} : window;
-    loadCache = () => {
-      if (loaded) {
-        return;
-      }
-      loaded = true;
-      const minTime = Math.floor(Date.now() / hour) - cacheExpiration;
-      function load2(key) {
-        const func = getGlobal(key);
-        if (!func) {
-          return;
-        }
-        const getItem = (index) => {
-          const name = cachePrefix + index;
-          const item = func.getItem(name);
-          if (typeof item !== "string") {
-            return false;
-          }
-          let valid = true;
-          try {
-            const data = JSON.parse(item);
-            if (typeof data !== "object" || typeof data.cached !== "number" || data.cached < minTime || typeof data.provider !== "string" || typeof data.data !== "object" || typeof data.data.prefix !== "string") {
-              valid = false;
-            } else {
-              const provider = data.provider;
-              const prefix = data.data.prefix;
-              const storage2 = getStorage(provider, prefix);
-              valid = addIconSet(storage2, data.data).length > 0;
-            }
-          } catch (err) {
-            valid = false;
-          }
-          if (!valid) {
-            func.removeItem(name);
-          }
-          return valid;
-        };
-        try {
-          const version = func.getItem(versionKey);
-          if (version !== cacheVersion) {
-            if (version) {
-              destroyCache(func);
-            }
-            initCache(func, key);
-            return;
-          }
-          let total = getCount(func);
-          for (let i2 = total - 1; i2 >= 0; i2--) {
-            if (!getItem(i2)) {
-              if (i2 === total - 1) {
-                total--;
-              } else {
-                emptyList[key].push(i2);
-              }
-            }
-          }
-          setCount(func, key, total);
-        } catch (err) {
-        }
-      }
-      for (const key in config2) {
-        load2(key);
-      }
-    };
-    storeCache = (provider, data) => {
-      if (!loaded) {
-        loadCache();
-      }
-      function store(key) {
-        if (!config2[key]) {
-          return false;
-        }
-        const func = getGlobal(key);
-        if (!func) {
-          return false;
-        }
-        let index = emptyList[key].shift();
-        if (index === void 0) {
-          index = count[key];
-          if (!setCount(func, key, index + 1)) {
-            return false;
-          }
-        }
-        try {
-          const item = {
-            cached: Math.floor(Date.now() / hour),
-            provider,
-            data
-          };
-          func.setItem(cachePrefix + index, JSON.stringify(item));
-        } catch (err) {
-          return false;
-        }
-        return true;
-      }
-      if (!store("local")) {
-        store("session");
-      }
-    };
-    separator = /[\s,]+/;
-    svgDefaults = {
-      "xmlns": "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink",
-      "aria-hidden": true,
-      "role": "img"
-    };
-    allowSimpleNames(true);
-    setAPIModule("", fetchAPIModule);
-    if (typeof document !== "undefined" && typeof window !== "undefined") {
-      cache.store = storeCache;
-      loadCache();
-      const _window2 = window;
-      if (_window2.IconifyPreload !== void 0) {
-        const preload = _window2.IconifyPreload;
-        const err = "Invalid IconifyPreload syntax.";
-        if (typeof preload === "object" && preload !== null) {
-          (preload instanceof Array ? preload : [preload]).forEach((item) => {
-            try {
-              if (typeof item !== "object" || item === null || item instanceof Array || typeof item.icons !== "object" || typeof item.prefix !== "string" || !addCollection(item)) {
-                console.error(err);
-              }
-            } catch (e3) {
-              console.error(err);
-            }
-          });
-        }
-      }
-      if (_window2.IconifyProviders !== void 0) {
-        const providers = _window2.IconifyProviders;
-        if (typeof providers === "object" && providers !== null) {
-          for (let key in providers) {
-            const err = "IconifyProviders[" + key + "] is invalid.";
-            try {
-              const value = providers[key];
-              if (typeof value !== "object" || !value || value.resources === void 0) {
-                continue;
-              }
-              if (!addAPIProvider(key, value)) {
-                console.error(err);
-              }
-            } catch (e3) {
-              console.error(err);
-            }
-          }
-        }
-      }
-    }
-  }
-});
-
-// .svelte-kit/output/server/chunks/UserAddress-a10ebe45.js
-var css, UserAddress;
-var init_UserAddress_a10ebe45 = __esm({
-  ".svelte-kit/output/server/chunks/UserAddress-a10ebe45.js"() {
-    init_shims();
-    init_app_31f4847e();
-    css = {
+    css$32 = {
       code: ".led-green.svelte-bnzski{position:relative;display:inline-block;top:0px;margin-right:0.5em;background-color:var(--primary);width:14px;height:14px;border-radius:14px}",
       map: null
     };
@@ -22694,432 +23246,9 @@ var init_UserAddress_a10ebe45 = __esm({
         $$bindings.address(address);
       if ($$props.abbreviated === void 0 && $$bindings.abbreviated && abbreviated !== void 0)
         $$bindings.abbreviated(abbreviated);
-      $$result.css.add(css);
+      $$result.css.add(css$32);
       return `<div><span class="${"led-green svelte-bnzski"}"></span>
   <span class="${"mono"}">${escape2(abbreviated ? "0x..." + address.slice(address.length - 4) : address)}</span></div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/stores-85b2d1de.js
-var Icon, css$4, Tab1, css$3, Modal_1, HorizontalSpace, css$2, Dialog, css$1, Tab2, css2, Tab3, Tab4, draftFloat, tabs, theme, tab1data, tokens, selectedToken, collections, modal, dialog;
-var init_stores_85b2d1de = __esm({
-  ".svelte-kit/output/server/chunks/stores-85b2d1de.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_index_af55a9bb();
-    Icon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      const state = {
-        name: "",
-        loading: null,
-        destroyed: false
-      };
-      let mounted = false;
-      let data;
-      const onLoad = (icon) => {
-        if (typeof $$props.onLoad === "function") {
-          $$props.onLoad(icon);
-        }
-        const dispatch = createEventDispatcher();
-        dispatch("load", { icon });
-      };
-      function loaded2() {
-      }
-      onDestroy(() => {
-        state.destroyed = true;
-        if (state.loading) {
-          state.loading.abort();
-          state.loading = null;
-        }
-      });
-      {
-        {
-          const iconData = checkIconState($$props.icon, state, mounted, loaded2, onLoad);
-          data = iconData ? generateIcon(iconData.data, $$props) : null;
-          if (data && iconData.classes) {
-            data.attributes["class"] = (typeof $$props["class"] === "string" ? $$props["class"] + " " : "") + iconData.classes.join(" ");
-          }
-        }
-      }
-      return `${data !== null ? `<svg${spread([escape_object(data.attributes)], {})}><!-- HTML_TAG_START -->${data.body}<!-- HTML_TAG_END --></svg>` : ``}`;
-    });
-    css$4 = {
-      code: "textarea.svelte-19lnoss{border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px}.menu-icon-container.svelte-19lnoss{display:flex;height:100%;width:6%;justify-content:center;align-items:center}.alignment-icon.svelte-19lnoss{width:33.3%;height:100%;display:flex;justify-content:center;align-items:center}.alignment-container.svelte-19lnoss{display:flex;width:20%;height:100%;justify-content:space-between;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-type-container.svelte-19lnoss{display:flex;width:34%;height:100%;align-items:center;justify-content:space-between;border-right:1px solid var(--form-element-border-color);padding-left:0.5rem;padding-right:0.5rem}.text-icons-container.svelte-19lnoss{display:flex;width:40%;height:100%;justify-content:start;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-icon.svelte-19lnoss{display:flex;height:100%;width:1.8rem;justify-content:center;align-items:center}.textarea-header.svelte-19lnoss{display:flex;width:100%;height:1.6rem;border:1px solid var(--form-element-border-color);border-bottom:none;border-top-right-radius:6px;border-top-left-radius:6px;margin-top:3px}",
-      map: null
-    };
-    Tab1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_tab1data;
-      $$unsubscribe_tab1data = subscribe(tab1data, (value) => value);
-      let { tab1val } = $$props;
-      tab1data.subscribe((val) => tab1val = val);
-      let name = tab1val.name;
-      let description = tab1val.description;
-      if ($$props.tab1val === void 0 && $$bindings.tab1val && tab1val !== void 0)
-        $$bindings.tab1val(tab1val);
-      $$result.css.add(css$4);
-      $$unsubscribe_tab1data();
-      return `<div><header><h3 class="${"mt-1"}">Tab 1</h3>
-        <p>Something about Tab 1</p></header>
-
-    <div><div style="${"width:100%"}"><h3 class="${"mt-1"}">Name</h3>
-            <input id="${"name"}" placeholder="${"My awesome project"}"${add_attribute("value", name ? name : null, 0)}></div>
-        <h3 class="${"mt-1"}">Description</h3>
-        <div class="${"textarea-header svelte-19lnoss"}"><section class="${"text-icons-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:bold", height: 20 }, {}, {})}</div>
-                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "bx:italic", height: 19 }, {}, {})}</div>
-                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "ant-design:underline-outlined",
-        height: 20
-      }, {}, {})}</div>
-                <div style="${"width: 8px;"}"></div>
-                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "ooui:underline-a", height: 16 }, {}, {})}
-                    ${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "akar-icons:chevron-down",
-        height: 14
-      }, {}, {})}</div></section>
-            <section class="${"text-type-container svelte-19lnoss"}"><div><span style="${"font-weight: 300; font-size:16px"}">Normal Text</span></div>
-                <div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "akar-icons:chevron-down",
-        height: 18
-      }, {}, {})}</div></section>
-            <section class="${"alignment-container svelte-19lnoss"}"><div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "akar-icons:text-align-left",
-        height: 18
-      }, {}, {})}</div>
-                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "akar-icons:text-align-center",
-        height: 18
-      }, {}, {})}</div>
-                <div class="${"alignment-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "akar-icons:text-align-right",
-        height: 18
-      }, {}, {})}</div></section>
-            <section class="${"menu-icon-container svelte-19lnoss"}"><div class="${"text-icon svelte-19lnoss"}">${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "carbon:overflow-menu-vertical",
-        height: 22
-      }, {}, {})}</div></section></div>
-        <textarea id="${"description"}" rows="${"4"}" placeholder="${"My awesome project it\xB4s ..."}" class="${"svelte-19lnoss"}">${escape2(description ? description : null)}</textarea></div>
-            </div>`;
-    });
-    css$3 = {
-      code: "header.svelte-ukirbf{display:flex;flex-direction:row;height:14%;width:100%;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-ukirbf{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-ukirbf{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#modal.svelte-ukirbf{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:60%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
-      map: null
-    };
-    Modal_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_modal;
-      $$unsubscribe_modal = subscribe(modal, (value) => value);
-      let Modal;
-      modal.subscribe((val) => Modal = val);
-      $$result.css.add(css$3);
-      $$unsubscribe_modal();
-      return `<div id="${"background"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none")}" class="${"svelte-ukirbf"}"></div>
-<main id="${"modal"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none") + ";"}" class="${"svelte-ukirbf"}"><header class="${"svelte-ukirbf"}"><div><h3>Modal Title</h3></div>
-    <div>
-      <div>${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "ant-design:close-circle-outlined",
-        height: "1.4rem",
-        color: "lightgrey"
-      }, {}, {})}</div></div></header>
-  <div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Input 1</h3>
-      <input placeholder="${"Input 1"}"></div>
-    
-    <div style="${"width:80%"}"><h3 class="${"mt-0"}">Input 2</h3>
-      <input placeholder="${"Input 2"}"></div></div>
-  <footer class="${"svelte-ukirbf"}"><div style="${"cursor: pointer;"}">ACTION 2
-
-    </div></footer>
-</main>`;
-    });
-    HorizontalSpace = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { value } = $$props;
-      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
-        $$bindings.value(value);
-      return `<main style="${"width: " + escape2(value)}"></main>`;
-    });
-    css$2 = {
-      code: "header.svelte-1r665vk{display:flex;flex-direction:row;height:16%;width:100%;justify-content:space-between;align-items:center;padding-right:1rem;padding-left:2rem;border-bottom:2px solid var(--form-element-border-color)}footer.svelte-1r665vk{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:2px solid var(--form-element-border-color)}#background.svelte-1r665vk{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#dialog.svelte-1r665vk{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;filter:drop-shadow(0 0 20px #333);height:48%;width:42%;border-radius:20px;border:2px solid var(--form-element-border-color)}",
-      map: null
-    };
-    Dialog = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $tokens, $$unsubscribe_tokens;
-      let $dialog, $$unsubscribe_dialog;
-      $$unsubscribe_tokens = subscribe(tokens, (value) => $tokens = value);
-      $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
-      let dialogValue;
-      let selectedVal;
-      let amountInput;
-      dialog.subscribe((val) => {
-        dialogValue = val;
-        console.log("dialogValue", dialogValue);
-      });
-      tokens.subscribe((val) => val);
-      selectedToken.subscribe((val) => selectedVal = val);
-      $$result.css.add(css$2);
-      $$unsubscribe_tokens();
-      $$unsubscribe_dialog();
-      return `<div id="${"background"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none")}" class="${"svelte-1r665vk"}"></div>
-<main id="${"dialog"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none") + ";"}" class="${"svelte-1r665vk"}"><header class="${"svelte-1r665vk"}"><div><h3>Dialog title</h3></div>
-<div>
-  <div>${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "ant-design:close-circle-outlined",
-        height: "1.4rem",
-        color: "lightgrey"
-      }, {}, {})}</div></div></header>
-<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Amount</h3>
-  ${$tokens[selectedVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $tokens[selectedVal].amount, 0)}>`}</div>
-<div style="${"width:80%"}"></div></div>
-<footer class="${"svelte-1r665vk"}"><div style="${"cursor: pointer;"}">ACTION 2
-
-</div></footer>
-</main>`;
-    });
-    css$1 = {
-      code: ".amount-container.svelte-1t9x261{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1t9x261{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1t9x261{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}.token-container-active.svelte-1t9x261{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-inactive.svelte-1t9x261{position:relative;display:flex;width:20%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1t9x261{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1t9x261{margin:0;padding:0}ul.svelte-1t9x261{margin:0;padding:0}li.svelte-1t9x261{margin:0;padding:0}.secondary-btn.svelte-1t9x261{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1t9x261:hover{background:rgba(56, 232, 198, 0.1)}.custom-container.svelte-1t9x261{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1t9x261{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1t9x261{height:100%;width:100%}",
-      map: null
-    };
-    Tab2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_tokens;
-      let $$unsubscribe_selectedToken;
-      let $$unsubscribe_dialog;
-      let $$unsubscribe_modal;
-      $$unsubscribe_tokens = subscribe(tokens, (value) => value);
-      $$unsubscribe_selectedToken = subscribe(selectedToken, (value) => value);
-      $$unsubscribe_dialog = subscribe(dialog, (value) => value);
-      $$unsubscribe_modal = subscribe(modal, (value) => value);
-      let hoveredId;
-      let tokensValue;
-      modal.subscribe((val) => val);
-      tokens.subscribe((val) => {
-        tokensValue = val;
-        console.log("tokensVal", tokensValue);
-      });
-      createEventDispatcher();
-      $$result.css.add(css$1);
-      $$unsubscribe_tokens();
-      $$unsubscribe_selectedToken();
-      $$unsubscribe_dialog();
-      $$unsubscribe_modal();
-      return `${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
-${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
-<main class="${"container svelte-1t9x261"}"><header><h3 class="${"mt-1"}">Tokens</h3>
-        <p>Something about the Tokens</p></header>
-    <div class="${"tokens-container mt-2 svelte-1t9x261"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-1t9x261"}">${each(tokensValue, ({ id, label, amount, imgUrl, selected }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "token-active mt-1" : "token-inactive mt-1")) + " svelte-1t9x261"}"><div class="${escape2(null_to_empty(amount ? "token-container-active" : "token-container-inactive")) + " svelte-1t9x261"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "}"><img style="${"height:100%; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
-                    <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
-                    ${amount !== 0 ? `<div class="${"amount-container svelte-1t9x261"}">${escape2(amount)}
-                        <div class="${"icon-container svelte-1t9x261"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div>
-                    </div>` : `<div></div>`}</div>
-                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}"${add_attribute("checked", selected, 1)}></div>
-            </li>`;
-      })}</ul>
-        <footer class="${"custom-container svelte-1t9x261"}"><div class="${"secondary-btn svelte-1t9x261"}"><div>${validate_component(Icon, "Icon").$$render($$result, {
-        icon: "ant-design:plus-circle-outlined",
-        height: "1.2rem"
-      }, {}, {})}</div>
-                ${validate_component(HorizontalSpace, "HorizontalSpace").$$render($$result, { value: "0.3rem" }, {}, {})}
-                <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
-    });
-    css2 = {
-      code: ".collection-container-inactive.svelte-y0qazc{position:relative;display:flex;width:30%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:1rem}.collection-inactive.svelte-y0qazc{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-y0qazc{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}main.svelte-y0qazc{margin:0;padding:0}ul.svelte-y0qazc{margin:0;padding:0}li.svelte-y0qazc{margin:0;padding:0}.collections-container.svelte-y0qazc{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-y0qazc{height:100%;width:100%}",
-      map: null
-    };
-    Tab3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$unsubscribe_collections;
-      $$unsubscribe_collections = subscribe(collections, (value) => value);
-      createEventDispatcher();
-      let hoveredId;
-      let collectionsValue;
-      collections.subscribe((val) => collectionsValue = val);
-      $$result.css.add(css2);
-      $$unsubscribe_collections();
-      return `
-<main class="${"container svelte-y0qazc"}"><header><h3 class="${"mt-1"}">Collections</h3>
-        <p>Something about the Collections</p></header>
-
-    <div class="${"collections-container mt-2 svelte-y0qazc"}"><ul style="${"height:100%; width: 100%; list-style:none; overflow:hidden"}" class="${"svelte-y0qazc"}">${each(collectionsValue, ({ id, label, imgUrl }, i2) => {
-        return `<li class="${escape2(null_to_empty(hoveredId === id ? "collection-active" : "collection-inactive")) + " svelte-y0qazc"}"><div class="${"collection-container-inactive svelte-y0qazc"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img style="${"height:2.6rem; width:2.6rem; border-radius: 50px; object-fit:fill"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
-                    <div>${escape2(label)}
-                    </div></div>
-                <div style="${"display:flex; justify-content:end; width:20%; padding-right: 1rem;"}"><input type="${"checkbox"}" ${collectionsValue[id].selected ? "checked" : ""}></div>
-            </li>`;
-      })}</ul></div></main>
-`;
-    });
-    Tab4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `tab 4`;
-    });
-    draftFloat = writable2({
-      name: "",
-      description: "",
-      url: "",
-      ipfsHash: "",
-      claimable: true,
-      timelock: false,
-      startTime: false,
-      endTime: false,
-      quantity: false,
-      claimCodeEnabled: false,
-      claimCode: "",
-      transferrable: true
-    });
-    tabs = writable2([
-      {
-        label: "Content",
-        value: 0,
-        component: Tab1,
-        icon: "ic:outline-subtitles"
-      },
-      {
-        label: "Tokens",
-        value: 1,
-        component: Tab2,
-        icon: "icomoon-free:coin-dollar"
-      },
-      {
-        label: "Tab 3",
-        value: 2,
-        component: Tab3,
-        icon: "fluent:collections-add-24-regular"
-      },
-      {
-        label: "Tab 4",
-        value: 3,
-        component: Tab4,
-        icon: "fa:diamond"
-      },
-      {
-        label: "Tab 5",
-        value: 4,
-        component: Tab4,
-        icon: "bi:card-image"
-      },
-      {
-        label: "Tab 5",
-        value: 5,
-        component: Tab4,
-        icon: "ic:outline-subtitles"
-      },
-      {
-        label: "Tab 5",
-        value: 6,
-        component: Tab4,
-        icon: "ic:outline-subtitles"
-      }
-    ]);
-    theme = writable2(null);
-    tab1data = writable2({
-      name: "",
-      description: ""
-    });
-    tokens = writable2([
-      {
-        id: 0,
-        label: "FLOW",
-        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
-        selected: false,
-        amount: 0
-      },
-      {
-        id: 1,
-        label: "FUSD",
-        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
-        selected: false,
-        amount: 0
-      }
-    ]);
-    selectedToken = writable2(0);
-    collections = writable2([
-      {
-        id: 0,
-        label: "Basic Beasts",
-        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618a0cea8665abc4610c4ca6_basic_beasts_o5telf.png",
-        selected: false
-      },
-      {
-        id: 1,
-        label: "Ballerz",
-        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/618b83df2183ef7f2902c886_thumbnail_ballerz_jwtdpb.jpg",
-        selected: false
-      },
-      {
-        id: 2,
-        label: "Flovatar",
-        imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145169/619efc34fe0b49bb68dc20b8_flovatar_5-01_1_bo3h2k.png",
-        selected: false
-      }
-    ]);
-    modal = writable2({
-      title: "",
-      action: "",
-      opened: false
-    });
-    dialog = writable2({
-      title: "",
-      action: "",
-      opened: false
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/stores-50472bcb.js
-var getStores, page;
-var init_stores_50472bcb = __esm({
-  ".svelte-kit/output/server/chunks/stores-50472bcb.js"() {
-    init_shims();
-    init_app_31f4847e();
-    getStores = () => {
-      const stores = getContext("__svelte__");
-      return {
-        page: {
-          subscribe: stores.page.subscribe
-        },
-        navigating: {
-          subscribe: stores.navigating.subscribe
-        },
-        get preloading() {
-          console.error("stores.preloading is deprecated; use stores.navigating instead");
-          return {
-            subscribe: stores.navigating.subscribe
-          };
-        },
-        session: stores.session
-      };
-    };
-    page = {
-      subscribe(fn) {
-        const store = getStores().page;
-        return store.subscribe(fn);
-      }
-    };
-  }
-});
-
-// .svelte-kit/output/server/chunks/__layout-267661ca.js
-var layout_267661ca_exports = {};
-__export(layout_267661ca_exports, {
-  default: () => _layout
-});
-var import_onflow_fcl_esm2, css$32, ConnectWallet, css$22, Header, css$12, Transaction, css3, _layout;
-var init_layout_267661ca = __esm({
-  ".svelte-kit/output/server/chunks/__layout-267661ca.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_9982a29a();
-    import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_UserAddress_a10ebe45();
-    init_stores_85b2d1de();
-    init_stores_50472bcb();
-    init_ssr();
-    init_index_af55a9bb();
-    css$32 = {
-      code: "a.svelte-nbcav7{padding:8px 14px}",
-      map: null
-    };
-    ConnectWallet = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css$32);
-      return `<a role="${"button"}" href="${"/"}" class="${"contrast small-button svelte-nbcav7"}">Connect Wallet</a>`;
     });
     css$22 = {
       code: "li.svelte-bq95g1{margin-right:1rem}.outline.svelte-bq95g1{padding:6px 14px}.theme-toggle.svelte-bq95g1{padding:0;height:45px;width:45px;background-color:var(--primary-focus);border-radius:50%;display:inline-block;text-align:center;justify-content:center;display:flex;vertical-align:middle;align-items:center}@media screen and (max-width: 500px){}",
@@ -23130,6 +23259,9 @@ var init_layout_267661ca = __esm({
       let $user, $$unsubscribe_user;
       $$unsubscribe_theme = subscribe(theme, (value) => value);
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
+      let { screenSize } = $$props;
+      if ($$props.screenSize === void 0 && $$bindings.screenSize && screenSize !== void 0)
+        $$bindings.screenSize(screenSize);
       $$result.css.add(css$22);
       $$unsubscribe_theme();
       $$unsubscribe_user();
@@ -23138,13 +23270,16 @@ var init_layout_267661ca = __esm({
       
       </li></ul>
   <ul>
-    <li class="${"svelte-bq95g1"}"><a class="${"theme-toggle svelte-bq95g1"}" href="${"/"}"><svg xmlns="${"http://www.w3.org/2000/svg"}" width="${"16"}" height="${"16"}" fill="${"currentColor"}" class="${"bi bi-moon-fill"}" viewBox="${"0 0 16 16"}"><path d="${"M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"}"></path></svg></a></li>
-    <li class="${"svelte-bq95g1"}"><a href="${"/about"}">About</a></li>
-    
-    <li class="${"svelte-bq95g1"}">${$user?.loggedIn ? `<a href="${"/account"}" role="${"button"}" class="${"outline svelte-bq95g1"}">${validate_component(UserAddress, "UserAddress").$$render($$result, {
+  ${screenSize !== "mobile" ? `<li class="${"svelte-bq95g1"}"><a class="${"theme-toggle svelte-bq95g1"}" href="${"/"}"><svg xmlns="${"http://www.w3.org/2000/svg"}" width="${"16"}" height="${"16"}" fill="${"currentColor"}" class="${"bi bi-moon-fill"}" viewBox="${"0 0 16 16"}"><path d="${"M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"}"></path></svg></a></li>
+  <li class="${"svelte-bq95g1"}"><a href="${"/projects"}">Your Projects</a></li>    
+  <li class="${"svelte-bq95g1"}">${$user?.loggedIn ? `<a href="${"/account"}" role="${"button"}" class="${"outline svelte-bq95g1"}">${validate_component(UserAddress, "UserAddress").$$render($$result, {
         address: $user?.addr || "0x0",
         abbreviated: true
-      }, {}, {})}</a>` : `${validate_component(ConnectWallet, "ConnectWallet").$$render($$result, {}, {}, {})}`}</li></ul></nav>`;
+      }, {}, {})}</a>` : `${validate_component(ConnectWallet, "ConnectWallet").$$render($$result, {}, {}, {})}`}</li>` : `<div style="${"margin-right:0.5rem; margin-bottom:0.25rem"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "charm:menu-hamburger",
+        color: "var(--primary)",
+        height: "2rem"
+      }, {}, {})}</div>`}</ul></nav>`;
     });
     css$12 = {
       code: "article.svelte-11j8u0c{padding:1rem}progress.svelte-11j8u0c{margin-top:1em}small.svelte-11j8u0c{opacity:0.8}",
@@ -23183,7 +23318,31 @@ var init_layout_267661ca = __esm({
       <span><kbd>Expired</kbd><br><small class="${"svelte-11j8u0c"}">The transaction was submitted past its expiration block height.</small></span>` : `<span data-theme="${"invalid"}">Unexpected parameters were passed into the transaction.</span>`}`}`}`}`}`}
     </article>` : ``}`;
     });
-    css3 = {
+    getStores = () => {
+      const stores = getContext("__svelte__");
+      return {
+        page: {
+          subscribe: stores.page.subscribe
+        },
+        navigating: {
+          subscribe: stores.navigating.subscribe
+        },
+        get preloading() {
+          console.error("stores.preloading is deprecated; use stores.navigating instead");
+          return {
+            subscribe: stores.navigating.subscribe
+          };
+        },
+        session: stores.session
+      };
+    };
+    page = {
+      subscribe(fn) {
+        const store = getStores().page;
+        return store.subscribe(fn);
+      }
+    };
+    css2 = {
       code: ".graffle.svelte-j5rx0t.svelte-j5rx0t{position:relative;display:flex;justify-content:center;align-items:center}img.graffle.svelte-j5rx0t.svelte-j5rx0t{position:relative;top:-5px;width:100px;height:auto;margin-left:5px}footer.svelte-j5rx0t.svelte-j5rx0t{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:10px}p.svelte-j5rx0t.svelte-j5rx0t{font-size:0.7rem}footer.svelte-j5rx0t a.svelte-j5rx0t{font-weight:bold}@media(min-width: 480px){footer.svelte-j5rx0t.svelte-j5rx0t{padding:10px 0}}",
       map: null
     };
@@ -23191,9 +23350,26 @@ var init_layout_267661ca = __esm({
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
       console.log($page.path);
-      $$result.css.add(css3);
+      $$result.css.add(css2);
       $$unsubscribe_page();
-      return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}
+      return `${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(min-width: 1281px)" }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(Header, "Header").$$render($$result, { screenSize: "desktop" }, {}, {})}` : ``}`;
+        }
+      })}
+${validate_component(MediaQuery, "MediaQuery").$$render($$result, {
+        query: "(min-width: 481px) and (max-width: 1280px)"
+      }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(Header, "Header").$$render($$result, { screenSize: "tablet" }, {}, {})}` : ``}`;
+        }
+      })}
+${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(max-width: 480px)" }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(Header, "Header").$$render($$result, { screenSize: "mobile" }, {}, {})}` : ``}`;
+        }
+      })}
+
 
 <main class="${"container"}">${slots.default ? slots.default({}) : ``}
   ${validate_component(Transaction, "Transaction").$$render($$result, {}, {}, {})}</main>
@@ -23211,9 +23387,9 @@ var init_layout_267661ca = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-3792ad3f.js
-var error_3792ad3f_exports = {};
-__export(error_3792ad3f_exports, {
+// .svelte-kit/output/server/chunks/__error-8aae356d.js
+var error_8aae356d_exports = {};
+__export(error_8aae356d_exports, {
   default: () => _error,
   load: () => load
 });
@@ -23223,10 +23399,10 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_3792ad3f = __esm({
-  ".svelte-kit/output/server/chunks/__error-3792ad3f.js"() {
+var init_error_8aae356d = __esm({
+  ".svelte-kit/output/server/chunks/__error-8aae356d.js"() {
     init_shims();
-    init_app_31f4847e();
+    init_app_d3d82645();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23237,1142 +23413,393 @@ var init_error_3792ad3f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/constants-358452f5.js
+// .svelte-kit/output/server/chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js
 var PAGE_TITLE_EXTENSION;
-var init_constants_358452f5 = __esm({
-  ".svelte-kit/output/server/chunks/constants-358452f5.js"() {
+var init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf = __esm({
+  ".svelte-kit/output/server/chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js"() {
     init_shims();
     PAGE_TITLE_EXTENSION = "| FLOAT by Emerald City DAO";
   }
 });
 
-// .svelte-kit/output/server/chunks/index-0a46f72a.js
-var index_0a46f72a_exports = {};
-__export(index_0a46f72a_exports, {
-  default: () => Routes
+// .svelte-kit/output/server/chunks/projects-1859ad1e.js
+var projects_1859ad1e_exports = {};
+__export(projects_1859ad1e_exports, {
+  default: () => Projects
 });
-var css4, Routes;
-var init_index_0a46f72a = __esm({
-  ".svelte-kit/output/server/chunks/index-0a46f72a.js"() {
+var css3, CreateProject, Projects;
+var init_projects_1859ad1e = __esm({
+  ".svelte-kit/output/server/chunks/projects-1859ad1e.js"() {
     init_shims();
-    init_app_31f4847e();
-    init_stores_85b2d1de();
-    init_constants_358452f5();
+    init_app_d3d82645();
+    init_Icon_d8bf2219();
     init_ssr();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_index_af55a9bb();
-    css4 = {
-      code: "ul.svelte-1qb8znc{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-1qb8znc::-webkit-scrollbar{display:none}li.svelte-1qb8znc{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:25%;height:100%;min-width:25%;cursor:pointer}li.active.svelte-1qb8znc{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(56, 232, 198, 0.1);margin:0;padding:0;width:25%;height:100%;min-width:25%}.inactive-tab.svelte-1qb8znc:hover{background:var(--form-element-border-color)}.chevron-icon.svelte-1qb8znc{cursor:pointer}.chevron-icon-disabled.svelte-1qb8znc{opacity:0.5}.tabbar.svelte-1qb8znc{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-1qb8znc{display:flex;justify-content:center;align-items:center;height:100%;width:20%}",
+    css3 = {
+      code: "a.svelte-kwuh1f{text-decoration:none}p.svelte-kwuh1f{font-size:medium}.project-card.svelte-kwuh1f{border-radius:12px;background-color:#252E37;height:16rem}.project-card.svelte-kwuh1f:hover{background-color:rgba(56, 232, 198, 0.03);cursor:pointer}",
       map: null
     };
+    CreateProject = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      $$result.css.add(css3);
+      return `<a href="${"createProject"}" class="${"svelte-kwuh1f"}"><div class="${"card project-card svelte-kwuh1f"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-outlined",
+        height: "3.6rem",
+        color: "lightgrey"
+      }, {}, {})}
+            <div><h1>Add new project
+                </h1>
+
+                <p class="${"svelte-kwuh1f"}">Create a new project you want to build a list for
+                </p></div></div>
+            </a>`;
+    });
+    Projects = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${$$result.head += `${$$result.title = `<title>Your Projects</title>`, ""}`, ""}
+    <article><h2>Your Projects
+        </h2>
+        <div class="${"card-container"}"></div>
+        ${validate_component(CreateProject, "CreateProject").$$render($$result, {}, {}, {})}
+
+    </article>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/index-92036539.js
+var index_92036539_exports = {};
+__export(index_92036539_exports, {
+  default: () => Routes
+});
+var css$52, LocalRolesComponent, css$43, ServerRolesComponent, DiscordRoles, css$33, DiscordVerifContent, CustomTokenContent, css$23, TwitterVerifContent, css$13, Modal_1, css4, Dialog, Routes;
+var init_index_92036539 = __esm({
+  ".svelte-kit/output/server/chunks/index-92036539.js"() {
+    init_shims();
+    init_app_d3d82645();
+    init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf();
+    init_stores_572856a0();
+    init_Icon_d8bf2219();
+    init_projects_1859ad1e();
+    init_ssr();
+    css$52 = {
+      code: ".icon-container.svelte-eafmfp{height:3rem}.icon-container.svelte-eafmfp:hover{color:red;height:3rem;cursor:pointer}ul.svelte-eafmfp{list-style-type:none;width:99.5%;display:flex;flex-direction:column;margin:0;padding:0}li.svelte-eafmfp{margin-top:0.3rem;padding:0;display:flex;width:100%;justify-content:space-between;height:3rem}.role.svelte-eafmfp{display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:100%;border-radius:50px;height:100%}",
+      map: null
+    };
+    LocalRolesComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { localRoles } = $$props;
+      let { dispatch } = $$props;
+      if ($$props.localRoles === void 0 && $$bindings.localRoles && localRoles !== void 0)
+        $$bindings.localRoles(localRoles);
+      if ($$props.dispatch === void 0 && $$bindings.dispatch && dispatch !== void 0)
+        $$bindings.dispatch(dispatch);
+      $$result.css.add(css$52);
+      return `${localRoles === [] ? `<div>no roles</div>` : `<ul class="${"svelte-eafmfp"}">${each(localRoles, (role, i2) => {
+        return `<li class="${"role-container svelte-eafmfp"}"><div class="${"role svelte-eafmfp"}">${escape2(role.label)}
+            <div class="${"icon-container svelte-eafmfp"}">${validate_component(Icon, "Icon").$$render($$result, {
+          icon: "ant-design:minus-circle-twotone",
+          height: "3rem"
+        }, {}, {})}
+            </div></div>
+        
+    </li>`;
+      })}</ul>`}`;
+    });
+    css$43 = {
+      code: ".icon-container.svelte-aaxewx{height:3rem}.icon-container.svelte-aaxewx:hover{color:red;height:3rem;cursor:pointer}ul.svelte-aaxewx{list-style-type:none;width:99.5%;display:flex;flex-direction:column;margin:0;padding:0}li.svelte-aaxewx{margin-top:0.3rem;padding:0;display:flex;width:100%;justify-content:space-between;height:3rem}.role.svelte-aaxewx{display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:100%;border-radius:50px;height:100%}",
+      map: null
+    };
+    ServerRolesComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_discordVerif;
+      $$unsubscribe_discordVerif = subscribe(discordVerif, (value) => value);
+      let DiscordVerif;
+      discordVerif.subscribe((val) => DiscordVerif = val);
+      let { dispatch } = $$props;
+      if ($$props.dispatch === void 0 && $$bindings.dispatch && dispatch !== void 0)
+        $$bindings.dispatch(dispatch);
+      $$result.css.add(css$43);
+      $$unsubscribe_discordVerif();
+      return `${DiscordVerif.servers[DiscordVerif.selectedId].roles.length === 0 ? `<div>no roles</div>` : `<ul class="${"svelte-aaxewx"}">${each(DiscordVerif.servers[DiscordVerif.selectedId].roles, (role, i2) => {
+        return `<li class="${"role-container svelte-aaxewx"}"><div class="${"role svelte-aaxewx"}">${escape2(role.label)}
+            <div class="${"icon-container svelte-aaxewx"}">${validate_component(Icon, "Icon").$$render($$result, {
+          icon: "ant-design:minus-circle-twotone",
+          height: "3rem"
+        }, {}, {})}
+            </div></div>
+        
+    </li>`;
+      })}</ul>`}`;
+    });
+    DiscordRoles = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { localRoles } = $$props;
+      let { dispatch } = $$props;
+      let DiscordVerif;
+      discordVerif.subscribe((val) => DiscordVerif = val);
+      console.log("localRoles", localRoles);
+      if ($$props.localRoles === void 0 && $$bindings.localRoles && localRoles !== void 0)
+        $$bindings.localRoles(localRoles);
+      if ($$props.dispatch === void 0 && $$bindings.dispatch && dispatch !== void 0)
+        $$bindings.dispatch(dispatch);
+      return `${DiscordVerif.editing ? `${validate_component(ServerRolesComponent, "ServerRolesComponent").$$render($$result, { dispatch }, {}, {})}` : `${validate_component(LocalRolesComponent, "LocalRolesComponent").$$render($$result, { dispatch, localRoles }, {}, {})}`}`;
+    });
+    css$33 = {
+      code: ".id-input.svelte-1yo92ww:focus{border-color:#5865F2}.plus-icon.svelte-1yo92ww{height:3rem}.plus-icon.svelte-1yo92ww:hover{height:3rem;color:#5865F2;cursor:pointer}.plus-icon-container.svelte-1yo92ww{width:4rem;height:100%;border:0.2px solid var(--form-element-border-color);border-top-right-radius:6px;border-bottom-right-radius:6px}.role-input.svelte-1yo92ww{width:100%;border-top-right-radius:0px;border-bottom-right-radius:0px;border-right-width:0.5px}.role-input.svelte-1yo92ww:focus{width:100%;border-top-right-radius:0px;border-bottom-right-radius:0px;border-right-width:0.5px;border-color:#5865F2}.role-input-container.svelte-1yo92ww{display:flex;width:100%;align-items:center}.content.svelte-1yo92ww{display:flex;flex-direction:column;align-items:center;width:100%;height:100%;overflow:auto;overflow-x:hidden}.content.svelte-1yo92ww::-webkit-scrollbar{display:none}.content.svelte-1yo92ww{-ms-overflow-style:none;scrollbar-width:none}",
+      map: null
+    };
+    DiscordVerifContent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      const dispatch = createEventDispatcher();
+      let { localRoles } = $$props;
+      let { serverId } = $$props;
+      let { roleName } = $$props;
+      let DiscordVerif;
+      discordVerif.subscribe((val) => DiscordVerif = val);
+      if ($$props.localRoles === void 0 && $$bindings.localRoles && localRoles !== void 0)
+        $$bindings.localRoles(localRoles);
+      if ($$props.serverId === void 0 && $$bindings.serverId && serverId !== void 0)
+        $$bindings.serverId(serverId);
+      if ($$props.roleName === void 0 && $$bindings.roleName && roleName !== void 0)
+        $$bindings.roleName(roleName);
+      $$result.css.add(css$33);
+      return `<div class="${"content svelte-1yo92ww"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Discord Server ID</h3>
+        ${DiscordVerif.editing ? `<input class="${"id-input svelte-1yo92ww"}" placeholder="${"Server ID"}"${add_attribute("value", DiscordVerif.servers[DiscordVerif.selectedId].label, 0)}>` : `<input class="${"id-input svelte-1yo92ww"}" placeholder="${"Server ID"}"${add_attribute("value", serverId, 0)}>`}</div>
+    <div style="${"width:80%"}"><h3 class="${"mt-0"}">Discord Server Roles</h3>
+        <div class="${"role-input-container svelte-1yo92ww"}"><div class="${""}" style="${"display:flex; margin:0; padding:0; width:100%"}"><input class="${"role-input svelte-1yo92ww"}" placeholder="${"Server Role"}"${add_attribute("value", roleName, 0)}>
+                <div class="${"plus-icon-container flex-align svelte-1yo92ww"}"><div class="${"plus-icon flex-align svelte-1yo92ww"}">${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:plus-circle-twotone",
+        height: "3rem"
+      }, {}, {})}</div></div></div></div>
+                            ${validate_component(DiscordRoles, "DiscordRoles").$$render($$result, { dispatch, localRoles }, {}, {})}</div>
+                            </div>`;
+    });
+    CustomTokenContent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Input 1</h3>
+    <input placeholder="${"Input 1"}"></div>
+
+<div style="${"width:80%"}"><h3 class="${"mt-0"}">Input 2</h3>
+    <input placeholder="${"Input 2"}"></div></div>`;
+    });
+    css$23 = {
+      code: "input.svelte-jbstn1:focus{border-color:#1DA1F2\n    }",
+      map: null
+    };
+    TwitterVerifContent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_twitterVerif;
+      $$unsubscribe_twitterVerif = subscribe(twitterVerif, (value) => value);
+      let TwitterVerif;
+      let selectedId;
+      let inputVal;
+      twitterVerif.subscribe((val) => {
+        TwitterVerif = val;
+        selectedId = TwitterVerif.selectedId;
+        inputVal = TwitterVerif.accounts[selectedId]?.label;
+      });
+      $$result.css.add(css$23);
+      $$unsubscribe_twitterVerif();
+      return `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Account Handle</h3>
+    <input${add_attribute("value", inputVal, 0)} class="${"svelte-jbstn1"}"></div>
+
+</div>`;
+    });
+    css$13 = {
+      code: ".cancel.svelte-e0ia7h{height:2.4rem;width:5rem;cursor:pointer;color:red\n}.cancel.svelte-e0ia7h:hover{background-color:rgba(255, 0, 61, 0.1);border-radius:6px}.save.svelte-e0ia7h{height:2.4rem;width:5rem;cursor:pointer;color:var(--color)\n}.save.svelte-e0ia7h:hover{background-color:var(--bg);border-radius:6px;color:var(--color)\n}header.svelte-e0ia7h{display:flex;flex-direction:row;height:12%;width:100%;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;border-bottom:var(--border)}.content.svelte-e0ia7h{height:76%}footer.svelte-e0ia7h{color:var(--primary);display:flex;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;height:12%;width:100%;border-top:var(--border);;}#background.svelte-e0ia7h{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.5)}#modal.svelte-e0ia7h{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;height:80%;width:48%;border-radius:20px;border:var(--border)\n\n}",
+      map: null
+    };
+    Modal_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_discordVerif;
+      let $$unsubscribe_modal;
+      $$unsubscribe_discordVerif = subscribe(discordVerif, (value) => value);
+      $$unsubscribe_modal = subscribe(modal, (value) => value);
+      let Modal;
+      let localRoles = [];
+      let serverId = "";
+      let roleName = "";
+      modal.subscribe((val) => Modal = val);
+      discordVerif.subscribe((val) => val);
+      $$result.css.add(css$13);
+      localRoles && console.log("changed");
+      $$unsubscribe_discordVerif();
+      $$unsubscribe_modal();
+      return `<div id="${"background"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none")}" class="${"svelte-e0ia7h"}"></div>
+    <main id="${"modal"}" style="${"--display: " + escape2(Modal.opened ? "block" : "none") + "; --border: " + escape2(Modal.content === "custom-token" ? "2px solid var(--primary)" : Modal.content !== "twitter" ? "2px solid #5865F2" : "2px solid #1DA1F2") + "; --color: " + escape2(Modal.content === "custom-token" ? "var(--primary)" : Modal.content !== "twitter" ? "#5865F2" : "#1DA1F2") + "; --bg: " + escape2(Modal.content === "custom-token" ? "rgba(56, 232, 198, 0.1)" : Modal.content !== "twitter" ? "rgba(88, 101, 242, 0.1)" : "rgba(29, 161, 242, 0.1)") + ";"}" class="${"svelte-e0ia7h"}"><header class="${"svelte-e0ia7h"}"><div><h3>Modal Title</h3></div>
+            <div></div></header>
+        <div class="${"content svelte-e0ia7h"}">${Modal.content === "custom-token" ? `${validate_component(CustomTokenContent, "CustomTokenContent").$$render($$result, {}, {}, {})}` : `${Modal.content === "twitter" ? `${validate_component(TwitterVerifContent, "TwitterVerifContent").$$render($$result, {}, {}, {})}` : `${validate_component(DiscordVerifContent, "DiscordVerifContent").$$render($$result, { localRoles, serverId, roleName }, {}, {})}`}`}</div>
+
+                <footer class="${"svelte-e0ia7h"}"><div class="${"cancel flex-align svelte-e0ia7h"}">CANCEL
+
+                    </div>
+                    <div class="${"save flex-align svelte-e0ia7h"}">SAVE
+
+                    </div></footer>
+                </main>`;
+    });
+    css4 = {
+      code: "header.svelte-1crudv2{display:flex;flex-direction:row;height:16%;width:100%;justify-content:space-between;align-items:center;padding-right:1rem;padding-left:2rem;border-bottom:0.5px solid var(--primary)}footer.svelte-1crudv2{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:0.5px solid var(--primary)}#background.svelte-1crudv2{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#dialog.svelte-1crudv2{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;height:48%;width:42%;border-radius:20px;border:2px solid var(--primary)}",
+      map: null
+    };
+    Dialog = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $collections, $$unsubscribe_collections;
+      let $tokens, $$unsubscribe_tokens;
+      let $dialog, $$unsubscribe_dialog;
+      $$unsubscribe_collections = subscribe(collections, (value) => $collections = value);
+      $$unsubscribe_tokens = subscribe(tokens, (value) => $tokens = value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
+      let dialogValue;
+      let selectedVal;
+      let selectedCollectionVal;
+      let amountInput;
+      let activeTabValue;
+      dialog.subscribe((val) => {
+        dialogValue = val;
+        console.log("dialogValue", dialogValue);
+      });
+      tokens.subscribe((val) => val);
+      collections.subscribe((val) => val);
+      selectedToken.subscribe((val) => selectedVal = val);
+      selectedCollection.subscribe((val) => selectedCollectionVal = val);
+      activeTabVal.subscribe((val) => activeTabValue = val);
+      $$result.css.add(css4);
+      $$unsubscribe_collections();
+      $$unsubscribe_tokens();
+      $$unsubscribe_dialog();
+      return `<div id="${"background"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none")}" class="${"svelte-1crudv2"}"></div>
+    <main id="${"dialog"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none") + ";"}" class="${"svelte-1crudv2"}"><header class="${"svelte-1crudv2"}"><div><h3>Dialog title</h3></div>
+            <div><div>${validate_component(Icon, "Icon").$$render($$result, {
+        icon: "ant-design:close-circle-outlined",
+        height: "1.4rem",
+        color: "lightgrey"
+      }, {}, {})}</div></div></header>
+                      
+
+                        ${activeTabValue === 1 ? `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Token Amount</h3>
+                            ${$tokens[selectedVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $tokens[selectedVal].amount, 0)}>`}</div>
+                        <div style="${"width:80%"}"></div></div>` : `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Collection Amount</h3>
+                            ${$collections[selectedCollectionVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $collections[selectedCollectionVal].amount, 0)}>`}</div>
+                        <div style="${"width:80%"}"></div></div>`}
+
+
+                        <footer class="${"svelte-1crudv2"}"><div style="${"cursor: pointer;"}">SAVE
+
+                            </div></footer>
+                        </main>`;
+    });
     Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
+
+    ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
+    ${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
+    ${validate_component(Projects, "Projects").$$render($$result, {}, {}, {})}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/createProject-d49b3c7c.js
+var createProject_d49b3c7c_exports = {};
+__export(createProject_d49b3c7c_exports, {
+  default: () => CreateProject2
+});
+var EmeraldIdIcon, css5, CreateProjectDetails, CreateProject2;
+var init_createProject_d49b3c7c = __esm({
+  ".svelte-kit/output/server/chunks/createProject-d49b3c7c.js"() {
+    init_shims();
+    init_app_d3d82645();
+    init_Icon_d8bf2219();
+    init_stores_572856a0();
+    init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf();
+    init_MediaQuery_dd0a8898();
+    init_ssr();
+    EmeraldIdIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { color } = $$props;
+      let { mobile } = $$props;
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.mobile === void 0 && $$bindings.mobile && mobile !== void 0)
+        $$bindings.mobile(mobile);
+      return `<svg${add_attribute("width", mobile ? "1.3rem" : "1.4rem", 0)}${add_attribute("height", mobile ? "1.25rem" : "1.4rem", 0)} viewBox="${"0 0 40 40"}" fill="${"none"}" xmlns="${"http://www.w3.org/2000/svg"}"><path d="${"M20 0C8.97111 0 0 8.97182 0 20C0 31.0282 8.97111 40 20 40C31.0282 40 40 31.0282 40 20C40 8.97182 31.0289 0 20 0ZM20 37.4403C10.3834 37.4403 2.55914 29.6173 2.55977 20C2.55977 10.3834 10.3834 2.55977 20 2.55977C29.6166 2.55977 37.4403 10.3834 37.4403 20C37.4403 29.6173 29.6166 37.4403 20 37.4403Z"}"${add_attribute("fill", color, 0)}></path><path d="${"M20.2873 27.8947L19.9741 27.643L19.6609 27.8947L16.6279 30.3322L15.6034 26.5717L15.4979 26.1844L15.097 26.2037L11.2078 26.3901L12.5856 22.759L12.7279 22.3841L12.3927 22.1638L9.13893 20.0255L12.3927 17.8871L12.7279 17.6669L12.5856 17.2919L11.2078 13.6609L15.097 13.8473L15.4979 13.8665L15.6034 13.4793L16.6279 9.71875L19.6609 12.1562L19.9741 12.4079L20.2873 12.1562L23.3203 9.71875L24.3448 13.4793L24.4503 13.8665L24.8512 13.8473L28.7404 13.6609L27.3626 17.2919L27.2203 17.6669L27.5554 17.8871L30.8093 20.0255L27.5554 22.1638L27.2203 22.3841L27.3626 22.759L28.7404 26.3901L24.8512 26.2037L24.4503 26.1844L24.3448 26.5717L23.3203 30.3322L20.2873 27.8947Z"}"${add_attribute("stroke", color, 0)}></path><path d="${"M11.2404 20.3245L13.8303 22.0264L12.7356 24.9111L7.16898 25.1761C6.93136 24.5978 6.73843 23.9957 6.58057 23.379L11.2404 20.3245Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M32.7797 14.8747C33.0173 15.4531 33.2102 16.0552 33.3681 16.6718L28.7083 19.7264L26.1184 18.0245L27.2131 15.1398L32.7797 14.8747Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M12.7356 15.1397L13.8303 18.0245L11.2404 19.7264L6.58057 16.6718C6.73839 16.0552 6.93135 15.453 7.16898 14.8747L12.7356 15.1397Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M12.6444 8.32176L16.9946 11.8144L16.1806 14.804L13.0876 14.6559L11.1071 9.44716C11.5919 9.02973 12.1009 8.6579 12.6444 8.32176Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M16.1806 25.247L16.9946 28.2364L12.6444 31.7292C12.1009 31.3929 11.5919 31.0212 11.1071 30.6038L13.0876 25.3949L16.1806 25.247Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M26.862 25.3949L28.8419 30.6176C28.3566 31.0233 27.8478 31.3937 27.3054 31.7292L22.9552 28.2364L23.7692 25.247L26.862 25.3949Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M28.7083 20.3245L33.3689 23.3796C33.211 24.0088 33.0179 24.6128 32.7799 25.1922L27.2132 24.9116L26.1184 22.0264L28.7083 20.3245Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><path d="${"M27.3039 8.32297C27.8342 8.65845 28.3415 9.02871 28.8258 9.43372L26.8615 14.656L23.7692 14.804L22.9552 11.8144L27.3039 8.32297Z"}"${add_attribute("stroke", color, 0)} stroke-width="${"0.5"}"></path><mask id="${"path-11-inside-1_159_2"}"${add_attribute("fill", color, 0)}><path fill-rule="${"evenodd"}" clip-rule="${"evenodd"}" d="${"M19.9746 34.1401C19.9745 34.1401 19.9745 34.1401 19.9744 34.1401C19.594 34.1401 19.2135 34.1236 18.8331 34.0904L17.2783 28.3288L19.9744 26.162L19.9746 26.1621V26.162L22.6707 28.3288L21.1159 34.0904C20.7355 34.1236 20.355 34.1401 19.9746 34.1401Z"}"></path></mask><path d="${"M18.8331 34.0904L18.3504 34.2207L18.4415 34.5582L18.7898 34.5886L18.8331 34.0904ZM17.2783 28.3288L16.9651 27.9391L16.7105 28.1437L16.7956 28.4591L17.2783 28.3288ZM19.9744 26.162L20.2876 25.7723L19.9744 25.5205L19.6612 25.7723L19.9744 26.162ZM19.9746 26.1621L19.6614 26.5519L20.4746 27.2054V26.1621H19.9746ZM19.9746 26.162L20.2878 25.7723L19.4746 25.1187V26.162H19.9746ZM22.6707 28.3288L23.1534 28.4591L23.2385 28.1437L22.9839 27.9391L22.6707 28.3288ZM21.1159 34.0904L21.1593 34.5886L21.5076 34.5582L21.5986 34.2207L21.1159 34.0904ZM19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9746 33.6401C19.9746 33.6401 19.9746 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9745 33.6401 19.9745 33.6401C19.9745 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401C19.9744 33.6401 19.9744 33.6401 19.9744 33.6401V34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9744 34.6401 19.9744 34.6401C19.9744 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9745 34.6401 19.9745 34.6401 19.9745 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401C19.9746 34.6401 19.9746 34.6401 19.9746 34.6401V33.6401ZM19.9744 33.6401C19.6086 33.6401 19.2425 33.6242 18.8765 33.5923L18.7898 34.5886C19.1845 34.6229 19.5795 34.6401 19.9744 34.6401V33.6401ZM19.3159 33.9602L17.7611 28.1985L16.7956 28.4591L18.3504 34.2207L19.3159 33.9602ZM17.5915 28.7185L20.2876 26.5517L19.6612 25.7723L16.9651 27.9391L17.5915 28.7185ZM19.6612 26.5517L19.6614 26.5519L20.2878 25.7724L20.2876 25.7723L19.6612 26.5517ZM19.4746 26.162V26.1621H20.4746V26.162H19.4746ZM22.9839 27.9391L20.2878 25.7723L19.6614 26.5517L22.3575 28.7185L22.9839 27.9391ZM21.5986 34.2207L23.1534 28.4591L22.188 28.1985L20.6332 33.9602L21.5986 34.2207ZM19.9746 34.6401C20.3695 34.6401 20.7645 34.6229 21.1593 34.5886L21.0725 33.5923C20.7065 33.6242 20.3405 33.6401 19.9746 33.6401V34.6401Z"}"${add_attribute("fill", color, 0)} mask="${"url(#path-11-inside-1_159_2)"}"></path><mask id="${"path-13-inside-2_159_2"}"${add_attribute("fill", color, 0)}><path fill-rule="${"evenodd"}" clip-rule="${"evenodd"}" d="${"M19.9746 5.91083C20.355 5.91083 20.7355 5.92739 21.1159 5.96051L22.6707 11.722L19.9746 13.8889V13.8887L19.9744 13.8889L17.2783 11.722L18.8331 5.96051C19.2135 5.92739 19.594 5.91083 19.9744 5.91083C19.9745 5.91083 19.9745 5.91083 19.9746 5.91083Z"}"></path></mask><path d="${"M21.1159 5.96051L21.5986 5.83024L21.5076 5.49272L21.1593 5.46239L21.1159 5.96051ZM22.6707 11.722L22.9839 12.1118L23.2385 11.9071L23.1534 11.5918L22.6707 11.722ZM19.9746 13.8889H19.4746V14.9322L20.2878 14.2786L19.9746 13.8889ZM19.9746 13.8887H20.4746V12.8455L19.6614 13.499L19.9746 13.8887ZM19.9744 13.8889L19.6612 14.2786L19.9744 14.5303L20.2876 14.2786L19.9744 13.8889ZM17.2783 11.722L16.7956 11.5918L16.7105 11.9071L16.9651 12.1118L17.2783 11.722ZM18.8331 5.96051L18.7898 5.46239L18.4415 5.49272L18.3504 5.83024L18.8331 5.96051ZM21.1593 5.46239C20.7645 5.42802 20.3695 5.41083 19.9746 5.41083V6.41083C20.3405 6.41083 20.7065 6.42675 21.0725 6.45862L21.1593 5.46239ZM23.1534 11.5918L21.5986 5.83024L20.6332 6.09078L22.188 11.8523L23.1534 11.5918ZM20.2878 14.2786L22.9839 12.1118L22.3575 11.3323L19.6614 13.4991L20.2878 14.2786ZM19.4746 13.8887V13.8889H20.4746V13.8887H19.4746ZM19.6614 13.499L19.6612 13.4991L20.2876 14.2786L20.2878 14.2785L19.6614 13.499ZM20.2876 13.4991L17.5915 11.3323L16.9651 12.1118L19.6612 14.2786L20.2876 13.4991ZM17.7611 11.8523L19.3159 6.09078L18.3504 5.83024L16.7956 11.5918L17.7611 11.8523ZM18.8765 6.45862C19.2425 6.42675 19.6086 6.41083 19.9744 6.41083V5.41083C19.5795 5.41083 19.1845 5.42802 18.7898 5.46239L18.8765 6.45862ZM19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9744 6.41083 19.9744 6.41083C19.9744 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9745 6.41083 19.9745 6.41083 19.9745 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083C19.9746 6.41083 19.9746 6.41083 19.9746 6.41083V5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9746 5.41083C19.9746 5.41083 19.9746 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9745 5.41083 19.9745 5.41083C19.9745 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083C19.9744 5.41083 19.9744 5.41083 19.9744 5.41083V6.41083Z"}"${add_attribute("fill", color, 0)} mask="${"url(#path-13-inside-2_159_2)"}"></path><circle cx="${"20"}" cy="${"20"}" r="${"14.5"}"${add_attribute("stroke", color, 0)}></circle></svg>`;
+    });
+    css5 = {
+      code: "ul.svelte-w2e1iq{display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;height:70%;width:70%;max-width:70%;overflow:scroll;border-radius:9px;background:rgba(255, 255, 255, 0.08);list-style:none}ul.svelte-w2e1iq::-webkit-scrollbar{display:none}li.svelte-w2e1iq{margin:0;padding:0;display:flex;justify-content:center;align-items:center;width:var(--width);height:100%;min-width:var(--width);cursor:pointer}li.active.svelte-w2e1iq{display:flex;justify-content:center;align-items:center;color:#495057;background-color:#fff;border-bottom:2px solid var(--primary);color:var(--primary);background-color:rgba(56, 232, 198, 0.1);margin:0;padding:0;width:var(--width);height:100%;min-width:var(--width)}.inactive-tab.svelte-w2e1iq:hover{background:var(--form-element-border-color)}.chevron-icon.svelte-w2e1iq{cursor:pointer}.chevron-icon-disabled.svelte-w2e1iq{opacity:0.5}.main-container.svelte-w2e1iq{margin-top:-6%;height:3rem;display:flex;width:100%;justify-content:center;align-items:center}.chevron-wrapper.svelte-w2e1iq{display:flex;justify-content:center;align-items:center;height:var(--height);width:var(--width)\n}",
+      map: null
+    };
+    CreateProjectDetails = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$unsubscribe_activeTabVal;
       let $$unsubscribe_tabs;
+      $$unsubscribe_activeTabVal = subscribe(activeTabVal, (value) => value);
       $$unsubscribe_tabs = subscribe(tabs, (value) => value);
+      let { screenSize } = $$props;
+      let mobile = screenSize === "mobile";
       let tabsValue;
-      let activeTabValue = 0;
+      let activeTabValue;
       tabs.subscribe((value) => {
         tabsValue = value;
       });
-      console.log("store tabs", tabsValue);
-      $$result.css.add(css4);
+      activeTabVal.subscribe((val) => activeTabValue = val);
+      if ($$props.screenSize === void 0 && $$bindings.screenSize && screenSize !== void 0)
+        $$bindings.screenSize(screenSize);
+      $$result.css.add(css5);
+      $$unsubscribe_activeTabVal();
       $$unsubscribe_tabs();
-      return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
-
-    
-
-    
-
-    <article><main class="${"tabbar svelte-1qb8znc"}"><div class="${"chevron-wrapper svelte-1qb8znc"}"><div class="${escape2(null_to_empty("chevron-icon-disabled")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
+      return `<article><main class="${"main-container svelte-w2e1iq"}">
+        <div style="${"--width:" + escape2(mobile ? "30%" : "20%")}" class="${"chevron-wrapper svelte-w2e1iq"}"><div class="${escape2(null_to_empty(activeTabValue === 0 ? "chevron-icon-disabled" : "chevron-icon")) + " svelte-w2e1iq"}">${validate_component(Icon, "Icon").$$render($$result, {
         class: "chevron-icon",
         icon: "akar-icons:circle-chevron-left",
-        height: 36,
+        height: mobile ? 30 : 36,
         color: "lightgrey"
       }, {}, {})}</div></div>
-                        <ul class="${"svelte-1qb8znc"}">${each(tabsValue, (item, i2) => {
-        return `<li class="${escape2(null_to_empty(activeTabValue === item.value ? "active" : "inactive-tab")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
-          icon: item.icon,
-          height: 30,
-          color: tabsValue[i2].done ? "#85DFB4" : activeTabValue === item.value ? "var(--primary)" : "lightgrey"
+                    <ul class="${"svelte-w2e1iq"}">${each(tabsValue, (item, i2) => {
+        return `<li style="${"--width:" + escape2(mobile ? "33.3%" : "25%")}"${add_attribute("id", `tab${i2}`, 0)} class="${escape2(null_to_empty(activeTabValue === item.value ? "active" : "inactive-tab")) + " svelte-w2e1iq"}">${i2 === 3 ? `<div class="${"flex-align"}">${validate_component(EmeraldIdIcon, "EmeraldIdIcon").$$render($$result, {
+          mobile,
+          color: activeTabValue === 3 || tabsValue[i2].done ? "var(--primary)" : "white"
         }, {}, {})}
-                                    </li>`;
+                            </div>` : `${validate_component(Icon, "Icon").$$render($$result, {
+          icon: item.icon,
+          height: mobile ? 22 : i2 === 3 ? 26 : 30,
+          color: tabsValue[i2].done ? "var(--primary)" : activeTabValue === item.value ? "var(--primary)" : "lightgrey"
+        }, {}, {})}`}
+
+                                </li>`;
       })}</ul>
-                                    <div class="${"chevron-wrapper svelte-1qb8znc"}"><div class="${escape2(null_to_empty("chevron-icon")) + " svelte-1qb8znc"}">${validate_component(Icon, "Icon").$$render($$result, {
+                                <div style="${"--width:" + escape2(mobile ? "30%" : "20%")}" class="${"chevron-wrapper svelte-w2e1iq"}"><div class="${escape2(null_to_empty(activeTabValue === 5 ? "chevron-icon-disabled" : "chevron-icon")) + " svelte-w2e1iq"}">${validate_component(Icon, "Icon").$$render($$result, {
         class: "chevron-icon",
         icon: "akar-icons:circle-chevron-right",
-        height: 36,
+        height: mobile ? 30 : 36,
         color: "lightgrey"
       }, {}, {})}</div></div></main>
 
-                                                
-                                                ${each(tabsValue, (item) => {
+                                            
+                                            ${each(tabsValue, (item) => {
         return `${activeTabValue == item.value ? `<div class="${"tab-content-container"}">
-                                                    
-                                                    ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, {}, {}, {})}</div>
-                                                <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
-                                                            </footer>` : ``}`;
+                                                
+                                                ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, { mobile }, {}, {})}</div>
+                                            <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
+                                                        </footer>` : ``}`;
       })}
 
-                                                       
-                                                            </article>`;
+                                                        </article>`;
     });
-  }
-});
+    CreateProject2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${$$result.head += `${$$result.title = `<title>Create Project ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
 
-// .svelte-kit/output/server/chunks/Float-bba22cfa.js
-var fcl, getFLOATEvent, getFLOATEvents, getFLOATs, Loading, css5, Float;
-var init_Float_bba22cfa = __esm({
-  ".svelte-kit/output/server/chunks/Float-bba22cfa.js"() {
-    init_shims();
-    fcl = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_app_31f4847e();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    getFLOATEvent = async (addr, id) => {
-      try {
-        let queryResult = await fcl.query({
-          cadence: `
-      import FLOAT from 0xFLOAT
-      import MetadataViews from 0xMDV
-      import FLOATMetadataViews from 0xFMDV
 
-      pub fun main(account: Address, id: UInt64): FLOATMetadataViews.FLOATEventMetadataView? {
-        let floatEventCollection = getAccount(account).getCapability(FLOAT.FLOATEventsPublicPath)
-                                    .borrow<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic, MetadataViews.ResolverCollection}>()
-                                    ?? panic("Could not borrow the FLOAT Events Collection from the account.")
-        let floatEvent = floatEventCollection.borrowViewResolver(id: id)
-
-        if let metadata = floatEvent.resolveView(Type<FLOATMetadataViews.FLOATEventMetadataView>()) {
-          return metadata as! FLOATMetadataViews.FLOATEventMetadataView
+${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(min-width: 1281px)" }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(CreateProjectDetails, "CreateProjectDetails").$$render($$result, { screenSize: "desktop" }, {}, {})}` : ``}`;
         }
-        return nil
-      }
-      `,
-          args: (arg, t2) => [
-            arg(addr, t2.Address),
-            arg(parseInt(id), t2.UInt64)
-          ]
-        });
-        console.log(queryResult);
-        return queryResult || {};
-      } catch (e3) {
-        console.log(e3);
-      }
-    };
-    getFLOATEvents = async (addr) => {
-      try {
-        let queryResult = await fcl.query({
-          cadence: `
-      import FLOAT from 0xFLOAT
-      import MetadataViews from 0xMDV
-      import FLOATMetadataViews from 0xFMDV
-
-      pub fun main(account: Address): {String: FLOATMetadataViews.FLOATEventMetadataView} {
-        let floatEventCollection = getAccount(account).getCapability(FLOAT.FLOATEventsPublicPath)
-                                    .borrow<&FLOAT.FLOATEvents{FLOAT.FLOATEventsPublic, MetadataViews.ResolverCollection}>()
-                                    ?? panic("Could not borrow the FLOAT Events Collection from the account.")
-        let floatEvents: [UInt64] = floatEventCollection.getIDs()
-        let returnVal: {String: FLOATMetadataViews.FLOATEventMetadataView} = {}
-
-        for id in floatEvents {
-          let view = floatEventCollection.borrowViewResolver(id: id)
-          if var metadata = view.resolveView(Type<FLOATMetadataViews.FLOATEventMetadataView>()) {
-            var floatEvent = metadata as! FLOATMetadataViews.FLOATEventMetadataView
-            returnVal[floatEvent.name] = floatEvent
-          }
-        }
-        return returnVal
-      }
-      `,
-          args: (arg, t2) => [
-            arg(addr, t2.Address)
-          ]
-        });
-        return queryResult || {};
-      } catch (e3) {
-        console.log(e3);
-      }
-    };
-    getFLOATs = async (addr) => {
-      try {
-        let queryResult = await fcl.query({
-          cadence: `
-      import FLOAT from 0xFLOAT
-      import MetadataViews from 0xMDV
-      import FLOATMetadataViews from 0xFMDV
-
-      pub fun main(account: Address): [FLOATMetadataViews.FLOATMetadataView] {
-        let nftCollection = getAccount(account).getCapability(FLOAT.FLOATCollectionPublicPath)
-                              .borrow<&FLOAT.Collection{MetadataViews.ResolverCollection}>()
-                              ?? panic("Could not borrow the Collection from the account.")
-        let floats = nftCollection.getIDs()
-        var returnVal: [FLOATMetadataViews.FLOATMetadataView] = []
-        for id in floats {
-          let view = nftCollection.borrowViewResolver(id: id)
-          if var metadata = view.resolveView(Type<FLOATMetadataViews.FLOATMetadataView>()) {
-            var float = metadata as! FLOATMetadataViews.FLOATMetadataView
-            returnVal.append(float)
-          }
-        }
-
-        return returnVal
-      }
-      `,
-          args: (arg, t2) => [
-            arg(addr, t2.Address)
-          ]
-        });
-        console.log(queryResult);
-        return queryResult || [];
-      } catch (e3) {
-        console.log(e3);
-      }
-    };
-    Loading = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<article aria-busy="${"true"}"></article>`;
-    });
-    css5 = {
-      code: ".host.svelte-61bxp3{font-family:monospace}.credit.svelte-61bxp3{font-size:0.7rem;display:block;line-height:1}p.svelte-61bxp3{margin-top:10px;margin-bottom:10px}",
-      map: null
-    };
-    Float = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { float = {} } = $$props;
-      let { preview = false } = $$props;
-      let { individual = false } = $$props;
-      if ($$props.float === void 0 && $$bindings.float && float !== void 0)
-        $$bindings.float(float);
-      if ($$props.preview === void 0 && $$bindings.preview && preview !== void 0)
-        $$bindings.preview(preview);
-      if ($$props.individual === void 0 && $$bindings.individual && individual !== void 0)
-        $$bindings.individual(individual);
-      $$result.css.add(css5);
-      return `${individual ? `<a class="${"no-style"}" href="${"/" + escape2(float?.eventHost) + "/" + escape2(float?.eventId) + "/" + escape2(float?.serial)}"><article class="${"card"}"><img src="${"https://ipfs.infura.io/ipfs/" + escape2(float?.eventMetadata.image)}" alt="${escape2(float?.eventMetadata.name) + " Image"}">
-      <h1>${escape2(float?.eventMetadata.name)}</h1>
-      <p class="${"svelte-61bxp3"}"><small><span class="${"credit svelte-61bxp3"}">Created by</span>
-          <a href="${"/" + escape2(float?.eventHost)}" class="${"host svelte-61bxp3"}">${escape2(float?.eventHost)}</a></small></p>
-      <code data-tooltip="${escape2(float?.serial) + " of " + escape2(float?.eventMetadata.totalSupply)}">#${escape2(float?.serial)}</code></article></a>` : `${preview ? `<article class="${"card card-preview"}">${float?.eventMetadata.image ? `<img src="${"https://ipfs.infura.io/ipfs/" + escape2(float?.eventMetadata.image)}" alt="${escape2(float?.eventMetadata.name) + " Image"}">` : ``}
-    <h1>${escape2(float?.eventMetadata.name)}</h1>
-    <p class="${"svelte-61bxp3"}"><small><span class="${"credit svelte-61bxp3"}">Created by</span>
-        <a href="${"/" + escape2(float?.eventHost)}" class="${"host svelte-61bxp3"}">${escape2(float?.eventHost)}</a></small></p>
-    <code data-tooltip="${"Minted so far"}">#${escape2(float?.eventMetadata.totalSupply)}</code></article>` : `<a class="${"no-style"}" href="${"/" + escape2(float?.eventHost) + "/" + escape2(float?.eventId)}"><article class="${"card"}">${float?.eventMetadata.image ? `<img src="${"https://ipfs.infura.io/ipfs/" + escape2(float?.eventMetadata.image)}" alt="${escape2(float?.eventMetadata.name) + " Image"}">` : ``}
-      <h1>${escape2(float?.eventMetadata.name)}</h1>
-      <p class="${"svelte-61bxp3"}"><small><span class="${"credit svelte-61bxp3"}">Created by</span>
-          <a href="${"/" + escape2(float?.eventHost)}" class="${"host svelte-61bxp3"}">${escape2(float?.eventHost)}</a></small></p>
-      <code data-tooltip="${escape2(float?.serial) + " of " + escape2(float?.eventMetadata.totalSupply)}">#${escape2(float?.serial)}</code></article></a>`}`}`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/AccountContents-cf0c9326.js
-function getEventsArray(floatEventsObj) {
-  if (floatEventsObj && Object.keys(floatEventsObj)?.length > 0) {
-    return Object.values(floatEventsObj);
-  } else {
-    return [];
-  }
-}
-var css6, Event, AccountContents;
-var init_AccountContents_cf0c9326 = __esm({
-  ".svelte-kit/output/server/chunks/AccountContents-cf0c9326.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_Float_bba22cfa();
-    css6 = {
-      code: ".host.svelte-mj8iyj{font-family:monospace}.credit.svelte-mj8iyj{font-size:0.7rem;display:block;line-height:1}p.svelte-mj8iyj{margin-top:10px;margin-bottom:10px}",
-      map: null
-    };
-    Event = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { floatEvent = {} } = $$props;
-      if ($$props.floatEvent === void 0 && $$bindings.floatEvent && floatEvent !== void 0)
-        $$bindings.floatEvent(floatEvent);
-      $$result.css.add(css6);
-      return `<a class="${"no-style"}" href="${"/" + escape2(floatEvent?.host) + "/" + escape2(floatEvent?.id)}"><article class="${"card"}">${floatEvent?.image ? `<img src="${"https://ipfs.infura.io/ipfs/" + escape2(floatEvent?.image)}" alt="${escape2(floatEvent.name) + " Image"}">` : ``}
-    <h1>${escape2(floatEvent?.name)}</h1>
-    <p class="${"svelte-mj8iyj"}"><small><span class="${"credit svelte-mj8iyj"}">Created by</span>
-        <a href="${"/" + escape2(floatEvent?.host)}" class="${"host svelte-mj8iyj"}">${escape2(floatEvent?.host)}</a></small></p>
-    <code class="${"mb-1"}">ID:${escape2(floatEvent?.id)}</code>
-    <button>Visit</button></article></a>`;
-    });
-    AccountContents = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { address } = $$props;
-      let floatEvents = getFLOATEvents(address);
-      let floats = getFLOATs(address);
-      if ($$props.address === void 0 && $$bindings.address && address !== void 0)
-        $$bindings.address(address);
-      return `<h3>Claimed FLOATs</h3>
-
-<div class="${"card-container"}">${function(__value) {
-        if (is_promise(__value)) {
-          __value.then(null, noop3);
-          return `
-  ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}
-  `;
-        }
-        return function(floats2) {
-          return ` 
-    ${floats2?.length > 0 ? `${each(floats2, (float) => {
-            return `${validate_component(Float, "Float").$$render($$result, { float, individual: true }, {}, {})}`;
-          })}` : `<p>This account doesn&#39;t have any FLOATs yet.</p>`}
-  `;
-        }(__value);
-      }(floats)}</div>
-
-<h3 class="${"mt-1"}">Events</h3>
-
-<div class="${"card-container"}">${function(__value) {
-        if (is_promise(__value)) {
-          __value.then(null, noop3);
-          return `
-  ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}
-  `;
-        }
-        return function(floatEvents2) {
-          return ` 
-    ${getEventsArray(floatEvents2)?.length > 0 ? `${each(getEventsArray(floatEvents2), (floatEvent) => {
-            return `${validate_component(Event, "Event").$$render($$result, { floatEvent }, {}, {})}`;
-          })}` : `<p>This account has not created any Events yet.</p>`}
-  `;
-        }(__value);
-      }(floatEvents)}</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/account-2901f1a2.js
-var account_2901f1a2_exports = {};
-__export(account_2901f1a2_exports, {
-  default: () => Account
-});
-var import_onflow_fcl_esm3, Account;
-var init_account_2901f1a2 = __esm({
-  ".svelte-kit/output/server/chunks/account-2901f1a2.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_9982a29a();
-    import_onflow_fcl_esm3 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_constants_358452f5();
-    init_AccountContents_cf0c9326();
-    init_UserAddress_a10ebe45();
-    init_ssr();
-    init_index_af55a9bb();
-    init_Float_bba22cfa();
-    Account = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $user, $$unsubscribe_user;
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_user();
-      return `${$$result.head += `${$$result.title = `<title>Account ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
-
-<div class="${"container"}"><h1>Your Account</h1>
-  
-  <div class="${"mt-2 mb-2"}">${!$user?.loggedIn ? `<button class="${"contrast small-button"}">Connect Wallet</button>` : `You are currently logged in as:
-    ${validate_component(UserAddress, "UserAddress").$$render($$result, { address: $user?.addr }, {}, {})}
-    <br>
-    <a href="${"/"}" role="${"button"}">Logout</a>`}</div>
-  
-  ${$user?.addr ? `${validate_component(AccountContents, "AccountContents").$$render($$result, { address: $user.addr }, {}, {})}` : ``}</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/LibLoader-2f5402ca.js
-var LibLoader;
-var init_LibLoader_2f5402ca = __esm({
-  ".svelte-kit/output/server/chunks/LibLoader-2f5402ca.js"() {
-    init_shims();
-    init_app_31f4847e();
-    LibLoader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      createEventDispatcher();
-      let { url } = $$props;
-      let { uniqueId } = $$props;
-      let script;
-      if ($$props.url === void 0 && $$bindings.url && url !== void 0)
-        $$bindings.url(url);
-      if ($$props.uniqueId === void 0 && $$bindings.uniqueId && uniqueId !== void 0)
-        $$bindings.uniqueId(uniqueId);
-      return `${$$result.head += `<script${add_attribute("src", url, 0)}${add_attribute("this", script, 0)} data-svelte="svelte-50y8ql"><\/script>`, ""}`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/create-1ae939e7.js
-var create_1ae939e7_exports = {};
-__export(create_1ae939e7_exports, {
-  default: () => Create
-});
-var import_onflow_fcl_esm4, css7, Create;
-var init_create_1ae939e7 = __esm({
-  ".svelte-kit/output/server/chunks/create-1ae939e7.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_9982a29a();
-    import_onflow_fcl_esm4 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_stores_85b2d1de();
-    init_constants_358452f5();
-    init_LibLoader_2f5402ca();
-    init_ssr();
-    init_index_af55a9bb();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    css7 = {
-      code: ".outline.svelte-1d4h73c.svelte-1d4h73c{text-align:left}.outline.svelte-1d4h73c span.svelte-1d4h73c{display:block;font-size:0.75rem;line-height:1.2;font-weight:400;opacity:0.6}xmp.svelte-1d4h73c.svelte-1d4h73c{position:relative;width:100%;font-size:12px;padding:10px;overflow:scroll;border-radius:5px;color:white}.xmp-dark.svelte-1d4h73c.svelte-1d4h73c{background:rgb(56, 232, 198,, 0.25)}.xmp-light.svelte-1d4h73c.svelte-1d4h73c{background:rgb(27, 40, 50)}h5.svelte-1d4h73c.svelte-1d4h73c{margin-bottom:5px}.error.svelte-1d4h73c.svelte-1d4h73c{background-color:red;border-color:white;color:white;opacity:1}",
-      map: null
-    };
-    Create = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $draftFloat, $$unsubscribe_draftFloat;
-      let $theme, $$unsubscribe_theme;
-      let $user, $$unsubscribe_user;
-      let $eventCreationInProgress, $$unsubscribe_eventCreationInProgress;
-      let $eventCreatedStatus, $$unsubscribe_eventCreatedStatus;
-      $$unsubscribe_draftFloat = subscribe(draftFloat, (value) => $draftFloat = value);
-      $$unsubscribe_theme = subscribe(theme, (value) => $theme = value);
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_eventCreationInProgress = subscribe(eventCreationInProgress, (value) => $eventCreationInProgress = value);
-      $$unsubscribe_eventCreatedStatus = subscribe(eventCreatedStatus, (value) => $eventCreatedStatus = value);
-      let timezone = new Date().toLocaleTimeString("en-us", { timeZoneName: "short" }).split(" ")[2];
-      console.log($theme);
-      let distributeCode = `
-import FLOAT from ${{}.VITE_FLOAT_ADDRESS}
-import NonFungibleToken from ${{}.VITE_CORE_CONTRACTS_ADDRESS}
-
-transaction(eventId: UInt64, recipient: Address) {
-
-	let FLOATEvents: &FLOAT.FLOATEvents
-	let RecipientCollection: &FLOAT.Collection{NonFungibleToken.CollectionPublic}
-
-	prepare(signer: AuthAccount) {
-		self.FLOATEvents = 
-			signer.borrow<&FLOAT.FLOATEvents>(from: FLOAT.FLOATEventsStoragePath)
-					?? panic("Could not borrow the signer's FLOAT Events resource.")
-		self.RecipientCollection = 
-			getAccount(recipient).getCapability(FLOAT.FLOATCollectionPublicPath)
-				.borrow<&FLOAT.Collection{NonFungibleToken.CollectionPublic}>()
-				?? panic("Could not get the public FLOAT Collection from the recipient.")
-	}
-
-	execute {
-		//
-		// Give the "recipient" a FLOAT from the event with "id"
-		//
-
-		self.FLOATEvents.distributeDirectly(id: eventId, recipient: self.RecipientCollection)
-		log("Distributed the FLOAT.")
-
-		//
-		// SOME OTHER ACTION HAPPENS
-		//
-	}
-}
-	`;
-      $$result.css.add(css7);
-      $$unsubscribe_draftFloat();
-      $$unsubscribe_theme();
-      $$unsubscribe_user();
-      $$unsubscribe_eventCreationInProgress();
-      $$unsubscribe_eventCreatedStatus();
-      return `${$$result.head += `${$$result.title = `<title>Create a new FLOAT ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
-
-${validate_component(LibLoader, "LibLoader").$$render($$result, {
-        url: "https://cdn.jsdelivr.net/npm/ipfs-http-client@56.0.0/index.min.js",
-        uniqueId: +new Date()
-      }, {}, {})}
-
-<div class="${"container"}"><article><h1 class="${"mb-1"}">Create a new FLOAT</h1>
-
-    <label for="${"name"}">Event Name
-      <input type="${"text"}" id="${"name"}" name="${"name"}"${add_attribute("value", $draftFloat.name, 0)}></label>
-
-    <label for="${"name"}">Event URL
-      <input type="${"text"}" id="${"name"}" name="${"name"}"${add_attribute("value", $draftFloat.url, 0)}></label>
-
-    <label for="${"description"}">Event Description
-      <textarea id="${"description"}" name="${"description"}">${$draftFloat.description || ""}</textarea></label>
-
-    ${`<p>IPFS not loaded</p>`}
-
-    ${``}
-
-    
-    <h3 class="${"mb-1"}">Configure your FLOAT</h3>
-
-    
-    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", !$draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Transferrable
-        <span class="${"svelte-1d4h73c"}">This FLOAT can be transferred to other accounts.</span></button>
-      <button class="${["outline svelte-1d4h73c", $draftFloat.transferrable ? "secondary" : ""].join(" ").trim()}">Non-Transferrable
-        <span class="${"svelte-1d4h73c"}">This FLOAT <strong>cannot</strong> be transferred to others (i.e. soul-bound).</span></button></div>
-
-    <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", !$draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Claimable
-        <span class="${"svelte-1d4h73c"}">Users can mint their own FLOAT based on the parameters defined below.</span></button>
-      <button class="${["outline svelte-1d4h73c", $draftFloat.claimable ? "secondary" : ""].join(" ").trim()}">Not Claimable
-        <span class="${"svelte-1d4h73c"}">You will be responsible for distributing the FLOAT to accounts in
-          your own custom transactions.</span></button></div>
-
-    ${$draftFloat.claimable ? `
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Unlimited Quantity
-          <span class="${"svelte-1d4h73c"}">Select this if you don&#39;t want your FLOAT to have a limited
-            quantity.</span></button>
-        <button class="${["outline svelte-1d4h73c", !$draftFloat.quantity ? "secondary" : ""].join(" ").trim()}">Limited Quantity
-          <span class="${"svelte-1d4h73c"}">You can set the maximum number of times the FLOAT can be minted.</span></button></div>
-      ${$draftFloat.quantity ? `<label for="${"quantity"}">How many can be claimed?
-          <input type="${"number"}" name="${"quantity"}" min="${"1"}" placeholder="${"ex. 100"}"${add_attribute("value", $draftFloat.quantity, 0)}></label>
-        <hr>` : ``}
-
-      
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">No Time Limit
-          <span class="${"svelte-1d4h73c"}">Can be minted at any point in the future.</span></button>
-        <button class="${["outline svelte-1d4h73c", !$draftFloat.timelock ? "secondary" : ""].join(" ").trim()}">Time Limit
-          <span class="${"svelte-1d4h73c"}">Can only be minted between a specific time interval.</span></button></div>
-      ${$draftFloat.timelock ? `<div class="${"grid"}">
-          <label for="${"start"}">Start (${escape2(timezone)})
-            <input type="${"datetime-local"}" id="${"start"}" name="${"start"}"${add_attribute("value", $draftFloat.startTime, 0)}></label>
-
-          
-          <label for="${"start"}">End (${escape2(timezone)})
-            <input type="${"datetime-local"}" id="${"start"}" name="${"start"}"${add_attribute("value", $draftFloat.endTime, 0)}></label></div>
-        <hr>` : ``}
-
-      
-      <div class="${"grid no-break mb-1"}"><button class="${["outline svelte-1d4h73c", $draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Anyone Can Claim
-          <span class="${"svelte-1d4h73c"}">Your FLOAT can be minted freely by anyone that knows its address.</span></button>
-        <button class="${["outline svelte-1d4h73c", !$draftFloat.claimCodeEnabled ? "secondary" : ""].join(" ").trim()}">Use Claim Code
-          <span class="${"svelte-1d4h73c"}">Your FLOAT can only be minted if people know the claim code.</span></button></div>
-      ${$draftFloat.claimCodeEnabled ? `<label for="${"claimCode"}">Enter a claim code (Note: it is case-sensitive)
-          <input type="${"text"}" name="${"claimCode"}" placeholder="${"ex. mySecretCode"}"${add_attribute("value", $draftFloat.claimCode, 0)}></label>
-        <hr>` : ``}` : `<h5 class="${"svelte-1d4h73c"}">This is how you would distribute your FLOAT to a user in Cadence:</h5>
-      <xmp class="${escape2(null_to_empty($theme === "light" ? "xmp-light" : "xmp-dark")) + " svelte-1d4h73c"}">${escape2(distributeCode)}</xmp>`}
-
-    <footer>${!$user?.loggedIn ? `<div class="${"mt-2 mb-2"}"><button class="${"contrast small-button"}">Connect Wallet</button></div>` : `${$eventCreationInProgress ? `<button aria-busy="${"true"}" disabled>Creating FLOAT</button>` : `${$eventCreatedStatus.success ? `<a role="${"button"}" class="${"d-block"}" href="${"/account"}" style="${"display:block"}">Event created successfully!
-        </a>` : `${!$eventCreatedStatus.success && $eventCreatedStatus.error ? `<button class="${"error svelte-1d4h73c"}" disabled>${escape2($eventCreatedStatus.error)}</button>` : `<button>Create FLOAT</button>`}`}`}`}</footer></article>
-</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/about-14a3211b.js
-var about_14a3211b_exports = {};
-__export(about_14a3211b_exports, {
-  default: () => About
-});
-var css8, About;
-var init_about_14a3211b = __esm({
-  ".svelte-kit/output/server/chunks/about-14a3211b.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_constants_358452f5();
-    init_ssr();
-    css8 = {
-      code: "video.svelte-1hwcgvn{width:100%;margin-bottom:25px}.twitter.svelte-1hwcgvn{color:rgb(29 155 239)}.discord.svelte-1hwcgvn{color:rgb(88 101 242)}.youtube.svelte-1hwcgvn{color:rgb(255, 0, 0)}",
-      map: null
-    };
-    About = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css8);
-      return `${$$result.head += `${$$result.title = `<title>About ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
-
-<div class="${"container"}"><h1>A Flow-enabled proof of attendance platform.</h1>
-
-	<video src="${"/updated_float.mp4"}" alt="${"FLOATing island video."}" autoplay loop class="${"svelte-1hwcgvn"}"><track kind="${"captions"}"></video>
-
-	<h2>Configure and create your own FLOAT Events.</h2>
-	<p>Whether it be a <span class="${"twitter svelte-1hwcgvn"}">Twitter space</span>,
-		<span class="${"discord svelte-1hwcgvn"}">Discord call</span>,
-		<span class="${"youtube svelte-1hwcgvn"}">YouTube livestream</span>, or anything at all, you can
-		create a FLOAT Event so participants can remember and have proof that they
-		were there.
-	</p>
-
-	<h2>Cherish your favorite memories #onFlow.</h2>
-	<p>Claim FLOATs and show them off as proof that <strong>you</strong> were there.
-	</p>
-
-	<h2 id="${"distribute-directly"}">Reward users for taking certain actions.</h2>
-	<p>FLOATs can be configured to only be distributed by the creator. You can do
-		this by selecting <span class="${"emphasis"}">Not Claimable</span> on the
-		<code>/create</code>
-		page. This means the creator can send FLOATs in their own custom transactions
-		to reward their community. Want to give people proof that they participated in
-		your token drop? Give them a FLOAT automatically in your transaction code when
-		the user purchases the NFT.
-	</p>
-
-	<h2>FLOAT == &quot;Flow Attendance&quot;</h2>
-	<p>Developed by your <i>best</i> friends at
-		<a href="${"https://discord.gg/emeraldcity"}" target="${"_blank"}"><img style="${"height:20px;width:auto;margin-right:4px;"}" src="${"/emeraldcitylogo.png"}" alt="${"Emerald City logo"}">Emerald City</a>, the first DAO on Flow. You may have seen us develop other fun stuff like
-		the
-		<a href="${"https://emeraldcity.gitbook.io/emerald-city/building-guild/emerald-bot"}" target="${"_blank"}"><img style="${"height:20px;width:auto;margin-right:4px;"}" src="${"/emeraldboticon.png"}" alt="${"Emerald bot icon"}">Emerald bot
-		</a>. If you have, hellooooooooo again!
-	</p>
-	<p>Our goal is to educate the Flow community, build really cool things for the
-		Flow ecosystem (like FLOAT), and pave the way for DAOs on Flow. We&#39;d love to
-		have you!
-	</p>
-</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-46d808ce.js
-var index_46d808ce_exports = {};
-__export(index_46d808ce_exports, {
-  default: () => Claim
-});
-var Claim;
-var init_index_46d808ce = __esm({
-  ".svelte-kit/output/server/chunks/index-46d808ce.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_ssr();
-    Claim = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `URL not recognized.`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/live-09b939eb.js
-var live_09b939eb_exports = {};
-__export(live_09b939eb_exports, {
-  default: () => Live
-});
-var css$13, Lantern, css9, Live;
-var init_live_09b939eb = __esm({
-  ".svelte-kit/output/server/chunks/live-09b939eb.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_ssr();
-    css$13 = {
-      code: ".lantern.svelte-htfji2{position:absolute;color:lightblue;top:100vh;opacity:1;display:block;animation-name:svelte-htfji2-slide;animation-fill-mode:forwards;animation-duration:5s;animation-iteration-count:1;animation-timing-function:ease-in}img.lantern.svelte-htfji2{width:60px;height:60px;object-fit:cover;border-radius:100%;box-shadow:0px 0px 5px 5px #38e8c6}@keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}@-webkit-keyframes svelte-htfji2-slide{0%{top:100vh;opacity:1}85%{opacity:1}99%{transform:translateY(-109vh);opacity:0.1}100%{transform:translateY(-110vh);opacity:0}}",
-      map: null
-    };
-    Lantern = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { ipfsHash } = $$props;
-      if ($$props.ipfsHash === void 0 && $$bindings.ipfsHash && ipfsHash !== void 0)
-        $$bindings.ipfsHash(ipfsHash);
-      $$result.css.add(css$13);
-      return `<img class="${"lantern svelte-htfji2"}" style="${"left: " + escape2(Math.floor(Math.random() * (90 - 10 + 1)) + 10) + "vw;"}" src="${"https://ipfs.infura.io/ipfs/" + escape2(ipfsHash)}" alt="${"lantern"}">`;
-    });
-    css9 = {
-      code: "div.svelte-uww0j{text-align:center}.island.svelte-uww0j{position:relative;width:50%;animation:8s svelte-uww0j-float linear infinite}@keyframes svelte-uww0j-float{0%{transform:translateY(0)}23%{transform:translateY(19px)}25%{transform:translateY(20px)}28%{transform:translateY(20px)}50%{transform:translateY(0)}73%{transform:translateY(-19px)}75%{transform:translateY(-20px)}78%{transform:translateY(-20px)}100%{transform:translateY(0)}}",
-      map: null
-    };
-    Live = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let claimedEvents = {};
-      $$result.css.add(css9);
-      return `
-
-<div id="${"spawner"}" class="${"svelte-uww0j"}"><img class="${"island svelte-uww0j"}" src="${"/island.png"}" alt="${"FLOATing island"}">
-  ${each(Object.keys(claimedEvents), (id) => {
-        return `${validate_component(Lantern, "Lantern").$$render($$result, { ipfsHash: claimedEvents[id] }, {}, {})}`;
       })}
-</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/Meta-f9e303da.js
-var Meta;
-var init_Meta_f9e303da = __esm({
-  ".svelte-kit/output/server/chunks/Meta-f9e303da.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_constants_358452f5();
-    Meta = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { title } = $$props;
-      let { author } = $$props;
-      let { description } = $$props;
-      let { url } = $$props;
-      if ($$props.title === void 0 && $$bindings.title && title !== void 0)
-        $$bindings.title(title);
-      if ($$props.author === void 0 && $$bindings.author && author !== void 0)
-        $$bindings.author(author);
-      if ($$props.description === void 0 && $$bindings.description && description !== void 0)
-        $$bindings.description(description);
-      if ($$props.url === void 0 && $$bindings.url && url !== void 0)
-        $$bindings.url(url);
-      return `${$$result.head += `${$$result.title = `<title>${escape2(title)} ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}<meta name="${"author"}"${add_attribute("content", author, 0)} data-svelte="svelte-alrcrj"><meta name="${"description"}"${add_attribute("content", description, 0)} data-svelte="svelte-alrcrj"><meta property="${"og:title"}" content="${escape2(title) + " " + escape2(PAGE_TITLE_EXTENSION)}" data-svelte="svelte-alrcrj"><meta property="${"og:type"}" content="${"article"}" data-svelte="svelte-alrcrj"><meta property="${"og:url"}"${add_attribute("content", url, 0)} data-svelte="svelte-alrcrj"><meta property="${"og:description"}"${add_attribute("content", description, 0)} data-svelte="svelte-alrcrj"><meta name="${"twitter:title"}" content="${escape2(title) + " " + escape2(PAGE_TITLE_EXTENSION)}" data-svelte="svelte-alrcrj"><meta name="${"twitter:description"}"${add_attribute("content", description, 0)} data-svelte="svelte-alrcrj"><meta name="${"twitter:description"}"${add_attribute("content", description, 0)} data-svelte="svelte-alrcrj">`, ""}`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-0e7f9456.js
-var index_0e7f9456_exports = {};
-__export(index_0e7f9456_exports, {
-  default: () => U5Baddressu5D
-});
-var import_onflow_fcl_esm5, CheckAddress, U5Baddressu5D;
-var init_index_0e7f9456 = __esm({
-  ".svelte-kit/output/server/chunks/index-0e7f9456.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_50472bcb();
-    init_Meta_f9e303da();
-    init_AccountContents_cf0c9326();
-    init_ssr();
-    init_constants_358452f5();
-    init_Float_bba22cfa();
-    import_onflow_fcl_esm5 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    CheckAddress = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let address;
-      return `<div class="${"input-button-group"}"><input type="${"text"}" id="${"address"}" name="${"address"}" placeholder="${"0x00000000000"}"${add_attribute("value", address, 0)}>
-  <a href="${"/" + escape2(address)}" role="${"button"}"${add_classes("".trim())}>View</a></div>
-<small>Paste in a Flow address.</small>
-  
-  `;
-    });
-    U5Baddressu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $page, $$unsubscribe_page;
-      $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      $$unsubscribe_page();
-      return `${validate_component(Meta, "Meta").$$render($$result, {
-        title: "FLOATs owned by " + $page.params.address,
-        author: $page.params.address,
-        description: "FLOATs owned by " + $page.params.address,
-        url: $page.url
-      }, {}, {})}
-
-<div class="${"container"}"><h1 class="${"mb-1"}">${escape2($page.params.address)}&#39;s Account</h1>
-  ${validate_component(AccountContents, "AccountContents").$$render($$result, { address: $page.params.address }, {}, {})}
-
-  <h3 class="${"mt-1"}">Check another address</h3>
-  ${validate_component(CheckAddress, "CheckAddress").$$render($$result, {}, {}, {})}</div>`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/index-6faed9b2.js
-var index_6faed9b2_exports = {};
-__export(index_6faed9b2_exports, {
-  default: () => U5BeventIdu5D
-});
-var import_onflow_fcl_esm6, Countdown, css$33, globalLabels$3, Sort, globalLabels$2, Search, Row, css$23, globalLabels$1, Pagination, css$14, globalLabels, Table, page2, pageSize, ClaimsTable, css10, U5BeventIdu5D;
-var init_index_6faed9b2 = __esm({
-  ".svelte-kit/output/server/chunks/index-6faed9b2.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_50472bcb();
-    init_stores_9982a29a();
-    init_constants_358452f5();
-    init_Float_bba22cfa();
-    init_LibLoader_2f5402ca();
-    init_Meta_f9e303da();
-    init_ssr();
-    init_index_af55a9bb();
-    import_onflow_fcl_esm6 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    Countdown = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { unix } = $$props;
-      let countdownString = "";
-      if ($$props.unix === void 0 && $$bindings.unix && unix !== void 0)
-        $$bindings.unix(unix);
-      return `${validate_component(LibLoader, "LibLoader").$$render($$result, {
-        url: "https://cdn.jsdelivr.net/npm/countdown@2.6.0/countdown.min.js",
-        uniqueId: +new Date()
-      }, {}, {})}
-<span>${escape2(countdownString)}</span>`;
-    });
-    css$33 = {
-      code: ".sort.svelte-36rrah{right:0;cursor:pointer;position:absolute;padding:0 0.25em;color:inherit}",
-      map: null
-    };
-    Sort = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      createEventDispatcher();
-      getContext("state");
-      let { dir = "none" } = $$props;
-      let { key } = $$props;
-      let { labels = {
-        asc: { title: "Ascending", html: "&#8593;" },
-        desc: { title: "Desceding", html: "&#8595;" },
-        unsorted: { title: "Unsorted", html: "&#8645;" },
-        ...globalLabels$3
-      } } = $$props;
-      if ($$props.dir === void 0 && $$bindings.dir && dir !== void 0)
-        $$bindings.dir(dir);
-      if ($$props.key === void 0 && $$bindings.key && key !== void 0)
-        $$bindings.key(key);
-      if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
-        $$bindings.labels(labels);
-      $$result.css.add(css$33);
-      return `<span class="${"sort svelte-36rrah"}">${dir === "asc" ? `<span${add_attribute("title", labels.asc.title, 0)}><!-- HTML_TAG_START -->${labels.asc.html}<!-- HTML_TAG_END --></span>` : `${dir === "desc" ? `<span${add_attribute("title", labels.desc.title, 0)}><!-- HTML_TAG_START -->${labels.desc.html}<!-- HTML_TAG_END --></span>` : `<span${add_attribute("title", labels.unsorted.title, 0)}><!-- HTML_TAG_START -->${labels.unsorted.html}<!-- HTML_TAG_END --></span>`}`}</span>`;
-    });
-    Search = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      createEventDispatcher();
-      getContext("state");
-      let { filter = (row, text2, index2) => {
-        text2 = text2.toLowerCase();
-        for (let i2 in row) {
-          if (row[i2].toString().toLowerCase().indexOf(text2) > -1) {
-            return true;
-          }
+    ${validate_component(MediaQuery, "MediaQuery").$$render($$result, {
+        query: "(min-width: 481px) and (max-width: 1280px)"
+      }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(CreateProjectDetails, "CreateProjectDetails").$$render($$result, { screenSize: "tablet" }, {}, {})}` : ``}`;
         }
-        return false;
-      } } = $$props;
-      let { index = -1 } = $$props;
-      let { text = "" } = $$props;
-      let { labels = { placeholder: "Search", ...globalLabels$2 } } = $$props;
-      if ($$props.filter === void 0 && $$bindings.filter && filter !== void 0)
-        $$bindings.filter(filter);
-      if ($$props.index === void 0 && $$bindings.index && index !== void 0)
-        $$bindings.index(index);
-      if ($$props.text === void 0 && $$bindings.text && text !== void 0)
-        $$bindings.text(text);
-      if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
-        $$bindings.labels(labels);
-      return `
-
-<div class="${"search"}"><input type="${"search"}"${add_attribute("title", labels.placeholder, 0)}${add_attribute("placeholder", labels.placeholder, 0)}${add_attribute("value", text, 0)}></div>`;
-    });
-    Row = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      createEventDispatcher();
-      let { index = 0 } = $$props;
-      if ($$props.index === void 0 && $$bindings.index && index !== void 0)
-        $$bindings.index(index);
-      return `<tr class="${[
-        escape2($$props.class),
-        (index % 2 !== 0 ? "odd" : "") + " " + (index % 2 === 0 ? "even" : "")
-      ].join(" ").trim()}">${slots.default ? slots.default({}) : ``}</tr>`;
-    });
-    css$23 = {
-      code: "div.svelte-1j1cxhu{display:flex}button.svelte-1j1cxhu{margin-left:5px;font-size:0.8rem;padding:0.5rem 0.5rem}",
-      map: null
-    };
-    Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let pageCount;
-      createEventDispatcher();
-      getContext("state");
-      let { complete = true } = $$props;
-      let { buttons = [-2, -1, 0, 1, 2] } = $$props;
-      let { count: count2 } = $$props;
-      let { page: page22 = 0 } = $$props;
-      let { pageSize: pageSize2 } = $$props;
-      let { serverSide = false } = $$props;
-      let { labels = {
-        first: "\u21E4",
-        last: "\u21E5",
-        next: "\u2192",
-        previous: "\u2190",
-        ...globalLabels$1
-      } } = $$props;
-      if ($$props.complete === void 0 && $$bindings.complete && complete !== void 0)
-        $$bindings.complete(complete);
-      if ($$props.buttons === void 0 && $$bindings.buttons && buttons !== void 0)
-        $$bindings.buttons(buttons);
-      if ($$props.count === void 0 && $$bindings.count && count2 !== void 0)
-        $$bindings.count(count2);
-      if ($$props.page === void 0 && $$bindings.page && page22 !== void 0)
-        $$bindings.page(page22);
-      if ($$props.pageSize === void 0 && $$bindings.pageSize && pageSize2 !== void 0)
-        $$bindings.pageSize(pageSize2);
-      if ($$props.serverSide === void 0 && $$bindings.serverSide && serverSide !== void 0)
-        $$bindings.serverSide(serverSide);
-      if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
-        $$bindings.labels(labels);
-      $$result.css.add(css$23);
-      pageCount = Math.floor(count2 / pageSize2);
-      return `<div class="${"svelte-1j1cxhu"}">${complete ? `<button class="${"outline svelte-1j1cxhu"}" ${page22 === 0 ? "disabled" : ""}>${escape2(labels.first)}</button>` : ``}
-
-    <button class="${"outline svelte-1j1cxhu"}" ${page22 === 0 ? "disabled" : ""}>${escape2(labels.previous)}</button>
-  ${complete ? `${each(buttons, (button) => {
-        return `${page22 + button >= 0 && page22 + button <= pageCount ? `<button class="${["svelte-1j1cxhu", page22 !== page22 + button ? "outline" : ""].join(" ").trim()}">${escape2(page22 + button + 1)}
-        </button>` : ``}`;
-      })}` : ``}
-    <button class="${"outline svelte-1j1cxhu"}" ${page22 > pageCount - 1 ? "disabled" : ""}>${escape2(labels.next)}</button>
-
-  ${complete ? `<button class="${"outline svelte-1j1cxhu"}" ${page22 >= pageCount ? "disabled" : ""}>${escape2(labels.last)}</button>` : ``}</div>`;
-    });
-    css$14 = {
-      code: ".table.svelte-s34j0i{width:100%;border-collapse:collapse}.table.svelte-s34j0i th,.table.svelte-s34j0i td{position:relative}",
-      map: null
-    };
-    Table = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let filteredRows;
-      let visibleRows;
-      createEventDispatcher();
-      let { loading = false } = $$props;
-      let { page: page22 = 0 } = $$props;
-      let { pageIndex = 0 } = $$props;
-      let { pageSize: pageSize2 = 10 } = $$props;
-      let { responsive = true } = $$props;
-      let { rows } = $$props;
-      let { serverSide = false } = $$props;
-      let { labels = {
-        empty: "No records available",
-        loading: "Loading data",
-        ...globalLabels
-      } } = $$props;
-      setContext("state", {
-        getState: () => ({
-          page: page22,
-          pageIndex,
-          pageSize: pageSize2,
-          rows,
-          filteredRows
-        }),
-        setPage: (_page, _pageIndex) => {
-          page22 = _page;
-          pageIndex = _pageIndex;
-        },
-        setRows: (_rows) => filteredRows = _rows
-      });
-      if ($$props.loading === void 0 && $$bindings.loading && loading !== void 0)
-        $$bindings.loading(loading);
-      if ($$props.page === void 0 && $$bindings.page && page22 !== void 0)
-        $$bindings.page(page22);
-      if ($$props.pageIndex === void 0 && $$bindings.pageIndex && pageIndex !== void 0)
-        $$bindings.pageIndex(pageIndex);
-      if ($$props.pageSize === void 0 && $$bindings.pageSize && pageSize2 !== void 0)
-        $$bindings.pageSize(pageSize2);
-      if ($$props.responsive === void 0 && $$bindings.responsive && responsive !== void 0)
-        $$bindings.responsive(responsive);
-      if ($$props.rows === void 0 && $$bindings.rows && rows !== void 0)
-        $$bindings.rows(rows);
-      if ($$props.serverSide === void 0 && $$bindings.serverSide && serverSide !== void 0)
-        $$bindings.serverSide(serverSide);
-      if ($$props.labels === void 0 && $$bindings.labels && labels !== void 0)
-        $$bindings.labels(labels);
-      $$result.css.add(css$14);
-      filteredRows = rows;
-      visibleRows = filteredRows.slice(pageIndex, pageIndex + pageSize2);
-      return `${slots.top ? slots.top({ rows: visibleRows }) : `
-  <div class="${"slot-top"}">${validate_component(Search || missing_component, "svelte:component").$$render($$result, {}, {}, {})}</div>
-`}
-
-<table class="${[
-        escape2(null_to_empty("table " + $$props.class)) + " svelte-s34j0i",
-        responsive ? "responsive" : ""
-      ].join(" ").trim()}">${slots.head ? slots.head({ rows: visibleRows }) : ``}
-  ${loading ? `<tbody><tr><td class="${"center"}" colspan="${"100%"}"><span><!-- HTML_TAG_START -->${labels.loading}<!-- HTML_TAG_END --></span></td></tr></tbody>` : `${visibleRows.length === 0 ? `<tbody><tr><td class="${"center"}" colspan="${"100%"}"><span><!-- HTML_TAG_START -->${labels.empty}<!-- HTML_TAG_END --></span></td></tr></tbody>` : `${slots.default ? slots.default({ rows: visibleRows }) : ``}`}`}
-  ${slots.foot ? slots.foot({ rows: visibleRows }) : ``}</table>
-
-${slots.bottom ? slots.bottom({ rows: visibleRows }) : `
-  <div class="${"slot-bottom"}">${validate_component(Pagination || missing_component, "svelte:component").$$render($$result, {
-        page: page22,
-        pageSize: pageSize2,
-        serverSide,
-        count: filteredRows.length - 1
-      }, {}, {})}</div>
-`}`;
-    });
-    page2 = 0;
-    pageSize = 25;
-    ClaimsTable = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { rows = [] } = $$props;
-      if ($$props.rows === void 0 && $$bindings.rows && rows !== void 0)
-        $$bindings.rows(rows);
-      return `${validate_component(Table, "Table").$$render($$result, { page: page2, pageSize, rows }, {}, {
-        head: ({ rows: rows2 }) => {
-          return `<thead slot="${"head"}"><tr><th>Serial
-        ${validate_component(Sort, "Sort").$$render($$result, { key: "serial" }, {}, {})}</th>
-      <th>Address
-      </th></tr></thead>`;
-        },
-        default: ({ rows: rows2 }) => {
-          return `<tbody>${each(rows2, (row, index) => {
-            return `${validate_component(Row, "Row").$$render($$result, { index }, {}, {
-              default: () => {
-                return `<td data-label="${"Serial"}"><code>#${escape2(row.serial)}</code></td>
-        <td data-label="${"Address"}"><span class="${"mono"}"><a href="${"/" + escape2(row.address)}">${escape2(row.address)}</a></span></td>
-      `;
-              }
-            })}`;
-          })}</tbody>`;
+      })}
+    ${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(max-width: 480px)" }, {}, {
+        default: ({ matches }) => {
+          return `${matches ? `${validate_component(CreateProjectDetails, "CreateProjectDetails").$$render($$result, { screenSize: "mobile" }, {}, {})}` : ``}`;
         }
       })}`;
     });
-    css10 = {
-      code: ".container.svelte-3qqfmq.svelte-3qqfmq{text-align:center}blockquote.svelte-3qqfmq.svelte-3qqfmq{text-align:left}.secondary.outline.svelte-3qqfmq.svelte-3qqfmq{font-weight:300}p.svelte-3qqfmq.svelte-3qqfmq{margin-bottom:0px}.muted.svelte-3qqfmq.svelte-3qqfmq{font-size:0.7rem;opacity:0.7}.toggle.svelte-3qqfmq.svelte-3qqfmq{margin-top:15px;margin-bottom:0px;position:relative;display:flex;justify-content:space-around;height:auto}.toggle.svelte-3qqfmq button.svelte-3qqfmq{width:30%}.red.svelte-3qqfmq.svelte-3qqfmq{border-color:red;color:red}.small.svelte-3qqfmq.svelte-3qqfmq{position:relative;width:125px;font-size:13px;padding:5px;left:50%;transform:translateX(-50%)}.error.svelte-3qqfmq.svelte-3qqfmq{background-color:red;border-color:white;color:white;opacity:1}.claimed-badge.svelte-3qqfmq.svelte-3qqfmq{width:250px;margin:0 auto;padding:0.3rem 0.5rem;border:1px solid var(--green);border-radius:100px;color:var(--green);font-size:0.7rem}",
-      map: null
-    };
-    U5BeventIdu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let currentUnixTime;
-      let $page, $$unsubscribe_page;
-      let $user, $$unsubscribe_user;
-      let $floatClaimingInProgress, $$unsubscribe_floatClaimingInProgress;
-      let $floatClaimedStatus, $$unsubscribe_floatClaimedStatus;
-      $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      $$unsubscribe_user = subscribe(user, (value) => $user = value);
-      $$unsubscribe_floatClaimingInProgress = subscribe(floatClaimingInProgress, (value) => $floatClaimingInProgress = value);
-      $$unsubscribe_floatClaimedStatus = subscribe(floatClaimedStatus, (value) => $floatClaimedStatus = value);
-      let floatEvent = getFLOATEvent($page.params.address, $page.params.eventId);
-      let claimCode = "";
-      $$result.css.add(css10);
-      currentUnixTime = +new Date() / 1e3;
-      $$unsubscribe_page();
-      $$unsubscribe_user();
-      $$unsubscribe_floatClaimingInProgress();
-      $$unsubscribe_floatClaimedStatus();
-      return `${$$result.head += `${$$result.title = `<title>FLOAT #${escape2($page.params.eventId)} ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
-
-<div class="${"container svelte-3qqfmq"}">${function(__value) {
-        if (is_promise(__value)) {
-          __value.then(null, noop3);
-          return `
-    ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}
-  `;
-        }
-        return function(floatEvent2) {
-          return `
-    ${validate_component(Meta, "Meta").$$render($$result, {
-            title: floatEvent2?.name + " | FLOAT #" + $page.params.eventId,
-            author: floatEvent2?.host,
-            description: floatEvent2?.description,
-            url: $page.url
-          }, {}, {})}
-
-    <article><header><a${add_attribute("href", floatEvent2?.url, 0)} target="${"_blank"}"><h1>${escape2(floatEvent2?.name)}</h1></a>
-        <p class="${"svelte-3qqfmq"}">FLOAT Event #${escape2($page.params.eventId)}</p>
-        <p class="${"svelte-3qqfmq"}"><small class="${"muted svelte-3qqfmq"}">Created on ${escape2(new Date(floatEvent2?.dateCreated * 1e3).toLocaleString())}</small></p></header>
-      ${Object.keys(floatEvent2?.claimed).includes($user?.addr) ? `<div class="${"claimed-badge svelte-3qqfmq"}">\u2713 You claimed this FLOAT</div>
-        ${validate_component(Float, "Float").$$render($$result, {
-            float: {
-              eventHost: floatEvent2?.host,
-              eventId: floatEvent2?.id,
-              eventMetadata: {
-                name: floatEvent2?.name,
-                image: floatEvent2?.image,
-                totalSupply: floatEvent2?.totalSupply
-              },
-              serial: floatEvent2?.claimed[$user.addr].serial
-            },
-            individual: true
-          }, {}, {})}
-        <button class="${"outline red small svelte-3qqfmq"}">Delete this FLOAT
-        </button>` : `${validate_component(Float, "Float").$$render($$result, {
-            float: {
-              eventHost: floatEvent2?.host,
-              eventId: floatEvent2?.id,
-              eventMetadata: {
-                name: floatEvent2?.name,
-                image: floatEvent2?.image,
-                totalSupply: floatEvent2?.totalSupply
-              }
-            },
-            preview: true,
-            individual: false
-          }, {}, {})}`}
-
-      <blockquote class="${"svelte-3qqfmq"}"><strong><small class="${"muted svelte-3qqfmq"}">DESCRIPTION</small></strong><br>${escape2(floatEvent2?.description)}</blockquote>
-      <p class="${"svelte-3qqfmq"}"><span class="${"emphasis"}">${escape2(floatEvent2?.totalSupply)}</span> have been minted.
-      </p>
-      ${floatEvent2?.capacity ? `<p class="${"svelte-3qqfmq"}">Only <span class="${"emphasis"}">${escape2(floatEvent2.capacity)}</span> will ever exist.
-        </p>` : ``}
-      <footer>
-
-        ${Object.keys(floatEvent2?.claimed).includes($user?.addr) ? `<button class="${"secondary outline svelte-3qqfmq"}" disabled>\u2713 You already claimed this FLOAT.
-          </button>` : `${floatEvent2?.claimable ? `${floatEvent2?.isOpen && !floatEvent2?.requiresSecret ? `${$floatClaimingInProgress ? `<button aria-busy="${"true"}" disabled>Claiming FLOAT </button>` : `${$floatClaimedStatus.success ? `<a role="${"button"}" class="${"d-block"}" href="${"/account"}" style="${"display:block"}">FLOAT claimed successfully!
-              </a>` : `${!$floatClaimedStatus.success && $floatClaimedStatus.error ? `<button class="${"error svelte-3qqfmq"}" disabled>${escape2($floatClaimedStatus.error)}</button>` : `<button>Claim this FLOAT
-              </button>`}`}`}` : `${floatEvent2?.isOpen ? `<label for="${"claimCode"}">Enter the claim code below.
-              <input type="${"text"}" name="${"claimCode"}" placeholder="${"secret code"}"${add_attribute("value", claimCode, 0)}></label>
-            ${`<button class="${"secondary outline svelte-3qqfmq"}" disabled>You must enter a secret code.
-              </button>`}` : `${!floatEvent2?.active ? `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT has been manually closed by the host.
-            </button>` : `${floatEvent2?.capacity && floatEvent2?.capacity <= floatEvent2?.currentCapacity ? `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT is no longer available.<br> All
-              <span class="${"emphasis"}">${escape2(floatEvent2?.currentCapacity)}/${escape2(floatEvent2?.capacity)}</span> have been claimed.
-            </button>` : `${floatEvent2?.startTime > currentUnixTime ? `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT Event has not started yet.<br>
-              Starting in
-              <span class="${"emphasis"}">${validate_component(Countdown, "Countdown").$$render($$result, { unix: floatEvent2?.startTime }, {}, {})}</span></button>` : `${floatEvent2?.endTime < currentUnixTime ? `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT is no longer available.<br>This event has ended.
-            </button>` : `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT is not claimable.<br>Unknown reason.
-            </button>`}`}`}`}`}`}` : `<button class="${"secondary outline svelte-3qqfmq"}" disabled>This FLOAT is not claimable.<br>The host opted to distribute it
-            manually.
-          </button>`}`}
-        ${$user?.addr == floatEvent2?.host ? `<div class="${"toggle svelte-3qqfmq"}"><button class="${"outline svelte-3qqfmq"}">${escape2(floatEvent2?.active ? "Pause claiming" : "Resume claiming")}</button>
-            <button class="${"outline svelte-3qqfmq"}">${escape2(floatEvent2?.transferrable ? "Stop transfers" : "Allow transfers")}</button>
-            <button class="${"outline red svelte-3qqfmq"}" ${floatEvent2?.totalSupply !== 0 ? "disabled" : ""}>Delete this event
-            </button></div>` : ``}</footer></article>
-
-    <article><header><h3>Claimed by</h3></header>
-      ${validate_component(ClaimsTable, "ClaimsTable").$$render($$result, {
-            rows: Object.values(floatEvent2?.claimed).sort((a2, b2) => a2.serial - b2.serial)
-          }, {}, {})}</article>
-  `;
-        }(__value);
-      }(floatEvent)}
-
-</div>`;
-    });
   }
 });
 
-// .svelte-kit/output/server/chunks/_serial_-6391cba1.js
-var serial_6391cba1_exports = {};
-__export(serial_6391cba1_exports, {
-  default: () => U5Bserialu5D
-});
-var import_onflow_fcl_esm7, css11, U5Bserialu5D;
-var init_serial_6391cba1 = __esm({
-  ".svelte-kit/output/server/chunks/_serial_-6391cba1.js"() {
-    init_shims();
-    init_app_31f4847e();
-    init_stores_50472bcb();
-    init_Float_bba22cfa();
-    init_Meta_f9e303da();
-    init_ssr();
-    import_onflow_fcl_esm7 = __toModule(require_fcl_cjs());
-    init_config_860ef6b7();
-    init_Tab3_svelte_svelte_type_style_lang_8ff82521();
-    init_constants_358452f5();
-    css11 = {
-      code: "article.svelte-1ld3buq{text-align:center;align-items:center}",
-      map: null
-    };
-    U5Bserialu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $page, $$unsubscribe_page;
-      $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      let owner = null;
-      let serial = $page.params.serial;
-      let floatEvent = getFLOATEvent($page.params.address, $page.params.eventId).then((result) => {
-        floatEvent = result;
-        let claimed = floatEvent.claimed;
-        Object.keys(claimed).map(function(address, index) {
-          if (claimed[address].serial == serial) {
-            owner = address;
-          }
-        });
-      });
-      $$result.css.add(css11);
-      $$unsubscribe_page();
-      return `${function(__value) {
-        if (is_promise(__value)) {
-          __value.then(null, noop3);
-          return `
-  ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}
-`;
-        }
-        return function(floatEvent2) {
-          return `
-
-  ${validate_component(Meta, "Meta").$$render($$result, {
-            title: floatEvent2?.name + " | FLOAT #" + $page.params.eventId,
-            author: floatEvent2?.host,
-            description: floatEvent2?.description,
-            url: $page.url
-          }, {}, {})}
-
-  <article class="${"svelte-1ld3buq"}"><header><h3>Owned by ${escape2(owner)}</h3></header>
-    ${validate_component(Float, "Float").$$render($$result, {
-            float: {
-              eventHost: floatEvent2?.host,
-              eventId: floatEvent2?.id,
-              eventMetadata: {
-                name: floatEvent2?.name,
-                image: floatEvent2?.image,
-                totalSupply: floatEvent2?.totalSupply
-              },
-              serial
-            },
-            preview: false
-          }, {}, {})}</article>
-`;
-        }(__value);
-      }(floatEvent)}`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/chunks/app-31f4847e.js
+// .svelte-kit/output/server/chunks/app-d3d82645.js
 function noop3() {
-}
-function is_promise(value) {
-  return value && typeof value === "object" && typeof value.then === "function";
 }
 function run(fn) {
   return fn();
@@ -24553,9 +23980,6 @@ function add_attribute(name, value, boolean) {
     return "";
   return ` ${name}${value === true && boolean_attributes.has(name) ? "" : `=${typeof value === "string" ? JSON.stringify(escape2(value)) : `"${value}"`}`}`;
 }
-function add_classes(classes) {
-  return classes ? ` class="${classes}"` : "";
-}
 function style_object_to_string(style_object) {
   return Object.keys(style_object).filter((key) => style_object[key]).map((key) => `${key}: ${style_object[key]};`).join(" ");
 }
@@ -24575,9 +23999,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-76044a3b.js",
+      file: assets + "/_app/start-e80be0bd.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-76044a3b.js", assets + "/_app/chunks/vendor-2b38a6d6.js"]
+      js: [assets + "/_app/start-e80be0bd.js", assets + "/_app/chunks/vendor-30cfb5d2.js"]
     },
     fetched: void 0,
     floc: false,
@@ -24620,9 +24044,9 @@ function render2(request, {
   const host = request.headers["host"];
   return respond({ ...request, host }, options, { prerender });
 }
-var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css12, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_31f4847e = __esm({
-  ".svelte-kit/output/server/chunks/app-31f4847e.js"() {
+var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css6, Root, base, assets, user_hooks, template, options, default_settings, empty, manifest, get_hooks, module_lookup, metadata_lookup;
+var init_app_d3d82645 = __esm({
+  ".svelte-kit/output/server/chunks/app-d3d82645.js"() {
     init_shims();
     init_ssr();
     Promise.resolve();
@@ -24663,13 +24087,13 @@ var init_app_31f4847e = __esm({
     missing_component = {
       $$render: () => ""
     };
-    css12 = {
+    css6 = {
       code: "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}",
       map: null
     };
     Root = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { stores } = $$props;
-      let { page: page3 } = $$props;
+      let { page: page2 } = $$props;
       let { components } = $$props;
       let { props_0 = null } = $$props;
       let { props_1 = null } = $$props;
@@ -24678,8 +24102,8 @@ var init_app_31f4847e = __esm({
       afterUpdate(stores.page.notify);
       if ($$props.stores === void 0 && $$bindings.stores && stores !== void 0)
         $$bindings.stores(stores);
-      if ($$props.page === void 0 && $$bindings.page && page3 !== void 0)
-        $$bindings.page(page3);
+      if ($$props.page === void 0 && $$bindings.page && page2 !== void 0)
+        $$bindings.page(page2);
       if ($$props.components === void 0 && $$bindings.components && components !== void 0)
         $$bindings.components(components);
       if ($$props.props_0 === void 0 && $$bindings.props_0 && props_0 !== void 0)
@@ -24688,9 +24112,9 @@ var init_app_31f4847e = __esm({
         $$bindings.props_1(props_1);
       if ($$props.props_2 === void 0 && $$bindings.props_2 && props_2 !== void 0)
         $$bindings.props_2(props_2);
-      $$result.css.add(css12);
+      $$result.css.add(css6);
       {
-        stores.page.set(page3);
+        stores.page.set(page2);
       }
       return `
 
@@ -24716,10 +24140,9 @@ ${``}`;
     template = ({ head, body }) => '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="utf-8" />\n  <meta name="description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  <link rel="icon" href="/favicon.png" />\n  <meta name="viewport" content="width=device-width, initial-scale=1" />\n  \n  <meta property="og:image" content="http://floats.city/social-card.png">\n  <meta property="twitter:image" content="http://floats.city/social-card.png">\n  <meta name="twitter:card" content="summary_large_image">\n  <meta property="og:title" content="FLOATs by Emerald City DAO">\n  <meta property="og:type" content="article" />\n  <meta property="og:url" content="https://floats.city">\n  \n  <!--  Non-Essential, But Recommended -->\n  <meta property="og:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO">\n  <meta property="og:site_name" content="FLOATs.city">\n  <meta name="twitter:image:alt" content="FLOATs.city">\n  \n  <meta name="twitter:title" content="FLOATs by Emerald City DAO" />\n  <meta name="twitter:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  <meta name="twitter:description" content="Create and view FLOATs, a proof of attendance protocol built by Emerald City DAO" />\n  \n  <!--  Non-Essential, But Required for Analytics -->\n  <meta name="twitter:site" content="@emerald_dao">\n\n  ' + head + '\n</head>\n<body>\n  \n  <div id="svelte">' + body + "</div>\n</body>\n</html>\n";
     options = null;
     default_settings = { paths: { "base": "", "assets": "" } };
-    d2 = (s3) => s3.replace(/%23/g, "#").replace(/%3[Bb]/g, ";").replace(/%2[Cc]/g, ",").replace(/%2[Ff]/g, "/").replace(/%3[Ff]/g, "?").replace(/%3[Aa]/g, ":").replace(/%40/g, "@").replace(/%26/g, "&").replace(/%3[Dd]/g, "=").replace(/%2[Bb]/g, "+").replace(/%24/g, "$");
     empty = () => ({});
     manifest = {
-      assets: [{ "file": "emeraldboticon.png", "size": 8708, "type": "image/png" }, { "file": "emeraldboticon_big.png", "size": 108426, "type": "image/png" }, { "file": "emeraldcitylogo.png", "size": 11212, "type": "image/png" }, { "file": "emeraldcitylogo_big.png", "size": 592303, "type": "image/png" }, { "file": "favicon.png", "size": 18361, "type": "image/png" }, { "file": "floatlogo.png", "size": 18361, "type": "image/png" }, { "file": "floatlogo_big.png", "size": 267156, "type": "image/png" }, { "file": "floatlogowebpage.png", "size": 49896, "type": "image/png" }, { "file": "graffle-logo.png", "size": 143693, "type": "image/png" }, { "file": "island.mp4", "size": 9421944, "type": "video/mp4" }, { "file": "island.png", "size": 134471, "type": "image/png" }, { "file": "island_original.png", "size": 442155, "type": "image/png" }, { "file": "logo-mainnet.png", "size": 21097, "type": "image/png" }, { "file": "logo-testnet.png", "size": 20808, "type": "image/png" }, { "file": "robots.txt", "size": 67, "type": "text/plain" }, { "file": "social-card.png", "size": 58503, "type": "image/png" }, { "file": "updated_float.mp4", "size": 2946136, "type": "video/mp4" }],
+      assets: [{ "file": "emerald_id_logo.svg", "size": 104266, "type": "image/svg+xml" }, { "file": "emeraldboticon.png", "size": 8708, "type": "image/png" }, { "file": "emeraldboticon_big.png", "size": 108426, "type": "image/png" }, { "file": "emeraldcitylogo.png", "size": 11212, "type": "image/png" }, { "file": "emeraldcitylogo_big.png", "size": 592303, "type": "image/png" }, { "file": "favicon.png", "size": 18361, "type": "image/png" }, { "file": "floatlogo.png", "size": 18361, "type": "image/png" }, { "file": "floatlogo_big.png", "size": 267156, "type": "image/png" }, { "file": "floatlogowebpage.png", "size": 49896, "type": "image/png" }, { "file": "graffle-logo.png", "size": 143693, "type": "image/png" }, { "file": "island.mp4", "size": 9421944, "type": "video/mp4" }, { "file": "island.png", "size": 134471, "type": "image/png" }, { "file": "island_original.png", "size": 442155, "type": "image/png" }, { "file": "logo-mainnet.png", "size": 21097, "type": "image/png" }, { "file": "logo-testnet.png", "size": 20808, "type": "image/png" }, { "file": "robots.txt", "size": 67, "type": "text/plain" }, { "file": "social-card.png", "size": 58503, "type": "image/png" }, { "file": "updated_float.mp4", "size": 2946136, "type": "video/mp4" }],
       layout: "src/routes/__layout.svelte",
       error: "src/routes/__error.svelte",
       routes: [
@@ -24732,58 +24155,23 @@ ${``}`;
         },
         {
           type: "page",
-          pattern: /^\/account\/?$/,
+          pattern: /^\/createProject\/?$/,
           params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/account.svelte"],
+          a: ["src/routes/__layout.svelte", "src/routes/createProject.svelte"],
           b: ["src/routes/__error.svelte"]
         },
         {
           type: "page",
-          pattern: /^\/create\/?$/,
+          pattern: /^\/MediaQuery\/?$/,
           params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/create.svelte"],
+          a: ["src/routes/__layout.svelte", "src/routes/MediaQuery.svelte"],
           b: ["src/routes/__error.svelte"]
         },
         {
           type: "page",
-          pattern: /^\/about\/?$/,
+          pattern: /^\/projects\/?$/,
           params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/about.svelte"],
-          b: ["src/routes/__error.svelte"]
-        },
-        {
-          type: "page",
-          pattern: /^\/claim\/?$/,
-          params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/claim/index.svelte"],
-          b: ["src/routes/__error.svelte"]
-        },
-        {
-          type: "page",
-          pattern: /^\/live\/?$/,
-          params: empty,
-          a: ["src/routes/__layout.svelte", "src/routes/live.svelte"],
-          b: ["src/routes/__error.svelte"]
-        },
-        {
-          type: "page",
-          pattern: /^\/([^/]+?)\/?$/,
-          params: (m2) => ({ address: d2(m2[1]) }),
-          a: ["src/routes/__layout.svelte", "src/routes/[address]/index.svelte"],
-          b: ["src/routes/__error.svelte"]
-        },
-        {
-          type: "page",
-          pattern: /^\/([^/]+?)\/([^/]+?)\/?$/,
-          params: (m2) => ({ address: d2(m2[1]), eventId: d2(m2[2]) }),
-          a: ["src/routes/__layout.svelte", "src/routes/[address]/[eventId]/index.svelte"],
-          b: ["src/routes/__error.svelte"]
-        },
-        {
-          type: "page",
-          pattern: /^\/([^/]+?)\/([^/]+?)\/([^/]+?)\/?$/,
-          params: (m2) => ({ address: d2(m2[1]), eventId: d2(m2[2]), serial: d2(m2[3]) }),
-          a: ["src/routes/__layout.svelte", "src/routes/[address]/[eventId]/[serial].svelte"],
+          a: ["src/routes/__layout.svelte", "src/routes/projects.svelte"],
           b: ["src/routes/__error.svelte"]
         }
       ]
@@ -24795,19 +24183,14 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_267661ca(), layout_267661ca_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_3792ad3f(), error_3792ad3f_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_0a46f72a(), index_0a46f72a_exports)),
-      "src/routes/account.svelte": () => Promise.resolve().then(() => (init_account_2901f1a2(), account_2901f1a2_exports)),
-      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_1ae939e7(), create_1ae939e7_exports)),
-      "src/routes/about.svelte": () => Promise.resolve().then(() => (init_about_14a3211b(), about_14a3211b_exports)),
-      "src/routes/claim/index.svelte": () => Promise.resolve().then(() => (init_index_46d808ce(), index_46d808ce_exports)),
-      "src/routes/live.svelte": () => Promise.resolve().then(() => (init_live_09b939eb(), live_09b939eb_exports)),
-      "src/routes/[address]/index.svelte": () => Promise.resolve().then(() => (init_index_0e7f9456(), index_0e7f9456_exports)),
-      "src/routes/[address]/[eventId]/index.svelte": () => Promise.resolve().then(() => (init_index_6faed9b2(), index_6faed9b2_exports)),
-      "src/routes/[address]/[eventId]/[serial].svelte": () => Promise.resolve().then(() => (init_serial_6391cba1(), serial_6391cba1_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_89ec6763(), layout_89ec6763_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_8aae356d(), error_8aae356d_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_92036539(), index_92036539_exports)),
+      "src/routes/createProject.svelte": () => Promise.resolve().then(() => (init_createProject_d49b3c7c(), createProject_d49b3c7c_exports)),
+      "src/routes/MediaQuery.svelte": () => Promise.resolve().then(() => (init_MediaQuery_dd0a8898(), MediaQuery_dd0a8898_exports)),
+      "src/routes/projects.svelte": () => Promise.resolve().then(() => (init_projects_1859ad1e(), projects_1859ad1e_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-407ca28b.js", "css": ["assets/pages/__layout.svelte-e8e46778.css", "assets/stores-f514e5d1.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/__layout.svelte-407ca28b.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/UserAddress-d0e0ef5e.js", "chunks/stores-0a26e7b3.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-90357f7c.js", "css": [], "js": ["pages/__error.svelte-90357f7c.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-aab3d46a.js", "css": ["assets/pages/index.svelte-077525cb.css", "assets/stores-f514e5d1.css"], "js": ["pages/index.svelte-aab3d46a.js", "chunks/vendor-2b38a6d6.js", "chunks/constants-358452f5.js", "chunks/stores-1a1c8456.js"], "styles": [] }, "src/routes/account.svelte": { "entry": "pages/account.svelte-056949cf.js", "css": ["assets/stores-f514e5d1.css", "assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/UserAddress-ca66c1d2.css"], "js": ["pages/account.svelte-056949cf.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/AccountContents-f8ca9783.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/UserAddress-d0e0ef5e.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-b37f24c2.js", "css": ["assets/pages/create.svelte-4c49840d.css", "assets/stores-f514e5d1.css", "assets/Float-a182edcb.css"], "js": ["pages/create.svelte-b37f24c2.js", "chunks/vendor-2b38a6d6.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/LibLoader-f077cfca.js", "chunks/Float-0a981fca.js"], "styles": [] }, "src/routes/about.svelte": { "entry": "pages/about.svelte-a85a9476.js", "css": ["assets/pages/about.svelte-d1f5b61a.css"], "js": ["pages/about.svelte-a85a9476.js", "chunks/vendor-2b38a6d6.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/claim/index.svelte": { "entry": "pages/claim/index.svelte-78a2961b.js", "css": [], "js": ["pages/claim/index.svelte-78a2961b.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/live.svelte": { "entry": "pages/live.svelte-5e980695.js", "css": ["assets/pages/live.svelte-bfa2ff43.css"], "js": ["pages/live.svelte-5e980695.js", "chunks/vendor-2b38a6d6.js"], "styles": [] }, "src/routes/[address]/index.svelte": { "entry": "pages/_address_/index.svelte-cb905b0b.js", "css": ["assets/AccountContents-07b32160.css", "assets/Float-a182edcb.css", "assets/stores-f514e5d1.css"], "js": ["pages/_address_/index.svelte-cb905b0b.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/Meta-d56b7633.js", "chunks/constants-358452f5.js", "chunks/AccountContents-f8ca9783.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js"], "styles": [] }, "src/routes/[address]/[eventId]/index.svelte": { "entry": "pages/_address_/_eventId_/index.svelte-dbfe44fb.js", "css": ["assets/pages/_address_/_eventId_/index.svelte-59dbe05c.css", "assets/stores-f514e5d1.css", "assets/Float-a182edcb.css"], "js": ["pages/_address_/_eventId_/index.svelte-dbfe44fb.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/constants-358452f5.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/LibLoader-f077cfca.js", "chunks/Meta-d56b7633.js"], "styles": [] }, "src/routes/[address]/[eventId]/[serial].svelte": { "entry": "pages/_address_/_eventId_/_serial_.svelte-4ecb4d15.js", "css": ["assets/pages/_address_/_eventId_/_serial_.svelte-2f1d4f5b.css", "assets/Float-a182edcb.css", "assets/stores-f514e5d1.css"], "js": ["pages/_address_/_eventId_/_serial_.svelte-4ecb4d15.js", "chunks/vendor-2b38a6d6.js", "chunks/stores-0a26e7b3.js", "chunks/Loading-011145fc.js", "chunks/Float-0a981fca.js", "chunks/actions-ac76e6a1.js", "chunks/stores-1a1c8456.js", "chunks/Meta-d56b7633.js", "chunks/constants-358452f5.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-d5f13c97.js", "css": ["assets/pages/__layout.svelte-d3820f7a.css", "assets/stores-dc5fc4dc.css"], "js": ["pages/__layout.svelte-d5f13c97.js", "chunks/vendor-30cfb5d2.js", "chunks/stores-0fc70030.js", "pages/MediaQuery.svelte-9391cf75.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-571fd1c3.js", "css": [], "js": ["pages/__error.svelte-571fd1c3.js", "chunks/vendor-30cfb5d2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-2229df44.js", "css": ["assets/Dialog.svelte_svelte_type_style_lang-d0a0af67.css", "assets/stores-dc5fc4dc.css", "assets/pages/projects.svelte-92e0cb01.css"], "js": ["pages/index.svelte-2229df44.js", "chunks/vendor-30cfb5d2.js", "chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js", "chunks/stores-0fc70030.js", "pages/projects.svelte-0a5c797f.js"], "styles": [] }, "src/routes/createProject.svelte": { "entry": "pages/createProject.svelte-49734aae.js", "css": ["assets/pages/createProject.svelte-fc7e3a3e.css", "assets/stores-dc5fc4dc.css", "assets/Dialog.svelte_svelte_type_style_lang-d0a0af67.css"], "js": ["pages/createProject.svelte-49734aae.js", "chunks/vendor-30cfb5d2.js", "chunks/stores-0fc70030.js", "chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js", "pages/MediaQuery.svelte-9391cf75.js"], "styles": [] }, "src/routes/MediaQuery.svelte": { "entry": "pages/MediaQuery.svelte-9391cf75.js", "css": [], "js": ["pages/MediaQuery.svelte-9391cf75.js", "chunks/vendor-30cfb5d2.js"], "styles": [] }, "src/routes/projects.svelte": { "entry": "pages/projects.svelte-0a5c797f.js", "css": ["assets/pages/projects.svelte-92e0cb01.css"], "js": ["pages/projects.svelte-0a5c797f.js", "chunks/vendor-30cfb5d2.js"], "styles": [] } };
   }
 });
 
@@ -24861,7 +24244,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_31f4847e();
+init_app_d3d82645();
 
 // .svelte-kit/vercel/entry.js
 init();
