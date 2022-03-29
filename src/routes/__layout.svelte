@@ -4,6 +4,7 @@
   import "../app.css";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
+import MediaQuery from "./MediaQuery.svelte";
 
   onMount(() => {
     let savedTheme = localStorage.getItem("theme");
@@ -16,7 +17,22 @@
   console.log($page.path);
 </script>
 
-<Header />
+<MediaQuery query="(min-width: 1281px)" let:matches>
+  {#if matches}
+  <Header screenSize="desktop" />
+  {/if}
+</MediaQuery>
+<MediaQuery query="(min-width: 481px) and (max-width: 1280px)" let:matches>
+  {#if matches}
+  <Header screenSize="tablet" />
+  {/if}
+</MediaQuery>
+<MediaQuery query="(max-width: 480px)" let:matches>
+  {#if matches}
+  <Header screenSize="mobile" />
+  {/if}
+</MediaQuery>
+
 
 <main class="container">
   <slot />

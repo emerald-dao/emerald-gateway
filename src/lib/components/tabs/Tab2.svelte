@@ -20,9 +20,23 @@ import Icon from "@iconify/svelte";
 // import Dialog from '../Dialog.svelte';
 import TabHeader from './TabHeader.svelte';
 
+export let mobile
+
 let hoveredId;
 let tokensValue;
 let ModalVal
+
+let styles = {
+		'note-bg-color': '#f4ed2a',
+		'note-color': '#FF5555',
+		'mobile-width': '50%',
+		'active-width': '20%',
+		'inactive-width': '30%',
+	};
+	
+	$: cssVarStyles = Object.entries(styles)
+		.map(([key, value]) => `--${key}:${value}`)
+		.join(';');
 
 modal.subscribe(val => ModalVal = val)
 tokens.subscribe(val => {
@@ -36,14 +50,6 @@ function openModal() {
 function openDialog() {
     $dialog.opened = true
 }
-
-// function closeModal() {
-//     $modal.opened = false
-// }
-
-// function closeDialog() {
-//     $dialog.opened = false
-// }
 
 const handleEdit = (id) => {
     $selectedToken = id
@@ -72,9 +78,7 @@ const handlePointerEnter = id => hoveredId = id
 const handlePointerLeave = id => hoveredId = null
 </script>
 
-<Modal   />
-<!-- <Dialog  /> -->
-<main class="container">
+<main class="container" style="{cssVarStyles}">
     <TabHeader title={"Tokens"} subtitle={"Something about the tokens"} />
     <div class="tokens-container mt-2">
         <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
@@ -85,13 +89,14 @@ const handlePointerLeave = id => hoveredId = null
                 on:pointerleave={() => handlePointerLeave(id)}
                 >
                 <div
-                    class={amount ? "token-container-active" : "token-container-inactive"}
+                    style="--width:{amount ? "20%" : "30%"} "
+                    class={ !mobile  ? "token-container" : "token-container-mobile"}
                     >
                     <div
-                        style="display:flex; justify-content:space-between; align-items:center; width: 4rem; height:100%; "
+                        style="display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "
                         >
                         <img
-                            style="height:96%; border-radius: 50px; object-fit:cover"
+                            style="height:100%; width:2.6rem;   border-radius: 50px; object-fit:cover"
                             src={imgUrl}
                             alt="logo"
                             />
@@ -173,10 +178,21 @@ const handlePointerLeave = id => hoveredId = null
     padding-left: 3%;
 }
 
-.token-container-active {
+.token-container {
     position: relative;
     display: flex;
-    width: 30%;
+    width: var(--width);
+    height: 70%;
+    justify-content: space-between;
+    border-radius: 50px;
+    align-items: center;
+    background-color: #252E37;
+    font-weight: bold;
+}
+.token-container-mobile {
+    position: relative;
+    display: flex;
+    width: 50%;
     height: 70%;
     justify-content: space-between;
     border-radius: 50px;
@@ -185,18 +201,7 @@ const handlePointerLeave = id => hoveredId = null
     font-weight: bold;
 }
 
-.token-container-inactive {
-    position: relative;
-    display: flex;
-    width: 20%;
-    height: 70%;
-    justify-content: space-between;
-    border-radius: 50px;
-    align-items: center;
-    background-color: #252E37;
-    font-weight: bold;
 
-}
 
 .icon-container {
     display: flex;

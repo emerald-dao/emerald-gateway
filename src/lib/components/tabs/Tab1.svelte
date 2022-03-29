@@ -10,6 +10,9 @@ import {
 import TabHeader from "./TabHeader.svelte";
 
 export let tab1val
+export let mobile
+
+console.log("mobile tab 1", mobile)
 
 tab1data.subscribe(val => tab1val = val)
 
@@ -43,7 +46,10 @@ const handleChange = (e) => {
         </div>
         <h3 class="mt-1">Description</h3>
         <div class="textarea-header">
-            <section class="text-icons-container">
+            {#if mobile}
+                <div></div>
+            {:else}
+ <section class="text-icons-container">
                 <div class="text-icon">
                     <Icon icon="bx:bold" height={20} />
                 </div>
@@ -83,6 +89,8 @@ const handleChange = (e) => {
                     <Icon icon="carbon:overflow-menu-vertical" height={22} />
                 </div>
             </section>
+            {/if}
+           
         </div>
         <textarea
             id="description"

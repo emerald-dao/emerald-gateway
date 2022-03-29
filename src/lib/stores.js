@@ -7,21 +7,6 @@ import Tab5 from "$lib/components/tabs/Tab5.svelte"
 
 import { writable, derived } from 'svelte/store';
 
-export const draftFloat = writable({
-  name: '',
-  description: '',
-  url: '',
-  ipfsHash: '',
-  claimable: true,
-  timelock: false,
-  startTime: false,
-  endTime: false,
-  quantity: false,
-  claimCodeEnabled: false,
-  claimCode: '',
-  transferrable: true,
-});
-
 export const activeTabVal = writable(0)
 
 activeTabVal.subscribe(val => console.log("active tab val", val))
