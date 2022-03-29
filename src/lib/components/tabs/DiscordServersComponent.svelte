@@ -15,7 +15,6 @@ function handleSelection(i) {
 }
 
 function removeServer(id) {
-    alert("handling")
 		$discordVerif.servers = $discordVerif.servers.filter(function(value, index, arr){ 
 			if (value.id != id) return value;
 		});

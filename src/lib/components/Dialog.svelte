@@ -148,7 +148,7 @@ const handleClose = () => {
 
                         <footer >
                             <div style="cursor: pointer;" on:click={handleClose}>
-                                ACTION 2
+                                SAVE
 
                             </div>
                         </footer>
@@ -165,7 +165,7 @@ header {
     padding-right: 1rem;
     padding-left: 2rem;
 
-    border-bottom: 2px solid var(--form-element-border-color);
+    border-bottom: 0.5px solid var(--primary);
 }
 
 section {
@@ -185,7 +185,7 @@ footer {
     padding-right: 2rem;
     height: 15%;
     width: 100%;
-    border-top: 2px solid var(--form-element-border-color);
+    border-top: 0.5px solid var(--primary);
 }
 
 #background {
@@ -207,10 +207,9 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #141e26;
-    filter: drop-shadow(0 0 20px #333);
     height: 48%;
     width: 42%;
     border-radius: 20px;
-    border: 2px solid var(--form-element-border-color);
+    border: 2px solid var(--primary);
 }
 </style>

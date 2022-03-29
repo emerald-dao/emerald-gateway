@@ -69,21 +69,24 @@ const handlePointerLeave = id => hoveredId = null
 // }
 
 const handleSelection = (id) => {
+    $collections[id].selected = !$collections[id].selected
+
+
     // update token 
-    $selectedCollection = id
-    $collections[id].selected = true
+    // $selectedCollection = id
+    // $collections[id].selected = true
     // console.log("collections val", collectionsValue)
 
-    // check store state
-    const collectionAmount = $collections[id].amount
+    // // check store state
+    // const collectionAmount = $collections[id].amount
 
-    if (collectionAmount === 0) {
-        openDialog()
-    } else {
-        //reset token amount and selection state
-        $collections[id].amount = 0
-        $collections[id].selected = false
-    }
+    // if (collectionAmount === 0) {
+    //     openDialog()
+    // } else {
+    //     //reset token amount and selection state
+    //     $collections[id].amount = 0
+    //     $collections[id].selected = false
+    // }
 
 }
 

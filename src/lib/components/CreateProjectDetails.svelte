@@ -54,6 +54,14 @@ const handleEvent = msg => {
             $tabs[activeTabValue].done = true
             handleAction("increment")
             break;
+        case 4:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
+        // case 5:
+        //     $tabs[activeTabValue].done = true
+        //     handleAction("increment")
+        //     break;
 
         default:
             break;
@@ -70,10 +78,10 @@ const autoScroll = (target) => {
 }
 
 const handleAction = (action) => {
-    if (activeTabValue === 0 && action === "decrement" || activeTabValue === 4 && action === "increment") {
+    if ($activeTabVal === 0 && action === "decrement" || $activeTabVal === 5 && action === "increment") {
         return
     } else {
-        action === "increment" ? activeTabValue++ : activeTabValue--
+        action === "increment" ? $activeTabVal++ : $activeTabVal--
         autoScroll()
 
     }
@@ -108,15 +116,15 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                             on:click={handleClick(item.value)}
                             >
                             {#if i === 3}
-                            <div style="padding: 2rem;">
-                                <EmeraldIdIcon mobile={mobile} color={activeTabValue === 3 ? "var(--primary)"  :"white"} />
+                            <div class="flex-align">
+                                <EmeraldIdIcon mobile={mobile} color={activeTabValue === 3 || tabsValue[i].done ? "var(--primary)"  :"white"} />
                             </div>
                             {:else}
                             <Icon
                                 icon={item.icon}
                                 height={mobile ? 22 : i === 3 ? 26 : 30}
                                 color={tabsValue[i].done
-                                ? "#85DFB4"
+                                ? "var(--primary)"
                                 : activeTabValue === item.value
                                 ? "var(--primary)"
                                 : "lightgrey"}
@@ -131,7 +139,7 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                                  style="--width:{mobile ? "30%" : "20%"}"
                                 class="chevron-wrapper" on:click={() => handleAction("increment")}>
                                     <div
-                                        class={activeTabValue === 4 ? "chevron-icon-disabled" : "chevron-icon"}
+                                        class={activeTabValue === 5 ? "chevron-icon-disabled" : "chevron-icon"}
                                         on:pointerenter={() => (isHovered.right = !isHovered.right)}
                                         on:pointerleave={() => (isHovered.right = !isHovered.right)}
                                         >
@@ -139,7 +147,7 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                                             class="chevron-icon"
                                             icon="akar-icons:circle-chevron-right"
                                             height={mobile ? 30 : 36}
-                                            color={isHovered.right && activeTabValue !== 3 ? "var(--primary)" : "lightgrey"}
+                                            color={isHovered.right && activeTabValue !== 5 ? "var(--primary)" : "lightgrey"}
                                             />
                                             </div>
                                             </div>

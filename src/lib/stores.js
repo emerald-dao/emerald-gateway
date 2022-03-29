@@ -3,7 +3,7 @@ import Tab2 from "$lib/components/tabs/Tab2.svelte"
 import Tab3 from "$lib/components/tabs/Tab3.svelte"
 import Tab4 from "$lib/components/tabs/Tab4.svelte"
 import Tab5 from "$lib/components/tabs/Tab5.svelte"
-// import { openDialog } from "./utils"
+import Tab6 from "$lib/components/tabs/Tab6.svelte"
 
 import { writable, derived } from 'svelte/store';
 
@@ -46,19 +46,12 @@ export const tabs = writable ([{
   icon: "radix-icons:discord-logo"
 },
 {
-  label: "Tab 5",
+  label: "Tab 6",
   value: 5,
-  component: Tab4,
+  component: Tab6,
 
-  icon: "ic:outline-subtitles"
+  icon: "radix-icons:twitter-logo"
 },
-{
-  label: "Tab 5",
-  value: 6,
-  component: Tab4,
-
-  icon: "ic:outline-subtitles"
-}
 ]);
 
 export const theme = writable(null);
@@ -141,4 +134,12 @@ export const discordVerif = writable({
   active: false,
   editing: false,
   servers: [],
+})
+
+export const twitterVerif = writable({
+  selectedId: 0,
+  accountId: "",
+  active: false,
+  editing: false,
+  accounts: [],
 })

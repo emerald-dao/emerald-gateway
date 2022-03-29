@@ -27,8 +27,6 @@ let tokensValue;
 let ModalVal
 
 let styles = {
-		'note-bg-color': '#f4ed2a',
-		'note-color': '#FF5555',
 		'mobile-width': '50%',
 		'active-width': '20%',
 		'inactive-width': '30%',
@@ -44,6 +42,7 @@ tokens.subscribe(val => {
 })
 
 function openModal() {
+    $modal.content = "custom-token"
     $modal.opened = true
 }
 
@@ -65,6 +64,7 @@ const handleSelection = (id) => {
     // check store state
     const tokenAmount = $tokens[id].amount
     if (tokenAmount === 0) {
+
         openDialog()
     } else {
         //reset token amount and selection state
@@ -89,7 +89,7 @@ const handlePointerLeave = id => hoveredId = null
                 on:pointerleave={() => handlePointerLeave(id)}
                 >
                 <div
-                    style="--width:{amount ? "20%" : "30%"} "
+                    style="--width:{amount ? "30%" : "20%"} "
                     class={ !mobile  ? "token-container" : "token-container-mobile"}
                     >
                     <div
