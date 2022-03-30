@@ -4,12 +4,17 @@ import Tab3 from "$lib/components/tabs/Tab3.svelte"
 import Tab4 from "$lib/components/tabs/Tab4.svelte"
 import Tab5 from "$lib/components/tabs/Tab5.svelte"
 import Tab6 from "$lib/components/tabs/Tab6.svelte"
+import Tab7 from "$lib/components/tabs/Tab7.svelte"
 
 import { writable, derived } from 'svelte/store';
+
+export const projects = writable([]) 
 
 export const activeTabVal = writable(0)
 
 activeTabVal.subscribe(val => console.log("active tab val", val))
+
+
 
 export const tabs = writable ([{
   label: "Content",
@@ -51,6 +56,13 @@ export const tabs = writable ([{
   component: Tab6,
 
   icon: "radix-icons:twitter-logo"
+},
+{
+  label: "Tab 7",
+  value: 6,
+  component: Tab7,
+
+  icon: "line-md:confirm-circle"
 },
 ]);
 
@@ -127,8 +139,14 @@ export const dialog = writable({
   opened: false,
 })
 
-export const emeraldIdVerif = writable(false)
+export const emeraldIdVerif = writable({
+  label: "Emerald ID",
+  active:false,
+  imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg"
+})
 export const discordVerif = writable({
+  label:"Discord",
+  imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648666781/discordIcon_pokppb.svg",
   selectedId: 0,
   serverId: "",
   active: false,
@@ -137,9 +155,14 @@ export const discordVerif = writable({
 })
 
 export const twitterVerif = writable({
+  label:"Twitter",
+  imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648666781/twitterIcon_sxe5jr.svg",
   selectedId: 0,
   accountId: "",
   active: false,
   editing: false,
   accounts: [],
 })
+
+
+

@@ -1,5 +1,6 @@
 <script>
 import CreateProject from "$lib/components/CreateProject.svelte";
+import ProjectsComponent from "$lib/components/projects/ProjectsComponent.svelte";
 
 
 </script>
@@ -13,7 +14,11 @@ import CreateProject from "$lib/components/CreateProject.svelte";
         <div class="card-container">
 
         </div>
-        <CreateProject />
+        <div style="display: flex;">
+             <CreateProject />
+        <ProjectsComponent />
+        </div>
+       
 
     </article>
 

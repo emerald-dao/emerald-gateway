@@ -9,10 +9,19 @@ import {
 } from "$lib/components/tabs/utils"
 
 import {
+    goto,
+} from '$app/navigation';
+
+import {
     tabs,
     tokens,
     collections,
     activeTabVal,
+    projects,
+    tab1data,
+    emeraldIdVerif,
+    discordVerif,
+    twitterVerif,
 } from '$lib/stores';
 import Dialog from "$lib/components/Dialog.svelte";
 import Modal from "$lib/components/Modal.svelte";
@@ -24,17 +33,57 @@ let mobile = screenSize === "mobile"
 
 let tabsValue
 let activeTabValue;
+let btnLabel
 let isHovered = {
     right: false,
     left: false
 }
+
+let Tab1data
+let Tokens
+let Collections
+let EmeraldIdVerif
+let DiscordVerif
+let TwitterVerif
+let Projects
 
 // logic
 tabs.subscribe(value => {
     tabsValue = value;
 });
 
-activeTabVal.subscribe(val => activeTabValue = val)
+activeTabVal.subscribe(val => {
+    activeTabValue = val
+    if(val === 6) {
+        btnLabel = "CONFIRM"
+    } else {
+        btnLabel = "CONTINUE"
+    }
+})
+tab1data.subscribe(val => Tab1data = val)
+tokens.subscribe(val => Tokens = val)
+collections.subscribe(val => Collections = val)
+emeraldIdVerif.subscribe(val => EmeraldIdVerif = val)
+discordVerif.subscribe(val => DiscordVerif = val)
+twitterVerif.subscribe(val => TwitterVerif = val)
+projects.subscribe(val => Projects = val)
+
+function handleNav() {
+    goto("/")
+}
+
+function createProject() {
+    $projects = [...$projects, {
+        id: Projects.length,
+        name: Tab1data.name,
+        description:Tab1data.description,
+        tokens: Tokens,
+        collections: Collections,
+        emeraldIdVerif: EmeraldIdVerif,
+        discordVerif: DiscordVerif,
+        twitterVerif: TwitterVerif
+    }];
+}
 
 const handleEvent = msg => {
     switch (activeTabValue) {
@@ -58,10 +107,15 @@ const handleEvent = msg => {
             $tabs[activeTabValue].done = true
             handleAction("increment")
             break;
-        // case 5:
-        //     $tabs[activeTabValue].done = true
-        //     handleAction("increment")
-        //     break;
+        case 5:
+            $tabs[activeTabValue].done = true
+            handleAction("increment")
+            break;
+        case 6:
+            $tabs[activeTabValue].done = true
+            createProject()
+            handleNav()
+            break;
 
         default:
             break;
@@ -78,7 +132,7 @@ const autoScroll = (target) => {
 }
 
 const handleAction = (action) => {
-    if ($activeTabVal === 0 && action === "decrement" || $activeTabVal === 5 && action === "increment") {
+    if ($activeTabVal === 0 && action === "decrement" || $activeTabVal === 6 && action === "increment") {
         return
     } else {
         action === "increment" ? $activeTabVal++ : $activeTabVal--
@@ -88,6 +142,9 @@ const handleAction = (action) => {
 }
 const handleClick = tabValue => () => ($activeTabVal = tabValue);
 </script>
+
+<Dialog />
+    <Modal />
 
 <article>
     <main class="main-container">
@@ -136,8 +193,8 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                                 {/each}
                                 </ul>
                                 <div
-                                 style="--width:{mobile ? "30%" : "20%"}"
-                                class="chevron-wrapper" on:click={() => handleAction("increment")}>
+                                    style="--width:{mobile ? "30%" : "20%"}"
+                                    class="chevron-wrapper" on:click={() => handleAction("increment")}>
                                     <div
                                         class={activeTabValue === 5 ? "chevron-icon-disabled" : "chevron-icon"}
                                         on:pointerenter={() => (isHovered.right = !isHovered.right)}
@@ -165,7 +222,7 @@ const handleClick = tabValue => () => ($activeTabVal = tabValue);
                                                 <div class="mt-0 mb-0 pl-1">
                                                     <button class="contrast small-button"
                                                         on:click={handleEvent}
-                                                        >Continue</button
+                                                        >{btnLabel}</button
                                                         >
                                                         </div>
                                                         </footer>

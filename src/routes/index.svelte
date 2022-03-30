@@ -5,8 +5,7 @@ import {
     PAGE_TITLE_EXTENSION
 } from '$lib/constants';
 
-import Dialog from "$lib/components/Dialog.svelte";
-import Modal from "$lib/components/Modal.svelte";
+
 import Projects from './projects.svelte';
 
 </script>
@@ -19,8 +18,7 @@ import Projects from './projects.svelte';
     <title>Home {PAGE_TITLE_EXTENSION}</title>
     </svelte:head>
 
-    <Dialog />
-    <Modal />
+    
     <Projects />
 
     

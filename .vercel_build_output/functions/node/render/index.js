@@ -6676,7 +6676,7 @@ var init_ssr = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Icon-d8bf2219.js
+// .svelte-kit/output/server/chunks/stores-668e9aa6.js
 function fullIcon(data) {
   return { ...iconDefaults, ...data };
 }
@@ -8128,11 +8128,52 @@ function checkIconState(icon, state, mounted, callback, onload) {
 function generateIcon(icon, props) {
   return icon ? render(icon, props) : null;
 }
-var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults, Icon;
-var init_Icon_d8bf2219 = __esm({
-  ".svelte-kit/output/server/chunks/Icon-d8bf2219.js"() {
+function writable2(value, start = noop3) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal2(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue2.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue2.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i2 = 0; i2 < subscriber_queue2.length; i2 += 2) {
+            subscriber_queue2[i2][0](subscriber_queue2[i2 + 1]);
+          }
+          subscriber_queue2.length = 0;
+        }
+      }
+    }
+  }
+  function update(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop3) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set) || noop3;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update, subscribe: subscribe2 };
+}
+var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults, Icon, subscriber_queue2, TabHeader, css$b, Tab1, HorizontalSpace, css$a, Tab2, VerticalSpace, css$9, CollectionComponent, css$8, SearchComponent, css$7, Tab3, css$6, Tab4, css$5, DiscordServersComponent, css$4, Tab5, css$3, TwitterAccountsComponent, css$2, Tab6, css$1, VerificationComponent, css, Tab7, projects, activeTabVal, tabs, theme, tab1data, tokens, selectedToken, selectedCollection, collections, modal, dialog, emeraldIdVerif, discordVerif, twitterVerif;
+var init_stores_668e9aa6 = __esm({
+  ".svelte-kit/output/server/chunks/stores-668e9aa6.js"() {
     init_shims();
-    init_app_d3d82645();
+    init_app_bed6abf6();
     matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
     iconDefaults = Object.freeze({
       left: 0,
@@ -8656,57 +8697,6 @@ var init_Icon_d8bf2219 = __esm({
       }
       return `${data !== null ? `<svg${spread([escape_object(data.attributes)], {})}><!-- HTML_TAG_START -->${data.body}<!-- HTML_TAG_END --></svg>` : ``}`;
     });
-  }
-});
-
-// .svelte-kit/output/server/chunks/stores-572856a0.js
-function writable2(value, start = noop3) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal2(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue2.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue2.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i2 = 0; i2 < subscriber_queue2.length; i2 += 2) {
-            subscriber_queue2[i2][0](subscriber_queue2[i2 + 1]);
-          }
-          subscriber_queue2.length = 0;
-        }
-      }
-    }
-  }
-  function update(fn) {
-    set(fn(value));
-  }
-  function subscribe2(run2, invalidate = noop3) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set) || noop3;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  return { set, update, subscribe: subscribe2 };
-}
-var subscriber_queue2, TabHeader, css$9, Tab1, HorizontalSpace, css$8, Tab2, css$7, CollectionComponent, css$6, SearchComponent, css$5, Tab3, css$4, Tab4, css$3, DiscordServersComponent, css$2, Tab5, css$1, TwitterAccountsComponent, css, Tab6, activeTabVal, tabs, theme, tab1data, tokens, selectedToken, selectedCollection, collections, modal, dialog, emeraldIdVerif, discordVerif, twitterVerif;
-var init_stores_572856a0 = __esm({
-  ".svelte-kit/output/server/chunks/stores-572856a0.js"() {
-    init_shims();
-    init_app_d3d82645();
-    init_Icon_d8bf2219();
     subscriber_queue2 = [];
     TabHeader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -8719,7 +8709,7 @@ var init_stores_572856a0 = __esm({
     <p>${escape2(subtitle)}</p>
 </header>`;
     });
-    css$9 = {
+    css$b = {
       code: "textarea.svelte-19lnoss{border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px}.menu-icon-container.svelte-19lnoss{display:flex;height:100%;width:6%;justify-content:center;align-items:center}.alignment-icon.svelte-19lnoss{width:33.3%;height:100%;display:flex;justify-content:center;align-items:center}.alignment-container.svelte-19lnoss{display:flex;width:20%;height:100%;justify-content:space-between;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-type-container.svelte-19lnoss{display:flex;width:34%;height:100%;align-items:center;justify-content:space-between;border-right:1px solid var(--form-element-border-color);padding-left:0.5rem;padding-right:0.5rem}.text-icons-container.svelte-19lnoss{display:flex;width:40%;height:100%;justify-content:start;align-items:center;border-right:1px solid var(--form-element-border-color)}.text-icon.svelte-19lnoss{display:flex;height:100%;width:1.8rem;justify-content:center;align-items:center}.textarea-header.svelte-19lnoss{display:flex;width:100%;height:1.6rem;border:1px solid var(--form-element-border-color);border-bottom:none;border-top-right-radius:6px;border-top-left-radius:6px;margin-top:3px}",
       map: null
     };
@@ -8736,7 +8726,7 @@ var init_stores_572856a0 = __esm({
         $$bindings.tab1val(tab1val);
       if ($$props.mobile === void 0 && $$bindings.mobile && mobile !== void 0)
         $$bindings.mobile(mobile);
-      $$result.css.add(css$9);
+      $$result.css.add(css$b);
       $$unsubscribe_tab1data();
       return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
         title: "Tab 1",
@@ -8787,7 +8777,7 @@ var init_stores_572856a0 = __esm({
         $$bindings.value(value);
       return `<main style="${"width: " + escape2(value)}"></main>`;
     });
-    css$8 = {
+    css$a = {
       code: ".amount-container.svelte-1khxnhk{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}.token-inactive.svelte-1khxnhk{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.token-active.svelte-1khxnhk{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}.token-container.svelte-1khxnhk{position:relative;display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.token-container-mobile.svelte-1khxnhk{position:relative;display:flex;width:50%;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.icon-container.svelte-1khxnhk{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}main.svelte-1khxnhk{margin:0;padding:0}ul.svelte-1khxnhk{margin:0;padding:0}li.svelte-1khxnhk{margin:0;padding:0}.secondary-btn.svelte-1khxnhk{display:flex;height:1.6rem;align-items:center;padding:0.6rem 1rem;border-radius:3px;cursor:pointer}.secondary-btn.svelte-1khxnhk:hover{background:rgba(56, 232, 198, 0.1)}.custom-container.svelte-1khxnhk{display:flex;justify-content:center;align-items:center;width:100%;height:20%;font-size:0.7rem;color:var(--primary);font-weight:bold;border-top:2px solid var(--form-element-border-color)}.tokens-container.svelte-1khxnhk{display:flex;flex-direction:column;justify-content:space-between;height:13rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-1khxnhk{height:100%;width:100%}",
       map: null
     };
@@ -8810,12 +8800,13 @@ var init_stores_572856a0 = __esm({
         "inactive-width": "30%"
       };
       modal.subscribe((val) => val);
+      dialog.subscribe((val) => val);
       tokens.subscribe((val) => {
         tokensValue = val;
       });
       if ($$props.mobile === void 0 && $$bindings.mobile && mobile !== void 0)
         $$bindings.mobile(mobile);
-      $$result.css.add(css$8);
+      $$result.css.add(css$a);
       cssVarStyles = Object.entries(styles).map(([key, value]) => `--${key}:${value}`).join(";");
       $$unsubscribe_tokens();
       $$unsubscribe_selectedToken();
@@ -8841,7 +8832,13 @@ var init_stores_572856a0 = __esm({
                                         ${validate_component(HorizontalSpace, "HorizontalSpace").$$render($$result, { value: "0.3rem" }, {}, {})}
                                         <div>ADD CUSTOM TOKEN</div></div></footer></div></main>`;
     });
-    css$7 = {
+    VerticalSpace = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { value } = $$props;
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      return `<main style="${"height: " + escape2(value)}"></main>`;
+    });
+    css$9 = {
       code: "img.svelte-1kk9tr5{max-width:2.4rem;min-width:2.4rem;height:100%;border-style:none;margin-left:-0.1rem;border-radius:50px}.label-active.svelte-1kk9tr5{margin-left:2rem;width:10rem;display:flex;justify-content:end}.label-inactive.svelte-1kk9tr5{width:10rem;display:flex;justify-content:end}.amount-container.svelte-1kk9tr5{color:#252E37;font-weight:bold;display:flex;height:100%;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px;margin-left:1rem}.icon-container.svelte-1kk9tr5{display:flex;align-items:center;justify-content:center;background-color:var(--primary);border-radius:100px;position:absolute;top:-0.6rem;right:0px;height:1.2rem;width:1.2rem;padding:0.2rem}.collection-container-active.svelte-1kk9tr5{position:relative;display:flex;width:16rem;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold}.collection-container-inactive.svelte-1kk9tr5{position:relative;display:flex;width:14rem;height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;padding-right:0.8rem}",
       map: null
     };
@@ -8865,7 +8862,7 @@ var init_stores_572856a0 = __esm({
         $$bindings.imgUrl(imgUrl);
       if ($$props.id === void 0 && $$bindings.id && id !== void 0)
         $$bindings.id(id);
-      $$result.css.add(css$7);
+      $$result.css.add(css$9);
       $$unsubscribe_dialog();
       $$unsubscribe_selectedCollection();
       return `<div class="${escape2(null_to_empty(amount ? "collection-container-active" : "collection-container-inactive")) + " svelte-1kk9tr5"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-1kk9tr5"}"></div>
@@ -8875,7 +8872,7 @@ var init_stores_572856a0 = __esm({
         <div class="${"icon-container svelte-1kk9tr5"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div></div>` : `<div></div>`}
             </div>`;
     });
-    css$6 = {
+    css$8 = {
       code: "header.svelte-1ombc6g{border-bottom:0.5px solid var(--form-element-border-color);margin:0;padding:0}input.svelte-1ombc6g{margin:0;padding:0;border-top-left-radius:0px;border-bottom-left-radius:0px}.icon-container.svelte-1ombc6g{width:2rem;height:3.1rem;border-top-left-radius:12px;border-bottom-left-radius:12px;border:1px solid var(--form-element-border-color)}",
       map: null
     };
@@ -8883,12 +8880,12 @@ var init_stores_572856a0 = __esm({
       let { searchTerm } = $$props;
       if ($$props.searchTerm === void 0 && $$bindings.searchTerm && searchTerm !== void 0)
         $$bindings.searchTerm(searchTerm);
-      $$result.css.add(css$6);
+      $$result.css.add(css$8);
       return `<header class="${"flex-align svelte-1ombc6g"}"><div class="${"icon-container flex-align svelte-1ombc6g"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:search" }, {}, {})}</div>
     <div class="${"mt-1"}"><input type="${"text"}" id="${"search-field"}" placeholder="${"Search ..."}" autocomplete="${"off"}" class="${"svelte-1ombc6g"}"${add_attribute("value", searchTerm, 0)}></div>
 </header>`;
     });
-    css$5 = {
+    css$7 = {
       code: ".collection-inactive.svelte-telswo{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;padding-left:3%}.collection-active.svelte-telswo{display:flex;height:3.5rem;width:100%;justify-content:space-between;align-items:center;background-color:rgba(56, 232, 198, 0.1);cursor:pointer;padding-left:3%}main.svelte-telswo{margin:0;padding:0}ul.svelte-telswo{margin:0;padding:0}li.svelte-telswo{margin:0;padding:0}.collections-container.svelte-telswo{display:flex;flex-direction:column;justify-content:space-between;height:26rem;border:2px solid var(--form-element-border-color);width:100%;border-radius:9px;background:var(--background-color)}.container.svelte-telswo{height:100%;width:100%}",
       map: null
     };
@@ -8905,7 +8902,7 @@ var init_stores_572856a0 = __esm({
       collections.subscribe((val) => collectionsValue = val);
       let filteredCollections = [];
       let searchTerm = "";
-      $$result.css.add(css$5);
+      $$result.css.add(css$7);
       let $$settled;
       let $$rendered;
       do {
@@ -8943,7 +8940,7 @@ var init_stores_572856a0 = __esm({
       $$unsubscribe_selectedCollection();
       return $$rendered;
     });
-    css$4 = {
+    css$6 = {
       code: ".logo.svelte-mc1wpv{object-fit:cover;height:2rem;margin-left:0.5rem}",
       map: null
     };
@@ -8954,17 +8951,17 @@ var init_stores_572856a0 = __esm({
       emeraldIdVerif.subscribe((val) => emeraldIdVal = val);
       if ($$props.emeraldIdVal === void 0 && $$bindings.emeraldIdVal && emeraldIdVal !== void 0)
         $$bindings.emeraldIdVal(emeraldIdVal);
-      $$result.css.add(css$4);
+      $$result.css.add(css$6);
       $$unsubscribe_emeraldIdVerif();
       return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
         title: "Emerald ID",
         subtitle: "Something about Emerald ID"
       }, {}, {})}
-    <button${add_attribute("class", emeraldIdVal ? "flex-align" : "outline mb-1 flex-align", 0)}>Add Emerald ID Verification
+    <button${add_attribute("class", emeraldIdVal.active ? "flex-align" : "outline mb-1 flex-align", 0)}>Add Emerald ID Verification
         <img class="${"logo svelte-mc1wpv"}" src="${"https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg"}"></button>
 </div>`;
     });
-    css$3 = {
+    css$5 = {
       code: ".edit-icon-container.svelte-11iatjc{position:absolute;top:-0.8rem;right:-0.5rem;display:flex;align-items:center;justify-content:center;background-color:#5865F2;border-radius:100px;height:1.4rem;width:1.4rem;padding:0.2rem}.edit-icon-container.svelte-11iatjc:hover{cursor:pointer}ul.svelte-11iatjc{list-style-type:none;width:100%;margin-top:0.9rem;padding:0}li.svelte-11iatjc{display:flex;height:3rem;margin-top:1rem;padding:0}.icon-container.svelte-11iatjc{height:100%;color:lightslategrey}.icon-container.svelte-11iatjc:hover{color:red;cursor:pointer}.server-container.svelte-11iatjc{display:flex;justify-content:space-between;align-items:center;width:100%;color:#5865F2}.server-container.svelte-11iatjc:hover{display:flex;justify-content:space-between;align-items:center;width:100%;color:#5865F2;background-color:rgba(88, 101, 242, 0.1);border-radius:12px}.server.svelte-11iatjc{position:relative;display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:50%;border-radius:9px;height:100%}.server.svelte-11iatjc:hover{cursor:pointer}",
       map: null
     };
@@ -8976,7 +8973,7 @@ var init_stores_572856a0 = __esm({
       let { servers } = $$props;
       if ($$props.servers === void 0 && $$bindings.servers && servers !== void 0)
         $$bindings.servers(servers);
-      $$result.css.add(css$3);
+      $$result.css.add(css$5);
       $$unsubscribe_discordVerif();
       $$unsubscribe_modal();
       return `<h3 class="${"mt-2"}">Discord Servers</h3>
@@ -8993,7 +8990,7 @@ var init_stores_572856a0 = __esm({
       })}
 </ul>`;
     });
-    css$2 = {
+    css$4 = {
       code: ".discord-active.svelte-18xjoy9{color:white;border-color:#5865F2;background:#5865F2}.discord-inactive.svelte-18xjoy9{color:#5865F2;border-color:#5865F2;background:transparent;cursor:pointer}.logo.svelte-18xjoy9{object-fit:cover;height:2rem;margin-left:0.5rem}",
       map: null
     };
@@ -9004,7 +9001,7 @@ var init_stores_572856a0 = __esm({
       $$unsubscribe_discordVerif = subscribe(discordVerif, (value) => value);
       let discordVal;
       discordVerif.subscribe((val) => discordVal = val);
-      $$result.css.add(css$2);
+      $$result.css.add(css$4);
       $$unsubscribe_modal();
       $$unsubscribe_discordVerif();
       return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
@@ -9027,7 +9024,7 @@ var init_stores_572856a0 = __esm({
 
 </div>`;
     });
-    css$1 = {
+    css$3 = {
       code: "input.svelte-1jf81m1:focus{border-color:#1DA1F2}.twitter-inactive.svelte-1jf81m1{color:#1DA1F2;border-color:#1DA1F2;background:transparent;cursor:pointer}.add-button.svelte-1jf81m1{margin-left:1rem;height:3rem}.account-input-container.svelte-1jf81m1{display:flex;justify-content:space-between;width:100%}.edit-icon-container.svelte-1jf81m1{position:absolute;top:-0.8rem;right:-0.5rem;display:flex;align-items:center;justify-content:center;background-color:#1DA1F2;border-radius:100px;height:1.4rem;width:1.4rem;padding:0.2rem}.edit-icon-container.svelte-1jf81m1:hover{cursor:pointer}ul.svelte-1jf81m1{list-style-type:none;width:100%;margin-top:0.9rem;padding:0}li.svelte-1jf81m1{display:flex;height:3rem;margin-top:1rem;padding:0}.icon-container.svelte-1jf81m1{height:100%;color:lightslategrey}.icon-container.svelte-1jf81m1:hover{color:red;cursor:pointer}.account-container.svelte-1jf81m1{display:flex;justify-content:space-between;align-items:center;width:100%;color:#1DA1F2}.account-container.svelte-1jf81m1:hover{display:flex;justify-content:space-between;align-items:center;width:100%;color:#1DA1F2;background-color:rgba(29 ,161, 242, 0.1);border-radius:12px}.account.svelte-1jf81m1{position:relative;display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:50%;border-radius:9px;height:100%}.account.svelte-1jf81m1:hover{cursor:pointer}",
       map: null
     };
@@ -9042,7 +9039,7 @@ var init_stores_572856a0 = __esm({
       twitterVerif.subscribe((val) => TwitterVerif = val);
       if ($$props.accounts === void 0 && $$bindings.accounts && accounts !== void 0)
         $$bindings.accounts(accounts);
-      $$result.css.add(css$1);
+      $$result.css.add(css$3);
       $$unsubscribe_twitterVerif();
       $$unsubscribe_modal();
       return `<h3 class="${"mt-2"}">Twitter Accounts</h3>
@@ -9066,7 +9063,7 @@ var init_stores_572856a0 = __esm({
       })}
                 </ul>`;
     });
-    css = {
+    css$2 = {
       code: ".twitter-active.svelte-12582e3{color:white;border-color:#1DA1F2;background:#1DA1F2}.twitter-inactive.svelte-12582e3{color:#1DA1F2;border-color:#1DA1F2;background:transparent;cursor:pointer}.logo.svelte-12582e3{object-fit:cover;height:2rem;margin-left:0.5rem}",
       map: null
     };
@@ -9077,7 +9074,7 @@ var init_stores_572856a0 = __esm({
       $$unsubscribe_twitterVerif = subscribe(twitterVerif, (value) => value);
       let twitterVal;
       twitterVerif.subscribe((val) => twitterVal = val);
-      $$result.css.add(css);
+      $$result.css.add(css$2);
       $$unsubscribe_modal();
       $$unsubscribe_twitterVerif();
       return `<div>${validate_component(TabHeader, "TabHeader").$$render($$result, {
@@ -9095,6 +9092,98 @@ var init_stores_572856a0 = __esm({
 
 </div>`;
     });
+    css$1 = {
+      code: ".see-details-container.svelte-13z6v86{padding-left:0.7rem;width:50%;height:100%;border-left:2px solid blue;border-left-color:var(--border)}.see-details-container.svelte-13z6v86:hover{color:var(--border);cursor:pointer}img.svelte-13z6v86{max-width:2.4rem;min-width:2.4rem;height:100%;border-style:none;margin-left:-0.1rem;border-radius:50px}.verification-container-inactive.svelte-13z6v86{position:relative;z-index:92;display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;font-weight:bold;padding-right:0.8rem;border:2px solid var(--border);background-color:#252E37}",
+      map: null
+    };
+    VerificationComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { selected } = $$props;
+      let { label } = $$props;
+      let { imgUrl } = $$props;
+      let { id } = $$props;
+      let color;
+      let details = null;
+      if (label === "Discord") {
+        color = "#5865F2";
+      } else if (label === "Twitter") {
+        color = "#1DA1F2";
+      } else {
+        color = "var(--primary)";
+      }
+      if (label === "Discord" || label === "Twitter") {
+        details = true;
+      } else {
+        details = false;
+      }
+      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
+        $$bindings.selected(selected);
+      if ($$props.label === void 0 && $$bindings.label && label !== void 0)
+        $$bindings.label(label);
+      if ($$props.imgUrl === void 0 && $$bindings.imgUrl && imgUrl !== void 0)
+        $$bindings.imgUrl(imgUrl);
+      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
+        $$bindings.id(id);
+      $$result.css.add(css$1);
+      return `<div style="${"--border:" + escape2(color) + "; --width:" + escape2(details ? "16rem" : "9rem") + "; height:2.6rem;"}" class="${escape2(null_to_empty("verification-container-inactive")) + " svelte-13z6v86"}"><div style="${"display: flex; height:100%; align-items: center; width:" + escape2(details ? "60%" : "100%")}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%; "}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-13z6v86"}"></div>
+        
+        <div style="${"color: white; margin-left:0.3rem; width:100%"}">${escape2(label)}</div></div>
+
+    ${details ? `<div class="${"flex-align see-details-container svelte-13z6v86"}">See details
+    </div>` : ``}
+
+</div>`;
+    });
+    css = {
+      code: ".token-container.svelte-1v562r5{display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;margin-left:var(--margin-left)}.amount-container.svelte-1v562r5{color:#252E37;font-weight:bold;display:flex;height:2.6rem;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}",
+      map: null
+    };
+    Tab7 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let Tab1data;
+      let Tokens;
+      let Collections;
+      let EmeraldIdVerif;
+      let DiscordVerif;
+      let TwitterVerif;
+      tab1data.subscribe((val) => Tab1data = val);
+      tokens.subscribe((val) => Tokens = val);
+      collections.subscribe((val) => Collections = val);
+      emeraldIdVerif.subscribe((val) => EmeraldIdVerif = val);
+      discordVerif.subscribe((val) => DiscordVerif = val);
+      twitterVerif.subscribe((val) => TwitterVerif = val);
+      $$result.css.add(css);
+      return `${validate_component(TabHeader, "TabHeader").$$render($$result, {
+        title: "Confirmation",
+        subtitle: "Something about the confirmation"
+      }, {}, {})}
+
+<h3>${escape2(Tab1data.name)}</h3>
+<p>${escape2(Tab1data.description)}</p>
+
+<h3>Tokens
+</h3>
+<div style="${"display: flex;"}" class="${"mt-1"}">${each(Tokens, ({ imgUrl, label, amount, selected, id }) => {
+        return `${selected ? `<div style="${"--width:" + escape2("30%") + "; --margin-left:" + escape2(id === 0 ? "0rem" : "0.8rem")}" class="${escape2(null_to_empty("token-container")) + " svelte-1v562r5"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "}"><img style="${"height:100%; width:2.6rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+        <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
+        <div class="${"amount-container svelte-1v562r5"}">${escape2(amount)}</div>
+    </div>` : ``}`;
+      })}</div>
+<h3>Collections
+</h3>
+<div class="${"mt-1"}">${each(Collections, (collection) => {
+        return `${collection.selected ? `<div class="${"mt-1"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign(collection), {}, {})}
+
+    </div>` : ``}`;
+      })}</div>
+
+<div class="${"mt-2"}" style="${"display: flex;"}"><h3>Verification</h3></div>
+<div class="${"mt-1"}">${EmeraldIdVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(EmeraldIdVerif), {}, {})}` : ``}
+    ${validate_component(VerticalSpace, "VerticalSpace").$$render($$result, { value: "0.8rem" }, {}, {})}
+    ${DiscordVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(DiscordVerif), {}, {})}` : ``}
+    ${validate_component(VerticalSpace, "VerticalSpace").$$render($$result, { value: "0.8rem" }, {}, {})}
+    ${TwitterVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(TwitterVerif), {}, {})}` : ``}
+</div>`;
+    });
+    projects = writable2([]);
     activeTabVal = writable2(0);
     activeTabVal.subscribe((val) => console.log("active tab val", val));
     tabs = writable2([
@@ -9133,6 +9222,12 @@ var init_stores_572856a0 = __esm({
         value: 5,
         component: Tab6,
         icon: "radix-icons:twitter-logo"
+      },
+      {
+        label: "Tab 7",
+        value: 6,
+        component: Tab7,
+        icon: "line-md:confirm-circle"
       }
     ]);
     theme = writable2(null);
@@ -9192,8 +9287,14 @@ var init_stores_572856a0 = __esm({
       action: "",
       opened: false
     });
-    emeraldIdVerif = writable2(false);
+    emeraldIdVerif = writable2({
+      label: "Emerald ID",
+      active: false,
+      imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg"
+    });
     discordVerif = writable2({
+      label: "Discord",
+      imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648666781/discordIcon_pokppb.svg",
       selectedId: 0,
       serverId: "",
       active: false,
@@ -9201,6 +9302,8 @@ var init_stores_572856a0 = __esm({
       servers: []
     });
     twitterVerif = writable2({
+      label: "Twitter",
+      imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1648666781/twitterIcon_sxe5jr.svg",
       selectedId: 0,
       accountId: "",
       active: false,
@@ -23179,16 +23282,16 @@ var require_fcl_cjs = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/MediaQuery-dd0a8898.js
-var MediaQuery_dd0a8898_exports = {};
-__export(MediaQuery_dd0a8898_exports, {
+// .svelte-kit/output/server/chunks/MediaQuery-fec72ce1.js
+var MediaQuery_fec72ce1_exports = {};
+__export(MediaQuery_fec72ce1_exports, {
   default: () => MediaQuery
 });
 var MediaQuery;
-var init_MediaQuery_dd0a8898 = __esm({
-  ".svelte-kit/output/server/chunks/MediaQuery-dd0a8898.js"() {
+var init_MediaQuery_fec72ce1 = __esm({
+  ".svelte-kit/output/server/chunks/MediaQuery-fec72ce1.js"() {
     init_shims();
-    init_app_d3d82645();
+    init_app_bed6abf6();
     init_ssr();
     MediaQuery = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { query } = $$props;
@@ -23200,20 +23303,19 @@ var init_MediaQuery_dd0a8898 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-89ec6763.js
-var layout_89ec6763_exports = {};
-__export(layout_89ec6763_exports, {
+// .svelte-kit/output/server/chunks/__layout-04011753.js
+var layout_04011753_exports = {};
+__export(layout_04011753_exports, {
   default: () => _layout
 });
 var import_onflow_fcl_esm, user, transactionStatus, txId, transactionInProgress, css$42, ConnectWallet, css$32, UserAddress, css$22, Header, css$12, Transaction, getStores, page, css2, _layout;
-var init_layout_89ec6763 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-89ec6763.js"() {
+var init_layout_04011753 = __esm({
+  ".svelte-kit/output/server/chunks/__layout-04011753.js"() {
     init_shims();
-    init_app_d3d82645();
-    init_Icon_d8bf2219();
-    init_stores_572856a0();
+    init_app_bed6abf6();
+    init_stores_668e9aa6();
     import_onflow_fcl_esm = __toModule(require_fcl_cjs());
-    init_MediaQuery_dd0a8898();
+    init_MediaQuery_fec72ce1();
     init_ssr();
     user = writable2(null);
     transactionStatus = writable2(null);
@@ -23387,9 +23489,9 @@ ${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(max
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-8aae356d.js
-var error_8aae356d_exports = {};
-__export(error_8aae356d_exports, {
+// .svelte-kit/output/server/chunks/__error-a87fa5f9.js
+var error_a87fa5f9_exports = {};
+__export(error_a87fa5f9_exports, {
   default: () => _error,
   load: () => load
 });
@@ -23399,10 +23501,10 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_8aae356d = __esm({
-  ".svelte-kit/output/server/chunks/__error-8aae356d.js"() {
+var init_error_a87fa5f9 = __esm({
+  ".svelte-kit/output/server/chunks/__error-a87fa5f9.js"() {
     init_shims();
-    init_app_d3d82645();
+    init_app_bed6abf6();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23413,33 +23515,33 @@ var init_error_8aae356d = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js
+// .svelte-kit/output/server/chunks/constants-358452f5.js
 var PAGE_TITLE_EXTENSION;
-var init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf = __esm({
-  ".svelte-kit/output/server/chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js"() {
+var init_constants_358452f5 = __esm({
+  ".svelte-kit/output/server/chunks/constants-358452f5.js"() {
     init_shims();
     PAGE_TITLE_EXTENSION = "| FLOAT by Emerald City DAO";
   }
 });
 
-// .svelte-kit/output/server/chunks/projects-1859ad1e.js
-var projects_1859ad1e_exports = {};
-__export(projects_1859ad1e_exports, {
+// .svelte-kit/output/server/chunks/projects-d2c8e955.js
+var projects_d2c8e955_exports = {};
+__export(projects_d2c8e955_exports, {
   default: () => Projects
 });
-var css3, CreateProject, Projects;
-var init_projects_1859ad1e = __esm({
-  ".svelte-kit/output/server/chunks/projects-1859ad1e.js"() {
+var css$13, CreateProject, css3, ProjectsComponent, Projects;
+var init_projects_d2c8e955 = __esm({
+  ".svelte-kit/output/server/chunks/projects-d2c8e955.js"() {
     init_shims();
-    init_app_d3d82645();
-    init_Icon_d8bf2219();
+    init_app_bed6abf6();
+    init_stores_668e9aa6();
     init_ssr();
-    css3 = {
+    css$13 = {
       code: "a.svelte-kwuh1f{text-decoration:none}p.svelte-kwuh1f{font-size:medium}.project-card.svelte-kwuh1f{border-radius:12px;background-color:#252E37;height:16rem}.project-card.svelte-kwuh1f:hover{background-color:rgba(56, 232, 198, 0.03);cursor:pointer}",
       map: null
     };
     CreateProject = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css3);
+      $$result.css.add(css$13);
       return `<a href="${"createProject"}" class="${"svelte-kwuh1f"}"><div class="${"card project-card svelte-kwuh1f"}">${validate_component(Icon, "Icon").$$render($$result, {
         icon: "ant-design:plus-circle-outlined",
         height: "3.6rem",
@@ -23452,34 +23554,140 @@ var init_projects_1859ad1e = __esm({
                 </p></div></div>
             </a>`;
     });
+    css3 = {
+      code: ".projects-container.svelte-1slr4no{display:flex;flex-wrap:true;max-width:100%}a.svelte-1slr4no{text-decoration:none}.project-card.svelte-1slr4no{border-radius:12px;background-color:#252E37;height:16rem}.project-card.svelte-1slr4no:hover{background-color:rgba(56, 232, 198, 0.03);cursor:pointer}",
+      map: null
+    };
+    ProjectsComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let Projects2;
+      projects.subscribe((val) => Projects2 = val);
+      $$result.css.add(css3);
+      return `<div class="${"projects-container svelte-1slr4no"}">${each(Projects2, (project) => {
+        return `<a href="${"projectDetails"}" class="${"svelte-1slr4no"}"><div class="${"card project-card svelte-1slr4no"}"><div><h1>${escape2(project.name)}
+                        </h1></div>
+
+                    <div>Entries: 0
+                    </div></div>
+            </a>`;
+      })}
+
+</div>`;
+    });
     Projects = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `${$$result.head += `${$$result.title = `<title>Your Projects</title>`, ""}`, ""}
     <article><h2>Your Projects
         </h2>
         <div class="${"card-container"}"></div>
-        ${validate_component(CreateProject, "CreateProject").$$render($$result, {}, {}, {})}
+        <div style="${"display: flex;"}">${validate_component(CreateProject, "CreateProject").$$render($$result, {}, {}, {})}
+        ${validate_component(ProjectsComponent, "ProjectsComponent").$$render($$result, {}, {}, {})}</div>
+       
 
     </article>`;
     });
   }
 });
 
-// .svelte-kit/output/server/chunks/index-92036539.js
-var index_92036539_exports = {};
-__export(index_92036539_exports, {
+// .svelte-kit/output/server/chunks/index-168a53cd.js
+var index_168a53cd_exports = {};
+__export(index_168a53cd_exports, {
   default: () => Routes
 });
-var css$52, LocalRolesComponent, css$43, ServerRolesComponent, DiscordRoles, css$33, DiscordVerifContent, CustomTokenContent, css$23, TwitterVerifContent, css$13, Modal_1, css4, Dialog, Routes;
-var init_index_92036539 = __esm({
-  ".svelte-kit/output/server/chunks/index-92036539.js"() {
+var Routes;
+var init_index_168a53cd = __esm({
+  ".svelte-kit/output/server/chunks/index-168a53cd.js"() {
     init_shims();
-    init_app_d3d82645();
-    init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf();
-    init_stores_572856a0();
-    init_Icon_d8bf2219();
-    init_projects_1859ad1e();
+    init_app_bed6abf6();
+    init_constants_358452f5();
+    init_projects_d2c8e955();
     init_ssr();
-    css$52 = {
+    init_stores_668e9aa6();
+    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
+
+    
+    ${validate_component(Projects, "Projects").$$render($$result, {}, {}, {})}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/projectDetails-ebdd5f8d.js
+var projectDetails_ebdd5f8d_exports = {};
+__export(projectDetails_ebdd5f8d_exports, {
+  default: () => ProjectDetails
+});
+var import_onflow_fcl_esm2, css4, ProjectDetails;
+var init_projectDetails_ebdd5f8d = __esm({
+  ".svelte-kit/output/server/chunks/projectDetails-ebdd5f8d.js"() {
+    init_shims();
+    init_app_bed6abf6();
+    init_stores_668e9aa6();
+    import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
+    init_ssr();
+    css4 = {
+      code: ".token-container.svelte-1v562r5{display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;margin-left:var(--margin-left)}.amount-container.svelte-1v562r5{color:#252E37;font-weight:bold;display:flex;height:2.6rem;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}",
+      map: null
+    };
+    ProjectDetails = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let Tab1data;
+      let Tokens;
+      let Collections;
+      let EmeraldIdVerif;
+      let DiscordVerif;
+      let TwitterVerif;
+      tab1data.subscribe((val) => Tab1data = val);
+      tokens.subscribe((val) => Tokens = val);
+      collections.subscribe((val) => Collections = val);
+      emeraldIdVerif.subscribe((val) => EmeraldIdVerif = val);
+      discordVerif.subscribe((val) => DiscordVerif = val);
+      twitterVerif.subscribe((val) => TwitterVerif = val);
+      $$result.css.add(css4);
+      return `${$$result.head += `${$$result.title = `<title>${escape2(Tab1data.name)} details</title>`, ""}`, ""}
+    <article><h1>${escape2(Tab1data.name)}</h1>
+        <p>${escape2(Tab1data.description)}</p>
+
+        <h1>Tokens
+        </h1>
+        <div style="${"display: flex;"}" class="${"mt-1"}">${each(Tokens, ({ imgUrl, label, amount, selected, id }) => {
+        return `${selected ? `<div style="${"--width:" + escape2("30%") + "; --margin-left:" + escape2(id === 0 ? "0rem" : "0.8rem")}" class="${escape2(null_to_empty("token-container")) + " svelte-1v562r5"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "}"><img style="${"height:100%; width:2.6rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", imgUrl, 0)} alt="${"logo"}"></div>
+                <div style="${"margin-right: 1rem;"}">${escape2(label)}</div>
+                <div class="${"amount-container svelte-1v562r5"}">${escape2(amount)}</div>
+            </div>` : ``}`;
+      })}</div>
+        <h1>Collections
+        </h1>
+        <div class="${"mt-1"}">${each(Collections, (collection) => {
+        return `${collection.selected ? `<div class="${"mt-1"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign(collection), {}, {})}
+
+            </div>` : ``}`;
+      })}</div>
+
+        <div class="${"mt-2"}" style="${"display: flex;"}"><h1>Verification</h1></div>
+        <div class="${"mt-1"}">${EmeraldIdVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(EmeraldIdVerif), {}, {})}` : ``}
+            ${validate_component(VerticalSpace, "VerticalSpace").$$render($$result, { value: "0.8rem" }, {}, {})}
+            ${DiscordVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(DiscordVerif), {}, {})}` : ``}
+            ${validate_component(VerticalSpace, "VerticalSpace").$$render($$result, { value: "0.8rem" }, {}, {})}
+            ${TwitterVerif.active ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign(TwitterVerif), {}, {})}` : ``}</div>
+
+    </article>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/createProject-c3f2656f.js
+var createProject_c3f2656f_exports = {};
+__export(createProject_c3f2656f_exports, {
+  default: () => CreateProject2
+});
+var css$62, LocalRolesComponent, css$52, ServerRolesComponent, DiscordRoles, css$43, DiscordVerifContent, CustomTokenContent, css$33, TwitterVerifContent, css$23, Modal_1, css$14, Dialog, EmeraldIdIcon, css5, CreateProjectDetails, CreateProject2;
+var init_createProject_c3f2656f = __esm({
+  ".svelte-kit/output/server/chunks/createProject-c3f2656f.js"() {
+    init_shims();
+    init_app_bed6abf6();
+    init_stores_668e9aa6();
+    init_MediaQuery_fec72ce1();
+    init_constants_358452f5();
+    init_ssr();
+    css$62 = {
       code: ".icon-container.svelte-eafmfp{height:3rem}.icon-container.svelte-eafmfp:hover{color:red;height:3rem;cursor:pointer}ul.svelte-eafmfp{list-style-type:none;width:99.5%;display:flex;flex-direction:column;margin:0;padding:0}li.svelte-eafmfp{margin-top:0.3rem;padding:0;display:flex;width:100%;justify-content:space-between;height:3rem}.role.svelte-eafmfp{display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:100%;border-radius:50px;height:100%}",
       map: null
     };
@@ -23490,7 +23698,7 @@ var init_index_92036539 = __esm({
         $$bindings.localRoles(localRoles);
       if ($$props.dispatch === void 0 && $$bindings.dispatch && dispatch !== void 0)
         $$bindings.dispatch(dispatch);
-      $$result.css.add(css$52);
+      $$result.css.add(css$62);
       return `${localRoles === [] ? `<div>no roles</div>` : `<ul class="${"svelte-eafmfp"}">${each(localRoles, (role, i2) => {
         return `<li class="${"role-container svelte-eafmfp"}"><div class="${"role svelte-eafmfp"}">${escape2(role.label)}
             <div class="${"icon-container svelte-eafmfp"}">${validate_component(Icon, "Icon").$$render($$result, {
@@ -23502,7 +23710,7 @@ var init_index_92036539 = __esm({
     </li>`;
       })}</ul>`}`;
     });
-    css$43 = {
+    css$52 = {
       code: ".icon-container.svelte-aaxewx{height:3rem}.icon-container.svelte-aaxewx:hover{color:red;height:3rem;cursor:pointer}ul.svelte-aaxewx{list-style-type:none;width:99.5%;display:flex;flex-direction:column;margin:0;padding:0}li.svelte-aaxewx{margin-top:0.3rem;padding:0;display:flex;width:100%;justify-content:space-between;height:3rem}.role.svelte-aaxewx{display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:100%;border-radius:50px;height:100%}",
       map: null
     };
@@ -23514,7 +23722,7 @@ var init_index_92036539 = __esm({
       let { dispatch } = $$props;
       if ($$props.dispatch === void 0 && $$bindings.dispatch && dispatch !== void 0)
         $$bindings.dispatch(dispatch);
-      $$result.css.add(css$43);
+      $$result.css.add(css$52);
       $$unsubscribe_discordVerif();
       return `${DiscordVerif.servers[DiscordVerif.selectedId].roles.length === 0 ? `<div>no roles</div>` : `<ul class="${"svelte-aaxewx"}">${each(DiscordVerif.servers[DiscordVerif.selectedId].roles, (role, i2) => {
         return `<li class="${"role-container svelte-aaxewx"}"><div class="${"role svelte-aaxewx"}">${escape2(role.label)}
@@ -23539,7 +23747,7 @@ var init_index_92036539 = __esm({
         $$bindings.dispatch(dispatch);
       return `${DiscordVerif.editing ? `${validate_component(ServerRolesComponent, "ServerRolesComponent").$$render($$result, { dispatch }, {}, {})}` : `${validate_component(LocalRolesComponent, "LocalRolesComponent").$$render($$result, { dispatch, localRoles }, {}, {})}`}`;
     });
-    css$33 = {
+    css$43 = {
       code: ".id-input.svelte-1yo92ww:focus{border-color:#5865F2}.plus-icon.svelte-1yo92ww{height:3rem}.plus-icon.svelte-1yo92ww:hover{height:3rem;color:#5865F2;cursor:pointer}.plus-icon-container.svelte-1yo92ww{width:4rem;height:100%;border:0.2px solid var(--form-element-border-color);border-top-right-radius:6px;border-bottom-right-radius:6px}.role-input.svelte-1yo92ww{width:100%;border-top-right-radius:0px;border-bottom-right-radius:0px;border-right-width:0.5px}.role-input.svelte-1yo92ww:focus{width:100%;border-top-right-radius:0px;border-bottom-right-radius:0px;border-right-width:0.5px;border-color:#5865F2}.role-input-container.svelte-1yo92ww{display:flex;width:100%;align-items:center}.content.svelte-1yo92ww{display:flex;flex-direction:column;align-items:center;width:100%;height:100%;overflow:auto;overflow-x:hidden}.content.svelte-1yo92ww::-webkit-scrollbar{display:none}.content.svelte-1yo92ww{-ms-overflow-style:none;scrollbar-width:none}",
       map: null
     };
@@ -23556,7 +23764,7 @@ var init_index_92036539 = __esm({
         $$bindings.serverId(serverId);
       if ($$props.roleName === void 0 && $$bindings.roleName && roleName !== void 0)
         $$bindings.roleName(roleName);
-      $$result.css.add(css$33);
+      $$result.css.add(css$43);
       return `<div class="${"content svelte-1yo92ww"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Discord Server ID</h3>
         ${DiscordVerif.editing ? `<input class="${"id-input svelte-1yo92ww"}" placeholder="${"Server ID"}"${add_attribute("value", DiscordVerif.servers[DiscordVerif.selectedId].label, 0)}>` : `<input class="${"id-input svelte-1yo92ww"}" placeholder="${"Server ID"}"${add_attribute("value", serverId, 0)}>`}</div>
     <div style="${"width:80%"}"><h3 class="${"mt-0"}">Discord Server Roles</h3>
@@ -23575,7 +23783,7 @@ var init_index_92036539 = __esm({
 <div style="${"width:80%"}"><h3 class="${"mt-0"}">Input 2</h3>
     <input placeholder="${"Input 2"}"></div></div>`;
     });
-    css$23 = {
+    css$33 = {
       code: "input.svelte-jbstn1:focus{border-color:#1DA1F2\n    }",
       map: null
     };
@@ -23590,14 +23798,14 @@ var init_index_92036539 = __esm({
         selectedId = TwitterVerif.selectedId;
         inputVal = TwitterVerif.accounts[selectedId]?.label;
       });
-      $$result.css.add(css$23);
+      $$result.css.add(css$33);
       $$unsubscribe_twitterVerif();
       return `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3 class="${"mt-1"}">Account Handle</h3>
     <input${add_attribute("value", inputVal, 0)} class="${"svelte-jbstn1"}"></div>
 
 </div>`;
     });
-    css$13 = {
+    css$23 = {
       code: ".cancel.svelte-e0ia7h{height:2.4rem;width:5rem;cursor:pointer;color:red\n}.cancel.svelte-e0ia7h:hover{background-color:rgba(255, 0, 61, 0.1);border-radius:6px}.save.svelte-e0ia7h{height:2.4rem;width:5rem;cursor:pointer;color:var(--color)\n}.save.svelte-e0ia7h:hover{background-color:var(--bg);border-radius:6px;color:var(--color)\n}header.svelte-e0ia7h{display:flex;flex-direction:row;height:12%;width:100%;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;border-bottom:var(--border)}.content.svelte-e0ia7h{height:76%}footer.svelte-e0ia7h{color:var(--primary);display:flex;justify-content:space-between;align-items:center;padding-right:2rem;padding-left:2rem;height:12%;width:100%;border-top:var(--border);;}#background.svelte-e0ia7h{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.5)}#modal.svelte-e0ia7h{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;height:80%;width:48%;border-radius:20px;border:var(--border)\n\n}",
       map: null
     };
@@ -23612,7 +23820,7 @@ var init_index_92036539 = __esm({
       let roleName = "";
       modal.subscribe((val) => Modal = val);
       discordVerif.subscribe((val) => val);
-      $$result.css.add(css$13);
+      $$result.css.add(css$23);
       localRoles && console.log("changed");
       $$unsubscribe_discordVerif();
       $$unsubscribe_modal();
@@ -23629,37 +23837,31 @@ var init_index_92036539 = __esm({
                     </div></footer>
                 </main>`;
     });
-    css4 = {
+    css$14 = {
       code: "header.svelte-1crudv2{display:flex;flex-direction:row;height:16%;width:100%;justify-content:space-between;align-items:center;padding-right:1rem;padding-left:2rem;border-bottom:0.5px solid var(--primary)}footer.svelte-1crudv2{color:var(--primary);display:flex;justify-content:flex-end;align-items:center;padding-right:2rem;height:15%;width:100%;border-top:0.5px solid var(--primary)}#background.svelte-1crudv2{display:var(--display);position:fixed;z-index:1;top:0;left:0;width:100vw;height:100vh;background-color:rgba(0, 0, 0, 0.7)}#dialog.svelte-1crudv2{display:var(--display);position:fixed;z-index:2;top:50%;left:50%;transform:translate(-50%, -50%);background:#141e26;height:48%;width:42%;border-radius:20px;border:2px solid var(--primary)}",
       map: null
     };
     Dialog = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $collections, $$unsubscribe_collections;
       let $tokens, $$unsubscribe_tokens;
-      let $dialog, $$unsubscribe_dialog;
-      $$unsubscribe_collections = subscribe(collections, (value) => $collections = value);
+      let $$unsubscribe_dialog;
       $$unsubscribe_tokens = subscribe(tokens, (value) => $tokens = value);
-      $$unsubscribe_dialog = subscribe(dialog, (value) => $dialog = value);
+      $$unsubscribe_dialog = subscribe(dialog, (value) => value);
+      let tokensVal;
       let dialogValue;
       let selectedVal;
-      let selectedCollectionVal;
       let amountInput;
-      let activeTabValue;
       dialog.subscribe((val) => {
         dialogValue = val;
         console.log("dialogValue", dialogValue);
       });
-      tokens.subscribe((val) => val);
-      collections.subscribe((val) => val);
+      tokens.subscribe((val) => tokensVal = val);
       selectedToken.subscribe((val) => selectedVal = val);
-      selectedCollection.subscribe((val) => selectedCollectionVal = val);
-      activeTabVal.subscribe((val) => activeTabValue = val);
-      $$result.css.add(css4);
-      $$unsubscribe_collections();
+      activeTabVal.subscribe((val) => val);
+      $$result.css.add(css$14);
       $$unsubscribe_tokens();
       $$unsubscribe_dialog();
-      return `<div id="${"background"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none")}" class="${"svelte-1crudv2"}"></div>
-    <main id="${"dialog"}" style="${"--display: " + escape2($dialog.opened ? "block" : "none") + ";"}" class="${"svelte-1crudv2"}"><header class="${"svelte-1crudv2"}"><div><h3>Dialog title</h3></div>
+      return `<div id="${"background"}" style="${"--display: " + escape2(dialogValue.opened ? "block" : "none")}" class="${"svelte-1crudv2"}"></div>
+    <main id="${"dialog"}" style="${"--display: " + escape2(dialogValue.opened ? "block" : "none") + ";"}" class="${"svelte-1crudv2"}"><header class="${"svelte-1crudv2"}"><div><h3>Dialog title</h3></div>
             <div><div>${validate_component(Icon, "Icon").$$render($$result, {
         icon: "ant-design:close-circle-outlined",
         height: "1.4rem",
@@ -23667,43 +23869,19 @@ var init_index_92036539 = __esm({
       }, {}, {})}</div></div></header>
                       
 
-                        ${activeTabValue === 1 ? `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Token Amount</h3>
-                            ${$tokens[selectedVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $tokens[selectedVal].amount, 0)}>`}</div>
-                        <div style="${"width:80%"}"></div></div>` : `<div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Collection Amount</h3>
-                            ${$collections[selectedCollectionVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $collections[selectedCollectionVal].amount, 0)}>`}</div>
-                        <div style="${"width:80%"}"></div></div>`}
+                        <div style="${"width: 100%; height:70%; display:flex; flex-direction:column; justify-content:center; align-items:center"}"><div style="${"width:80%"}"><h3>Token Amount</h3>
+                            ${tokensVal[selectedVal].amount === 0 ? `<input type="${"number"}"${add_attribute("placeholder", 0, 0)}${add_attribute("this", amountInput, 0)}>` : `<input type="${"number"}"${add_attribute("this", amountInput, 0)}${add_attribute("value", $tokens[selectedVal].amount, 0)}>`}</div>
+                        <div style="${"width:80%"}"></div></div>
 
 
                         <footer class="${"svelte-1crudv2"}"><div style="${"cursor: pointer;"}">SAVE
 
-                            </div></footer>
-                        </main>`;
-    });
-    Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `${$$result.head += `${$$result.title = `<title>Home ${escape2(PAGE_TITLE_EXTENSION)}</title>`, ""}`, ""}
+                            </div></footer></main>
 
-    ${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
-    ${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
-    ${validate_component(Projects, "Projects").$$render($$result, {}, {}, {})}`;
-    });
-  }
-});
 
-// .svelte-kit/output/server/chunks/createProject-d49b3c7c.js
-var createProject_d49b3c7c_exports = {};
-__export(createProject_d49b3c7c_exports, {
-  default: () => CreateProject2
-});
-var EmeraldIdIcon, css5, CreateProjectDetails, CreateProject2;
-var init_createProject_d49b3c7c = __esm({
-  ".svelte-kit/output/server/chunks/createProject-d49b3c7c.js"() {
-    init_shims();
-    init_app_d3d82645();
-    init_Icon_d8bf2219();
-    init_stores_572856a0();
-    init_Dialog_svelte_svelte_type_style_lang_ef7e9ccf();
-    init_MediaQuery_dd0a8898();
-    init_ssr();
+
+`;
+    });
     EmeraldIdIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { color } = $$props;
       let { mobile } = $$props;
@@ -23720,22 +23898,43 @@ var init_createProject_d49b3c7c = __esm({
     CreateProjectDetails = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$unsubscribe_activeTabVal;
       let $$unsubscribe_tabs;
+      let $$unsubscribe_projects;
       $$unsubscribe_activeTabVal = subscribe(activeTabVal, (value) => value);
       $$unsubscribe_tabs = subscribe(tabs, (value) => value);
+      $$unsubscribe_projects = subscribe(projects, (value) => value);
       let { screenSize } = $$props;
       let mobile = screenSize === "mobile";
       let tabsValue;
       let activeTabValue;
+      let btnLabel;
       tabs.subscribe((value) => {
         tabsValue = value;
       });
-      activeTabVal.subscribe((val) => activeTabValue = val);
+      activeTabVal.subscribe((val) => {
+        activeTabValue = val;
+        if (val === 6) {
+          btnLabel = "CONFIRM";
+        } else {
+          btnLabel = "CONTINUE";
+        }
+      });
+      tab1data.subscribe((val) => val);
+      tokens.subscribe((val) => val);
+      collections.subscribe((val) => val);
+      emeraldIdVerif.subscribe((val) => val);
+      discordVerif.subscribe((val) => val);
+      twitterVerif.subscribe((val) => val);
+      projects.subscribe((val) => val);
       if ($$props.screenSize === void 0 && $$bindings.screenSize && screenSize !== void 0)
         $$bindings.screenSize(screenSize);
       $$result.css.add(css5);
       $$unsubscribe_activeTabVal();
       $$unsubscribe_tabs();
-      return `<article><main class="${"main-container svelte-w2e1iq"}">
+      $$unsubscribe_projects();
+      return `${validate_component(Dialog, "Dialog").$$render($$result, {}, {}, {})}
+    ${validate_component(Modal_1, "Modal").$$render($$result, {}, {}, {})}
+
+<article><main class="${"main-container svelte-w2e1iq"}">
         <div style="${"--width:" + escape2(mobile ? "30%" : "20%")}" class="${"chevron-wrapper svelte-w2e1iq"}"><div class="${escape2(null_to_empty(activeTabValue === 0 ? "chevron-icon-disabled" : "chevron-icon")) + " svelte-w2e1iq"}">${validate_component(Icon, "Icon").$$render($$result, {
         class: "chevron-icon",
         icon: "akar-icons:circle-chevron-left",
@@ -23767,7 +23966,7 @@ var init_createProject_d49b3c7c = __esm({
         return `${activeTabValue == item.value ? `<div class="${"tab-content-container"}">
                                                 
                                                 ${validate_component(item.component || missing_component, "svelte:component").$$render($$result, { mobile }, {}, {})}</div>
-                                            <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">Continue</button></div>
+                                            <footer><div class="${"mt-0 mb-0 pl-1"}"><button class="${"contrast small-button"}">${escape2(btnLabel)}</button></div>
                                                         </footer>` : ``}`;
       })}
 
@@ -23798,7 +23997,7 @@ ${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(min
   }
 });
 
-// .svelte-kit/output/server/chunks/app-d3d82645.js
+// .svelte-kit/output/server/chunks/app-bed6abf6.js
 function noop3() {
 }
 function run(fn) {
@@ -23999,9 +24198,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-e80be0bd.js",
+      file: assets + "/_app/start-6c97e7d3.js",
       css: [assets + "/_app/assets/start-61d1577b.css"],
-      js: [assets + "/_app/start-e80be0bd.js", assets + "/_app/chunks/vendor-30cfb5d2.js"]
+      js: [assets + "/_app/start-6c97e7d3.js", assets + "/_app/chunks/vendor-a347a1bd.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -24045,8 +24244,8 @@ function render2(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var current_component, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css6, Root, base, assets, user_hooks, template, options, default_settings, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_d3d82645 = __esm({
-  ".svelte-kit/output/server/chunks/app-d3d82645.js"() {
+var init_app_bed6abf6 = __esm({
+  ".svelte-kit/output/server/chunks/app-bed6abf6.js"() {
     init_shims();
     init_ssr();
     Promise.resolve();
@@ -24155,6 +24354,13 @@ ${``}`;
         },
         {
           type: "page",
+          pattern: /^\/projectDetails\/?$/,
+          params: empty,
+          a: ["src/routes/__layout.svelte", "src/routes/projectDetails.svelte"],
+          b: ["src/routes/__error.svelte"]
+        },
+        {
+          type: "page",
           pattern: /^\/createProject\/?$/,
           params: empty,
           a: ["src/routes/__layout.svelte", "src/routes/createProject.svelte"],
@@ -24183,14 +24389,15 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_89ec6763(), layout_89ec6763_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_8aae356d(), error_8aae356d_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_92036539(), index_92036539_exports)),
-      "src/routes/createProject.svelte": () => Promise.resolve().then(() => (init_createProject_d49b3c7c(), createProject_d49b3c7c_exports)),
-      "src/routes/MediaQuery.svelte": () => Promise.resolve().then(() => (init_MediaQuery_dd0a8898(), MediaQuery_dd0a8898_exports)),
-      "src/routes/projects.svelte": () => Promise.resolve().then(() => (init_projects_1859ad1e(), projects_1859ad1e_exports))
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_04011753(), layout_04011753_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_a87fa5f9(), error_a87fa5f9_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_168a53cd(), index_168a53cd_exports)),
+      "src/routes/projectDetails.svelte": () => Promise.resolve().then(() => (init_projectDetails_ebdd5f8d(), projectDetails_ebdd5f8d_exports)),
+      "src/routes/createProject.svelte": () => Promise.resolve().then(() => (init_createProject_c3f2656f(), createProject_c3f2656f_exports)),
+      "src/routes/MediaQuery.svelte": () => Promise.resolve().then(() => (init_MediaQuery_fec72ce1(), MediaQuery_fec72ce1_exports)),
+      "src/routes/projects.svelte": () => Promise.resolve().then(() => (init_projects_d2c8e955(), projects_d2c8e955_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-d5f13c97.js", "css": ["assets/pages/__layout.svelte-d3820f7a.css", "assets/stores-dc5fc4dc.css"], "js": ["pages/__layout.svelte-d5f13c97.js", "chunks/vendor-30cfb5d2.js", "chunks/stores-0fc70030.js", "pages/MediaQuery.svelte-9391cf75.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-571fd1c3.js", "css": [], "js": ["pages/__error.svelte-571fd1c3.js", "chunks/vendor-30cfb5d2.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-2229df44.js", "css": ["assets/Dialog.svelte_svelte_type_style_lang-d0a0af67.css", "assets/stores-dc5fc4dc.css", "assets/pages/projects.svelte-92e0cb01.css"], "js": ["pages/index.svelte-2229df44.js", "chunks/vendor-30cfb5d2.js", "chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js", "chunks/stores-0fc70030.js", "pages/projects.svelte-0a5c797f.js"], "styles": [] }, "src/routes/createProject.svelte": { "entry": "pages/createProject.svelte-49734aae.js", "css": ["assets/pages/createProject.svelte-fc7e3a3e.css", "assets/stores-dc5fc4dc.css", "assets/Dialog.svelte_svelte_type_style_lang-d0a0af67.css"], "js": ["pages/createProject.svelte-49734aae.js", "chunks/vendor-30cfb5d2.js", "chunks/stores-0fc70030.js", "chunks/Dialog.svelte_svelte_type_style_lang-ef7e9ccf.js", "pages/MediaQuery.svelte-9391cf75.js"], "styles": [] }, "src/routes/MediaQuery.svelte": { "entry": "pages/MediaQuery.svelte-9391cf75.js", "css": [], "js": ["pages/MediaQuery.svelte-9391cf75.js", "chunks/vendor-30cfb5d2.js"], "styles": [] }, "src/routes/projects.svelte": { "entry": "pages/projects.svelte-0a5c797f.js", "css": ["assets/pages/projects.svelte-92e0cb01.css"], "js": ["pages/projects.svelte-0a5c797f.js", "chunks/vendor-30cfb5d2.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-257935c2.js", "css": ["assets/pages/__layout.svelte-d3820f7a.css", "assets/stores-40437ceb.css"], "js": ["pages/__layout.svelte-257935c2.js", "chunks/vendor-a347a1bd.js", "chunks/stores-ebe64505.js", "pages/MediaQuery.svelte-d5d68a9e.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-623ebb86.js", "css": [], "js": ["pages/__error.svelte-623ebb86.js", "chunks/vendor-a347a1bd.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-4e78fe3b.js", "css": ["assets/pages/projects.svelte-30f5c958.css", "assets/stores-40437ceb.css"], "js": ["pages/index.svelte-4e78fe3b.js", "chunks/vendor-a347a1bd.js", "chunks/constants-358452f5.js", "pages/projects.svelte-a14dcafe.js", "chunks/stores-ebe64505.js"], "styles": [] }, "src/routes/projectDetails.svelte": { "entry": "pages/projectDetails.svelte-8842687b.js", "css": ["assets/pages/projectDetails.svelte-8d3b1a51.css", "assets/stores-40437ceb.css"], "js": ["pages/projectDetails.svelte-8842687b.js", "chunks/vendor-a347a1bd.js", "chunks/stores-ebe64505.js"], "styles": [] }, "src/routes/createProject.svelte": { "entry": "pages/createProject.svelte-961c43aa.js", "css": ["assets/pages/createProject.svelte-be2d9163.css", "assets/stores-40437ceb.css"], "js": ["pages/createProject.svelte-961c43aa.js", "chunks/vendor-a347a1bd.js", "chunks/singletons-12a22614.js", "chunks/stores-ebe64505.js", "pages/MediaQuery.svelte-d5d68a9e.js", "chunks/constants-358452f5.js"], "styles": [] }, "src/routes/MediaQuery.svelte": { "entry": "pages/MediaQuery.svelte-d5d68a9e.js", "css": [], "js": ["pages/MediaQuery.svelte-d5d68a9e.js", "chunks/vendor-a347a1bd.js"], "styles": [] }, "src/routes/projects.svelte": { "entry": "pages/projects.svelte-a14dcafe.js", "css": ["assets/pages/projects.svelte-30f5c958.css", "assets/stores-40437ceb.css"], "js": ["pages/projects.svelte-a14dcafe.js", "chunks/vendor-a347a1bd.js", "chunks/stores-ebe64505.js"], "styles": [] } };
   }
 });
 
@@ -24244,7 +24451,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_d3d82645();
+init_app_bed6abf6();
 
 // .svelte-kit/vercel/entry.js
 init();

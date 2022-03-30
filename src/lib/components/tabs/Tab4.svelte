@@ -14,13 +14,13 @@ export let emeraldIdVal
 emeraldIdVerif.subscribe(val => emeraldIdVal = val)
 
 const handleEvent = (e) => {
-    $emeraldIdVerif = !emeraldIdVal
+    $emeraldIdVerif.active = !emeraldIdVal.active
 }
 </script>
 
 <div >
     <TabHeader title={"Emerald ID"} subtitle={"Something about Emerald ID"} />
-    <button  class={emeraldIdVal ? "flex-align" : "outline mb-1 flex-align"}
+    <button  class={emeraldIdVal.active ? "flex-align" : "outline mb-1 flex-align"}
     on:click={handleEvent}
     >
     Add Emerald ID Verification

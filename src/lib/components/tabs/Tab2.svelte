@@ -13,11 +13,9 @@ import {
     handleEvent
 } from './utils';
 
-import Modal from '../Modal.svelte';
 import HorizontalSpace from "../HorizontalSpace.svelte";
 import PrimaryBtn from "../PrimaryBtn.svelte"
 import Icon from "@iconify/svelte";
-// import Dialog from '../Dialog.svelte';
 import TabHeader from './TabHeader.svelte';
 
 export let mobile
@@ -25,6 +23,7 @@ export let mobile
 let hoveredId;
 let tokensValue;
 let ModalVal
+let DialogVal
 
 let styles = {
 		'mobile-width': '50%',
@@ -37,6 +36,7 @@ let styles = {
 		.join(';');
 
 modal.subscribe(val => ModalVal = val)
+dialog.subscribe(val => DialogVal = val)
 tokens.subscribe(val => {
     tokensValue = val
 })
@@ -58,13 +58,14 @@ const handleEdit = (id) => {
 const handleSelection = (id) => {
     // update token 
     $selectedToken = id
-    $tokens[id].selected = true
+    $tokens[id].selected = !$tokens[id].selected
     console.log("tokens val", tokensValue)
 
     // check store state
-    const tokenAmount = $tokens[id].amount
+    const tokenAmount = tokensValue[id].amount
+    console.log("tokenAmount", tokenAmount)
     if (tokenAmount === 0) {
-
+        console.log("opening")
         openDialog()
     } else {
         //reset token amount and selection state
