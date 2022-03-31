@@ -22,16 +22,29 @@ let selectedVal
 let selectedCollectionVal
 let amountInput
 let activeTabValue
+
+let borderColor
 // this works here, but not in Sapper:
 
 dialog.subscribe(val => {
     dialogValue = val
     console.log("dialogValue", dialogValue)
+    if(dialogValue.title === "Discord Servers") {
+    borderColor = "#5865F2"
+} else if(dialogValue.title === "Twitter Accounts") {
+    borderColor = "#1DA1F2"
+
+} else {
+    borderColor = "var(--primary)"
+
+}
 })
 
 tokens.subscribe(val => tokensVal = val)
 selectedToken.subscribe(val => selectedVal = val)
 activeTabVal.subscribe(val => activeTabValue = val)
+
+
 
 const handleChange = (e) =>  $tokens[selectedVal].amount = e.target.value
 
@@ -60,7 +73,7 @@ const handleClose = () => {
     style="--display: {dialogValue.opened ? 'block' : 'none'}"
     on:click={handleClose}
     />
-    <main id="dialog" style="--display: {dialogValue.opened ? 'block' : 'none'};">
+    <main id="dialog" style="--display: {dialogValue.opened ? 'block' : 'none'}; --border-color:{borderColor}">
         <header>
             <div>
                 <h3>Dialog title</h3>
@@ -74,7 +87,7 @@ const handleClose = () => {
                     <Icon
                         icon="ant-design:close-circle-outlined"
                         height={"1.4rem"}
-                        color={isHovered ? "var(--primary)" : "lightgrey"}
+                        color={isHovered ? borderColor: "lightgrey"}
                         />
                         </div>
                         </div>
@@ -118,7 +131,7 @@ header {
     padding-right: 1rem;
     padding-left: 2rem;
 
-    border-bottom: 0.5px solid var(--primary);
+    border-bottom: 0.5px solid var(--border-color);
 }
 
 section {
@@ -131,14 +144,14 @@ section {
 }
 
 footer {
-    color: var(--primary);
+    color: var(--border-color);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 2rem;
     height: 15%;
     width: 100%;
-    border-top: 0.5px solid var(--primary);
+    border-top: 0.5px solid var(--border-color);
 }
 
 #background {
@@ -163,7 +176,7 @@ footer {
     height: 48%;
     width: 42%;
     border-radius: 20px;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--border-color);
 }
 </style>
 

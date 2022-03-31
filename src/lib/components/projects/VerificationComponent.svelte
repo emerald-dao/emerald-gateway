@@ -1,4 +1,8 @@
 <script>
+import {
+    dialog
+} from "$lib/stores";
+
 export let selected
 export let label
 export let imgUrl
@@ -19,6 +23,18 @@ if (label === "Discord" || label === "Twitter") {
     details = true
 } else {
     details = false
+}
+
+function handleSeeDetails() {
+
+    if (label === "Discord") {
+        $dialog.title = "Discord Servers"
+
+    } else {
+        $dialog.title = "Twitter Accounts"
+
+    }
+    $dialog.opened = true
 }
 </script>
 
@@ -44,7 +60,7 @@ if (label === "Discord" || label === "Twitter") {
     </div>
 
     {#if details}
-    <div class="flex-align see-details-container" >
+    <div class="flex-align see-details-container" on:click={handleSeeDetails} >
         See details
     </div>
     {/if}
@@ -60,11 +76,11 @@ if (label === "Discord" || label === "Twitter") {
     border-left: 2px solid blue;
     border-left-color: var(--border);
 }
+
 .see-details-container:hover {
     color: var(--border);
     cursor: pointer;
 }
-
 
 img {
     max-width: 2.4rem;

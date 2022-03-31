@@ -8,7 +8,7 @@ import {
     collections,
     emeraldIdVerif,
     discordVerif,
-    twitterVerif
+    twitterVerif,
 } from "../../stores"
 import VerticalSpace from "../VerticalSpace.svelte";
 import TabHeader from "./TabHeader.svelte";
@@ -93,11 +93,11 @@ twitterVerif.subscribe(val => TwitterVerif = val)
 </div>
 <div  class="mt-1">
     {#if EmeraldIdVerif.active}
-    <VerificationComponent {...EmeraldIdVerif} />
+    <VerificationComponent {...EmeraldIdVerif}  />
     {/if}
     <VerticalSpace value="0.8rem" />
     {#if DiscordVerif.active}
-    <VerificationComponent {...DiscordVerif} />
+    <VerificationComponent {...DiscordVerif}  />
     {/if}
     <VerticalSpace value="0.8rem" />
     {#if TwitterVerif.active}
@@ -105,9 +105,6 @@ twitterVerif.subscribe(val => TwitterVerif = val)
     {/if}
 </div>
 
-    
-    
-        
         <style>
 .token-container {
     display: flex;
