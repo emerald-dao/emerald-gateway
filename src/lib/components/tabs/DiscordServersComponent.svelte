@@ -30,7 +30,6 @@ function removeServer(id) {
             {server.label}
             <div class="edit-icon-container">
                 <Icon color="white" icon="akar-icons:edit" />
-
             </div>
         </div>
         <div class="icon-container flex-align" on:click={() => removeServer(server.id)}>

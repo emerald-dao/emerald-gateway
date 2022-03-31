@@ -47,6 +47,7 @@ function openModal() {
 }
 
 function openDialog() {
+    $dialog.title = "Token Amount"
     $dialog.opened = true
 }
 

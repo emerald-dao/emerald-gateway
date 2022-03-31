@@ -29,10 +29,8 @@ function handleSeeDetails() {
 
     if (label === "Discord") {
         $dialog.title = "Discord Servers"
-
     } else {
         $dialog.title = "Twitter Accounts"
-
     }
     $dialog.opened = true
 }
@@ -113,7 +111,7 @@ img {
     justify-content: center;
     background-color: var(--primary);
     border-radius: 100px;
-    position: absolute;
+    /* position: absolute; */
     top: -0.6rem;
     right: 0px;
     height: 1.2rem;
@@ -122,7 +120,7 @@ img {
 }
 
 .verification-container-active {
-    position: relative;
+    /* position: relative; */
     display: flex;
     width: 16rem;
     height: 70%;
@@ -135,7 +133,7 @@ img {
 }
 
 .verification-container-inactive {
-    position: relative;
+    /* position: relative; */
     z-index: 92;
     display: flex;
     width: var(--width);

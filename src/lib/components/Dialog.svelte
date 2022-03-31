@@ -12,6 +12,9 @@ import {
 } from "../stores"
 import VerticalSpace from "../components/VerticalSpace.svelte"
 import Icon from "@iconify/svelte"
+import AmountComponent from './dialog/AmountComponent.svelte';
+import DiscordServersComponent from './dialog/DiscordServersComponent.svelte';
+import TwitterAccountsComponent from './dialog/TwitterAccountsComponent.svelte';
 
 // export let dialog.opened;
 let isHovered;
@@ -76,7 +79,7 @@ const handleClose = () => {
     <main id="dialog" style="--display: {dialogValue.opened ? 'block' : 'none'}; --border-color:{borderColor}">
         <header>
             <div>
-                <h3>Dialog title</h3>
+                <h3>{dialogValue.title}</h3>
             </div>
             <div>
                 <div
@@ -92,32 +95,29 @@ const handleClose = () => {
                         </div>
                         </div>
                         </header>
-                      
+                       
+                        {#if dialogValue.title === "Discord Servers"}
+                                <DiscordServersComponent />
+                        {:else if dialogValue.title === "Twitter Accounts"}
+                            <TwitterAccountsComponent />
+                        {:else}
+                        <AmountComponent  selectedVal={selectedVal}/>
 
-                        <div style="width: 100%; height:70%; display:flex;
-                        flex-direction:column;
-                        justify-content:center;
-                        align-items:center">
-                        <div style="width:80%">
-                            <h3>Token Amount</h3>
-                            {#if tokensVal[selectedVal].amount === 0 }
-                            <input bind:this={amountInput} type="number" placeholder={0}  on:change={handleChange}  />
-                            {:else}
-                            <input bind:this={amountInput} type="number"  bind:value={$tokens[selectedVal].amount} on:change={handleChange}  />
-                        
-                            {/if}
-                        </div>
+                        {/if}
+
+                       
                         <div style="width:80%">
                         </div>
+
+                    {#if !dialogValue.title === "Discord Servers" || !dialogValue.title === "Twitter Accounts"  }
+                    <footer >
+                        <div style="cursor: pointer;" on:click={handleClose}>
+                            SAVE
+
                         </div>
-
-
-                        <footer >
-                            <div style="cursor: pointer;" on:click={handleClose}>
-                                SAVE
-
-                            </div>
-                        </footer>
+                    </footer>
+                    {/if}
+                     
                         </main>
 
 <style>
@@ -173,7 +173,7 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #141e26;
-    height: 48%;
+    height: 56%;
     width: 42%;
     border-radius: 20px;
     border: 2px solid var(--border-color);

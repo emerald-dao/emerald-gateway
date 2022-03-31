@@ -4,6 +4,7 @@ import {
     twitterVerif
 } from "$lib/stores";
 import Icon from "@iconify/svelte"
+import HorizontalSpace from "../HorizontalSpace.svelte";
 
 export let accounts
 let accountHandle = ""
@@ -51,7 +52,14 @@ function handleAddAccount() {
                     {#each TwitterVerif.accounts as account, i}
                     <li class="account-container" >
                         <div class="account" on:click={() => handleSelection(i)}>
-                            {account.label}
+                            <div style="display: flex;">
+                                <span style="color: #1DA1F2;">@</span>
+                                <HorizontalSpace value="0.2rem" />
+                                 <span style="color: white;">
+                                    {account.label}
+                                </span>
+
+                            </div>
                             <div class="edit-icon-container">
                                 <Icon color="white" icon="akar-icons:edit" />
 
