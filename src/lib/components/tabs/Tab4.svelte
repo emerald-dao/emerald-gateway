@@ -24,7 +24,7 @@ const handleEvent = (e) => {
     on:click={handleEvent}
     >
     Add Emerald ID Verification
-        <img class="logo" src="https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg"  />
+        <img class="logo" src="https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg" alt="emeraldid"  />
     </button>
 </div>
 

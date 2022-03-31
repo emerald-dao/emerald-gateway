@@ -2,7 +2,7 @@
 import Icon from "@iconify/svelte"
 </script>
 
-<a href="createProject" >
+<a href="/create" >
     <div  class="card project-card">
 
         <Icon  icon="ant-design:plus-circle-outlined"

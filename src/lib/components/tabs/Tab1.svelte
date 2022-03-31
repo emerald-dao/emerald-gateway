@@ -110,11 +110,6 @@ textarea {
     border-bottom-right-radius: 6px;
 }
 
-h5 {
-    margin: 0;
-    padding: 0;
-}
-
 .menu-icon-container {
     display: flex;
     height: 100%;
@@ -177,23 +172,5 @@ h5 {
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     margin-top: 3px;
-}
-
-.inputs-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    height: 65%;
-    width: 80%;
-}
-
-.container {
-    height: 100%;
-    width: 100%;
-}
-
-.title {
-    letter-spacing: 3px;
 }
 </style>
