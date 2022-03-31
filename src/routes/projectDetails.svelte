@@ -47,7 +47,7 @@ twitterVerif.subscribe(val => TwitterVerif = val)
         </h1>
         <div style="display: flex;" class="mt-1">
             {#each Tokens as {imgUrl, label, amount, selected, id} }
-            {#if selected}
+            {#if selected || true}
             <div
                 style="--width:{ "30%"}; --margin-left:{id === 0 ? "0rem" : "0.8rem"}"
                 class={"token-container"}
@@ -81,7 +81,7 @@ twitterVerif.subscribe(val => TwitterVerif = val)
         </h1>
         <div  class="mt-1">
             {#each Collections as collection }
-            {#if collection.selected}
+            {#if collection.selected || true}
             <div class="mt-1">
                 <CollectionComponent {...collection} />
 
@@ -96,15 +96,15 @@ twitterVerif.subscribe(val => TwitterVerif = val)
             <h1>Verification</h1>
         </div>
         <div class="mt-1">
-            {#if EmeraldIdVerif.active}
+            {#if EmeraldIdVerif.active || true}
             <VerificationComponent {...EmeraldIdVerif} />
             {/if}
             <VerticalSpace value="0.8rem" />
-            {#if DiscordVerif.active}
+            {#if DiscordVerif.active || true}
             <VerificationComponent {...DiscordVerif} />
             {/if}
             <VerticalSpace value="0.8rem" />
-            {#if TwitterVerif.active}
+            {#if TwitterVerif.active || true}
             <VerificationComponent {...TwitterVerif} />
             {/if}
         </div>

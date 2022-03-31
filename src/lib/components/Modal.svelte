@@ -214,15 +214,6 @@ header {
     height: 76%;
 }
 
-section {
-    display: flex;
-    justify-content: start;
-    flex-direction: column;
-    align-items: center;
-    height: 73%;
-    width: 100%;
-}
-
 footer {
     color: var(--primary);
     display: flex;

@@ -2,7 +2,7 @@
   "name": "fcl-sveltekit",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "svelte-kit dev & flow emulator start -v --dev-wallet",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",

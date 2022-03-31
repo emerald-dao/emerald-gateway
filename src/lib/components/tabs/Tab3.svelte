@@ -166,13 +166,6 @@ style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
 </main>
 
 <style>
-header {
-    border-bottom: 1px solid var(--form-element-border-color);
-    /* height:3.6rem; */
-    margin: 0;
-    padding: 0.5rem;
-
-}
 
 .collection-inactive {
     display: flex;

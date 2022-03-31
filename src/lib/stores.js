@@ -66,8 +66,6 @@ export const tabs = writable ([{
 },
 ]);
 
-export const theme = writable(null);
-
 export const tab1data = writable({
   name: "",
   description: "",
@@ -81,6 +79,11 @@ export const tokens = writable([
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
     selected: false,
     amount:0,
+    path: {
+      domain: "public",
+      identifier: "flowTokenBalance"
+    },
+    identifier: "A.1654653399040a61.FlowToken.Vault"
   },
   {
     id: 1,
@@ -89,6 +92,11 @@ export const tokens = writable([
       "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
     selected: false,
     amount:0,
+    path: {
+      domain: "public",
+      identifier: "fusdBalance"
+    },
+    identifier: "A.3c5959b568896393.FUSD.Vault"
   },
 ]);
 

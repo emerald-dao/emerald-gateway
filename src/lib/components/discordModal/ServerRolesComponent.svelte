@@ -9,8 +9,6 @@ import Icon from "@iconify/svelte"
 let DiscordVerif
 discordVerif.subscribe(val => DiscordVerif = val)
 
-export let dispatch
-
 function removeRole(label) {
 		$discordVerif.servers[DiscordVerif.selectedId].roles = $discordVerif.servers[DiscordVerif.selectedId].roles.filter(function(value, index, arr){ 
 			if (value.label != label) return value;

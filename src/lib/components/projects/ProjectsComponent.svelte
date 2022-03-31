@@ -1,57 +1,56 @@
 <script>
-import {
-    projects
-} from "$lib/stores";
+    import { getWhitelists } from "$lib/flow/actions";
+    import { user } from "$lib/flow/stores";
 
-let Projects;
-
-projects.subscribe(val => Projects = val)
+    async function getAllWhitelists() {
+        let whitelists = await getWhitelists($user?.addr);
+        console.log(Object.values(whitelists))
+        return Object.values(whitelists);
+    }
+    let projects = getAllWhitelists();
 </script>
 
-<div class="projects-container">
-        {#each Projects as project }
-            <a href="projectDetails" >
-                <div  class="card project-card">
+{#await projects then projects}
+    <div class="projects-container">
+        {#each projects as project}
+            <a href="{project.variables.whitelistId}">
+                <div class="card project-card">
                     <div>
                         <h1>
-                            {project.name}
+                            {project.variables.name}
                         </h1>
-                      
                     </div>
 
-                    <div>
-                        Entries: 0
-                    </div>
-
+                    <div>Entries: {project.variables.totalCount}</div>
                 </div>
             </a>
         {/each}
-
-</div>
+    </div>
+{/await}
 
 <style>
-.projects-container {
-    display: flex;
-    flex-wrap: true;
-    max-width: 100%;
-}
+    .projects-container {
+        display: flex;
+        flex-wrap: true;
+        max-width: 100%;
+    }
 
-a {
-    text-decoration: none;
-}
+    a {
+        text-decoration: none;
+    }
 
-p {
-    font-size: medium;
-}
+    p {
+        font-size: medium;
+    }
 
-.project-card {
-    border-radius: 12px;
-    background-color: #252E37;
-    height: 16rem;
-}
+    .project-card {
+        border-radius: 12px;
+        background-color: #252e37;
+        height: 16rem;
+    }
 
-.project-card:hover {
-    background-color: rgba(56, 232, 198, 0.03);
-    cursor: pointer;
-}
+    .project-card:hover {
+        background-color: rgba(56, 232, 198, 0.03);
+        cursor: pointer;
+    }
 </style>
