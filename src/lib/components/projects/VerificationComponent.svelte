@@ -26,7 +26,6 @@ if (label === "Discord" || label === "Twitter") {
 }
 
 function handleSeeDetails() {
-
     if (label === "Discord") {
         $dialog.title = "Discord Servers"
     } else {

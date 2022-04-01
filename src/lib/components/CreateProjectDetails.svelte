@@ -62,7 +62,6 @@ import { user } from "$lib/flow/stores";
     projects.subscribe((val) => (Projects = val));
 
     function handleNav() {
-        console.log("user", $user?.addr )
         goto(`/${$user?.addr}/whitelists`);
     }
 
