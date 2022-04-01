@@ -4,10 +4,10 @@
 </script>
 
 <svelte:head>
-    <title>Your Projects</title>
+    <title>Your Whitelists</title>
 </svelte:head>
 <article>
-    <h2>Your Projects</h2>
+    <h2>Your Whitelists</h2>
     <div class="card-container" />
     <div style="display: flex;">
         <CreateProject />

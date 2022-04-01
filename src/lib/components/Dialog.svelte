@@ -109,11 +109,10 @@ const handleClose = () => {
                         <div style="width:80%">
                         </div>
 
-                    {#if !dialogValue.title === "Discord Servers" || !dialogValue.title === "Twitter Accounts"  }
+                    {#if dialogValue.title === "Token Amount"  }
                     <footer >
                         <div style="cursor: pointer;" on:click={handleClose}>
                             SAVE
-
                         </div>
                     </footer>
                     {/if}

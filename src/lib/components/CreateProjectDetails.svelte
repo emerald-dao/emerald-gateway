@@ -18,6 +18,7 @@
     import Modal from "$lib/components/Modal.svelte";
     import EmeraldIdIcon from "$lib/components/tabs/EmeraldIdIcon.svelte";
     import { createWhitelist } from "$lib/flow/actions";
+import { user } from "$lib/flow/stores";
 
     export let screenSize;
 
@@ -61,7 +62,8 @@
     projects.subscribe((val) => (Projects = val));
 
     function handleNav() {
-        goto("/");
+        console.log("user", $user?.addr )
+        goto(`/${$user?.addr}/whitelists`);
     }
 
     function createProject() {
@@ -80,39 +82,13 @@
     }
 
     const handleEvent = (msg) => {
-        switch (activeTabValue) {
-            case 0:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 1:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 2:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 3:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 4:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 5:
-                $tabs[activeTabValue].done = true;
-                handleAction("increment");
-                break;
-            case 6:
-                $tabs[activeTabValue].done = true;
+        if(activeTabValue === 6) {
+            $tabs[activeTabValue].done = true;
                 createProject();
                 handleNav();
-                break;
-
-            default:
-                break;
+        } else {
+            $tabs[activeTabValue].done = true;
+                handleAction("increment");
         }
     };
 
@@ -127,8 +103,8 @@
 
     const handleAction = (action) => {
         if (
-            ($activeTabVal === 0 && action === "decrement") ||
-            ($activeTabVal === 6 && action === "increment")
+            (activeTabValue === 0 && action === "decrement") ||
+            (activeTabValue === 7 && action === "increment")
         ) {
             return;
         } else {
@@ -139,9 +115,9 @@
     const handleClick = (tabValue) => () => ($activeTabVal = tabValue);
 </script>
 
+
 <Dialog />
 <Modal />
-
 <article>
     <main class="main-container">
         <!-- TabBar -->
@@ -206,7 +182,7 @@
             on:click={() => handleAction("increment")}
         >
             <div
-                class={activeTabValue === 5
+                class={activeTabValue === 6
                     ? "chevron-icon-disabled"
                     : "chevron-icon"}
                 on:pointerenter={() => (isHovered.right = !isHovered.right)}
@@ -216,7 +192,7 @@
                     class="chevron-icon"
                     icon="akar-icons:circle-chevron-right"
                     height={mobile ? 30 : 36}
-                    color={isHovered.right && activeTabValue !== 5
+                    color={isHovered.right && activeTabValue !== 6
                         ? "var(--primary)"
                         : "lightgrey"}
                 />

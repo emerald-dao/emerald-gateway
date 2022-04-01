@@ -3,7 +3,7 @@ import Icon from "@iconify/svelte"
 </script>
 
 <a href="/create" >
-    <div  class="card project-card">
+    <div  class="card project-card flex-align">
 
         <Icon  icon="ant-design:plus-circle-outlined"
             height={"3.6rem"}
@@ -11,12 +11,10 @@ import Icon from "@iconify/svelte"
             />
             <div>
                 <h1>
-                    Add new project
+                    Add Whitelist
                 </h1>
 
-                <p >
-                    Create a new project you want to build a list for
-                </p>
+               
             </div>
 
             </div>
@@ -34,7 +32,8 @@ p {
 .project-card {
     border-radius: 12px;
     background-color: #252E37;
-    height: 16rem;
+    height: 15rem;
+    width: 11.6rem;
 }
 
 .project-card:hover {

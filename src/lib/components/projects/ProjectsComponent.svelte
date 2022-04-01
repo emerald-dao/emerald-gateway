@@ -31,8 +31,8 @@
 <style>
     .projects-container {
         display: flex;
-        flex-wrap: true;
-        max-width: 100%;
+        flex-wrap: wrap;
+        max-width: 80%;
     }
 
     a {
@@ -46,7 +46,8 @@
     .project-card {
         border-radius: 12px;
         background-color: #252e37;
-        height: 16rem;
+        height: 15rem;
+        width: 11.4rem;
     }
 
     .project-card:hover {

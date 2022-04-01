@@ -17,6 +17,7 @@
 </svelte:head>
 
 {#await whitelist then whitelist}
+        
     <article>
         <h1>
             {whitelist.name}
