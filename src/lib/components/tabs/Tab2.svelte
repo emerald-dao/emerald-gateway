@@ -17,6 +17,7 @@ import HorizontalSpace from "../HorizontalSpace.svelte";
 import PrimaryBtn from "../PrimaryBtn.svelte"
 import Icon from "@iconify/svelte";
 import TabHeader from './TabHeader.svelte';
+import TokenComponent from './tokens/TokenComponent.svelte';
 
 export let mobile
 
@@ -45,93 +46,16 @@ function openModal() {
     $modal.content = "custom-token"
     $modal.opened = true
 }
-
-function openDialog() {
-    $dialog.title = "Token Amount"
-    $dialog.opened = true
-}
-
-const handleEdit = (id) => {
-    $selectedToken = id
-    openDialog()
-}
-
-const handleSelection = (id) => {
-    // update token 
-    $selectedToken = id
-    $tokens[id].selected = !$tokens[id].selected
-    console.log("tokens val", tokensValue)
-
-    // check store state
-    const tokenAmount = tokensValue[id].amount
-    console.log("tokenAmount", tokenAmount)
-    if (tokenAmount === 0) {
-        console.log("opening")
-        openDialog()
-    } else {
-        //reset token amount and selection state
-        $tokens[id].amount = 0
-        $tokens[id].selected = false
-    }   
-
-}
-
-const handlePointerEnter = id => hoveredId = id
-const handlePointerLeave = id => hoveredId = null
 </script>
 
 <main class="container" style="{cssVarStyles}">
     <TabHeader title={"Tokens"} subtitle={"Something about the tokens"} />
     <div class="tokens-container mt-2">
         <ul style="height:100%; width: 100%; list-style:none; overflow:hidden">
-            {#each tokensValue as { id, label, amount,  imgUrl, selected }, i}
-            <li
-                class={hoveredId === id ? "token-active mt-1" : "token-inactive mt-1"}
-                on:pointerenter={() => handlePointerEnter(id)}
-                on:pointerleave={() => handlePointerLeave(id)}
-                >
-                <div
-                    style="--width:{amount ? "30%" : "20%"} "
-                    class={ !mobile  ? "token-container" : "token-container-mobile"}
-                    >
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "
-                        >
-                        <img
-                            style="height:100%; width:2.6rem;   border-radius: 50px; object-fit:cover"
-                            src={imgUrl}
-                            alt="logo"
-                            />
-                    </div>
-                    <div style="margin-right: 1rem;"  >
-                        {label}
-                    </div>
-                    {#if amount !== 0}
-                    <div class="amount-container"
-                        on:click={() => handleEdit(id)}
-                        >
-                        {amount}
-                        <div class="icon-container">
-                            <Icon icon="akar-icons:edit" />
-
-                                </div>
-                                </div>
-                                {:else}
-                                <div></div>
-                                {/if}
-
-                                </div>
-                                <div
-                                    style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
-                                    >
-
-                                    <input
-                                        type="checkbox"
-                                        on:click={() => handleSelection(id)}
-                                    bind:checked={selected}
-                                    />
-                                </div>
-                                </li>
+            <!-- {#each tokensValue as { id, label, amount,  imgUrl, selected }, i} -->
+            {#each tokensValue as token, i}
+            <TokenComponent {...token} mobile={mobile} />
+           
                                 {/each}
                                 </ul>
                                 <footer class="custom-container">
@@ -146,7 +70,7 @@ const handlePointerLeave = id => hoveredId = null
                                 </main>
 
 <style>
-.amount-container {
+/* .amount-container {
     color: #252E37;
     font-weight: bold;
     display: flex;
@@ -217,7 +141,7 @@ const handlePointerLeave = id => hoveredId = null
     height: 1.2rem;
     width: 1.2rem;
     padding: 0.2rem;
-}
+} */
 
 main {
     margin: 0;

@@ -13,7 +13,7 @@ import VerticalSpace from "$lib/components/VerticalSpace.svelte";
 import {
     readWhitelist
 } from "$lib/flow/utils";
-import TokenComponent from "$lib/components/tabs/tokens/TokenComponent.svelte";
+import TokenComponent from "$lib/components/whitelists/TokenComponent.svelte";
 
 let whitelist = readWhitelist(
     $page.params.address,
