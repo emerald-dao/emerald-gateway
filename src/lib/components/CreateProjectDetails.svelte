@@ -18,7 +18,7 @@
     import Modal from "$lib/components/Modal.svelte";
     import EmeraldIdIcon from "$lib/components/tabs/EmeraldIdIcon.svelte";
     import { createWhitelist } from "$lib/flow/actions";
-import { user } from "$lib/flow/stores";
+    import { user } from "$lib/flow/stores";
 
     export let screenSize;
 
@@ -204,7 +204,6 @@ import { user } from "$lib/flow/stores";
         {#if activeTabValue == item.value}
             <div class="tab-content-container">
                 <!-- <div class="tab-content-container" in:fade={{ duration: 1000 }}> -->
-                <!-- <svelte:component this={item.component} on:message={handleEvent} /> -->
                 <svelte:component this={item.component} {mobile} />
             </div>
             <footer>
