@@ -17,10 +17,8 @@ import { dialog } from "$lib/stores";
 <svelte:head>
     <title>Whitelist details</title>
 </svelte:head>
-
+<Dialog />
 {#await whitelist then whitelist}
-        
-    <Dialog />
     <article>
         <h1>
             {whitelist.name}
