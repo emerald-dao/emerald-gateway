@@ -38,7 +38,7 @@
             : "discord-inactive outline mb-1 flex-align"}
         on:click={handleEvent}
     >
-        Add Discord Verification
+        Require
         <div class="logo">
             <Icon
                 height="100%"

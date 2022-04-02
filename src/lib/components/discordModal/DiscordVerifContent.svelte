@@ -31,7 +31,7 @@ function handleAddRole() {
 <div class="content"
     >
     <div style="width:80%">
-        <h3 class="mt-1">Discord Server ID</h3>
+        <h3 class="mt-1">Server ID</h3>
         {#if DiscordVerif.editing}
         <input class="id-input" placeholder="Server ID" bind:value={DiscordVerif.servers[DiscordVerif.selectedId].label}  />
         {:else}
@@ -40,7 +40,7 @@ function handleAddRole() {
 
     </div>
     <div style="width:80%">
-        <h3 class="mt-0">Discord Server Roles</h3>
+        <h3 class="mt-0">Server Roles</h3>
         <div class="role-input-container">
             <div class="" style="display:flex; margin:0; padding:0; width:100%">
                 <input class="role-input" placeholder="Server Role"  bind:value={roleName} on:blur={dispatch("role-change", roleName)} />
@@ -50,7 +50,6 @@ function handleAddRole() {
                             </div>
                             </div>
                             </div>
-
                             </div>
                             <DiscordRoles dispatch={dispatch} localRoles={localRoles} />
                             </div>

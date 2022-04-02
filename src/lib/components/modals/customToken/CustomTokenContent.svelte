@@ -1,4 +1,8 @@
-<div style="width: 100%; height:70%; display:flex;
+<script>
+    export let mobile
+</script>
+
+<div style="width: 100%; height:{mobile ? "80%": "70%"}; display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center">

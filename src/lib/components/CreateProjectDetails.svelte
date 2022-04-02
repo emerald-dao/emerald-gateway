@@ -103,7 +103,7 @@
     const handleAction = (action) => {
         if (
             (activeTabValue === 0 && action === "decrement") ||
-            (activeTabValue === 7 && action === "increment")
+            (activeTabValue === 6 && action === "increment")
         ) {
             return;
         } else {
@@ -115,8 +115,8 @@
 </script>
 
 
-<Dialog />
-<Modal />
+<Dialog mobile={mobile} />
+<Modal mobile={mobile} />
 <article>
     <main class="main-container">
         <!-- TabBar -->

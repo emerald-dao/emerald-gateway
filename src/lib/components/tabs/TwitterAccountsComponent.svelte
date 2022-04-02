@@ -7,6 +7,8 @@ import Icon from "@iconify/svelte"
 import HorizontalSpace from "../HorizontalSpace.svelte";
 
 export let accounts
+export let mobile
+console.log("mobile", mobile)
 let accountHandle = ""
 let TwitterVerif
 twitterVerif.subscribe(val => TwitterVerif = val)
@@ -41,10 +43,12 @@ function handleAddAccount() {
 <div class="account-input-container">
     <input placeholder="@AccountHandle" bind:value={accountHandle} />
 
-    <button on:click={handleAddAccount} style="width: 50%; display:flex" class="add-button twitter-inactive flex-align mt-0">
+    <button on:click={handleAddAccount} style="width:{mobile ? "20%" : "50%"}" class="add-button twitter-inactive flex-align mt-0">
+       {#if !mobile}
         <span>Add Account</span>
-        <div style="margin-left: 0.3rem;" class="flex-align">
-            <Icon icon="ant-design:plus-circle-twotone" height="1.6rem"/>
+        {/if}
+        <div style="{mobile ? "margin-left:0rem" : "margin-left: 0.3rem"}" class="flex-align">
+            <Icon icon="ant-design:plus-circle-twotone" height="{mobile ? "2.5rem" : "1.6rem"}"/>
                 </div>
                 </button>
                 </div>

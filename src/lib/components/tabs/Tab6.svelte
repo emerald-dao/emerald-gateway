@@ -9,6 +9,7 @@
     import TwitterAccountsComponent from "./TwitterAccountsComponent.svelte";
 
     let twitterVal;
+    export let mobile
 
     twitterVerif.subscribe((val) => (twitterVal = val));
 
@@ -33,7 +34,7 @@
             : "twitter-inactive outline mb-1 flex-align"}
         on:click={handleEvent}
     >
-        Require Twitter Verification
+        Require
         <div class="logo">
             <Icon
                 height="100%"
@@ -44,7 +45,7 @@
     </button>
 
     {#if twitterVal.active}
-        <TwitterAccountsComponent accounts={twitterVal.accounts} />
+        <TwitterAccountsComponent mobile={mobile} accounts={twitterVal.accounts} />
     {/if}
 </div>
 

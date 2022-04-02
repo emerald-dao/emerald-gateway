@@ -20,6 +20,7 @@ let EmeraldIdVerif
 let DiscordVerif
 let TwitterVerif
 let verificationData = []
+export let mobile
 
 tab1data.subscribe(val => Tab1data = val)
 tokens.subscribe(val => Tokens = val)
@@ -41,12 +42,12 @@ twitterVerif.subscribe(val => TwitterVerif = val)
 <h3>
     Tokens
 </h3>
-<div style="display: flex;" class="mt-1">
+<div style="display: flex; flex-direction:{mobile ? "column" : "row"}" class="mt-1">
     {#each Tokens as {imgUrl, label, amount, selected, id} }
     {#if selected}
     <div
-        style="--width:{ "30%"}; --margin-left:{id === 0 ? "0rem" : "0.8rem"}"
-        class={"token-container"}
+        style="--width:{mobile ? "60%" : "30%"}; --margin-left:{id === 0 && !mobile ? "0rem" : "0.8rem"} --margin-top:{mobile ? "0.6rem" : "0rem"}"
+        class={"token-container mt-1"}
         >
         <div
             style="display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "
@@ -80,7 +81,6 @@ twitterVerif.subscribe(val => TwitterVerif = val)
     {#if collection.selected}
     <div class="mt-1">
         <CollectionComponent {...collection} />
-
     </div>
 
     {/if}

@@ -10,9 +10,7 @@ import {
 import TabHeader from "./TabHeader.svelte";
 
 export let emeraldIdVal
-
 emeraldIdVerif.subscribe(val => emeraldIdVal = val)
-
 const handleEvent = (e) => {
     $emeraldIdVerif.active = !emeraldIdVal.active
 }
@@ -23,8 +21,8 @@ const handleEvent = (e) => {
     <button  class={emeraldIdVal.active ? "flex-align" : "outline mb-1 flex-align"}
     on:click={handleEvent}
     >
-    Add Emerald ID Verification
-        <img class="logo" src="https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg" alt="emeraldid"  />
+    Require
+    <img class="logo" src="https://res.cloudinary.com/do4mactw0/image/upload/v1648233132/Emerald_Bot_Logo_olre0f.svg" alt="emeraldid"  />
     </button>
 </div>
 

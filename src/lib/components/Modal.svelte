@@ -16,12 +16,12 @@ let localRoles = []
 $: localRoles && console.log("changed")
 let serverId = ""
 let roleName = ""
+export let mobile
+const modalWidth = mobile ? "80%" : "42%"
+const modalHeight = mobile ? "50%" : "80%"
 
 modal.subscribe(val => Modal = val)
 discordVerif.subscribe(val => DiscordVerif = val)
-
-let isHovered;
-
 
 function closeModal() {
     console.log("closing")
@@ -124,20 +124,22 @@ function handleCancel() {
     style="--display: {Modal.opened ? 'block' : 'none'}"
     />
     <main id="modal" style="--display: {Modal.opened ? 'block' : 'none'};
+     --modalWidth:{modalWidth};
+     --modalHeight:{modalHeight};
      --border: {Modal.content === "custom-token" ? "2px solid var(--primary)" : Modal.content !== "twitter" ? "2px solid #5865F2" : "2px solid #1DA1F2" };
      --color: {Modal.content === "custom-token" ? "var(--primary)" : Modal.content !== "twitter" ? "#5865F2" : "#1DA1F2" };
      --bg: {Modal.content === "custom-token" ? "rgba(56, 232, 198, 0.1)" : Modal.content !== "twitter" ? "rgba(88, 101, 242, 0.1)" : "rgba(29, 161, 242, 0.1)" };
      ">
         <header>
             <div>
-                <h3>Modal Title</h3>
+                <h3>{Modal.content}</h3>
             </div>
             <div>
             </div>
         </header>
         <div class="content">
             {#if Modal.content === "custom-token" }
-            <CustomTokenContent />
+            <CustomTokenContent mobile={mobile} />
             {:else if Modal.content === "twitter"}   
             <TwitterVerifContent />
             {:else}
@@ -247,8 +249,8 @@ footer {
     transform: translate(-50%, -50%);
     background: #141e26;
     /* filter: drop-shadow(0 0 20px #333); */
-    height: 80%;
-    width: 48%;
+    height: var(--modalHeight);
+    width: var(--modalWidth);
     border-radius: 20px;
     border: var(--border)
 

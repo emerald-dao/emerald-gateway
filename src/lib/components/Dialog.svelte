@@ -25,6 +25,9 @@ let selectedVal
 let selectedCollectionVal
 let amountInput
 let activeTabValue
+export let mobile
+const  width = mobile ? "80%" : "42%"
+const  height = mobile ? "32%" : "56%"
 
 let borderColor
 // this works here, but not in Sapper:
@@ -36,10 +39,8 @@ dialog.subscribe(val => {
     borderColor = "#5865F2"
 } else if(dialogValue.title === "Twitter Accounts") {
     borderColor = "#1DA1F2"
-
 } else {
     borderColor = "var(--primary)"
-
 }
 })
 
@@ -67,6 +68,8 @@ const handleClose = () => {
 
 }
 
+
+
 </script>
 
 
@@ -76,7 +79,7 @@ const handleClose = () => {
     style="--display: {dialogValue.opened ? 'block' : 'none'}"
     on:click={handleClose}
     />
-    <main id="dialog" style="--display: {dialogValue.opened ? 'block' : 'none'}; --border-color:{borderColor}">
+    <main id="dialog" style="--display: {dialogValue.opened ? 'block' : 'none'}; --border-color:{borderColor}; --width:{width}; --height:{height}">
         <header>
             <div>
                 <h3>{dialogValue.title}</h3>
@@ -172,8 +175,8 @@ footer {
     left: 50%;
     transform: translate(-50%, -50%);
     background: #141e26;
-    height: 56%;
-    width: 42%;
+    height: var(--height);
+    width: var(--width);
     border-radius: 20px;
     border: 2px solid var(--border-color);
 }
