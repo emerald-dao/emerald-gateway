@@ -33,11 +33,11 @@ p {
     border-radius: 12px;
     background-color: #252E37;
     height: 15rem;
-    width: 11.6rem;
+    width: 100%;
 }
 
 .project-card:hover {
-    background-color: rgba(56, 232, 198, 0.03);
+    background-color: rgba(152, 189, 182, 0.1);
     cursor: pointer;
 }
 </style>

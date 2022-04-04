@@ -10,7 +10,6 @@
     <h2>Your Whitelists</h2>
     <div class="card-container" />
     <div style="display: flex;">
-        <CreateProject />
         <ProjectsComponent />
     </div>
 </article>
