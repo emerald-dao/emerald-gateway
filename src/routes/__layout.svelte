@@ -5,6 +5,9 @@
   import { onMount } from "svelte";
   import { page } from "$app/stores";
 import MediaQuery from "./MediaQuery.svelte";
+import Sidebar from "$lib/components/Sidebar.svelte";
+
+let open = false
 
   onMount(() => {
     let savedTheme = localStorage.getItem("theme");
@@ -15,6 +18,7 @@ import MediaQuery from "./MediaQuery.svelte";
     }
   });
   console.log($page.path);
+
 </script>
 
 <MediaQuery query="(min-width: 1281px)" let:matches>
@@ -29,12 +33,13 @@ import MediaQuery from "./MediaQuery.svelte";
 </MediaQuery>
 <MediaQuery query="(max-width: 480px)" let:matches>
   {#if matches}
-  <Header screenSize="mobile" />
+  <Header screenSize="mobile" bind:sidebar={open} />
   {/if}
 </MediaQuery>
 
 
 <main class="container">
+  <Sidebar bind:open/>
   <slot />
   <Transaction />
 </main>

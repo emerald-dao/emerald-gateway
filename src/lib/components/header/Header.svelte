@@ -5,8 +5,11 @@
   import { user } from "$lib/flow/stores";
   import ConnectWallet from "$lib/components/ConnectWallet.svelte";
   import UserAddress from "../UserAddress.svelte";
+  import Hamburger from './Hamburger.svelte'
+	import Menu from './Menu.svelte'
 
   export let screenSize;
+  export let sidebar = false
 
   function auth() {
     if ($user && $user.loggedIn) {
@@ -18,6 +21,7 @@
   
   let html = document.querySelector('html')
   html.setAttribute('data-theme', 'dark');
+
 </script>
 
 <nav class="container">
@@ -43,12 +47,14 @@
         {/if}
       </li>
     {:else}
-      <div style="margin-right:0.5rem; margin-bottom:0.25rem">
-        <Icon
+      <div style="margin-right:1rem">
+        <!-- <Icon
           icon="charm:menu-hamburger"
           color="var(--primary)"
           height="2rem"
-        />
+        /> -->
+        <Hamburger bind:open={sidebar}/>
+
       </div>
     {/if}
   </ul>
