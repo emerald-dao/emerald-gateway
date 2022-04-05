@@ -8,6 +8,8 @@ import MediaQuery from "./MediaQuery.svelte";
 import Sidebar from "$lib/components/Sidebar.svelte";
 
 let open = false
+let title = "Passing data to slot";
+
 
   onMount(() => {
     let savedTheme = localStorage.getItem("theme");
@@ -40,7 +42,7 @@ let open = false
 
 <main class="container">
   <Sidebar bind:open/>
-  <slot />
+  <slot  />
   <Transaction />
 </main>
 
