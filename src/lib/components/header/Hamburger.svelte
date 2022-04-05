@@ -1,8 +1,17 @@
 <script>
-	export let open = false
+import { drawer } from "$lib/stores";
+
+let drawerVal;
+let opened;
+
+drawer.subscribe(val => {
+	drawerVal = val
+	opened = drawerVal.opened
+})
+
 </script>
 
-<div style="color: var(--primary); z-index:3; position:relative"  class:open on:click={() => open = !open}>
+<div style="color: var(--primary); z-index:3; position:relative"  class:opened on:click={() => $drawer.opened = !$drawer.opened}>
 	<svg width=30 height=30>
 		<line id="top" x1=0 y1=2  x2=32 y2=2/>
 		<line id="middle" x1=0 y1=12 x2=24 y2=12/>
@@ -26,19 +35,19 @@
 		z-index: 20;
 	}
 	
-	.open svg {
+	.opened svg {
 		transform: scale(0.7)
 	}
 	
-	.open #top {
+	.opened #top {
 		transform: translate(6px, 0px) rotate(45deg)
 	}
 	
-	.open #middle {
+	.opened #middle {
 		opacity: 0;
 	}
 	
-  .open #bottom {
+  .opened #bottom {
 		transform: translate(-12px, 9px) rotate(-45deg)
 	}
 </style>

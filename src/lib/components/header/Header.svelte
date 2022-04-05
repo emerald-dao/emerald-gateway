@@ -9,7 +9,6 @@
 	import Menu from './Menu.svelte'
 
   export let screenSize;
-  export let sidebar = false
 
   function auth() {
     if ($user && $user.loggedIn) {
@@ -53,7 +52,7 @@
           color="var(--primary)"
           height="2rem"
         /> -->
-        <Hamburger bind:open={sidebar}/>
+        <Hamburger />
 
       </div>
     {/if}

@@ -2,13 +2,26 @@
 import {
     user
 } from "$lib/flow/stores";
+import { goto } from "$app/navigation";
+import { page } from "$app/stores";
+
 import ConnectWallet from "./ConnectWallet.svelte";
 import * as fcl from "@samatech/onflow-fcl-esm";
 
 import UserAddress from "./UserAddress.svelte";
 import Divider from "./common/Divider.svelte";
+import { drawer } from "$lib/stores";
 
-export let open = false
+// export let open = false
+let drawerVal;
+let opened;
+const whitelistsPath = `/${$user?.addr}/whitelists`
+
+drawer.subscribe(val => {
+	drawerVal = val
+	opened = drawerVal.opened
+})
+console.log("page", $page.path)
 
 function auth() {
     if ($user && $user.loggedIn) {
@@ -17,14 +30,19 @@ function auth() {
         fcl.authenticate();
     }
 }
+
+function handleNav() {
+    goto(whitelistsPath);
+    $drawer.opened = false
+}
+
+function initNavEngine() {
+    // if its in whitelists only close the drawer, else navigate
+    $page.path === whitelistsPath ? $drawer.opened = false : handleNav();
+    }
 </script>
 
-<!-- <aside class="absolute w-full h-full bg-gray-200 border-r-2 shadow-lg" class:open> -->
-<!-- <main id="background"     style="--display: {open ? 'block' : 'none'}"
-    >
-
-</main> -->
-<article class="closed" class:open>
+<article class="closed" class:opened>
 
     <div style="">
         {#if $user?.loggedIn}
@@ -36,8 +54,9 @@ function auth() {
         {/if}
     </div>
     <Divider />
-    <div class="mt-1" >
-        <a href="/{$user?.addr}/whitelists">Your Whitelists</a>
+    <div class="mt-1" on:click="{initNavEngine}" >
+        <!-- <a href="/{$user?.addr}/whitelists">Your Whitelists</a> -->
+        <a>Your Whitelists</a>
         </div >
         </article>
 
@@ -66,7 +85,7 @@ function auth() {
     transition: right 0.3s ease-in-out;
 }
 
-.open {
+.opened {
     right: 0;
 }
 </style>

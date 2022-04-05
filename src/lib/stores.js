@@ -14,8 +14,6 @@ export const activeTabVal = writable(0)
 
 activeTabVal.subscribe(val => console.log("active tab val", val))
 
-
-
 export const tabs = writable ([{
   label: "Content",
   value: 0,
@@ -133,19 +131,7 @@ export const collections = writable([
 
 export const searchVal = writable(" ")
 
-export const modal = writable({
-  title: "",
-  action: "",
-  opened: false,
-  content:"custom-token"
-})
-
-//Dialog
-export const dialog = writable({
-  title: "",
-  action: "",
-  opened: false,
-})
+/// Verification
 
 export const emeraldIdVerif = writable({
   label: "Emerald ID",
@@ -170,6 +156,26 @@ export const twitterVerif = writable({
   active: false,
   editing: false,
   accounts: [],
+})
+
+// UI Components
+
+export const modal = writable({
+  title: "",
+  action: "",
+  opened: false,
+  content:"custom-token"
+})
+
+//Dialog
+export const dialog = writable({
+  title: "",
+  action: "",
+  opened: false,
+})
+
+export const drawer = writable({
+  opened: false
 })
 
 
