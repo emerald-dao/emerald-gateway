@@ -4,10 +4,10 @@
   import "../app.css";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-import MediaQuery from "./MediaQuery.svelte";
-import Sidebar from "$lib/components/Sidebar.svelte";
+  import MediaQuery from "./MediaQuery.svelte";
+  import Sidebar from "$lib/components/Sidebar.svelte";
+  import Drawer from 'svelte-drawer-component'
 
-let open = false
 let title = "Passing data to slot";
 
 
@@ -19,7 +19,6 @@ let title = "Passing data to slot";
       html.setAttribute("data-theme", savedTheme);
     }
   });
-  console.log($page.path);
 
 </script>
 
@@ -35,13 +34,13 @@ let title = "Passing data to slot";
 </MediaQuery>
 <MediaQuery query="(max-width: 480px)" let:matches>
   {#if matches}
-  <Header screenSize="mobile" bind:sidebar={open} />
+  <Header screenSize="mobile"  />
   {/if}
 </MediaQuery>
 
-
-<main class="container">
-  <Sidebar bind:open/>
+ 
+<main  class="container">
+  <Drawer />
   <slot  />
   <Transaction />
 </main>

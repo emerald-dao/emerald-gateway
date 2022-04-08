@@ -28,6 +28,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@iconify/svelte": "2.1.2"
+    "@iconify/svelte": "2.1.2",
+    "svelte-drawer-component": "^1.2.2"
   }
 }

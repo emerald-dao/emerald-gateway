@@ -12,7 +12,6 @@ import TabHeader from "./TabHeader.svelte";
 export let tab1val
 export let mobile
 
-console.log("mobile tab 1", mobile)
 
 tab1data.subscribe(val => tab1val = val)
 

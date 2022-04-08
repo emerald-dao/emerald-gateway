@@ -9,10 +9,8 @@ import CreateProject from "../CreateProject.svelte";
 
 export let screenSize
 let mobile = screenSize === "mobile"
-console.log("mobile", screenSize)
 async function getAllWhitelists() {
     let whitelists = await getWhitelists($user?.addr);
-    console.log("wls",Object.values(whitelists))
     return Object.values(whitelists);
 }
 let projects = getAllWhitelists();

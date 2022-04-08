@@ -35,13 +35,10 @@ const handleSelection = (id) => {
     // update token 
     $selectedToken = id
     $tokens[id].selected = !$tokens[id].selected
-    console.log("tokens val", tokensValue)
 
     // check store state
     const tokenAmount = tokensValue[id].amount
-    console.log("tokenAmount", tokenAmount)
     if (tokenAmount === 0) {
-        console.log("opening")
         openDialog()
     } else {
         //reset token amount and selection state

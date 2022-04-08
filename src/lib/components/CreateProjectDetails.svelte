@@ -19,6 +19,8 @@
     import EmeraldIdIcon from "$lib/components/tabs/EmeraldIdIcon.svelte";
     import { createWhitelist } from "$lib/flow/actions";
     import { user } from "$lib/flow/stores";
+import Tab1 from "./tabs/Tab1.svelte";
+import DrawerComponent from "./drawer/DrawerComponent.svelte";
 
     export let screenSize;
 
@@ -80,7 +82,20 @@
         createWhitelist(newProject);
     }
 
-    const handleEvent = (msg) => {
+    function checkInput() {
+        console.log("t1", Tab1data)
+        switch (activeTabValue) {
+            case 0:
+                return Tab1data.name !== "" && Tab1data.description != "" ? true : false
+
+                
+            default:
+                break;
+        }
+    }
+
+    const handleTabNav = () => {
+        console.log("naviii")
         if(activeTabValue === 6) {
             $tabs[activeTabValue].done = true;
                 createProject();
@@ -89,10 +104,19 @@
             $tabs[activeTabValue].done = true;
                 handleAction("increment");
         }
+    }
+
+    const showAlert = () => {
+        alert("Insert Text here")
+    }
+
+    const handleEvent = (msg) => {
+        console.log("activeTabValue", activeTabValue)
+         const isValid = checkInput()
+         isValid ? handleTabNav() : showAlert()
     };
 
     const autoScroll = (target) => {
-        console.log("scrolling");
         const el = document.querySelector(`#tab${activeTabValue}`);
         if (!el) return;
         el.scrollIntoView({
@@ -117,7 +141,9 @@
 
 <Dialog mobile={mobile} />
 <Modal mobile={mobile} />
-<article>
+<article class="app">
+    <DrawerComponent />
+
     <main class="main-container">
         <!-- TabBar -->
         <div
@@ -202,7 +228,8 @@
     <!-- TabContent -->
     {#each tabsValue as item}
         {#if activeTabValue == item.value}
-            <div class="tab-content-container">
+            <div class="    
+            ">
                 <!-- <div class="tab-content-container" in:fade={{ duration: 1000 }}> -->
                 <svelte:component this={item.component} {mobile} />
             </div>
@@ -218,6 +245,16 @@
 </article>
 
 <style>
+    
+    .app :global(.drawer .panel) {
+        background: #11191F;
+    }
+    
+    .tab-content-container{
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
     h1 {
         text-align: center;
     }

@@ -13,23 +13,25 @@ let Modal
 let DiscordVerif
 
 let localRoles = []
-$: localRoles && console.log("changed")
 let serverId = ""
 let roleName = ""
 export let mobile
 const modalWidth = mobile ? "80%" : "42%"
-const modalHeight = mobile ? "50%" : "80%"
+const modalHeight = mobile ? "50%" : "60%"
+const headerHeight = mobile ? "15%" : "12%"
+const bodyHeight = mobile ? "72%" : "76%"
+const footerHeight = mobile ? "12%" : "12%"
+const saveWidth = mobile ? "4rem" : "4rem"
+
 
 modal.subscribe(val => Modal = val)
 discordVerif.subscribe(val => DiscordVerif = val)
 
 function closeModal() {
-    console.log("closing")
     $modal.opened = false
 }
 
 function addServer() {
-    console.log("localRoles", localRoles)
 
     $discordVerif.servers = [...$discordVerif.servers, {
         id: DiscordVerif.servers.length,
@@ -75,7 +77,6 @@ const addRole = (data) => {
         }];
     } else {
         // update local state 
-        console.log("added role")
         localRoles.push({
             label: roleName
         })
@@ -99,8 +100,6 @@ function resetLocalState() {
 }
 
 function handleSave() {
-    console.log("serverId", serverId)
-
     if (DiscordVerif.editing) {
         closeModal()
         // update store
@@ -130,14 +129,14 @@ function handleCancel() {
      --color: {Modal.content === "custom-token" ? "var(--primary)" : Modal.content !== "twitter" ? "#5865F2" : "#1DA1F2" };
      --bg: {Modal.content === "custom-token" ? "rgba(56, 232, 198, 0.1)" : Modal.content !== "twitter" ? "rgba(88, 101, 242, 0.1)" : "rgba(29, 161, 242, 0.1)" };
      ">
-        <header>
+        <header style="height: {headerHeight};">
             <div>
                 <h3>{Modal.content}</h3>
             </div>
             <div>
             </div>
         </header>
-        <div class="content">
+        <div style="height:{bodyHeight}">
             {#if Modal.content === "custom-token" }
             <CustomTokenContent mobile={mobile} />
             {:else if Modal.content === "twitter"}   
@@ -157,14 +156,17 @@ function handleCancel() {
                 {/if}
                 </div>
 
-                <footer >
+                <footer style="height: {footerHeight};" >
                     <div  class="cancel flex-align"
                         on:click={handleCancel}
                         >
                         CANCEL
 
                     </div>
-                    <div  class="save flex-align"
+                    <div style="height: 2.4rem;
+                    width: {saveWidth};
+                    cursor: pointer;
+                    color: var(--color)"  class=" flex-align"
                         on:click={handleSave}
                         >
                         SAVE
@@ -203,7 +205,6 @@ function handleCancel() {
 header {
     display: flex;
     flex-direction: row;
-    height: 12%;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -212,9 +213,7 @@ header {
     border-bottom: var(--border);
 }
 
-.content {
-    height: 76%;
-}
+
 
 footer {
     color: var(--primary);
@@ -223,7 +222,6 @@ footer {
     align-items: center;
     padding-right: 2rem;
     padding-left: 2rem;
-    height: 12%;
     width: 100%;
     border-top: var(--border);
     ;

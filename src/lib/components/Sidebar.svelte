@@ -21,7 +21,6 @@ drawer.subscribe(val => {
 	drawerVal = val
 	opened = drawerVal.opened
 })
-console.log("page", $page.path)
 
 function auth() {
     if ($user && $user.loggedIn) {
@@ -42,17 +41,19 @@ function initNavEngine() {
     }
 </script>
 
-<article class="closed" class:opened>
+<div class="container">
 
-    <div style="">
+</div>
+
+<article  class="closed" class:opened>
+
         {#if $user?.loggedIn}
-        <button on:click={auth} class="outline">
+        <button on:click={auth}   class="outline">
             <UserAddress address={$user?.addr || "0x0"} abbreviated={true} />
         </button>
         {:else}
         <ConnectWallet />
         {/if}
-    </div>
     <Divider />
     <div class="mt-1" on:click="{initNavEngine}" >
         <!-- <a href="/{$user?.addr}/whitelists">Your Whitelists</a> -->
@@ -61,31 +62,27 @@ function initNavEngine() {
         </article>
 
 <style>
-#background {
-    display: var(--display);
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0%;
-    transition: right 0.3s ease-in-out;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+article{
+   
 }
 
 .closed {
+    display: flex;
+    visibility: hidden;
+    flex-direction: column;
     position: absolute;
     z-index: 2;
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 0%;
     height: 100%;
-    right: -100%;
-    transition: right 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    right:0
 }
 
 .opened {
-    right: 0;
+    visibility:visible;
+    /* right: 0; */
+    width: 100%;
+
 }
 </style>

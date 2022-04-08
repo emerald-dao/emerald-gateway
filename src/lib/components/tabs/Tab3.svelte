@@ -38,16 +38,11 @@ let searchVal;
 
 collections.subscribe(val => collectionsValue = val)
 
-function parentFunction() {
-    console.log("called")
-}
-
 function openDialog() {
     $dialog.opened = true
 }
 
 const handleChange = (id) => {
-    console.log("id", id)
     selectedId = id
 
     if ($collections[id].selected) {
@@ -62,11 +57,6 @@ const handleChange = (id) => {
 const handlePointerEnter = id => hoveredId = id
 const handlePointerLeave = id => hoveredId = null
 
-// const handleEdit = (id) => {
-//     console.log("id cole", id)
-//     $selectedCollection = id
-//     openDialog()
-// }
 
 const handleSelection = (id) => {
     $collections[id].selected = !$collections[id].selected
@@ -75,7 +65,6 @@ const handleSelection = (id) => {
     // update token 
     // $selectedCollection = id
     // $collections[id].selected = true
-    // console.log("collections val", collectionsValue)
 
     // // check store state
     // const collectionAmount = $collections[id].amount

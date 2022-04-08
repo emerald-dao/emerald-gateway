@@ -12,7 +12,6 @@ export const projects = writable([])
 
 export const activeTabVal = writable(0)
 
-activeTabVal.subscribe(val => console.log("active tab val", val))
 
 export const tabs = writable ([{
   label: "Content",

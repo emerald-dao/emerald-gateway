@@ -5,8 +5,6 @@ import Icon from "@iconify/svelte"
 export let servers
 
 function handleSelection(i) {
-    console.log("i", i)
-    console.log("handling")
     $discordVerif.selectedId = i 
     $modal.content = "discord-verif"
     $discordVerif.editing = true 

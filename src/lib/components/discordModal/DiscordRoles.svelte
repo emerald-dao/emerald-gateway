@@ -11,9 +11,6 @@ export let dispatch
 
 let DiscordVerif
 discordVerif.subscribe(val => DiscordVerif = val)
-// console.log("DiscordVerif.servers[DiscordVerif.selectedId].roles", DiscordVerif.servers[DiscordVerif.selectedId].roles.length)
-
-console.log("localRoles", localRoles)
 </script>
 
 {#if DiscordVerif.editing}

@@ -8,13 +8,11 @@ import HorizontalSpace from "../HorizontalSpace.svelte";
 
 export let accounts
 export let mobile
-console.log("mobile", mobile)
 let accountHandle = ""
 let TwitterVerif
 twitterVerif.subscribe(val => TwitterVerif = val)
 
 function handleSelection(i) {
-    console.log("i", i)
     $twitterVerif.selectedId = i
     $modal.content = "twitter"
     $twitterVerif.editing = true

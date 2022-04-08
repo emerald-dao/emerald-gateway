@@ -81,7 +81,7 @@ function handleSeeDetails() {
 
 img {
     max-width: 2.4rem;
-    min-width: 2.4rem;
+    /* min-width: 2.4rem; */
     height: 100%;
     border-style: none;
     margin-left: -0.1rem;
