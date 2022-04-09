@@ -10,8 +10,6 @@ import MediaQuery from "../MediaQuery.svelte";
 <svelte:head>
     <title>Your Whitelists</title>
 </svelte:head>
-<article>
-    <h2>Your Whitelists</h2>
     <div class="card-container" />
     <div style="display: flex;">
         <MediaQuery query="(min-width: 1281px)" let:matches>
@@ -31,7 +29,6 @@ import MediaQuery from "../MediaQuery.svelte";
           </MediaQuery>
            
     </div>
-</article>
 
 <style>
 </style>

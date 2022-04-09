@@ -32,3 +32,5 @@ export async function readWhitelist(address, whitelistId) {
   console.log(whitelist);
   return whitelist;
 }
+
+export const formatter = new Intl.DateTimeFormat("en-US");

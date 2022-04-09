@@ -94,15 +94,20 @@ import DrawerComponent from "./drawer/DrawerComponent.svelte";
         }
     }
 
-    const handleTabNav = () => {
-        console.log("naviii")
+    const handleDone = () => {
+        $tabs[activeTabValue].done = true;
+                handleAction("increment");
+    }
+
+    const handleEvent = () => {
         if(activeTabValue === 6) {
             $tabs[activeTabValue].done = true;
                 createProject();
                 handleNav();
+        } else if(activeTabValue === 0) {
+            validateTab1()
         } else {
-            $tabs[activeTabValue].done = true;
-                handleAction("increment");
+           handleDone()
         }
     }
 
@@ -110,10 +115,9 @@ import DrawerComponent from "./drawer/DrawerComponent.svelte";
         alert("Insert Text here")
     }
 
-    const handleEvent = (msg) => {
-        console.log("activeTabValue", activeTabValue)
+    const validateTab1 = (msg) => {
          const isValid = checkInput()
-         isValid ? handleTabNav() : showAlert()
+         isValid ?  handleDone() : showAlert()
     };
 
     const autoScroll = (target) => {
