@@ -11,7 +11,7 @@
 
       
       export let whitelists;
-      console.log("whitelists", whitelists)
+      console.log("whitelists2", whitelists)
       // let rows = [
       //     {id:0, name:"n1", description:"t1"},
       //     {id:0, name:"n1", description:"t1"},
@@ -47,7 +47,7 @@
       }
     </script>
         <Table {pageCount} {pageSize} {whitelists} let:whitelists={whitelists2} labels={{ empty: "This account has not created any whitelists.", loading: "Loading whitelists..."}} >
-                <Projects whitelists={whitelists2}  pageSize={pageSize} />
+                <Projects whitelists={whitelists2} />
           </Table>
     <style>
    

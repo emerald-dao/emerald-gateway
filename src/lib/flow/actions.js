@@ -84,13 +84,15 @@ export const createWhitelist = async (project) => {
       transactionStatus.set(res.status)
       if (res.status === 4) {
         // handlenav
-                goto(`/`);
+                // goto(`/`);
 
         setTimeout(() => transactionInProgress.set(false), 2000)
       }
     })
 
     let res = await fcl.tx(transactionId).onceSealed()
+                    goto(`/`);
+
     return res;
 
   } catch (e) {

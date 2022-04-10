@@ -1,19 +1,23 @@
 <script>
+import { user } from "$lib/flow/stores";
 import CreateProject from "../CreateProject.svelte";
 
+export let joined;
 export let whitelists
+console.log("component whitelist", whitelists)
 export let screenSize
-export let pageSize
 let mobile = screenSize === "mobile"
 </script>
 
 <div class="projects-container" style="--width:{mobile ? "48%" : "32%"} ">
-    <a>
-        <CreateProject mobile={mobile} />
-    </a>
+    {#if !joined}
+        <a>
+            <CreateProject mobile={mobile} />
+        </a>
+    {/if}
     <!-- {#await whitelists then whitelists} -->
     {#each whitelists as whitelist, i}
-    <a href="{whitelist.variables.whitelistId}">
+    <a href={$user?.addr + "/" + whitelist.variables.whitelistId}>
         <div style="--height:{mobile ? "14rem" : "15rem"}; padding-left:0; padding-right:0" class="card project-card">
             <div class="image-title-container">
                 <h1>
@@ -21,10 +25,7 @@ let mobile = screenSize === "mobile"
                 </h1>
             </div>
             <div class="description-container">
-
-                
                     {whitelist.variables.description}
-                
             </div>
             <footer>
                 <span>
@@ -37,6 +38,7 @@ let mobile = screenSize === "mobile"
         </div>
     </a>
     {/each}
+    <!-- {/await} -->
 </div>
 
 <style>

@@ -13,13 +13,15 @@ import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 import Loading from "$lib/components/common/Loading.svelte";
 import CreateProject from "$lib/components/CreateProject.svelte";
+import JoinedWhitelists from "$lib/components/common/table/JoinedWhitelists.svelte";
+import { joinedWhitelists } from "$lib/stores";
 
 let borrowed = true
 
 async function getAllWhitelists() {
 try {
   let whitelists = await getWhitelists($user?.addr);
-console.log("whitelists", whitelists)
+console.log("whitelists1", whitelists)
 return Object.values(whitelists);
 } catch (error) {
   borrowed = false
@@ -77,7 +79,7 @@ $: tab = $page.query.get('tab') || 'created';
     {#if tab === "created"}
   <YourWhitelists whitelists={whitelists} />
   {:else}
-  <!-- <YourWhitelists /> -->
+  <JoinedWhitelists  whitelists={$joinedWhitelists} />
     {/if}
   
   {/if}

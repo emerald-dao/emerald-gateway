@@ -8,10 +8,11 @@ import Tab7 from "$lib/components/tabs/Tab7.svelte"
 
 import { writable, derived } from 'svelte/store';
 
+export const joinedWhitelists = writable([])
+
 export const projects = writable([]) 
 
 export const activeTabVal = writable(0)
-
 
 export const tabs = writable ([{
   label: "Content",
@@ -98,8 +99,8 @@ export const tokens = writable([
 ]);
 
 export const selectedToken = writable(0)
-export const selectedCollection= writable(0)
 
+export const selectedCollection= writable(0)
 
 export const collections = writable([
   {
@@ -176,6 +177,11 @@ export const dialog = writable({
 export const drawer = writable({
   opened: false
 })
+
+export const user = writable(null);
+export const transactionStatus = writable(null);
+export const txId = writable(null);
+export const transactionInProgress = writable(false);
 
 
 

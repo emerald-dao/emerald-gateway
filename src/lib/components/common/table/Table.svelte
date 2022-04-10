@@ -101,6 +101,7 @@
       <tr>
         <td class="center" colspan="100%">
           <span>
+            empty
             {@html labels.empty}
           </span>
         </td>

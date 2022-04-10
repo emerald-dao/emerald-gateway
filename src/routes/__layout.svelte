@@ -7,6 +7,7 @@
   import MediaQuery from "./MediaQuery.svelte";
   import Sidebar from "$lib/components/Sidebar.svelte";
   import Drawer from 'svelte-drawer-component'
+import TxMockUp from "$lib/components/common/TxMockUp.svelte";
 
 let title = "Passing data to slot";
 
@@ -43,6 +44,7 @@ let title = "Passing data to slot";
   <Drawer />
   <slot  />
   <Transaction />
+  <TxMockUp />
 </main>
 
 <footer>
