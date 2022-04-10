@@ -1,6 +1,7 @@
 import { browser } from '$app/env';
 
 import * as fcl from "@samatech/onflow-fcl-esm";
+import { goto } from "$app/navigation";
 
 import "./config.js";
 import {
@@ -82,6 +83,9 @@ export const createWhitelist = async (project) => {
     fcl.tx(transactionId).subscribe(res => {
       transactionStatus.set(res.status)
       if (res.status === 4) {
+        // handlenav
+                goto(`/`);
+
         setTimeout(() => transactionInProgress.set(false), 2000)
       }
     })

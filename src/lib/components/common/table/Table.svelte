@@ -25,9 +25,9 @@
   export let loading = false;
   export let page = 0;
   export let pageIndex = 0;
-  export let pageSize = 10;
+  export let pageSize = 2;
   export let responsive = true;
-  export let rows;
+  export let whitelists;
   export let serverSide = false;
   export let labels = {
     empty: "No records available",
@@ -38,22 +38,22 @@
   let buttons = [-2, -1, 0, 1, 2];
   let pageCount = 0;
 
-  $: filteredRows = rows;
-  $: visibleRows = filteredRows.slice(pageIndex, pageIndex + pageSize);
+  $: filteredWhitelists = whitelists;
+  $: visibleWhitelists = filteredWhitelists.slice(pageIndex, pageIndex + pageSize);
 
   setContext("state", {
     getState: () => ({
       page,
       pageIndex,
       pageSize,
-      rows,
-      filteredRows
+      whitelists,
+      filteredWhitelists
     }),
     setPage: (_page, _pageIndex) => {
       page = _page;
       pageIndex = _pageIndex;
     },
-    setRows: _rows => (filteredRows = _rows)
+    setWhitelists: _whitelists => (filteredWhitelists = _whitelists)
   });
 
   function onPageChange(event) {
@@ -96,7 +96,7 @@
         </td>
       </tr>
     </tbody>
-  {:else if visibleRows.length === 0}
+  {:else if visibleWhitelists.length === 0}
     <tbody>
       <tr>
         <td class="center" colspan="100%">
@@ -107,7 +107,7 @@
       </tr>
     </tbody>
   {:else}
-    <slot rows={visibleRows} />
+    <slot whitelists={visibleWhitelists} />
   {/if}
   <slot name="foot" />
 </table>
@@ -119,7 +119,7 @@
       {page}
       {pageSize}
       {serverSide}
-      count={filteredRows.length - 1}
+      count={filteredWhitelists.length - 1}
       on:pageChange={onPageChange} />
   </div>
 </slot>

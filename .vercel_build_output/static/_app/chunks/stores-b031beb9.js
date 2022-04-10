@@ -1,4 +1,4 @@
-import{C as l,Y as y,Z as d,_ as u,$ as w,a0 as r,a1 as n,J as h}from"./vendor-59f8b443.js";const g=l(null),o=l(null),m=l(null),c=l(!1);y({"accessNode.api":"http://localhost:8080","discovery.wallet":"http://localhost:8701/fcl/authn","0xGateway":"0xf8d6e0586b0a20c7"});d.subscribe(g.set,[]);const G=()=>h(),p=async i=>{console.log(i);let a=!1;f();try{return a=await w({cadence:`
+import{C as r,W as d,X as y,Y as u,Z as g,_ as l,$ as n,G as w,a0 as h}from"./vendor-716abb8a.js";import{r as b}from"./singletons-12a22614.js";const m=r(null),o=r(null),f=r(null),c=r(!1),p=b,G=v;async function v(e,s){return p.goto(e,s,[])}d({"accessNode.api":"http://localhost:8080","discovery.wallet":"http://localhost:8701/fcl/authn","0xGateway":"0xf8d6e0586b0a20c7"});y.subscribe(m.set,[]);const I=()=>w(),_=async e=>{console.log(e);let s=!1;R();try{return s=await g({cadence:`
       import Gateway from 0xGateway
       import GatewayModules from 0xGateway
 
@@ -28,7 +28,7 @@ import{C as l,Y as y,Z as d,_ as u,$ as w,a0 as r,a1 as n,J as h}from"./vendor-5
           log("Started a new event.")
         }
       }
-      `,args:(e,t)=>[e(!0,t.Bool),e(i.name,t.String),e(i.description,t.String),e("",t.String),e("",t.String),e([i.tokens[0].path],t.Array(t.Path)),e([i.tokens[0].amount+".0"],t.Array(t.UFix64)),e([i.tokens[0].identifier],t.Array(t.String))],payer:r,proposer:r,authorizations:[r],limit:999}),m.set(a),n(a).subscribe(e=>{o.set(e.status),e.status===4&&setTimeout(()=>c.set(!1),2e3)}),await n(a).onceSealed()}catch(s){o.set(99),console.log(s)}},R=async i=>{try{return await u({cadence:`
+      `,args:(t,i)=>[t(!0,i.Bool),t(e.name,i.String),t(e.description,i.String),t("",i.String),t("",i.String),t([e.tokens[0].path],i.Array(i.Path)),t([e.tokens[0].amount+".0"],i.Array(i.UFix64)),t([e.tokens[0].identifier],i.Array(i.String))],payer:l,proposer:l,authorizations:[l],limit:999}),f.set(s),n(s).subscribe(t=>{o.set(t.status),t.status===4&&(G("/"),setTimeout(()=>c.set(!1),2e3))}),await n(s).onceSealed()}catch(a){o.set(99),console.log(a)}},x=async e=>{try{return await u({cadence:`
       import Gateway from 0xGateway
 
       pub fun main(account: Address): {String: Whitelist} {
@@ -64,7 +64,7 @@ import{C as l,Y as y,Z as d,_ as u,$ as w,a0 as r,a1 as n,J as h}from"./vendor-5
           }
         }
       }
-      `,args:(s,e)=>[s(i,e.Address)]})||{}}catch(a){console.log(a)}},v=async(i,a)=>{try{return await u({cadence:`
+      `,args:(a,t)=>[a(e,t.Address)]})||{}}catch(s){console.log(s)}},A=async(e,s)=>{try{return await u({cadence:`
       import Gateway from 0xGateway
 
       pub fun main(account: Address, whitelistId: UInt64): Whitelist {
@@ -95,4 +95,4 @@ import{C as l,Y as y,Z as d,_ as u,$ as w,a0 as r,a1 as n,J as h}from"./vendor-5
           }
         }
       }
-      `,args:(e,t)=>[e(i,t.Address),e(parseInt(a),t.UInt64)]})||{}}catch(s){console.log(s)}};function f(){c.set(!0),o.set(-1)}export{G as a,o as b,m as c,p as d,v as e,R as g,c as t,g as u};
+      `,args:(t,i)=>[t(e,i.Address),t(parseInt(s),i.UInt64)]})||{}}catch(a){console.log(a)}};function R(){c.set(!0),o.set(-1)}const P=()=>{const e=h("__svelte__");return{page:{subscribe:e.page.subscribe},navigating:{subscribe:e.navigating.subscribe},get preloading(){return console.error("stores.preloading is deprecated; use stores.navigating instead"),{subscribe:e.navigating.subscribe}},session:e.session}},M={subscribe(e){return P().page.subscribe(e)}};export{o as a,f as b,I as c,G as d,_ as e,A as f,x as g,M as p,c as t,m as u};

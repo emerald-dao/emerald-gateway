@@ -3,6 +3,9 @@
     import ProjectsComponent from "$lib/components/projects/ProjectsComponent.svelte";
 import MediaQuery from "../MediaQuery.svelte";
 
+
+export let whitelists 
+export let pageSize 
   
      
 </script>
@@ -14,7 +17,7 @@ import MediaQuery from "../MediaQuery.svelte";
     <div style="display: flex;">
         <MediaQuery query="(min-width: 1281px)" let:matches>
             {#if matches}
-            <ProjectsComponent screenSize={"desktop"} />    
+            <ProjectsComponent whitelists={whitelists} pageSize={pageSize}  screenSize={"desktop"} />    
             {/if}
           </MediaQuery>
           <MediaQuery query="(min-width: 481px) and (max-width: 1280px)" let:matches>

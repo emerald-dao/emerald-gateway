@@ -35,7 +35,7 @@
   <ul>
     <!-- <li><a href="/create" role="button" class="small-button" sveltekit:prefetch>+</a></li> -->
     {#if screenSize !== "mobile"}
-      <li><a href="/{$user.addr}/whitelists">Your Whitelists</a></li>
+      <li><a href="/{$user.addr}/whitelists">Whitelists</a></li>
       <li>
         {#if $user?.loggedIn}
           <button on:click={auth} class="outline">

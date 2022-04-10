@@ -1,17 +1,40 @@
 <script>
-import WhitelistsTable from "$lib/components/common/table/WhitelistsTable.svelte";
+import YourWhitelists from "$lib/components/common/table/YourWhitelists.svelte";
 import DrawerComponent from "$lib/components/drawer/DrawerComponent.svelte";
 import Sidebar from "$lib/components/Sidebar.svelte";
 import { PAGE_TITLE_EXTENSION } from "$lib/constants";
 import MediaQuery from "./MediaQuery.svelte";
 import Projects from "./[address]/whitelists.svelte";
 import { user } from "$lib/flow/stores";
+import {
+    getWhitelists
+} from "$lib/flow/actions";
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
-
 import Loading from "$lib/components/common/Loading.svelte";
+import CreateProject from "$lib/components/CreateProject.svelte";
 
-$: tab = $page.query.get('tab') || 'floats';
+let borrowed = true
+
+async function getAllWhitelists() {
+try {
+  let whitelists = await getWhitelists($user?.addr);
+console.log("whitelists", whitelists)
+return Object.values(whitelists);
+} catch (error) {
+  borrowed = false
+  console.log("err", error)
+}
+
+
+} 
+
+let whitelists = getAllWhitelists();
+
+// let whitelists = [{name:"n1"}]
+
+$: tab = $page.query.get('tab') || 'created';
+
   let query = new URLSearchParams($page.query.toString());
 </script>
 
@@ -19,56 +42,53 @@ $: tab = $page.query.get('tab') || 'floats';
     <title>Home {PAGE_TITLE_EXTENSION}</title>
 </svelte:head>
 
-<!-- <div let:dataFromB>
-    <div>i want {dataFromB}!</div>
-</div> -->
+
 <article class="app" >
    <DrawerComponent />
    <ul class="tabs">
     <li
       on:click={() => {
-        query.set('tab', 'floats')
+        query.set('tab', 'created')
         goto(`?${query.toString()}`);
       }}
-      class:animatedlink={tab !== "floats"}
-      class:selected={tab === "floats"}>
+      class:animatedlink={tab !== "created"}
+      class:selected={tab === "created"}>
       Your Whitelists
     </li>
     <li
       on:click={() => {
-        query.set('tab', 'events')
+        query.set('tab', 'joined')
         goto(`?${query.toString()}`);
       }}
-      class:animatedlink={tab !== "events"}
-      class:selected={tab === "events"}>
+      class:animatedlink={tab !== "joined"}
+      class:selected={tab === "joined"}>
       Joined Whitelists
     </li>
-    
-    <!-- {#await addressObject then addressObject}
-      {#if $user?.addr == addressObject.address}
-        <li
-        on:click={() => {
-          query.set('tab', 'account')
-          goto(`?${query.toString()}`);
-        }}
-          class:animatedlink={tab !== "account"}
-          class:selected={tab === "account"}>
-          Account
-        </li>
-      {/if}
-    {/await} -->
   </ul>
+  <!-- <CreateProject mobile={false} /> -->
 
-  <!-- {#await addressObject}
-    <Loading /> -->
-  <!-- {:then addressObject} -->
-    {#if tab === "floats"}
-    <WhitelistsTable />
-    {:else}
-    <WhitelistsTable />
+  {#if borrowed}
+  {#await whitelists}
+  <Loading />
+  {:then whitelists}
+  {#if whitelists === null} 
+  nop
+  {:else}
+    {#if tab === "created"}
+  <YourWhitelists whitelists={whitelists} />
+  {:else}
+  <!-- <YourWhitelists /> -->
     {/if}
-  <!-- {/await} -->
-    <!-- <Projects  /> -->
+  
+  {/if}
+  {/await}
+     <!-- not borrowed -->
+  {:else}
+    <CreateProject mobile={false} />
+
+  {/if}
+
+
   </article>
 
 

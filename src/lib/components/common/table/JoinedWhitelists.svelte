@@ -11,16 +11,15 @@ import Projects from "../../../../routes/[address]/whitelists.svelte";
 
       
       export let whitelists;
-      let rows = [
-          {id:0, name:"n1", description:"t1"},
-          {id:0, name:"n1", description:"t1"},
-          {id:0, name:"n1", description:"t1"},
-        ];
+      // let rows = [
+      //     {id:0, name:"n1", description:"t1"},
+      //     {id:0, name:"n1", description:"t1"},
+      //     {id:0, name:"n1", description:"t1"},
+      //   ];
       
-      console.log('whitelistsTable:', whitelists);
       
       let pageCount = 0; //first page
-      let pageSize = 25; 
+      let pageSize = 2; 
       
       function onCellClick(row) {
         return;
@@ -44,31 +43,15 @@ import Projects from "../../../../routes/[address]/whitelists.svelte";
         );
       }
     </script>
-    <!-- <article> -->
-        <Table {pageCount} {pageSize} {rows} let:rows={rows2} labels={{ empty: "This account has not created any whitelists.", loading: "Loading whitelists..."}} >
-            <thead slot="head">
-             
-            </thead>
+        <Table {pageCount} {pageSize} {whitelists} let:rows={whitelists2} labels={{ empty: "This account has not created any whitelists.", loading: "Loading whitelists..."}} >
             <tbody>
-                <Projects />
+                <Projects whitelists={whitelists2} />
             </tbody>
           </Table>
-    <!-- </article> -->
    
     
     <style>
-        .project-card {
-            
-    border-radius: 12px;
-    background-color: #252e37;
-    height: var(--height);
-    width: 50%;
-}
 
-.project-card:hover {
-    background-color: rgba(152, 189, 182, 0.1);
-    cursor: pointer;
-}
       .table-image {
         max-width: 75px;
         height:auto;

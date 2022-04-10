@@ -64,7 +64,8 @@ import DrawerComponent from "./drawer/DrawerComponent.svelte";
     projects.subscribe((val) => (Projects = val));
 
     function handleNav() {
-        goto(`/${$user?.addr}/whitelists`);
+        // goto(`/${$user?.addr}/whitelists`);
+        // goto(`/`);
     }
 
     function createProject() {
@@ -102,8 +103,8 @@ import DrawerComponent from "./drawer/DrawerComponent.svelte";
     const handleEvent = () => {
         if(activeTabValue === 6) {
             $tabs[activeTabValue].done = true;
+            handleNav();
                 createProject();
-                handleNav();
         } else if(activeTabValue === 0) {
             validateTab1()
         } else {
