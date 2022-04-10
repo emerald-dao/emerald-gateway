@@ -13,18 +13,27 @@
 
   export let filter = (whitelist, text, index) => {
     const wlName = whitelist.variables.name
+    //  console.log("wlName", wlName)
     text = text.toLowerCase();
-    for (let i in wlName) {
-      if (
-        wlName[i]
-          .toString()
-          .toLowerCase()
-          .indexOf(text) > -1
-      ) {
-        return true;
-      }
-    }
-    return false;
+    console.log("wlName[i]", wlName[i].toString())
+
+    const filtered = myArray.filter(function (str) { return str.indexOf(PATTERN) === -1; })
+console.log("filtered")
+    //       .toLowerCase().indexOf(text))
+
+    // for (let i in wlName) {
+    //   console.log("wlName[i]", wlName[i].toString()
+    //       .toLowerCase().indexOf(text))
+    //   if (
+    //     wlName[i]
+    //       .toString()
+    //       .toLowerCase()
+    //       .indexOf(text) > -1
+    //   ) {
+    //     return true;
+    //   }
+    // }
+    // return false;
   };
   export let index = -1;
   export let text = "";
@@ -35,8 +44,6 @@
   };
 
   async function onSearch(event) {
-    console.log("event", event)
-    console.log("text", text)
     const state = stateContext.getState();
     const detail = {
       originalEvent: event,
@@ -55,7 +62,15 @@
         stateContext.setWhitelists(state.whitelists);
       } else {
         stateContext.setWhitelists(
-          detail.whitelists.filter(r => detail.filter(r, detail.text, index))
+           detail.whitelists.filter(function (w) {
+            console.log("w", w.variables.name)
+            const name = w.variables.name
+            return name.includes(text);
+          })
+             
+
+          // detail.whitelists.filter( (w) =>  w.variables.name.indexOf(text) === -1 )
+          // detail.whitelists.filter(r => detail.filter(r, detail.text, index))
         );
       }
       stateContext.setPage(0, 0);
