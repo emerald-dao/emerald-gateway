@@ -11,11 +11,12 @@
   const dispatch = createEventDispatcher();
   const stateContext = getContext("state");
 
-  export let filter = (row, text, index) => {
+  export let filter = (whitelist, text, index) => {
+    const wlName = whitelist.variables.name
     text = text.toLowerCase();
-    for (let i in row) {
+    for (let i in wlName) {
       if (
-        row[i]
+        wlName[i]
           .toString()
           .toLowerCase()
           .indexOf(text) > -1
@@ -34,6 +35,8 @@
   };
 
   async function onSearch(event) {
+    console.log("event", event)
+    console.log("text", text)
     const state = stateContext.getState();
     const detail = {
       originalEvent: event,
@@ -43,21 +46,21 @@
       page: state.page,
       pageIndex: state.pageIndex,
       pageSize: state.pageSize,
-      rows: state.filteredRows
+      whitelists: state.filteredWhitelists
     };
     dispatch("search", detail);
 
     if (detail.preventDefault !== true) {
       if (detail.text.length === 0) {
-        stateContext.setRows(state.rows);
+        stateContext.setWhitelists(state.whitelists);
       } else {
-        stateContext.setRows(
-          detail.rows.filter(r => detail.filter(r, detail.text, index))
+        stateContext.setWhitelists(
+          detail.whitelists.filter(r => detail.filter(r, detail.text, index))
         );
       }
       stateContext.setPage(0, 0);
     } else {
-      stateContext.setRows(detail.rows);
+      stateContext.setWhitelists(detail.whitelists);
     }
   }
 </script>
