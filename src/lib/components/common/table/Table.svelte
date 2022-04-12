@@ -20,6 +20,7 @@
 
 <script>
   import { createEventDispatcher, setContext } from "svelte";
+import SearchComponent from "$lib/components/tabs/SearchComponent.svelte";
   const dispatch = createEventDispatcher();
 
   export let loading = false;
@@ -34,6 +35,13 @@
     loading: "Loading data",
     ...globalLabels
   };
+
+  let filteredCollections = [];
+
+// For Search Input
+let searchTerm = "";
+
+
 
   let buttons = [-2, -1, 0, 1, 2];
   let pageCount = 0;
@@ -55,6 +63,13 @@
     },
     setWhitelists: _whitelists => (filteredWhitelists = _whitelists)
   });
+
+  const searchCollections = () => {
+    return filteredWhitelists = whitelists.filter(whitelist => {
+        let whitelistLabel = whitelist.variables.name.toLowerCase();
+        return whitelistLabel.includes(searchTerm.toLowerCase())
+    });
+  }
 
   function onPageChange(event) {
     dispatch("pageChange", event.detail);
@@ -80,7 +95,9 @@
 
 <slot name="top">
   <div class="slot-top">
-    <svelte:component this={Search} on:search={onSearch} />
+    <!-- <svelte:component this={Search} on:search={onSearch} /> -->
+    <SearchComponent bind:searchTerm on:input={searchCollections} />
+
   </div>
 </slot>
 
@@ -108,7 +125,9 @@
       </tr>
     </tbody>
   {:else}
-    <slot whitelists={visibleWhitelists} />
+    <!-- // dynamic search or no search -->
+    
+    <slot whitelists={searchTerm === 0 ? visibleWhitelists : filteredWhitelists} />
   {/if}
   <slot name="foot" />
 </table>

@@ -11,7 +11,7 @@ console.log("wl3",whitelists )
 </script>
 
 <svelte:head>
-    <title>Your Whitelists</title>
+    <title>Whitelists</title>
 </svelte:head>
     <div class="card-container" />
     <div style="display: flex;">

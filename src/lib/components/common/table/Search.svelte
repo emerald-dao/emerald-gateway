@@ -11,29 +11,25 @@
   const dispatch = createEventDispatcher();
   const stateContext = getContext("state");
 
-  export let filter = (whitelist, text, index) => {
-    const wlName = whitelist.variables.name
-    //  console.log("wlName", wlName)
-    text = text.toLowerCase();
-    console.log("wlName[i]", wlName[i].toString())
+  export let filter = (w, text, index) => {
+    const name = w.variables.name
+        text = text.toLowerCase();
+   const matches = name.indexOf(text) > -1
+    return  matches 
 
-    const filtered = myArray.filter(function (str) { return str.indexOf(PATTERN) === -1; })
-console.log("filtered")
-    //       .toLowerCase().indexOf(text))
-
-    // for (let i in wlName) {
-    //   console.log("wlName[i]", wlName[i].toString()
-    //       .toLowerCase().indexOf(text))
-    //   if (
-    //     wlName[i]
-    //       .toString()
-    //       .toLowerCase()
-    //       .indexOf(text) > -1
-    //   ) {
-    //     return true;
-    //   }
-    // }
-    // return false;
+    // // for (let i in wlName) {
+    // //   console.log("wlName[i]", wlName[i].toString()
+    // //       .toLowerCase().indexOf(text))
+    // //   if (
+    // //     wlName[i]
+    // //       .toString()
+    // //       .toLowerCase()
+    // //       .indexOf(text) > -1
+    // //   ) {
+    // //     return true;
+    // //   }
+    // // }
+    // // return false;
   };
   export let index = -1;
   export let text = "";
@@ -62,15 +58,13 @@ console.log("filtered")
         stateContext.setWhitelists(state.whitelists);
       } else {
         stateContext.setWhitelists(
-           detail.whitelists.filter(function (w) {
-            console.log("w", w.variables.name)
-            const name = w.variables.name
-            return name.includes(text);
-          })
-             
+          //  detail.whitelists.filter(function (w) {
+          //   const name = w.variables.name
+          //   const newWhitelists = name.indexOf(text) > -1
 
-          // detail.whitelists.filter( (w) =>  w.variables.name.indexOf(text) === -1 )
-          // detail.whitelists.filter(r => detail.filter(r, detail.text, index))
+          //    return  newWhitelists 
+          // })
+          detail.whitelists.filter(w => detail.filter(w, detail.text, index))
         );
       }
       stateContext.setPage(0, 0);

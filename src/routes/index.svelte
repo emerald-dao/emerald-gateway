@@ -79,7 +79,7 @@ $: tab = $page.query.get('tab') || 'created';
     {#if tab === "created"}
   <YourWhitelists whitelists={whitelists} />
   {:else}
-  <JoinedWhitelists  whitelists={$joinedWhitelists} />
+  <JoinedWhitelists whitelists={$joinedWhitelists} />
     {/if}
   
   {/if}
