@@ -40,14 +40,15 @@ let title = "Passing data to slot";
 </MediaQuery>
 
  
-<main style="position: relative;"  class="container">
+<main   class="container">
   <Drawer />
   <slot  />
   <Transaction />
-  <div style="position: sticky; bottom:100px; left:10px; height:6rem">
-    <TxMockUp />
-  </div>
+ 
 </main>
+<div style="position: sticky; bottom:140px; left:10px; height:6rem">
+  <TxMockUp />
+</div>
 
 
 <footer>

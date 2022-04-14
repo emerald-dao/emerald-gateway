@@ -9,6 +9,7 @@
 
 {#if $transactionInProgress}
   <article
+  style="width: 40%;"
   class="accent-border {$transactionStatus == 99 ? 'error' : null}"
   transition:slide
 >

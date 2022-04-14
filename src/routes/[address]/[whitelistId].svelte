@@ -61,6 +61,7 @@ let whitelist = readWhitelist(
 );
 
 let token1valid = null
+let isVerifing = false
 
 const progress = tweened(50, {
     duration: 600,
@@ -99,6 +100,7 @@ function addJoinedWhitelist(whitelist) {
 }
 
 function handleJoin(whitelist) {
+    isVerifing = true
     $transactionInProgress = true
     $transactionStatus = 1
     setTimeout(() => {
@@ -108,8 +110,10 @@ function handleJoin(whitelist) {
         $transactionInProgress = false
     }, 2000);
     setTimeout(() => {
+
         goto("/?tab=joined")
-    },3500)
+        
+    },3000)
 }
 </script>
 
@@ -176,7 +180,13 @@ function handleJoin(whitelist) {
             
         </div>
         <footer>
-            <button on:click="{() => handleJoin(whitelist)}">JOIN</button>
+            <button style="--opacity:{isVerifing ? 0.4 : 1 }"  on:click="{() => handleJoin(whitelist)}">JOIN</button>
         </footer>
     </article>
     {/await}
+
+    <style>
+        button{
+            opacity: var(--opacity);
+        }
+    </style>
