@@ -3,7 +3,7 @@ import Icon from "@iconify/svelte"
 export let mobile
 </script>
 
-<a href="/create" >
+<a href="/create"  >
     <div style="--height:{mobile ? "14rem" : "15rem"}"  class="card project-card flex-align">
 
         <Icon  icon="ant-design:plus-circle-outlined"
@@ -35,6 +35,7 @@ p {
     background-color: #252E37;
     height: var(--height);
     width: 100%;
+
 }
 
 .project-card:hover {

@@ -3,8 +3,16 @@ import Icon from "@iconify/svelte"
 export let searchTerm;
 </script>
 
-<header class="flex-align">
-    <div class="icon-container flex-align" >
+<header >
+    <div class="search">
+        <input
+          type="search"
+          title={"Search ..."}
+          placeholder="Search ..."
+          bind:value={searchTerm}
+          on:input />
+      </div>
+    <!-- <div class="icon-container flex-align" >
         <Icon icon="akar-icons:search" />
     </div>
     <div class="mt-1" >
@@ -16,7 +24,7 @@ export let searchTerm;
             bind:value={searchTerm}
             on:input
              />
-    </div>
+    </div> -->
 </header>
 
 <style>

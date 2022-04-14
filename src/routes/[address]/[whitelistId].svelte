@@ -2,9 +2,15 @@
 import {
     page
 } from "$app/stores";
+import { spring } from "svelte/motion";
+  import { quartInOut } from "svelte/easing";
+  import { tweened } from 'svelte/motion'
+  import { cubicOut } from 'svelte/easing'
 import Dialog from "$lib/components/Dialog.svelte";
 import {
+collections,
     dialog,
+    emeraldIdVerif,
     joinedWhitelists,
     transactionInProgress,
     transactionStatus
@@ -19,12 +25,54 @@ import {
 import TokenComponent from "$lib/components/common/TokenComponent.svelte"
 import { goto } from "$app/navigation";
 
+const tokens = [
+    {
+        id: 0,
+    label: "FLOW",
+    imgUrl:
+      "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
+    selected: false,
+    amount:0,
+    path: {
+      domain: "public",
+      identifier: "flowTokenBalance"
+    },
+    identifier: "A.1654653399040a61.FlowToken.Vault"
+  },
+  {
+    id: 1,
+    label: "FUSD",
+    imgUrl:
+      "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
+    selected: false,
+    amount:0,
+    path: {
+      domain: "public",
+      identifier: "fusdBalance"
+    },
+    identifier: "A.3c5959b568896393.FUSD.Vault"
+  },
+    
+]
+
 let whitelist = readWhitelist(
     $page.params.address,
     $page.params.whitelistId
 );
 
 let token1valid = null
+
+const progress = tweened(50, {
+    duration: 600,
+    easing: cubicOut
+  })
+
+  const handleAnimation = () => {
+    $progress = 100
+    token1valid = true
+  }
+
+
 
 function addJoinedWhitelist(whitelist) {
         const wl = {
@@ -54,7 +102,7 @@ function handleJoin(whitelist) {
     $transactionInProgress = true
     $transactionStatus = 1
     setTimeout(() => {
-        token1valid = true
+        handleAnimation()
         $transactionStatus = 4
         addJoinedWhitelist(whitelist)
         $transactionInProgress = false
@@ -81,19 +129,22 @@ function handleJoin(whitelist) {
         </blockquote>
         <h1>Tokens</h1>
         <p>Something about the tokens</p>
-        <div style="display: flex;" class="mt-1">
-            {#each whitelist.modules.token as tokenModule, i}
-                <TokenComponent token1valid={token1valid} tokenModule={tokenModule} i={i} />
+            <!-- {#each whitelist.modules.token as tokenModule, i} -->
+            {#each tokens as tokenModule, i}
+            <div  class="mt-1">
+                <TokenComponent progress={progress} token1valid={token1valid} tokenModule={tokenModule} i={i} />
+            </div>
             {/each}
-        </div>
         <h1>Collections</h1>
         <p>Something about the collections</p>
         <div class="mt-1">
-            {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsNFT"]}
-            {#each whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsNFT"] as collection}
+            <!-- {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsNFT"]} -->
+            <!-- {#each whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsNFT"] as collection} -->
+            {#if $collections} 
+            {#each $collections as collection}
             {#if collection.selected}
             <div class="mt-1">
-                <CollectionComponent {...collection} />
+                <CollectionComponent token1valid={token1valid} progress={progress} {...collection} />
             </div>
             {/if}
             {/each}
@@ -105,18 +156,24 @@ function handleJoin(whitelist) {
         </div>
         <p>Something about the verification</p>
 
-        <div class="mt-1">
-            {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsEmeraldID"]}
-            <!-- <VerificationComponent {...EmeraldIdVerif} /> -->
-            {/if}
+        <!-- <div class="mt-1">
+             {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.OwnsEmeraldID"]}
+             <VerificationComponent {...EmeraldIdVerif} /> 
+            {/if} 
             <VerticalSpace value="0.8rem" />
             {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.DiscordRoles"]}
-            <!-- <VerificationComponent {...DiscordVerif} /> -->
+             <VerificationComponent {...DiscordVerif} /> 
             {/if}
             <VerticalSpace value="0.8rem" />
             {#if whitelist.modules["A.f8d6e0586b0a20c7.GatewayModules.TwitterFollows"]}
-            <!-- <VerificationComponent {...TwitterVerif} /> -->
+             <VerificationComponent {...TwitterVerif} /> 
             {/if}
+        </div> -->
+        <div class="mt-1">
+             {#if $emeraldIdVerif}
+             <VerificationComponent token1valid={token1valid} progress={progress} {...$emeraldIdVerif} /> 
+            {/if} 
+            
         </div>
         <footer>
             <button on:click="{() => handleJoin(whitelist)}">JOIN</button>

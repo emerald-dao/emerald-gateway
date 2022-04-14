@@ -40,12 +40,15 @@ let title = "Passing data to slot";
 </MediaQuery>
 
  
-<main  class="container">
+<main style="position: relative;"  class="container">
   <Drawer />
   <slot  />
   <Transaction />
-  <TxMockUp />
+  <div style="position: sticky; bottom:100px; left:10px; height:6rem">
+    <TxMockUp />
+  </div>
 </main>
+
 
 <footer>
   {#if $page.path === "/live"}

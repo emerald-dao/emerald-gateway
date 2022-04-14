@@ -1,77 +1,96 @@
 <script>
-    import  Icon  from "@iconify/svelte"
-    import { selectedCollection , dialog } from "$lib/stores"
-  
-    export let selected
-    export let amount 
-    export let label 
-    export let imgUrl
-    export let id
-    
+import Icon from "@iconify/svelte"
+import {
+    selectedCollection,
+    dialog
+} from "$lib/stores"
+
+export let selected
+export let amount
+export let label
+export let imgUrl
+export let id
+export let progress
+export let token1valid
 
 // let callParentFunction = functionProp();
-    const handleEdit = id => {
-        $selectedCollection = id
+const handleEdit = id => {
+    $selectedCollection = id
 
-        $dialog.opened = true
-    }
-
-
+    $dialog.opened = true
+}
 </script>
 
-<div
-class={amount ? "collection-container-active" : "collection-container-inactive"}
+<div style=" width:{`${$progress}%`};" class:valid={token1valid}  >
 
-    >
     <div
-        style="display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"
+        class={amount ? "collection-container-active" : "collection-container-inactive"}
+
         >
-        <img
-            src={imgUrl}
-            alt="logo"
-            />
-    </div>
-    <div                 class={amount ? "label-active" : "label-inactive"}
-    >
-        {label}
-    </div>
-    {#if amount}
-    <!-- <div class="amount-container"
+        <div
+            style="display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"
+            >
+            <img
+                src={imgUrl}
+                alt="logo"
+                />
+        </div>
+        <div                 class={amount ? "label-active" : "label-inactive"}
+            >
+            {label}
+        </div>
+        {#if amount}
+        <!-- <div class="amount-container"
         on:click={() => handleEdit(id)}
         > -->
-    <div class="amount-container"
-        on:click={() => handleEdit(id)}
-        >
-        {amount}
-        <div class="icon-container">
-            <Icon icon="akar-icons:edit" s/>
+        <div class="amount-container"
+            on:click={() => handleEdit(id)}
+            >
+            {amount}
+            <div class="icon-container">
+                <Icon icon="akar-icons:edit" s/>
 
-                </div>
-                </div>
-                {:else}
-                <div></div>
-                {/if}
-            </div>
-
+                    </div>
+                    </div>
+                    {:else}
+                    <div></div>
+                    {/if}
+                    
+                    </div>
+                    {#if token1valid}
+                    <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
+                    {/if}
+                    </div>
 
 <style>
+.valid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70%;
+    /* width: 100%; */
+    background-color: rgba(56, 232, 198, 0.1);
+    border-radius: 50px;
 
-img{
-    max-width: 2.4rem;
-    /* min-width: 2.4rem; */
-                            height: 100%;
-                            border-style: none;
-                            margin-left: -0.1rem;
-                            border-radius: 50px;
 }
 
-.label-active{
+img {
+    max-width: 2.4rem;
+    /* min-width: 2.4rem; */
+    height: 100%;
+    border-style: none;
+    margin-left: -0.1rem;
+    border-radius: 50px;
+}
+
+.label-active {
     margin-left: 2rem;
     width: 10rem;
     display: flex;
     justify-content: end;
 }
-.label-inactive{
+
+.label-inactive {
     /* margin-left: 2rem;
     width: 12rem; */
     width: 10rem;
@@ -107,7 +126,6 @@ img{
     padding: 0.2rem;
 }
 
-
 .collection-container-active {
     position: relative;
     display: flex;
@@ -131,6 +149,6 @@ img{
     align-items: center;
     background-color: #252E37;
     font-weight: bold;
-    padding-right:0.8rem;
+    padding-right: 0.8rem;
 }
 </style>

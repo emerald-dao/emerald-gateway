@@ -2,12 +2,15 @@
 import {
     dialog
 } from "$lib/stores";
+import Icon from "../common/Icon.svelte";
 
 export let selected
+export let amount
 export let label
 export let imgUrl
 export let id
-
+export let progress
+export let token1valid
 let color
 let details = null
 
@@ -35,7 +38,9 @@ function handleSeeDetails() {
 }
 </script>
 
-<div
+<div style=" width:{`${$progress}%`};" class:valid={token1valid}  >
+
+    <div
     style="--border:{color}; --width:{details ? "16rem" : "9rem"};  height:2.6rem; "
     class={"verification-container-inactive"}
 
@@ -62,9 +67,25 @@ function handleSeeDetails() {
     </div>
     {/if}
 
+    </div>
+    {#if token1valid}
+    <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
+    {/if}
 </div>
 
+
+
 <style>
+    .valid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70%;
+    /* width: 100%; */
+    background-color: rgba(56, 232, 198, 0.1);
+    border-radius: 50px;
+
+}
 .see-details-container {
 
     padding-left: 0.7rem;

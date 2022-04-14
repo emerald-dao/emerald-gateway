@@ -11,13 +11,13 @@ let mobile = screenSize === "mobile"
 
 <div class="projects-container" style="--width:{mobile ? "48%" : "32%"} ">
     {#if !joined}
-        <a>
+        <a style="margin-left: 0.3rem;" >
             <CreateProject mobile={mobile} />
         </a>
     {/if}
     <!-- {#await whitelists then whitelists} -->
     {#each whitelists as whitelist, i}
-    <a href={$user?.addr + "/" + whitelist.variables.whitelistId}>
+    <a style="margin-left: 0.3rem;"   href={$user?.addr + "/" + whitelist.variables.whitelistId}>
         <div style="--height:{mobile ? "14rem" : "15rem"}; padding-left:0; padding-right:0" class="card project-card">
             <div class="image-title-container">
                 <h1>
@@ -82,7 +82,7 @@ footer {
 
 .projects-container {
     display: flex;
-    justify-content: space-between;
+    justify-content:left; 
     flex-wrap: wrap;
     max-width: 100%;
     width: 100%;
@@ -107,6 +107,7 @@ p {
     text-align: left;
     padding-bottom: 0;
     padding-top: 0;
+
 
 }
 

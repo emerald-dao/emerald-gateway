@@ -1,16 +1,16 @@
 <script>
 import Icon from "./Icon.svelte"
-
 export let tokenModule
 export let token1valid
 export let i
+export let progress
 </script>
 
-<div style="height: 70%; width:100%;" class:valid={token1valid} >
+<!-- <button style="width: 100px;" on:click="{handleAnimation}">Check</button> -->
+<!-- <div style="height: 70%;       width={"1000px"};" class:valid={token1valid} > -->
+<div style="height: 70%; width:{`${$progress}%`};" class:valid={token1valid}  >
     <div
-        style="--width:{'30%'}; --margin-left:{i === 0
-        ? '0rem'
-        : '0.8rem'}"
+        style="--width:{"12rem"};"
         class={"token-container"}
         >
         <div
@@ -30,7 +30,7 @@ export let i
         </div>
     </div>
     {#if token1valid}
-        <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
+    <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
     {/if}
 </div>
 
@@ -40,7 +40,7 @@ export let i
     justify-content: space-between;
     align-items: center;
     height: 70%;
-    width: 100%;
+    /* width: 100%; */
     background-color: rgba(56, 232, 198, 0.1);
     border-radius: 50px;
 
