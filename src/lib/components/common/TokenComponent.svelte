@@ -3,12 +3,11 @@ import Icon from "./Icon.svelte"
 export let tokenModule
 export let token1valid
 export let i
-export let progress
+export let width
+export let joined
 </script>
 
-<!-- <button style="width: 100px;" on:click="{handleAnimation}">Check</button> -->
-<!-- <div style="height: 70%;       width={"1000px"};" class:valid={token1valid} > -->
-<div style="height: 70%; width:{`${$progress}%`};" class:valid={token1valid}  >
+<div style="height: 70%; width:{`${joined ? 100 : $width}%`};" class:valid={token1valid || joined}  >
     <div
         style="--width:{"12rem"};"
         class={"token-container"}
@@ -29,7 +28,7 @@ export let progress
             {parseFloat(tokenModule.amount).toFixed(2)}
         </div>
     </div>
-    {#if token1valid}
+    {#if token1valid || joined}
     <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
     {/if}
 </div>

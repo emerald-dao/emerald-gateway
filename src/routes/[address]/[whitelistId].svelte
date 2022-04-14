@@ -13,7 +13,8 @@ collections,
     emeraldIdVerif,
     joinedWhitelists,
     transactionInProgress,
-    transactionStatus
+    transactionStatus,
+
 } from "$lib/stores";
 
 import VerificationComponent from "$lib/components/projects/VerificationComponent.svelte";
@@ -24,6 +25,7 @@ import {
 } from "$lib/flow/utils";
 import TokenComponent from "$lib/components/common/TokenComponent.svelte"
 import { goto } from "$app/navigation";
+import { user } from "$lib/flow/stores";
 
 const tokens = [
     {
@@ -55,21 +57,25 @@ const tokens = [
     
 ]
 
+
 let whitelist = readWhitelist(
     $page.params.address,
-    $page.params.whitelistId
+    $page.params.whitelistId,
 );
 
+const  whitelistID = $page.params.whitelistId
+const joinedWls = $joinedWhitelists.filter(wl => wl.variables.whitelistId.toString() === whitelistID) 
+const joined = joinedWls.length > 0
 let token1valid = null
 let isVerifing = false
 
-const progress = tweened(50, {
+const width = tweened(50, {
     duration: 600,
     easing: cubicOut
   })
 
   const handleAnimation = () => {
-    $progress = 100
+    $width = 100
     token1valid = true
   }
 
@@ -136,7 +142,7 @@ function handleJoin(whitelist) {
             <!-- {#each whitelist.modules.token as tokenModule, i} -->
             {#each tokens as tokenModule, i}
             <div  class="mt-1">
-                <TokenComponent progress={progress} token1valid={token1valid} tokenModule={tokenModule} i={i} />
+                <TokenComponent joined={joined}  width={width} token1valid={token1valid} tokenModule={tokenModule} i={i} />
             </div>
             {/each}
         <h1>Collections</h1>
@@ -148,7 +154,7 @@ function handleJoin(whitelist) {
             {#each $collections as collection}
             {#if collection.selected}
             <div class="mt-1">
-                <CollectionComponent token1valid={token1valid} progress={progress} {...collection} />
+                <CollectionComponent joined={joined} token1valid={token1valid} width={width} {...collection} />
             </div>
             {/if}
             {/each}
@@ -175,13 +181,16 @@ function handleJoin(whitelist) {
         </div> -->
         <div class="mt-1">
              {#if $emeraldIdVerif}
-             <VerificationComponent token1valid={token1valid} progress={progress} {...$emeraldIdVerif} /> 
+             <VerificationComponent joined={joined} token1valid={token1valid} width={width} {...$emeraldIdVerif} /> 
             {/if} 
             
         </div>
+        {#if !joined}
         <footer>
             <button style="--opacity:{isVerifing ? 0.4 : 1 }"  on:click="{() => handleJoin(whitelist)}">JOIN</button>
         </footer>
+        {/if}
+       
     </article>
     {/await}
 

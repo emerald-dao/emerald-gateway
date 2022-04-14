@@ -9,8 +9,10 @@ export let amount
 export let label
 export let imgUrl
 export let id
-export let progress
+export let width
 export let token1valid
+export let joined
+
 let color
 let details = null
 
@@ -38,7 +40,7 @@ function handleSeeDetails() {
 }
 </script>
 
-<div style=" width:{`${$progress}%`};" class:valid={token1valid}  >
+<div style=" width:{`${joined ? 100 : $width}%`};" class:valid={token1valid || joined}  >
 
     <div
     style="--border:{color}; --width:{details ? "16rem" : "9rem"};  height:2.6rem; "
@@ -68,7 +70,7 @@ function handleSeeDetails() {
     {/if}
 
     </div>
-    {#if token1valid}
+    {#if token1valid || joined}
     <Icon icon="line-md:confirm-circle" color="var(--primary)" height="2.6rem" />
     {/if}
 </div>

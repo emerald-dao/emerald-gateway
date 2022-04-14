@@ -1,28 +1,58 @@
 <script>
+import { goto } from "$app/navigation";
+
 import { user } from "$lib/flow/stores";
+import Icon from "../common/Icon.svelte";
 import CreateProject from "../CreateProject.svelte";
+import Tooltip from '../common/tooltip/Tooltip.svelte';
+	import { tooltip } from '../common/tooltip/tooltip';
+	import { tooltip as tooltipv1 } from '../common/tooltip/tooltip.v1';
+
 
 export let joined;
 export let whitelists
-console.log("component whitelist", whitelists)
 export let screenSize
 let mobile = screenSize === "mobile"
+let iconHovered = false
+const userAddr = $user?.addr
+
+const handleHover = (enter) => enter ? iconHovered = true : iconHovered = false
+const handleSelection = (whitelistId) => !iconHovered ? goto(`/${userAddr}/${whitelistId}`) : handleUrlCopy(whitelistId)
+
+function handleUrlCopy(whitelistId) {
+    navigator.clipboard.writeText(`http://localhost:3000/${userAddr}/${whitelistId}`);
+    // showTooltip()
+}
 </script>
 
 <div class="projects-container" style="--width:{mobile ? "48%" : "32%"} ">
     {#if !joined}
-        <a style="margin-left: 0.3rem;" >
+        <a style="margin-right: 0.3rem;" >
             <CreateProject mobile={mobile} />
         </a>
     {/if}
     <!-- {#await whitelists then whitelists} -->
     {#each whitelists as whitelist, i}
-    <a style="margin-left: 0.3rem;"   href={$user?.addr + "/" + whitelist.variables.whitelistId}>
-        <div style="--height:{mobile ? "14rem" : "15rem"}; padding-left:0; padding-right:0" class="card project-card">
+    <!-- <a style="margin-left: 0.3rem;"   href={$user?.addr + "/" + whitelist.variables.whitelistId}> -->
+        <div
+        on:click={() => handleSelection(whitelist.variables.whitelistId)}
+         style="--height:{mobile ? "14rem" : "15rem"}; padding-left:0; padding-right:0" class="card project-card">
             <div class="image-title-container">
-                <h1>
-                    {whitelist.variables.name}
-                </h1>
+                <div style="display: flex; justify-content:space-between; align-items:center">
+                    <h1>
+                        {whitelist.variables.name}
+                    </h1>
+                    <div
+                     class="link-container"
+                        on:click={() => handleUrlCopy(whitelist.variables.whitelistId)}
+                      on:pointerenter={() => handleHover(true)} 
+                      on:pointerleave={() => handleHover(false)} 
+                      use:tooltip
+                      >
+                        <Icon icon="akar-icons:link-chain"  height="22px" color={iconHovered ? "var(--primary)" : "white"}/>
+                    </div>
+                </div>
+               
             </div>
             <div class="description-container">
                     {whitelist.variables.description}
@@ -36,13 +66,29 @@ let mobile = screenSize === "mobile"
                 </span>
             </footer>
         </div>
-    </a>
+    <!-- </a> -->
     {/each}
     <!-- {/await} -->
 </div>
 
 <style>
+.whitelist-container{
+    width: var(--width)
+
+}
+
+.link-container {
+    position: absolute;
+    bottom: 4px;
+    right: 10px;
+    color: var(--primary);
+    z-index: 1;
+
+}
+    
 .image-title-container {
+    position: relative;
+    z-index: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -54,6 +100,7 @@ let mobile = screenSize === "mobile"
     url("https://images.squarespace-cdn.com/content/v1/61646635d8111916a92d2d0e/e7e84db0-2082-4269-bec7-aa07bd337714/ballerz.gif");
     background-size: cover;
     padding-left: 0.5rem;
+    padding-right: 0.4rem;
 }
 
 .description-container {
@@ -107,8 +154,8 @@ p {
     text-align: left;
     padding-bottom: 0;
     padding-top: 0;
-
-
+    width: var(--width);
+    
 }
 
 .project-card:hover {

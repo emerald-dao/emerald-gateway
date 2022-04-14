@@ -127,7 +127,8 @@ let searchTerm = "";
   {:else}
     <!-- // dynamic search or no search -->
     
-    <slot whitelists={searchTerm === 0 ? visibleWhitelists : filteredWhitelists} />
+    <slot whitelists={!searchTerm ? visibleWhitelists : filteredWhitelists} />
+    <!-- <slot whitelists={ visibleWhitelists} /> -->
   {/if}
   <slot name="foot" />
 </table>

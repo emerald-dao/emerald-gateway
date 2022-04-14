@@ -20645,7 +20645,7 @@ var require_fcl_cjs = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-42dc9ad2.js
+// .svelte-kit/output/server/chunks/Icon-5f6e45ed.js
 function fullIcon(data) {
   return { ...iconDefaults, ...data };
 }
@@ -22138,11 +22138,11 @@ function writable2(value, start = noop3) {
   }
   return { set, update, subscribe: subscribe2 };
 }
-var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults, Icon, subscriber_queue2;
-var init_index_42dc9ad2 = __esm({
-  ".svelte-kit/output/server/chunks/index-42dc9ad2.js"() {
+var matchName, iconDefaults, stringToIcon, validateIcon, matchChar, storageVersion, storage$1, simpleNames, defaults, unitsSplit, unitsTest, regex, randomPrefix, counter, storage, configStorage, fallBackAPISources, fallBackAPI, mergeParams, maxLengthCache, pathCache, detectFetch, fetchModule, prepare, send, fetchAPIModule, callbacks, pendingUpdates, idCounter, defaultConfig, redundancyCache, cache, pendingIcons, iconsToLoad, loaderFlags, queueFlags, errorsCache, loadIcons, cacheVersion, cachePrefix, countKey, versionKey, hour, cacheExpiration, config, loaded, count, emptyList, _window, loadCache, storeCache, separator, svgDefaults, Icon, subscriber_queue2, Icon_1;
+var init_Icon_5f6e45ed = __esm({
+  ".svelte-kit/output/server/chunks/Icon-5f6e45ed.js"() {
     init_shims();
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     matchName = /^[a-z0-9]+(-[a-z0-9]+)*$/;
     iconDefaults = Object.freeze({
       left: 0,
@@ -22667,15 +22667,27 @@ var init_index_42dc9ad2 = __esm({
       return `${data !== null ? `<svg${spread([escape_object(data.attributes)], {})}><!-- HTML_TAG_START -->${data.body}<!-- HTML_TAG_END --></svg>` : ``}`;
     });
     subscriber_queue2 = [];
+    Icon_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { height } = $$props;
+      let { color } = $$props;
+      let { icon } = $$props;
+      if ($$props.height === void 0 && $$bindings.height && height !== void 0)
+        $$bindings.height(height);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.icon === void 0 && $$bindings.icon && icon !== void 0)
+        $$bindings.icon(icon);
+      return `${validate_component(Icon, "Icon").$$render($$result, { icon, height, color }, {}, {})}`;
+    });
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-cd26e7ab.js
+// .svelte-kit/output/server/chunks/stores-1efb28da.js
 var user, transactionStatus, txId, transactionInProgress;
-var init_stores_cd26e7ab = __esm({
-  ".svelte-kit/output/server/chunks/stores-cd26e7ab.js"() {
+var init_stores_1efb28da = __esm({
+  ".svelte-kit/output/server/chunks/stores-1efb28da.js"() {
     init_shims();
-    init_index_42dc9ad2();
+    init_Icon_5f6e45ed();
     user = writable2(null);
     transactionStatus = writable2(null);
     txId = writable2(null);
@@ -22683,13 +22695,13 @@ var init_stores_cd26e7ab = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-0e9dbb8f.js
+// .svelte-kit/output/server/chunks/stores-0841a5e5.js
 var import_onflow_fcl_esm, getStores, page;
-var init_stores_0e9dbb8f = __esm({
-  ".svelte-kit/output/server/chunks/stores-0e9dbb8f.js"() {
+var init_stores_0841a5e5 = __esm({
+  ".svelte-kit/output/server/chunks/stores-0841a5e5.js"() {
     init_shims();
     import_onflow_fcl_esm = __toModule(require_fcl_cjs());
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     (0, import_onflow_fcl_esm.config)({
       "accessNode.api": "http://localhost:8080",
       "discovery.wallet": "http://localhost:8701/fcl/authn",
@@ -22722,13 +22734,13 @@ var init_stores_0e9dbb8f = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/stores-2d97589b.js
-var TabHeader, css$c, Tab1, HorizontalSpace, css$b, TokenComponent, Object_1, css$a, Tab2, VerticalSpace, css$9, CollectionComponent, css$8, SearchComponent, css$7, Tab3, css$6, Tab4, css$5, DiscordServersComponent, css$4, Tab5, css$3, TwitterAccountsComponent, css$2, Tab6, Icon_1, css$1, VerificationComponent, css, Tab7, joinedWhitelists, projects, activeTabVal, tabs, tab1data, tokens, selectedToken, selectedCollection, collections, emeraldIdVerif, discordVerif, twitterVerif, modal, dialog, drawer, transactionStatus2, txId2, transactionInProgress2;
-var init_stores_2d97589b = __esm({
-  ".svelte-kit/output/server/chunks/stores-2d97589b.js"() {
+// .svelte-kit/output/server/chunks/stores-9c2d1cee.js
+var TabHeader, css$c, Tab1, HorizontalSpace, css$b, TokenComponent, Object_1, css$a, Tab2, VerticalSpace, css$9, CollectionComponent, css$8, SearchComponent, css$7, Tab3, css$6, Tab4, css$5, DiscordServersComponent, css$4, Tab5, css$3, TwitterAccountsComponent, css$2, Tab6, css$1, VerificationComponent, css, Tab7, joinedWhitelists, projects, activeTabVal, tabs, tab1data, tokens, selectedToken, selectedCollection, collections, emeraldIdVerif, discordVerif, twitterVerif, modal, dialog, drawer, transactionStatus2, txId2, transactionInProgress2;
+var init_stores_9c2d1cee = __esm({
+  ".svelte-kit/output/server/chunks/stores-9c2d1cee.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_index_42dc9ad2();
+    init_app_ab0237fb();
+    init_Icon_5f6e45ed();
     TabHeader = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
       let { subtitle } = $$props;
@@ -22906,7 +22918,7 @@ var init_stores_2d97589b = __esm({
     CollectionComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$unsubscribe_dialog;
       let $$unsubscribe_selectedCollection;
-      let $progress, $$unsubscribe_progress;
+      let $width, $$unsubscribe_width;
       $$unsubscribe_dialog = subscribe(dialog, (value) => value);
       $$unsubscribe_selectedCollection = subscribe(selectedCollection, (value) => value);
       let { selected } = $$props;
@@ -22914,9 +22926,10 @@ var init_stores_2d97589b = __esm({
       let { label } = $$props;
       let { imgUrl } = $$props;
       let { id } = $$props;
-      let { progress } = $$props;
-      $$unsubscribe_progress = subscribe(progress, (value) => $progress = value);
+      let { width } = $$props;
+      $$unsubscribe_width = subscribe(width, (value) => $width = value);
       let { token1valid } = $$props;
+      let { joined } = $$props;
       if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
         $$bindings.selected(selected);
       if ($$props.amount === void 0 && $$bindings.amount && amount !== void 0)
@@ -22927,20 +22940,22 @@ var init_stores_2d97589b = __esm({
         $$bindings.imgUrl(imgUrl);
       if ($$props.id === void 0 && $$bindings.id && id !== void 0)
         $$bindings.id(id);
-      if ($$props.progress === void 0 && $$bindings.progress && progress !== void 0)
-        $$bindings.progress(progress);
+      if ($$props.width === void 0 && $$bindings.width && width !== void 0)
+        $$bindings.width(width);
       if ($$props.token1valid === void 0 && $$bindings.token1valid && token1valid !== void 0)
         $$bindings.token1valid(token1valid);
+      if ($$props.joined === void 0 && $$bindings.joined && joined !== void 0)
+        $$bindings.joined(joined);
       $$result.css.add(css$9);
       $$unsubscribe_dialog();
       $$unsubscribe_selectedCollection();
-      $$unsubscribe_progress();
-      return `<div style="${"width:" + escape2(`${$progress}%`) + ";"}" class="${["svelte-188l51c", token1valid ? "valid" : ""].join(" ").trim()}"><div class="${escape2(null_to_empty(amount ? "collection-container-active" : "collection-container-inactive")) + " svelte-188l51c"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-188l51c"}"></div>
+      $$unsubscribe_width();
+      return `<div style="${"width:" + escape2(`${joined ? 100 : $width}%`) + ";"}" class="${["svelte-188l51c", token1valid || joined ? "valid" : ""].join(" ").trim()}"><div class="${escape2(null_to_empty(amount ? "collection-container-active" : "collection-container-inactive")) + " svelte-188l51c"}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%;"}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-188l51c"}"></div>
         <div class="${escape2(null_to_empty(amount ? "label-active" : "label-inactive")) + " svelte-188l51c"}">${escape2(label)}</div>
         ${amount ? `
         <div class="${"amount-container svelte-188l51c"}">${escape2(amount)}
             <div class="${"icon-container svelte-188l51c"}">${validate_component(Icon, "Icon").$$render($$result, { icon: "akar-icons:edit", s: true }, {}, {})}</div></div>` : `<div></div>`}</div>
-                    ${token1valid ? `${validate_component(Icon, "Icon").$$render($$result, {
+                    ${token1valid || joined ? `${validate_component(Icon, "Icon").$$render($$result, {
         icon: "line-md:confirm-circle",
         color: "var(--primary)",
         height: "2.6rem"
@@ -23173,34 +23188,23 @@ var init_stores_2d97589b = __esm({
     ${twitterVal.active ? `${validate_component(TwitterAccountsComponent, "TwitterAccountsComponent").$$render($$result, { mobile, accounts: twitterVal.accounts }, {}, {})}` : ``}
 </div>`;
     });
-    Icon_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { height } = $$props;
-      let { color } = $$props;
-      let { icon } = $$props;
-      if ($$props.height === void 0 && $$bindings.height && height !== void 0)
-        $$bindings.height(height);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.icon === void 0 && $$bindings.icon && icon !== void 0)
-        $$bindings.icon(icon);
-      return `${validate_component(Icon, "Icon").$$render($$result, { icon, height, color }, {}, {})}`;
-    });
     css$1 = {
       code: ".valid.svelte-9af6nd{display:flex;justify-content:space-between;align-items:center;height:70%;background-color:rgba(56, 232, 198, 0.1);border-radius:50px}.see-details-container.svelte-9af6nd{padding-left:0.7rem;width:50%;height:100%;border-left:2px solid blue;border-left-color:var(--border)}.see-details-container.svelte-9af6nd:hover{color:var(--border);cursor:pointer}img.svelte-9af6nd{max-width:2.4rem;height:100%;border-style:none;margin-left:-0.1rem;border-radius:50px}.verification-container-inactive.svelte-9af6nd{z-index:92;display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;font-weight:bold;padding-right:0.8rem;border:2px solid var(--border);background-color:#252E37}",
       map: null
     };
     VerificationComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$unsubscribe_dialog;
-      let $progress, $$unsubscribe_progress;
+      let $width, $$unsubscribe_width;
       $$unsubscribe_dialog = subscribe(dialog, (value) => value);
       let { selected } = $$props;
       let { amount } = $$props;
       let { label } = $$props;
       let { imgUrl } = $$props;
       let { id } = $$props;
-      let { progress } = $$props;
-      $$unsubscribe_progress = subscribe(progress, (value) => $progress = value);
+      let { width } = $$props;
+      $$unsubscribe_width = subscribe(width, (value) => $width = value);
       let { token1valid } = $$props;
+      let { joined } = $$props;
       let color;
       let details = null;
       if (label === "Discord") {
@@ -23225,20 +23229,22 @@ var init_stores_2d97589b = __esm({
         $$bindings.imgUrl(imgUrl);
       if ($$props.id === void 0 && $$bindings.id && id !== void 0)
         $$bindings.id(id);
-      if ($$props.progress === void 0 && $$bindings.progress && progress !== void 0)
-        $$bindings.progress(progress);
+      if ($$props.width === void 0 && $$bindings.width && width !== void 0)
+        $$bindings.width(width);
       if ($$props.token1valid === void 0 && $$bindings.token1valid && token1valid !== void 0)
         $$bindings.token1valid(token1valid);
+      if ($$props.joined === void 0 && $$bindings.joined && joined !== void 0)
+        $$bindings.joined(joined);
       $$result.css.add(css$1);
       $$unsubscribe_dialog();
-      $$unsubscribe_progress();
-      return `<div style="${"width:" + escape2(`${$progress}%`) + ";"}" class="${["svelte-9af6nd", token1valid ? "valid" : ""].join(" ").trim()}"><div style="${"--border:" + escape2(color) + "; --width:" + escape2(details ? "16rem" : "9rem") + "; height:2.6rem;"}" class="${escape2(null_to_empty("verification-container-inactive")) + " svelte-9af6nd"}"><div style="${"display: flex; height:100%; align-items: center; width:" + escape2(details ? "60%" : "100%")}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%; "}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-9af6nd"}"></div>
+      $$unsubscribe_width();
+      return `<div style="${"width:" + escape2(`${joined ? 100 : $width}%`) + ";"}" class="${["svelte-9af6nd", token1valid || joined ? "valid" : ""].join(" ").trim()}"><div style="${"--border:" + escape2(color) + "; --width:" + escape2(details ? "16rem" : "9rem") + "; height:2.6rem;"}" class="${escape2(null_to_empty("verification-container-inactive")) + " svelte-9af6nd"}"><div style="${"display: flex; height:100%; align-items: center; width:" + escape2(details ? "60%" : "100%")}"><div style="${"display:flex; justify-content:center; align-items:center; width: 2.6rem; height:100%; "}"><img${add_attribute("src", imgUrl, 0)} alt="${"logo"}" class="${"svelte-9af6nd"}"></div>
         
         <div style="${"color: white; margin-left:0.3rem; width:100%"}">${escape2(label)}</div></div>
 
     ${details ? `<div class="${"flex-align see-details-container svelte-9af6nd"}">See details
     </div>` : ``}</div>
-    ${token1valid ? `${validate_component(Icon_1, "Icon").$$render($$result, {
+    ${token1valid || joined ? `${validate_component(Icon_1, "Icon").$$render($$result, {
         icon: "line-md:confirm-circle",
         color: "var(--primary)",
         height: "2.6rem"
@@ -23442,15 +23448,15 @@ var init_stores_2d97589b = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Drawer-12f4b716.js
+// .svelte-kit/output/server/chunks/Drawer-aac55dd1.js
 var import_onflow_fcl_esm2, css$32, ConnectWallet, css$22, UserAddress, css$12, Hamburger, css2, Drawer;
-var init_Drawer_12f4b716 = __esm({
-  ".svelte-kit/output/server/chunks/Drawer-12f4b716.js"() {
+var init_Drawer_aac55dd1 = __esm({
+  ".svelte-kit/output/server/chunks/Drawer-aac55dd1.js"() {
     init_shims();
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     import_onflow_fcl_esm2 = __toModule(require_fcl_cjs());
-    init_stores_0e9dbb8f();
-    init_stores_2d97589b();
+    init_stores_0841a5e5();
+    init_stores_9c2d1cee();
     css$32 = {
       code: "a.svelte-nbcav7{padding:8px 14px}",
       map: null
@@ -23522,16 +23528,16 @@ var init_Drawer_12f4b716 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/MediaQuery-a057a0ca.js
-var MediaQuery_a057a0ca_exports = {};
-__export(MediaQuery_a057a0ca_exports, {
+// .svelte-kit/output/server/chunks/MediaQuery-7d7d5fb4.js
+var MediaQuery_7d7d5fb4_exports = {};
+__export(MediaQuery_7d7d5fb4_exports, {
   default: () => MediaQuery
 });
 var MediaQuery;
-var init_MediaQuery_a057a0ca = __esm({
-  ".svelte-kit/output/server/chunks/MediaQuery-a057a0ca.js"() {
+var init_MediaQuery_7d7d5fb4 = __esm({
+  ".svelte-kit/output/server/chunks/MediaQuery-7d7d5fb4.js"() {
     init_shims();
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     init_ssr();
     MediaQuery = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { query: query2 } = $$props;
@@ -23543,23 +23549,23 @@ var init_MediaQuery_a057a0ca = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/__layout-61533974.js
-var layout_61533974_exports = {};
-__export(layout_61533974_exports, {
+// .svelte-kit/output/server/chunks/__layout-d66899cb.js
+var layout_d66899cb_exports = {};
+__export(layout_d66899cb_exports, {
   default: () => _layout
 });
 var import_onflow_fcl_esm3, css$33, Header, css$23, Transaction, css$13, TxMockUp, css3, _layout;
-var init_layout_61533974 = __esm({
-  ".svelte-kit/output/server/chunks/__layout-61533974.js"() {
+var init_layout_d66899cb = __esm({
+  ".svelte-kit/output/server/chunks/__layout-d66899cb.js"() {
     init_shims();
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     import_onflow_fcl_esm3 = __toModule(require_fcl_cjs());
-    init_index_42dc9ad2();
-    init_stores_cd26e7ab();
-    init_Drawer_12f4b716();
-    init_stores_0e9dbb8f();
-    init_MediaQuery_a057a0ca();
-    init_stores_2d97589b();
+    init_Icon_5f6e45ed();
+    init_stores_1efb28da();
+    init_Drawer_aac55dd1();
+    init_stores_0841a5e5();
+    init_MediaQuery_7d7d5fb4();
+    init_stores_9c2d1cee();
     init_ssr();
     css$33 = {
       code: "li.svelte-9oim8o{margin-right:1rem}.outline.svelte-9oim8o{padding:6px 14px}",
@@ -23580,7 +23586,8 @@ var init_layout_61533974 = __esm({
       
       </li></ul>
   <ul>
-    ${screenSize !== "mobile" ? `<li class="${"svelte-9oim8o"}"><a href="${"/" + escape2($user.addr) + "/whitelists"}">Whitelists</a></li>
+    ${screenSize !== "mobile" ? `
+      <li class="${"svelte-9oim8o"}"><a href="${"/"}">Whitelists</a></li>
       <li class="${"svelte-9oim8o"}">${$user?.loggedIn ? `<button class="${"outline svelte-9oim8o"}">${validate_component(UserAddress, "UserAddress").$$render($$result, {
         address: $user?.addr || "0x0",
         abbreviated: true
@@ -23709,9 +23716,9 @@ ${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(max
   }
 });
 
-// .svelte-kit/output/server/chunks/__error-ef54afcf.js
-var error_ef54afcf_exports = {};
-__export(error_ef54afcf_exports, {
+// .svelte-kit/output/server/chunks/__error-4aa2d51e.js
+var error_4aa2d51e_exports = {};
+__export(error_4aa2d51e_exports, {
   default: () => _error,
   load: () => load
 });
@@ -23721,10 +23728,10 @@ function load({ error: error2, status }) {
   };
 }
 var _error;
-var init_error_ef54afcf = __esm({
-  ".svelte-kit/output/server/chunks/__error-ef54afcf.js"() {
+var init_error_4aa2d51e = __esm({
+  ".svelte-kit/output/server/chunks/__error-4aa2d51e.js"() {
     init_shims();
-    init_app_1d962cfa();
+    init_app_ab0237fb();
     init_ssr();
     _error = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { title } = $$props;
@@ -23735,21 +23742,21 @@ var init_error_ef54afcf = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/whitelists-e73dd218.js
-var whitelists_e73dd218_exports = {};
-__export(whitelists_e73dd218_exports, {
+// .svelte-kit/output/server/chunks/whitelists-c00373d4.js
+var whitelists_c00373d4_exports = {};
+__export(whitelists_c00373d4_exports, {
   C: () => CreateProject,
   W: () => Whitelists,
   w: () => whitelists
 });
 var css$14, CreateProject, css4, ProjectsComponent, Whitelists, whitelists;
-var init_whitelists_e73dd218 = __esm({
-  ".svelte-kit/output/server/chunks/whitelists-e73dd218.js"() {
+var init_whitelists_c00373d4 = __esm({
+  ".svelte-kit/output/server/chunks/whitelists-c00373d4.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_index_42dc9ad2();
-    init_stores_cd26e7ab();
-    init_MediaQuery_a057a0ca();
+    init_app_ab0237fb();
+    init_Icon_5f6e45ed();
+    init_stores_1efb28da();
+    init_MediaQuery_7d7d5fb4();
     css$14 = {
       code: "a.svelte-1l1u3pz{text-decoration:none}.project-card.svelte-1l1u3pz{border-radius:12px;background-color:#252E37;height:var(--height);width:100%}.project-card.svelte-1l1u3pz:hover{background-color:rgba(152, 189, 182, 0.1);cursor:pointer}",
       map: null
@@ -23769,7 +23776,7 @@ var init_whitelists_e73dd218 = __esm({
             </a>`;
     });
     css4 = {
-      code: '.image-title-container.svelte-1pitd{display:flex;flex-direction:column;justify-content:flex-end;height:60%;border-top-left-radius:12px;border-top-right-radius:12px;width:100%;background-image:linear-gradient(to bottom, rgba(245, 246, 252, 0.2), rgba(20, 18, 20, 0.6), rgba(20, 18, 20, 0.9)),\n    url("https://images.squarespace-cdn.com/content/v1/61646635d8111916a92d2d0e/e7e84db0-2082-4269-bec7-aa07bd337714/ballerz.gif");background-size:cover;padding-left:0.5rem}.description-container.svelte-1pitd{height:30%;font-size:small;padding-left:0.5rem;padding-right:0.5rem;padding-top:0.5rem;color:whitesmoke}footer.svelte-1pitd{height:10%;display:flex;width:100%;justify-content:space-between;align-items:center;font-size:0.6rem;font-weight:900;padding-left:0.5rem;padding-right:0.5rem;margin:0\n\n}.projects-container.svelte-1pitd{display:flex;justify-content:left;flex-wrap:wrap;max-width:100%;width:100%}a.svelte-1pitd{text-decoration:none;margin:0;padding:0;width:var(--width)\n}.project-card.svelte-1pitd{border-radius:12px;background-color:#252e37;height:var(--height);width:100%;text-align:left;padding-bottom:0;padding-top:0}.project-card.svelte-1pitd:hover{background-color:rgba(152, 189, 182, 0.1);cursor:pointer}',
+      code: '.link-container.svelte-739nqi{position:absolute;bottom:4px;right:10px;color:var(--primary);z-index:1}.image-title-container.svelte-739nqi{position:relative;z-index:0;display:flex;flex-direction:column;justify-content:flex-end;height:60%;border-top-left-radius:12px;border-top-right-radius:12px;width:100%;background-image:linear-gradient(to bottom, rgba(245, 246, 252, 0.2), rgba(20, 18, 20, 0.6), rgba(20, 18, 20, 0.9)),\n    url("https://images.squarespace-cdn.com/content/v1/61646635d8111916a92d2d0e/e7e84db0-2082-4269-bec7-aa07bd337714/ballerz.gif");background-size:cover;padding-left:0.5rem;padding-right:0.4rem}.description-container.svelte-739nqi{height:30%;font-size:small;padding-left:0.5rem;padding-right:0.5rem;padding-top:0.5rem;color:whitesmoke}footer.svelte-739nqi{height:10%;display:flex;width:100%;justify-content:space-between;align-items:center;font-size:0.6rem;font-weight:900;padding-left:0.5rem;padding-right:0.5rem;margin:0\n\n}.projects-container.svelte-739nqi{display:flex;justify-content:left;flex-wrap:wrap;max-width:100%;width:100%}a.svelte-739nqi{text-decoration:none;margin:0;padding:0;width:var(--width)\n}.project-card.svelte-739nqi{border-radius:12px;background-color:#252e37;height:var(--height);width:100%;text-align:left;padding-bottom:0;padding-top:0;width:var(--width)}.project-card.svelte-739nqi:hover{background-color:rgba(152, 189, 182, 0.1);cursor:pointer}',
       map: null
     };
     ProjectsComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -23777,9 +23784,9 @@ var init_whitelists_e73dd218 = __esm({
       $$unsubscribe_user = subscribe(user, (value) => $user = value);
       let { joined } = $$props;
       let { whitelists: whitelists2 } = $$props;
-      console.log("component whitelist", whitelists2);
       let { screenSize } = $$props;
       let mobile = screenSize === "mobile";
+      $user?.addr;
       if ($$props.joined === void 0 && $$bindings.joined && joined !== void 0)
         $$bindings.joined(joined);
       if ($$props.whitelists === void 0 && $$bindings.whitelists && whitelists2 !== void 0)
@@ -23788,17 +23795,23 @@ var init_whitelists_e73dd218 = __esm({
         $$bindings.screenSize(screenSize);
       $$result.css.add(css4);
       $$unsubscribe_user();
-      return `<div class="${"projects-container svelte-1pitd"}" style="${"--width:" + escape2(mobile ? "48%" : "32%")}">${!joined ? `<a style="${"margin-left: 0.3rem;"}" class="${"svelte-1pitd"}">${validate_component(CreateProject, "CreateProject").$$render($$result, { mobile }, {}, {})}</a>` : ``}
+      return `<div class="${"projects-container svelte-739nqi"}" style="${"--width:" + escape2(mobile ? "48%" : "32%")}">${!joined ? `<a style="${"margin-right: 0.3rem;"}" class="${"svelte-739nqi"}">${validate_component(CreateProject, "CreateProject").$$render($$result, { mobile }, {}, {})}</a>` : ``}
     
     ${each(whitelists2, (whitelist, i2) => {
-        return `<a style="${"margin-left: 0.3rem;"}"${add_attribute("href", $user?.addr + "/" + whitelist.variables.whitelistId, 0)} class="${"svelte-1pitd"}"><div style="${"--height:" + escape2(mobile ? "14rem" : "15rem") + "; padding-left:0; padding-right:0"}" class="${"card project-card svelte-1pitd"}"><div class="${"image-title-container svelte-1pitd"}"><h1>${escape2(whitelist.variables.name)}
-                </h1></div>
-            <div class="${"description-container svelte-1pitd"}">${escape2(whitelist.variables.description)}</div>
-            <footer class="${"svelte-1pitd"}"><span>ENTRIES: ${escape2(whitelist.variables.totalCount)}</span>
+        return `
+        <div style="${"--height:" + escape2(mobile ? "14rem" : "15rem") + "; padding-left:0; padding-right:0"}" class="${"card project-card svelte-739nqi"}"><div class="${"image-title-container svelte-739nqi"}"><div style="${"display: flex; justify-content:space-between; align-items:center"}"><h1>${escape2(whitelist.variables.name)}</h1>
+                    <div class="${"link-container svelte-739nqi"}">${validate_component(Icon_1, "Icon").$$render($$result, {
+          icon: "akar-icons:link-chain",
+          height: "22px",
+          color: "white"
+        }, {}, {})}</div>
+                </div></div>
+            <div class="${"description-container svelte-739nqi"}">${escape2(whitelist.variables.description)}</div>
+            <footer class="${"svelte-739nqi"}"><span>ENTRIES: ${escape2(whitelist.variables.totalCount)}</span>
                 <span>09/04/22
                 </span>
             </footer></div>
-    </a>`;
+    `;
       })}
     
 </div>`;
@@ -23845,18 +23858,18 @@ var init_whitelists_e73dd218 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/constants-bc253485.js
+// .svelte-kit/output/server/chunks/constants-4609813a.js
 var import_onflow_fcl_esm4, Divider, DrawerComponent, PAGE_TITLE_EXTENSION;
-var init_constants_bc253485 = __esm({
-  ".svelte-kit/output/server/chunks/constants-bc253485.js"() {
+var init_constants_4609813a = __esm({
+  ".svelte-kit/output/server/chunks/constants-4609813a.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_Drawer_12f4b716();
+    init_app_ab0237fb();
+    init_Drawer_aac55dd1();
     import_onflow_fcl_esm4 = __toModule(require_fcl_cjs());
-    init_index_42dc9ad2();
-    init_stores_cd26e7ab();
-    init_stores_2d97589b();
-    init_stores_0e9dbb8f();
+    init_Icon_5f6e45ed();
+    init_stores_1efb28da();
+    init_stores_9c2d1cee();
+    init_stores_0841a5e5();
     Divider = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return `<div class="${"mt-1"}" style="${"width: 1rem; height:2px; background: var(--primary)"}"></div>`;
     });
@@ -23899,14 +23912,14 @@ var init_constants_bc253485 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/actions-2562f620.js
+// .svelte-kit/output/server/chunks/actions-0461a995.js
 var fcl, getWhitelists, getWhitelist;
-var init_actions_2562f620 = __esm({
-  ".svelte-kit/output/server/chunks/actions-2562f620.js"() {
+var init_actions_0461a995 = __esm({
+  ".svelte-kit/output/server/chunks/actions-0461a995.js"() {
     init_shims();
     fcl = __toModule(require_fcl_cjs());
-    init_stores_0e9dbb8f();
-    init_app_1d962cfa();
+    init_stores_0841a5e5();
+    init_app_ab0237fb();
     getWhitelists = async (addr) => {
       try {
         let queryResult = await fcl.query({
@@ -24004,27 +24017,27 @@ var init_actions_2562f620 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/index-271dd422.js
-var index_271dd422_exports = {};
-__export(index_271dd422_exports, {
+// .svelte-kit/output/server/chunks/index-0210fffd.js
+var index_0210fffd_exports = {};
+__export(index_0210fffd_exports, {
   default: () => Routes
 });
 var import_onflow_fcl_esm5, css$24, globalLabels$1, Pagination, css$15, globalLabels, Table, pageCount$1, pageSize$1, YourWhitelists, Loading, pageCount, pageSize, JoinedWhitelists, css5, Routes;
-var init_index_271dd422 = __esm({
-  ".svelte-kit/output/server/chunks/index-271dd422.js"() {
+var init_index_0210fffd = __esm({
+  ".svelte-kit/output/server/chunks/index-0210fffd.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_stores_2d97589b();
+    init_app_ab0237fb();
+    init_stores_9c2d1cee();
     import_onflow_fcl_esm5 = __toModule(require_fcl_cjs());
-    init_stores_0e9dbb8f();
-    init_index_42dc9ad2();
-    init_whitelists_e73dd218();
-    init_constants_bc253485();
-    init_stores_cd26e7ab();
-    init_actions_2562f620();
-    init_Drawer_12f4b716();
+    init_stores_0841a5e5();
+    init_Icon_5f6e45ed();
+    init_whitelists_c00373d4();
+    init_constants_4609813a();
+    init_stores_1efb28da();
+    init_actions_0461a995();
+    init_Drawer_aac55dd1();
     init_ssr();
-    init_MediaQuery_a057a0ca();
+    init_MediaQuery_7d7d5fb4();
     css$24 = {
       code: "div.svelte-1j1cxhu{display:flex}button.svelte-1j1cxhu{margin-left:5px;font-size:0.8rem;padding:0.5rem 0.5rem}",
       map: null
@@ -24132,7 +24145,7 @@ var init_index_271dd422 = __esm({
         filteredWhitelists = whitelists2;
         visibleWhitelists = filteredWhitelists.slice(pageIndex, pageIndex + pageSize2);
         $$rendered = `${slots.top ? slots.top({
-          whitelists: searchTerm === 0 ? visibleWhitelists : filteredWhitelists
+          whitelists: !searchTerm ? visibleWhitelists : filteredWhitelists
         }) : `
   <div class="${"slot-top"}">
     ${validate_component(SearchComponent, "SearchComponent").$$render($$result, { searchTerm }, {
@@ -24147,20 +24160,21 @@ var init_index_271dd422 = __esm({
           escape2(null_to_empty("table " + $$props.class)) + " svelte-s34j0i",
           responsive ? "responsive" : ""
         ].join(" ").trim()}">${slots.head ? slots.head({
-          whitelists: searchTerm === 0 ? visibleWhitelists : filteredWhitelists
+          whitelists: !searchTerm ? visibleWhitelists : filteredWhitelists
         }) : ``}
   ${loading ? `<tbody><tr><td class="${"center"}" colspan="${"100%"}"><span><!-- HTML_TAG_START -->${labels.loading}<!-- HTML_TAG_END --></span></td></tr></tbody>` : `${visibleWhitelists.length === 0 ? `<tbody><tr><td class="${"center"}" colspan="${"100%"}"><span>empty
             <!-- HTML_TAG_START -->${labels.empty}<!-- HTML_TAG_END --></span></td></tr></tbody>` : `
     
     ${slots.default ? slots.default({
-          whitelists: searchTerm === 0 ? visibleWhitelists : filteredWhitelists
-        }) : ``}`}`}
+          whitelists: !searchTerm ? visibleWhitelists : filteredWhitelists
+        }) : ``}
+    `}`}
   ${slots.foot ? slots.foot({
-          whitelists: searchTerm === 0 ? visibleWhitelists : filteredWhitelists
+          whitelists: !searchTerm ? visibleWhitelists : filteredWhitelists
         }) : ``}</table>
 
 ${slots.bottom ? slots.bottom({
-          whitelists: searchTerm === 0 ? visibleWhitelists : filteredWhitelists
+          whitelists: !searchTerm ? visibleWhitelists : filteredWhitelists
         }) : `
   <div class="${"slot-bottom"}">${validate_component(Pagination || missing_component, "svelte:component").$$render($$result, {
           page: page2,
@@ -24284,20 +24298,20 @@ ${slots.bottom ? slots.bottom({
   }
 });
 
-// .svelte-kit/output/server/chunks/projectDetails-55d1ac42.js
-var projectDetails_55d1ac42_exports = {};
-__export(projectDetails_55d1ac42_exports, {
+// .svelte-kit/output/server/chunks/projectDetails-346d1c04.js
+var projectDetails_346d1c04_exports = {};
+__export(projectDetails_346d1c04_exports, {
   default: () => ProjectDetails
 });
 var import_onflow_fcl_esm6, css6, ProjectDetails;
-var init_projectDetails_55d1ac42 = __esm({
-  ".svelte-kit/output/server/chunks/projectDetails-55d1ac42.js"() {
+var init_projectDetails_346d1c04 = __esm({
+  ".svelte-kit/output/server/chunks/projectDetails-346d1c04.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_stores_2d97589b();
+    init_app_ab0237fb();
+    init_stores_9c2d1cee();
     import_onflow_fcl_esm6 = __toModule(require_fcl_cjs());
     init_ssr();
-    init_index_42dc9ad2();
+    init_Icon_5f6e45ed();
     css6 = {
       code: ".token-container.svelte-1v562r5{display:flex;width:var(--width);height:70%;justify-content:space-between;border-radius:50px;align-items:center;background-color:#252E37;font-weight:bold;margin-left:var(--margin-left)}.amount-container.svelte-1v562r5{color:#252E37;font-weight:bold;display:flex;height:2.6rem;width:36%;justify-content:center;align-items:center;background:white;border-top-right-radius:50px;border-bottom-right-radius:50px}",
       map: null
@@ -24348,14 +24362,14 @@ var init_projectDetails_55d1ac42 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/Dialog-124daab6.js
+// .svelte-kit/output/server/chunks/Dialog-6c4eaf0c.js
 var AmountComponent, css$34, DiscordRolesComponent, css$25, DiscordServersComponent2, css$16, TwitterAccountsComponent2, css7, Dialog;
-var init_Dialog_124daab6 = __esm({
-  ".svelte-kit/output/server/chunks/Dialog-124daab6.js"() {
+var init_Dialog_6c4eaf0c = __esm({
+  ".svelte-kit/output/server/chunks/Dialog-6c4eaf0c.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_stores_2d97589b();
-    init_index_42dc9ad2();
+    init_app_ab0237fb();
+    init_stores_9c2d1cee();
+    init_Icon_5f6e45ed();
     AmountComponent = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $tokens, $$unsubscribe_tokens;
       $$unsubscribe_tokens = subscribe(tokens, (value) => $tokens = value);
@@ -24500,26 +24514,26 @@ var init_Dialog_124daab6 = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/create-343ae8d6.js
-var create_343ae8d6_exports = {};
-__export(create_343ae8d6_exports, {
+// .svelte-kit/output/server/chunks/create-da82355e.js
+var create_da82355e_exports = {};
+__export(create_da82355e_exports, {
   default: () => Create
 });
 var import_onflow_fcl_esm7, css$52, LocalRolesComponent, css$42, ServerRolesComponent, DiscordRoles, css$35, DiscordVerifContent, CustomTokenContent, css$26, TwitterVerifContent, css$17, Modal_1, EmeraldIdIcon, css8, CreateProjectDetails, Create;
-var init_create_343ae8d6 = __esm({
-  ".svelte-kit/output/server/chunks/create-343ae8d6.js"() {
+var init_create_da82355e = __esm({
+  ".svelte-kit/output/server/chunks/create-da82355e.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_index_42dc9ad2();
-    init_stores_2d97589b();
-    init_Dialog_124daab6();
+    init_app_ab0237fb();
+    init_Icon_5f6e45ed();
+    init_stores_9c2d1cee();
+    init_Dialog_6c4eaf0c();
     import_onflow_fcl_esm7 = __toModule(require_fcl_cjs());
-    init_stores_0e9dbb8f();
-    init_constants_bc253485();
-    init_MediaQuery_a057a0ca();
+    init_stores_0841a5e5();
+    init_constants_4609813a();
+    init_MediaQuery_7d7d5fb4();
     init_ssr();
-    init_Drawer_12f4b716();
-    init_stores_cd26e7ab();
+    init_Drawer_aac55dd1();
+    init_stores_1efb28da();
     css$52 = {
       code: ".icon-container.svelte-eafmfp{height:3rem}.icon-container.svelte-eafmfp:hover{color:red;height:3rem;cursor:pointer}ul.svelte-eafmfp{list-style-type:none;width:99.5%;display:flex;flex-direction:column;margin:0;padding:0}li.svelte-eafmfp{margin-top:0.3rem;padding:0;display:flex;width:100%;justify-content:space-between;height:3rem}.role.svelte-eafmfp{display:flex;justify-content:space-between;align-items:center;padding-left:1rem;background:#252E37;width:100%;border-radius:50px;height:100%}",
       map: null
@@ -24790,9 +24804,9 @@ ${validate_component(MediaQuery, "MediaQuery").$$render($$result, { query: "(min
   }
 });
 
-// .svelte-kit/output/server/chunks/_whitelistId_-767119ae.js
-var whitelistId_767119ae_exports = {};
-__export(whitelistId_767119ae_exports, {
+// .svelte-kit/output/server/chunks/_whitelistId_-6355c4bb.js
+var whitelistId_6355c4bb_exports = {};
+__export(whitelistId_6355c4bb_exports, {
   default: () => U5BwhitelistIdu5D
 });
 async function readWhitelist(address, whitelistId) {
@@ -24920,15 +24934,15 @@ function tweened(value, defaults2 = {}) {
   };
 }
 var import_onflow_fcl_esm8, css$18, TokenComponent2, css9, U5BwhitelistIdu5D;
-var init_whitelistId_767119ae = __esm({
-  ".svelte-kit/output/server/chunks/_whitelistId_-767119ae.js"() {
+var init_whitelistId_6355c4bb = __esm({
+  ".svelte-kit/output/server/chunks/_whitelistId_-6355c4bb.js"() {
     init_shims();
-    init_app_1d962cfa();
-    init_stores_0e9dbb8f();
-    init_index_42dc9ad2();
-    init_Dialog_124daab6();
-    init_stores_2d97589b();
-    init_actions_2562f620();
+    init_app_ab0237fb();
+    init_stores_0841a5e5();
+    init_Icon_5f6e45ed();
+    init_Dialog_6c4eaf0c();
+    init_stores_9c2d1cee();
+    init_actions_0461a995();
     init_ssr();
     import_onflow_fcl_esm8 = __toModule(require_fcl_cjs());
     css$18 = {
@@ -24936,28 +24950,29 @@ var init_whitelistId_767119ae = __esm({
       map: null
     };
     TokenComponent2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $progress, $$unsubscribe_progress;
+      let $width, $$unsubscribe_width;
       let { tokenModule } = $$props;
       let { token1valid } = $$props;
       let { i: i2 } = $$props;
-      let { progress } = $$props;
-      $$unsubscribe_progress = subscribe(progress, (value) => $progress = value);
+      let { width } = $$props;
+      $$unsubscribe_width = subscribe(width, (value) => $width = value);
+      let { joined } = $$props;
       if ($$props.tokenModule === void 0 && $$bindings.tokenModule && tokenModule !== void 0)
         $$bindings.tokenModule(tokenModule);
       if ($$props.token1valid === void 0 && $$bindings.token1valid && token1valid !== void 0)
         $$bindings.token1valid(token1valid);
       if ($$props.i === void 0 && $$bindings.i && i2 !== void 0)
         $$bindings.i(i2);
-      if ($$props.progress === void 0 && $$bindings.progress && progress !== void 0)
-        $$bindings.progress(progress);
+      if ($$props.width === void 0 && $$bindings.width && width !== void 0)
+        $$bindings.width(width);
+      if ($$props.joined === void 0 && $$bindings.joined && joined !== void 0)
+        $$bindings.joined(joined);
       $$result.css.add(css$18);
-      $$unsubscribe_progress();
-      return `
-
-<div style="${"height: 70%; width:" + escape2(`${$progress}%`) + ";"}" class="${["svelte-r55h1a", token1valid ? "valid" : ""].join(" ").trim()}"><div style="${"--width:" + escape2("12rem") + ";"}" class="${escape2(null_to_empty("token-container")) + " svelte-r55h1a"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "}"><img style="${"height:100%; width:2.6rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", tokenModule.imgUrl, 0)} alt="${"logo"}"></div>
+      $$unsubscribe_width();
+      return `<div style="${"height: 70%; width:" + escape2(`${joined ? 100 : $width}%`) + ";"}" class="${["svelte-r55h1a", token1valid || joined ? "valid" : ""].join(" ").trim()}"><div style="${"--width:" + escape2("12rem") + ";"}" class="${escape2(null_to_empty("token-container")) + " svelte-r55h1a"}"><div style="${"display:flex; justify-content:space-between; align-items:center; width: 2.6rem; height:2.6rem; "}"><img style="${"height:100%; width:2.6rem; border-radius: 50px; object-fit:cover"}"${add_attribute("src", tokenModule.imgUrl, 0)} alt="${"logo"}"></div>
         <div style="${"margin-right: 1rem;"}">${escape2(tokenModule.label)}</div>
         <div class="${"amount-container svelte-r55h1a"}">${escape2(parseFloat(tokenModule.amount).toFixed(2))}</div></div>
-    ${token1valid ? `${validate_component(Icon_1, "Icon").$$render($$result, {
+    ${token1valid || joined ? `${validate_component(Icon_1, "Icon").$$render($$result, {
         icon: "line-md:confirm-circle",
         color: "var(--primary)",
         height: "2.6rem"
@@ -24971,14 +24986,14 @@ var init_whitelistId_767119ae = __esm({
     U5BwhitelistIdu5D = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$unsubscribe_transactionInProgress;
       let $$unsubscribe_transactionStatus;
-      let $$unsubscribe_joinedWhitelists;
-      let $$unsubscribe_progress;
+      let $joinedWhitelists, $$unsubscribe_joinedWhitelists;
+      let $$unsubscribe_width;
       let $page, $$unsubscribe_page;
       let $collections, $$unsubscribe_collections;
       let $emeraldIdVerif, $$unsubscribe_emeraldIdVerif;
       $$unsubscribe_transactionInProgress = subscribe(transactionInProgress2, (value) => value);
       $$unsubscribe_transactionStatus = subscribe(transactionStatus2, (value) => value);
-      $$unsubscribe_joinedWhitelists = subscribe(joinedWhitelists, (value) => value);
+      $$unsubscribe_joinedWhitelists = subscribe(joinedWhitelists, (value) => $joinedWhitelists = value);
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
       $$unsubscribe_collections = subscribe(collections, (value) => $collections = value);
       $$unsubscribe_emeraldIdVerif = subscribe(emeraldIdVerif, (value) => $emeraldIdVerif = value);
@@ -25009,14 +25024,17 @@ var init_whitelistId_767119ae = __esm({
         }
       ];
       let whitelist = readWhitelist($page.params.address, $page.params.whitelistId);
+      const whitelistID = $page.params.whitelistId;
+      const joinedWls = $joinedWhitelists.filter((wl) => wl.variables.whitelistId.toString() === whitelistID);
+      const joined = joinedWls.length > 0;
       let token1valid = null;
-      const progress = tweened(50, { duration: 600, easing: cubicOut });
-      $$unsubscribe_progress = subscribe(progress, (value) => value);
+      const width = tweened(50, { duration: 600, easing: cubicOut });
+      $$unsubscribe_width = subscribe(width, (value) => value);
       $$result.css.add(css9);
       $$unsubscribe_transactionInProgress();
       $$unsubscribe_transactionStatus();
       $$unsubscribe_joinedWhitelists();
-      $$unsubscribe_progress();
+      $$unsubscribe_width();
       $$unsubscribe_page();
       $$unsubscribe_collections();
       $$unsubscribe_emeraldIdVerif();
@@ -25035,7 +25053,13 @@ var init_whitelistId_767119ae = __esm({
         <p>Something about the tokens</p>
             
             ${each(tokens2, (tokenModule, i2) => {
-            return `<div class="${"mt-1"}">${validate_component(TokenComponent2, "TokenComponent").$$render($$result, { progress, token1valid, tokenModule, i: i2 }, {}, {})}
+            return `<div class="${"mt-1"}">${validate_component(TokenComponent2, "TokenComponent").$$render($$result, {
+              joined,
+              width,
+              token1valid,
+              tokenModule,
+              i: i2
+            }, {}, {})}
             </div>`;
           })}
         <h1>Collections</h1>
@@ -25043,7 +25067,7 @@ var init_whitelistId_767119ae = __esm({
         <div class="${"mt-1"}">
             
             ${$collections ? `${each($collections, (collection) => {
-            return `${collection.selected ? `<div class="${"mt-1"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign({ token1valid }, { progress }, collection), {}, {})}
+            return `${collection.selected ? `<div class="${"mt-1"}">${validate_component(CollectionComponent, "CollectionComponent").$$render($$result, Object.assign({ joined }, { token1valid }, { width }, collection), {}, {})}
             </div>` : ``}`;
           })}` : ``}</div>
 
@@ -25051,8 +25075,8 @@ var init_whitelistId_767119ae = __esm({
         <p>Something about the verification</p>
 
         
-        <div class="${"mt-1"}">${$emeraldIdVerif ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign({ token1valid }, { progress }, $emeraldIdVerif), {}, {})}` : ``}</div>
-        <footer><button style="${"--opacity:" + escape2(1)}" class="${"svelte-4ne3jg"}">JOIN</button></footer></article>
+        <div class="${"mt-1"}">${$emeraldIdVerif ? `${validate_component(VerificationComponent, "VerificationComponent").$$render($$result, Object.assign({ joined }, { token1valid }, { width }, $emeraldIdVerif), {}, {})}` : ``}</div>
+        ${!joined ? `<footer><button style="${"--opacity:" + escape2(1)}" class="${"svelte-4ne3jg"}">JOIN</button></footer>` : ``}</article>
     `;
         }(__value);
       }(whitelist)}`;
@@ -25060,7 +25084,7 @@ var init_whitelistId_767119ae = __esm({
   }
 });
 
-// .svelte-kit/output/server/chunks/app-1d962cfa.js
+// .svelte-kit/output/server/chunks/app-ab0237fb.js
 function noop3() {
 }
 function assign(tar, src) {
@@ -25292,9 +25316,9 @@ function init(settings = default_settings) {
     amp: false,
     dev: false,
     entry: {
-      file: assets + "/_app/start-2811935f.js",
+      file: assets + "/_app/start-e47c2db3.js",
       css: [assets + "/_app/assets/start-61d1577b.css", assets + "/_app/assets/vendor-25757cea.css"],
-      js: [assets + "/_app/start-2811935f.js", assets + "/_app/chunks/vendor-7812b4f9.js", assets + "/_app/chunks/singletons-12a22614.js"]
+      js: [assets + "/_app/start-e47c2db3.js", assets + "/_app/chunks/vendor-3b62d163.js", assets + "/_app/chunks/singletons-12a22614.js"]
     },
     fetched: void 0,
     floc: false,
@@ -25338,8 +25362,8 @@ function render2(request, {
   return respond({ ...request, host }, options, { prerender });
 }
 var identity, is_client, now, raf, tasks, current_component, globals, boolean_attributes, invalid_attribute_name_character, escaped2, missing_component, on_destroy, css10, Root, base, assets, user_hooks, template, options, default_settings, d2, empty, manifest, get_hooks, module_lookup, metadata_lookup;
-var init_app_1d962cfa = __esm({
-  ".svelte-kit/output/server/chunks/app-1d962cfa.js"() {
+var init_app_ab0237fb = __esm({
+  ".svelte-kit/output/server/chunks/app-ab0237fb.js"() {
     init_shims();
     init_ssr();
     identity = (x2) => x2;
@@ -25497,18 +25521,18 @@ ${``}`;
       externalFetch: hooks.externalFetch || fetch
     });
     module_lookup = {
-      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_61533974(), layout_61533974_exports)),
-      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_ef54afcf(), error_ef54afcf_exports)),
-      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_271dd422(), index_271dd422_exports)),
-      "src/routes/projectDetails.svelte": () => Promise.resolve().then(() => (init_projectDetails_55d1ac42(), projectDetails_55d1ac42_exports)),
-      "src/routes/MediaQuery.svelte": () => Promise.resolve().then(() => (init_MediaQuery_a057a0ca(), MediaQuery_a057a0ca_exports)),
-      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_343ae8d6(), create_343ae8d6_exports)),
-      "src/routes/[address]/whitelists.svelte": () => Promise.resolve().then(() => (init_whitelists_e73dd218(), whitelists_e73dd218_exports)).then(function(n) {
+      "src/routes/__layout.svelte": () => Promise.resolve().then(() => (init_layout_d66899cb(), layout_d66899cb_exports)),
+      "src/routes/__error.svelte": () => Promise.resolve().then(() => (init_error_4aa2d51e(), error_4aa2d51e_exports)),
+      "src/routes/index.svelte": () => Promise.resolve().then(() => (init_index_0210fffd(), index_0210fffd_exports)),
+      "src/routes/projectDetails.svelte": () => Promise.resolve().then(() => (init_projectDetails_346d1c04(), projectDetails_346d1c04_exports)),
+      "src/routes/MediaQuery.svelte": () => Promise.resolve().then(() => (init_MediaQuery_7d7d5fb4(), MediaQuery_7d7d5fb4_exports)),
+      "src/routes/create.svelte": () => Promise.resolve().then(() => (init_create_da82355e(), create_da82355e_exports)),
+      "src/routes/[address]/whitelists.svelte": () => Promise.resolve().then(() => (init_whitelists_c00373d4(), whitelists_c00373d4_exports)).then(function(n) {
         return n.w;
       }),
-      "src/routes/[address]/[whitelistId].svelte": () => Promise.resolve().then(() => (init_whitelistId_767119ae(), whitelistId_767119ae_exports))
+      "src/routes/[address]/[whitelistId].svelte": () => Promise.resolve().then(() => (init_whitelistId_6355c4bb(), whitelistId_6355c4bb_exports))
     };
-    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-ae6ab105.js", "css": ["assets/pages/__layout.svelte-ed6e4a04.css", "assets/Sidebar.svelte_svelte_type_style_lang-a8b8b1ab.css", "assets/vendor-25757cea.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css", "assets/stores-d3203f41.css"], "js": ["pages/__layout.svelte-ae6ab105.js", "chunks/vendor-7812b4f9.js", "chunks/stores-0e4ffa59.js", "chunks/Header.svelte_svelte_type_style_lang-600df42f.js", "chunks/stores-1420235c.js", "chunks/singletons-12a22614.js", "chunks/stores-72de02c6.js", "pages/MediaQuery.svelte-5251fe83.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-d32265a7.js", "css": ["assets/vendor-25757cea.css"], "js": ["pages/__error.svelte-d32265a7.js", "chunks/vendor-7812b4f9.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-c25a9cab.js", "css": ["assets/pages/index.svelte-30cff0a6.css", "assets/Sidebar.svelte_svelte_type_style_lang-a8b8b1ab.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css", "assets/whitelists-7b173db3.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css"], "js": ["pages/index.svelte-c25a9cab.js", "chunks/vendor-7812b4f9.js", "chunks/stores-72de02c6.js", "chunks/stores-1420235c.js", "chunks/singletons-12a22614.js", "chunks/stores-0e4ffa59.js", "chunks/whitelists-842b2324.js", "pages/MediaQuery.svelte-5251fe83.js", "chunks/constants-cbb897ad.js", "chunks/Header.svelte_svelte_type_style_lang-600df42f.js"], "styles": [] }, "src/routes/projectDetails.svelte": { "entry": "pages/projectDetails.svelte-cc5bbae9.js", "css": ["assets/pages/projectDetails.svelte-8d3b1a51.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css"], "js": ["pages/projectDetails.svelte-cc5bbae9.js", "chunks/vendor-7812b4f9.js", "chunks/stores-72de02c6.js"], "styles": [] }, "src/routes/MediaQuery.svelte": { "entry": "pages/MediaQuery.svelte-5251fe83.js", "css": ["assets/vendor-25757cea.css"], "js": ["pages/MediaQuery.svelte-5251fe83.js", "chunks/vendor-7812b4f9.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-f0951073.js", "css": ["assets/pages/create.svelte-73bcfad8.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css", "assets/Dialog-1351e10c.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css"], "js": ["pages/create.svelte-f0951073.js", "chunks/vendor-7812b4f9.js", "chunks/stores-72de02c6.js", "chunks/Dialog-7d39ef21.js", "chunks/stores-1420235c.js", "chunks/singletons-12a22614.js", "chunks/stores-0e4ffa59.js", "chunks/constants-cbb897ad.js", "chunks/Header.svelte_svelte_type_style_lang-600df42f.js", "pages/MediaQuery.svelte-5251fe83.js"], "styles": [] }, "src/routes/[address]/whitelists.svelte": { "entry": "pages/_address_/whitelists.svelte-6caad030.js", "css": ["assets/vendor-25757cea.css", "assets/whitelists-7b173db3.css"], "js": ["pages/_address_/whitelists.svelte-6caad030.js", "chunks/vendor-7812b4f9.js", "chunks/whitelists-842b2324.js", "chunks/stores-0e4ffa59.js", "pages/MediaQuery.svelte-5251fe83.js"], "styles": [] }, "src/routes/[address]/[whitelistId].svelte": { "entry": "pages/_address_/_whitelistId_.svelte-5eece76c.js", "css": ["assets/pages/_address_/_whitelistId_.svelte-dacfa395.css", "assets/vendor-25757cea.css", "assets/Dialog-1351e10c.css", "assets/stores-d3203f41.css"], "js": ["pages/_address_/_whitelistId_.svelte-5eece76c.js", "chunks/vendor-7812b4f9.js", "chunks/stores-1420235c.js", "chunks/singletons-12a22614.js", "chunks/stores-0e4ffa59.js", "chunks/Dialog-7d39ef21.js", "chunks/stores-72de02c6.js"], "styles": [] } };
+    metadata_lookup = { "src/routes/__layout.svelte": { "entry": "pages/__layout.svelte-29a09023.js", "css": ["assets/pages/__layout.svelte-ed6e4a04.css", "assets/Sidebar.svelte_svelte_type_style_lang-a8b8b1ab.css", "assets/vendor-25757cea.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css", "assets/stores-d3203f41.css"], "js": ["pages/__layout.svelte-29a09023.js", "chunks/vendor-3b62d163.js", "chunks/navigation-cc5c3534.js", "chunks/singletons-12a22614.js", "chunks/Header.svelte_svelte_type_style_lang-4f2653c5.js", "chunks/stores-06c760a7.js", "chunks/stores-5c8548b5.js", "chunks/Icon-fdd3e797.js", "pages/MediaQuery.svelte-e9649cdd.js"], "styles": [] }, "src/routes/__error.svelte": { "entry": "pages/__error.svelte-472bd2c7.js", "css": ["assets/vendor-25757cea.css"], "js": ["pages/__error.svelte-472bd2c7.js", "chunks/vendor-3b62d163.js"], "styles": [] }, "src/routes/index.svelte": { "entry": "pages/index.svelte-673a4b41.js", "css": ["assets/pages/index.svelte-30cff0a6.css", "assets/Sidebar.svelte_svelte_type_style_lang-a8b8b1ab.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css", "assets/whitelists-1c620488.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css"], "js": ["pages/index.svelte-673a4b41.js", "chunks/vendor-3b62d163.js", "chunks/stores-5c8548b5.js", "chunks/Icon-fdd3e797.js", "chunks/stores-06c760a7.js", "chunks/navigation-cc5c3534.js", "chunks/singletons-12a22614.js", "chunks/whitelists-d4b639c3.js", "pages/MediaQuery.svelte-e9649cdd.js", "chunks/constants-41399525.js", "chunks/Header.svelte_svelte_type_style_lang-4f2653c5.js"], "styles": [] }, "src/routes/projectDetails.svelte": { "entry": "pages/projectDetails.svelte-302b447d.js", "css": ["assets/pages/projectDetails.svelte-8d3b1a51.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css"], "js": ["pages/projectDetails.svelte-302b447d.js", "chunks/vendor-3b62d163.js", "chunks/stores-5c8548b5.js", "chunks/Icon-fdd3e797.js"], "styles": [] }, "src/routes/MediaQuery.svelte": { "entry": "pages/MediaQuery.svelte-e9649cdd.js", "css": ["assets/vendor-25757cea.css"], "js": ["pages/MediaQuery.svelte-e9649cdd.js", "chunks/vendor-3b62d163.js"], "styles": [] }, "src/routes/create.svelte": { "entry": "pages/create.svelte-c80c744e.js", "css": ["assets/pages/create.svelte-73bcfad8.css", "assets/vendor-25757cea.css", "assets/stores-d3203f41.css", "assets/Dialog-1351e10c.css", "assets/Header.svelte_svelte_type_style_lang-6c895964.css"], "js": ["pages/create.svelte-c80c744e.js", "chunks/vendor-3b62d163.js", "chunks/stores-5c8548b5.js", "chunks/Icon-fdd3e797.js", "chunks/Dialog-032f98ba.js", "chunks/stores-06c760a7.js", "chunks/navigation-cc5c3534.js", "chunks/singletons-12a22614.js", "chunks/constants-41399525.js", "chunks/Header.svelte_svelte_type_style_lang-4f2653c5.js", "pages/MediaQuery.svelte-e9649cdd.js"], "styles": [] }, "src/routes/[address]/whitelists.svelte": { "entry": "pages/_address_/whitelists.svelte-8fe74b01.js", "css": ["assets/vendor-25757cea.css", "assets/whitelists-1c620488.css"], "js": ["pages/_address_/whitelists.svelte-8fe74b01.js", "chunks/vendor-3b62d163.js", "chunks/whitelists-d4b639c3.js", "chunks/navigation-cc5c3534.js", "chunks/singletons-12a22614.js", "chunks/Icon-fdd3e797.js", "pages/MediaQuery.svelte-e9649cdd.js"], "styles": [] }, "src/routes/[address]/[whitelistId].svelte": { "entry": "pages/_address_/_whitelistId_.svelte-302ac226.js", "css": ["assets/pages/_address_/_whitelistId_.svelte-dacfa395.css", "assets/vendor-25757cea.css", "assets/Dialog-1351e10c.css", "assets/stores-d3203f41.css"], "js": ["pages/_address_/_whitelistId_.svelte-302ac226.js", "chunks/vendor-3b62d163.js", "chunks/stores-06c760a7.js", "chunks/navigation-cc5c3534.js", "chunks/singletons-12a22614.js", "chunks/Dialog-032f98ba.js", "chunks/stores-5c8548b5.js", "chunks/Icon-fdd3e797.js"], "styles": [] } };
   }
 });
 
@@ -25562,7 +25586,7 @@ function getRawBody(req) {
 // .svelte-kit/output/server/app.js
 init_shims();
 init_ssr();
-init_app_1d962cfa();
+init_app_ab0237fb();
 
 // .svelte-kit/vercel/entry.js
 init();

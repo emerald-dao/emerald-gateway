@@ -1,4 +1,4 @@
-import{W as c,X as d,Y as n,Z as y,_ as r,$ as o,G as g,a0 as w}from"./vendor-7812b4f9.js";import{r as h}from"./singletons-12a22614.js";import{u as b,b as m,a as l,t as u}from"./stores-0e4ffa59.js";const f=h,p=G;async function G(e,s){return f.goto(e,s,[])}c({"accessNode.api":"http://localhost:8080","discovery.wallet":"http://localhost:8701/fcl/authn","0xGateway":"0xf8d6e0586b0a20c7"});d.subscribe(b.set,[]);const I=()=>g(),_=async e=>{console.log(e);let s=!1;v();try{s=await y({cadence:`
+import{W as c,X as d,Y as n,Z as y,_ as r,$ as o,G as g,a0 as w}from"./vendor-3b62d163.js";import{u as h,b,a as l,t as u,g as m}from"./navigation-cc5c3534.js";c({"accessNode.api":"http://localhost:8080","discovery.wallet":"http://localhost:8701/fcl/authn","0xGateway":"0xf8d6e0586b0a20c7"});d.subscribe(h.set,[]);const R=()=>g(),P=async e=>{console.log(e);let s=!1;f();try{s=await y({cadence:`
       import Gateway from 0xGateway
       import GatewayModules from 0xGateway
 
@@ -28,7 +28,7 @@ import{W as c,X as d,Y as n,Z as y,_ as r,$ as o,G as g,a0 as w}from"./vendor-78
           log("Started a new event.")
         }
       }
-      `,args:(t,i)=>[t(!0,i.Bool),t(e.name,i.String),t(e.description,i.String),t("",i.String),t("",i.String),t([e.tokens[0].path],i.Array(i.Path)),t([e.tokens[0].amount+".0"],i.Array(i.UFix64)),t([e.tokens[0].identifier],i.Array(i.String))],payer:r,proposer:r,authorizations:[r],limit:999}),m.set(s),o(s).subscribe(t=>{l.set(t.status),t.status===4&&setTimeout(()=>u.set(!1),2e3)});let a=await o(s).onceSealed();return p("/"),a}catch(a){l.set(99),console.log(a)}},x=async e=>{try{return await n({cadence:`
+      `,args:(t,i)=>[t(!0,i.Bool),t(e.name,i.String),t(e.description,i.String),t("",i.String),t("",i.String),t([e.tokens[0].path],i.Array(i.Path)),t([e.tokens[0].amount+".0"],i.Array(i.UFix64)),t([e.tokens[0].identifier],i.Array(i.String))],payer:r,proposer:r,authorizations:[r],limit:999}),b.set(s),o(s).subscribe(t=>{l.set(t.status),t.status===4&&setTimeout(()=>u.set(!1),2e3)});let a=await o(s).onceSealed();return m("/"),a}catch(a){l.set(99),console.log(a)}},S=async e=>{try{return await n({cadence:`
       import Gateway from 0xGateway
 
       pub fun main(account: Address): {String: Whitelist} {
@@ -64,7 +64,7 @@ import{W as c,X as d,Y as n,Z as y,_ as r,$ as o,G as g,a0 as w}from"./vendor-78
           }
         }
       }
-      `,args:(a,t)=>[a(e,t.Address)]})||{}}catch(s){console.log(s)}},A=async(e,s)=>{try{return await n({cadence:`
+      `,args:(a,t)=>[a(e,t.Address)]})||{}}catch(s){console.log(s)}},W=async(e,s)=>{try{return await n({cadence:`
       import Gateway from 0xGateway
 
       pub fun main(account: Address, whitelistId: UInt64): Whitelist {
@@ -95,4 +95,4 @@ import{W as c,X as d,Y as n,Z as y,_ as r,$ as o,G as g,a0 as w}from"./vendor-78
           }
         }
       }
-      `,args:(t,i)=>[t(e,i.Address),t(parseInt(s),i.UInt64)]})||{}}catch(a){console.log(a)}};function v(){u.set(!0),l.set(-1)}const R=()=>{const e=w("__svelte__");return{page:{subscribe:e.page.subscribe},navigating:{subscribe:e.navigating.subscribe},get preloading(){return console.error("stores.preloading is deprecated; use stores.navigating instead"),{subscribe:e.navigating.subscribe}},session:e.session}},M={subscribe(e){return R().page.subscribe(e)}};export{I as a,p as b,_ as c,A as d,x as g,M as p};
+      `,args:(t,i)=>[t(e,i.Address),t(parseInt(s),i.UInt64)]})||{}}catch(a){console.log(a)}};function f(){u.set(!0),l.set(-1)}const p=()=>{const e=w("__svelte__");return{page:{subscribe:e.page.subscribe},navigating:{subscribe:e.navigating.subscribe},get preloading(){return console.error("stores.preloading is deprecated; use stores.navigating instead"),{subscribe:e.navigating.subscribe}},session:e.session}},I={subscribe(e){return p().page.subscribe(e)}};export{R as a,W as b,P as c,S as g,I as p};
