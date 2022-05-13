@@ -14,7 +14,7 @@
 
     const handleEvent = (e) => {
         $discordVerif.active = !discordVal.active;
-        $modal.content = "discord-verif";
+        $modal.content = "Discord Verification";
     };
 
     function openModal() {
@@ -22,7 +22,7 @@
     }
 
     function handleAddServer() {
-        $modal.content = "discord-verif";
+        $modal.content = "Discord Verification";
         openModal();
     }
 </script>

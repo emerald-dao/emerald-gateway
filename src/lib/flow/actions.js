@@ -1,7 +1,6 @@
 import { browser } from '$app/env';
 
 import * as fcl from "@samatech/onflow-fcl-esm";
-import { goto } from "$app/navigation";
 
 import "./config.js";
 import {
@@ -33,44 +32,43 @@ export const createWhitelist = async (project) => {
     transactionId = await fcl.mutate({
       cadence: `
       import Gateway from 0xGateway
-      import GatewayModules from 0xGateway
 
-      transaction(active: Bool, name: String, description: String, image: String, url: String, tokenPaths: [PublicPath], amounts: [UFix64], identifiers: [String]) {
+      transaction(active: Bool, name: String, description: String, image: String, url: String, moduleTypes: [String], moduleRequirements: [AnyStruct]) {
 
         let Registry: &Gateway.Registry
-
+      
         prepare(acct: AuthAccount) {
           // set up the Registry where users will store all their created events
           if acct.borrow<&Gateway.Registry>(from: Gateway.RegistryStoragePath) == nil {
             acct.save(<- Gateway.createEmptyRegistry(), to: Gateway.RegistryStoragePath)
             acct.link<&Gateway.Registry{Gateway.RegistryPublic}>(Gateway.RegistryPublicPath, target: Gateway.RegistryStoragePath)
           }
-
+      
           self.Registry = acct.borrow<&Gateway.Registry>(from: Gateway.RegistryStoragePath)
                               ?? panic("Could not borrow the Registry from the signer.")
         }
-
+      
         execute {
-          let modules: [{Gateway.IModule}] = []
+          let modules: [Gateway.Module] = []
           var i = 0
-          while i < identifiers.length {
-            modules.append(GatewayModules.OwnsToken(_path: tokenPaths[i], amount: amounts[i], identifier: identifiers[i]))
+          while i < moduleTypes.length {
+            modules.append(Gateway.Module(_type: moduleTypes[i], _requirement: moduleRequirements[i]))
             i = i + 1
           }
           self.Registry.createWhitelist(active: active, description: description, image: image, name: name, url: url, modules: modules, {})
-          log("Started a new event.")
+          log("Created a new whitelist.")
         }
       }
+      
       `,
       args: (arg, t) => [
         arg(true, t.Bool),
         arg(project.name, t.String),
         arg(project.description, t.String),
         arg("", t.String),
-        arg("", t.String),
-        arg([project.tokens[0].path], t.Array(t.Path)),
-        arg([project.tokens[0].amount + ".0"], t.Array(t.UFix64)),
-        arg([project.tokens[0].identifier], t.Array(t.String))
+        arg("https://twitter.com/emerald_dao", t.String),
+        arg(project.moduleTypes, t.Array(t.String)),
+        arg(project.moduleRequirements, t.Array(t.AnyStruct)),
       ],
       payer: fcl.authz,
       proposer: fcl.authz,
@@ -83,21 +81,18 @@ export const createWhitelist = async (project) => {
     fcl.tx(transactionId).subscribe(res => {
       transactionStatus.set(res.status)
       if (res.status === 4) {
-        // handlenav
-                // goto(`/`);
-
-        setTimeout(() => transactionInProgress.set(false), 2000)
+        setTimeout(() => transactionInProgress.set(false), 2000);
       }
     })
 
-    let res = await fcl.tx(transactionId).onceSealed()
-                    goto(`/`);
+    let res = await fcl.tx(transactionId).onceSealed();
 
     return res;
 
   } catch (e) {
     transactionStatus.set(99);
-    console.log(e)
+    setTimeout(() => transactionInProgress.set(false), 2000);
+    console.log(e);
   }
 }
 

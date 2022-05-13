@@ -1,7 +1,6 @@
 import Gateway from "../Gateway.cdc"
-import GatewayModules from "../GatewayModules.cdc"
 
-transaction(active: Bool, name: String, description: String, image: String, url: String, tokenPaths: [PublicPath], amounts: [UFix64], identifiers: [String]) {
+transaction(active: Bool, name: String, description: String, image: String, url: String, moduleTypes: [String], moduleRequirements: [AnyStruct]) {
 
   let Registry: &Gateway.Registry
 
@@ -17,14 +16,14 @@ transaction(active: Bool, name: String, description: String, image: String, url:
   }
 
   execute {
-    let modules: [{Gateway.IModule}] = []
+    let modules: [Gateway.Module] = []
     var i = 0
-    while i < identifiers.length {
-      modules.append(GatewayModules.OwnsToken(_path: tokenPaths[i], amount: amounts[i], identifier: identifiers[i]))
+    while i < moduleTypes.length {
+      modules.append(Gateway.Module(_type: moduleTypes[i], _requirement: moduleRequirements[i]))
       i = i + 1
     }
     self.Registry.createWhitelist(active: active, description: description, image: image, name: name, url: url, modules: modules, {})
-    log("Started a new event.")
+    log("Created a new whitelist.")
   }
 }
 

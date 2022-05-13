@@ -1,3 +1,5 @@
+import ZayVerifierV2 from "./core-contracts/ZayVerifierV2.cdc"
+
 pub contract Gateway {
 
     /***********************************************/
@@ -22,8 +24,38 @@ pub contract Gateway {
     /**************** FUNCTIONALITY ****************/
     /***********************************************/
 
-    pub struct interface IModule {
-        access(account) fun verify(_ params: {String: AnyStruct})
+    pub struct Module {
+        // ex. CustomToken
+        pub let type: String
+        // ex. FlowToken
+        pub let requirement: AnyStruct
+
+        init(_type: String, _requirement: AnyStruct) {
+            self.type = _type
+            self.requirement = _requirement
+        }
+    }
+
+    pub struct VerifySig {
+        pub let acctAddress: Address
+        pub let message: String 
+        pub let signatures: [String] 
+        pub let keyIds: [Int]
+        pub let signatureBlock: UInt64
+
+        init(
+        _acctAddress: Address, 
+        _message: String, 
+        _signatures: [String], 
+        _keyIds: [Int], 
+        _signatureBlock: UInt64
+        ) {
+        self.acctAddress = _acctAddress
+        self.message = _message
+        self.signatures = _signatures
+        self.keyIds = _keyIds
+        self.signatureBlock = _signatureBlock
+        }
     }
 
     pub resource interface WhitelistPublic {
@@ -39,8 +71,8 @@ pub contract Gateway {
         pub fun getRegistered(): [Address]
         pub fun getExtraMetadata(): {String: String}
         pub fun hasRegistered(account: Address): Bool
-        pub fun getModules(): [{IModule}]
-        access(account) fun register(registrant: Address, params: {String: AnyStruct})
+        pub fun getModules(): [Module]
+        pub fun register(registrant: Address, verify: VerifySig)
     }
 
     //
@@ -58,7 +90,7 @@ pub contract Gateway {
         pub let name: String
         pub var totalCount: UInt64
         pub let url: String
-        pub let modules: [{IModule}]
+        pub let modules: [Module]
 
         /***************** Setters for the Whitelist Owner *****************/
 
@@ -89,23 +121,33 @@ pub contract Gateway {
             return self.extraMetadata
         }
 
-        pub fun getModules(): [{IModule}] {
+        pub fun getModules(): [Module] {
             return self.modules
         }
 
         /****************** Registering ******************/
 
-        pub fun register(registrant: Address, params: {String: AnyStruct}) {
+        pub fun register(registrant: Address, verify: VerifySig) {
             pre {
                 self.active: 
                     "This Whitelist is not registerable, and thus not currently active."
+                verify.acctAddress == 0xf8d6e0586b0a20c7:
+                    "The signature must come from a Gateway Admin."
             }
-
-            params["whitelist"] = &self as &Whitelist{WhitelistPublic}
+            let intent = "Register ".concat((registrant as Address).toString())
+                                    .concat(" to ")
+                                    .concat(self.uuid.toString())
+            let identifier = self.uuid.toString()
             
-            for module in self.modules {
-                module.verify(params)
-            }
+            let result = ZayVerifierV2.verifySignature(
+                acctAddress: verify.acctAddress, 
+                message: verify.message, 
+                keyIds: verify.keyIds, 
+                signatures: verify.signatures, 
+                signatureBlock: verify.signatureBlock, 
+                intent: intent, 
+                identifier: identifier
+            )
 
             self.registered[registrant] = true
             self.totalCount = self.totalCount + 1
@@ -119,7 +161,7 @@ pub contract Gateway {
             _image: String, 
             _name: String,
             _url: String,
-            _modules: [{IModule}],
+            _modules: [Module],
         ) {
             self.active = _active
             self.dateCreated = getCurrentBlock().timestamp
@@ -159,7 +201,7 @@ pub contract Gateway {
             image: String, 
             name: String, 
             url: String,
-            modules: [{IModule}],
+            modules: [Module],
             _ extraMetadata: {String: String}
         ): UInt64 {
             let Whitelist <- create Whitelist(
@@ -196,12 +238,6 @@ pub contract Gateway {
 
         pub fun getIDs(): [UInt64] {
             return self.whitelists.keys
-        }
-
-        pub fun register(whitelist: &Whitelist{WhitelistPublic}, params: {String: AnyStruct}) {
-            let registrant = self.owner!.address
-            params["registrant"] = registrant
-            whitelist.register(registrant: registrant, params: params)
         }
 
         init() {

@@ -6,7 +6,7 @@ export let servers
 
 function handleSelection(i) {
     $discordVerif.selectedId = i 
-    $modal.content = "discord-verif"
+    $modal.content = "Discord Verification"
     $discordVerif.editing = true 
     $modal.opened = true
     

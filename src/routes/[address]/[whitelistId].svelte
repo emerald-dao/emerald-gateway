@@ -18,7 +18,7 @@ collections,
 } from "$lib/stores";
 
 import VerificationComponent from "$lib/components/projects/VerificationComponent.svelte";
-import CollectionComponent from "$lib/components/tabs/CollectionComponent.svelte";
+import CollectionComponent from "$lib/components/tabs/tab3/CollectionComponent.svelte";
 import VerticalSpace from "$lib/components/VerticalSpace.svelte";
 import {
     readWhitelist
