@@ -1,15 +1,7 @@
 <script>
-    import { tokens, modal } from "$lib/stores.js";
-
-    import HorizontalSpace from "$lib/components/HorizontalSpace.svelte";
-    import Icon from "@iconify/svelte";
+    import { tokens } from "$lib/stores.js";
     import TabHeader from "$lib/components/tabs/TabHeader.svelte";
     import TokenRow from "./TokenRow.svelte";
-
-    function openModal() {
-        $modal.content = "custom-token";
-        $modal.opened = true;
-    }
 </script>
 
 <main>
@@ -45,31 +37,6 @@
     ul {
         margin: 0;
         padding: 0;
-    }
-
-    .secondary-btn {
-        display: flex;
-        height: 1.6rem;
-        align-items: center;
-        padding: 0.6rem 1rem;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    .secondary-btn:hover {
-        background: rgba(56, 232, 198, 0.1);
-    }
-
-    .custom-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 20%;
-        font-size: 0.7rem;
-        color: var(--primary);
-        font-weight: bold;
-        border-top: 2px solid var(--form-element-border-color);
     }
 
     .tokens-container {

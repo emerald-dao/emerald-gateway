@@ -1,16 +1,12 @@
 <script>
-    // import Dialog from '../Dialog.svelte';
-    import { collections, selectedCollection, dialog } from "$lib/stores.js";
+    import { collections } from "$lib/stores.js";
 
     import TabHeader from "../TabHeader.svelte";
 
     import SearchComponent from "../SearchComponent.svelte";
     import CollectionRow from "./CollectionRow.svelte";
 
-    let hoveredId;
-
     let filteredCollections = $collections;
-
     let searchTerm = "";
 
     const searchCollections = () => {

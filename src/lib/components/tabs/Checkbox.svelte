@@ -1,8 +1,9 @@
 <script>
   export let handleClick;
+  export let selected;
 </script>
 
-<input type="checkbox" class="checkbox" on:click={handleClick} />
+<input type="checkbox" class="checkbox" checked={selected} on:click={handleClick} />
 
 <style>
   input {

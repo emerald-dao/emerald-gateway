@@ -1,34 +1,52 @@
 <script>
-    import { selectedToken } from "$lib/stores";
     import Icon from "@iconify/svelte";
 
-    export let imgUrl;
-    export let label;
-    export let amount;
-    export let id;
+    export let token;
+    let editing;
 
-    const handleEdit = (id) => {
-        $selectedToken = id;
-        openDialog();
-    };
+    function onEnter(e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            editing = false
+        }
+    }
 </script>
 
-<div style="--width:{amount ? '225px' : '150px'}" class="token-container">
-    <img src={imgUrl} alt="logo" class="token-image" />
+<div style="--width:{token.selected ? '225px' : '150px'}" class="token-container">
+    <img src={token.imgUrl} alt="logo" class="token-image" />
     <div style="margin-right: 1rem;">
-        {label}
+        {token.label}
     </div>
-    {#if amount !== 0}
-        <div class="amount-container" on:click={() => handleEdit(id)}>
-            {amount}
+    {#if token.selected && !editing}
+        <div class="amount-container" on:click={() => (editing = true)}>
+            {token.amount}
             <div class="icon-container">
                 <Icon icon="akar-icons:edit" />
+            </div>
+        </div>
+    {:else if token.selected && editing}
+        <div class="amount-container">
+            <input id="editor" type="text" style="color: black;" on:keydown={onEnter} on:change={(e) => token.amount = e.target.value} />
+            <div class="icon-container" on:click={() => (editing = false)}>
+                <Icon icon="akar-icons:clipboard" />
             </div>
         </div>
     {/if}
 </div>
 
 <style>
+    #editor {
+        text-decoration: none;
+        background: none;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid;
+        margin-bottom: 0px;
+        padding: 5px;
+        width: 50px;
+        height: 70%;
+        border-radius: 0px;
+        margin-right: 20px;
+    }
     .token-image {
         border-radius: 50px;
         object-fit: cover;
@@ -75,5 +93,6 @@
         height: 1.2rem;
         width: 1.2rem;
         padding: 0.2rem;
+
     }
 </style>

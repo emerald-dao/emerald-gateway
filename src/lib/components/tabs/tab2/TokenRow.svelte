@@ -9,8 +9,8 @@
 </script>
 
 <li class="token mt-1">
-  <TokenComponent {...token} />
-  <Checkbox handleClick={selectToken} />
+  <TokenComponent {token} />
+  <Checkbox handleClick={selectToken} selected={token.selected} />
 </li>
 
 <style>

@@ -10,7 +10,7 @@
 
 <li class="collection-row">
   <CollectionComponent {...collection} />
-  <Checkbox handleClick={selectCollection} />
+  <Checkbox handleClick={selectCollection} selected={collection.selected} />
 </li>
 
 <style>
