@@ -1,1 +1,0 @@
-import{C as t}from"./vendor-3b62d163.js";import{r as n}from"./singletons-12a22614.js";const e=t(null),l=t(null),i=t(null),g=t(!1),r=n,f=a;async function a(o,s){return r.goto(o,s,[])}export{l as a,i as b,f as g,g as t,e as u};
