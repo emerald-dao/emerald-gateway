@@ -11,7 +11,7 @@
         twitterVerif,
     } from "$lib/stores";
     import { createWhitelist } from "$lib/flow/actions";
-    import TabBar from "./tab_bar/TabBar.svelte";
+    import TabBar from "./tabs/TabBar.svelte";
 
     function createProject() {
         const newProject = {

@@ -23,7 +23,7 @@
                 <TokenRow {token} />
             {/each}
         </ul>
-        <footer class="custom-container">
+        <!-- <footer class="custom-container">
             <div class="secondary-btn" on:click={openModal}>
                 <Icon
                     icon="ant-design:plus-circle-outlined"
@@ -32,7 +32,7 @@
                 <HorizontalSpace value="0.3rem" />
                 <div>ADD CUSTOM TOKEN</div>
             </div>
-        </footer>
+        </footer> -->
     </div>
 </main>
 

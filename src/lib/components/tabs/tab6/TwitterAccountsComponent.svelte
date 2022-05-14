@@ -4,7 +4,7 @@ import {
     twitterVerif
 } from "$lib/stores";
 import Icon from "@iconify/svelte"
-import HorizontalSpace from "../HorizontalSpace.svelte";
+import HorizontalSpace from "$lib/components/HorizontalSpace.svelte";
 
 export let accounts
 export let mobile

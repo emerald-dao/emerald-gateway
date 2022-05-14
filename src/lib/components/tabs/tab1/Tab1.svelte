@@ -1,6 +1,6 @@
 <script>
-    import { tab1data } from "../../stores";
-    import TabHeader from "./TabHeader.svelte";
+    import { tab1data } from "$lib/stores.js";
+    import TabHeader from "../TabHeader.svelte";
 </script>
 
 <div>
@@ -20,7 +20,7 @@
         <textarea
             id="description"
             rows="4"
-            placeholder="My awesome project it´s ..."
+            placeholder="My awesome project..."
             bind:value={$tab1data.description}
         />
     </div>

@@ -1,11 +1,7 @@
 <script>
     import Icon from "@iconify/svelte";
-    import PrimaryBtn from "../PrimaryBtn.svelte";
-    import { twitterVerif, modal } from "../../stores";
-    // import {
-    //     handleEvent
-    // } from "./utils"
-    import TabHeader from "./TabHeader.svelte";
+    import { twitterVerif, modal } from "$lib/stores.js";
+    import TabHeader from "../TabHeader.svelte";
     import TwitterAccountsComponent from "./TwitterAccountsComponent.svelte";
 
     let twitterVal;

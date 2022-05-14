@@ -1,10 +1,10 @@
-import Tab1 from "$lib/components/tabs/Tab1.svelte"
+import Tab1 from "$lib/components/tabs/tab1/Tab1.svelte"
 import Tab2 from "$lib/components/tabs/tab2/Tab2.svelte"
 import Tab3 from "$lib/components/tabs/tab3/Tab3.svelte"
-import Tab4 from "$lib/components/tabs/Tab4.svelte"
-import Tab5 from "$lib/components/tabs/Tab5.svelte"
-import Tab6 from "$lib/components/tabs/Tab6.svelte"
-import Tab7 from "$lib/components/tabs/Tab7.svelte"
+import Tab4 from "$lib/components/tabs/tab4/Tab4.svelte"
+import Tab5 from "$lib/components/tabs/tab5/Tab5.svelte"
+import Tab6 from "$lib/components/tabs/tab6/Tab6.svelte"
+import Tab7 from "$lib/components/tabs/tab7/Tab7.svelte"
 
 import { writable } from 'svelte/store';
 
@@ -12,7 +12,7 @@ export const joinedWhitelists = writable([])
 
 export const projects = writable([])
 
-export const activeTabVal = writable(0)
+export const activeTabVal = writable(2);
 
 export const tabs = writable([
   {
@@ -70,8 +70,7 @@ export const tokens = writable([
   {
     id: 0,
     label: "FLOW",
-    imgUrl:
-      "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
+    imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145425/FlowLogo_myf3sv.svg",
     selected: false,
     amount: 30,
     path: {
@@ -83,8 +82,7 @@ export const tokens = writable([
   {
     id: 1,
     label: "FUSD",
-    imgUrl:
-      "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
+    imgUrl: "https://res.cloudinary.com/do4mactw0/image/upload/v1647145831/FusdIcon_esmisr.svg",
     selected: false,
     amount: 0,
     path: {
@@ -142,7 +140,7 @@ export const discordVerif = writable({
   serverId: "",
   active: false,
   editing: false,
-  servers: [],
+  servers: [234234],
 })
 
 export const twitterVerif = writable({

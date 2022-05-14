@@ -1,6 +1,5 @@
 <script>
   import YourWhitelists from "$lib/components/common/table/YourWhitelists.svelte";
-  import DrawerComponent from "$lib/components/drawer/DrawerComponent.svelte";
   import { PAGE_TITLE_EXTENSION } from "$lib/constants";
   import { user } from "$lib/flow/stores";
   import { getWhitelists } from "$lib/flow/actions";
@@ -37,7 +36,6 @@
 </svelte:head>
 
 <article class="app">
-  <DrawerComponent />
   <ul class="tabs">
     <li
       on:click={() => {

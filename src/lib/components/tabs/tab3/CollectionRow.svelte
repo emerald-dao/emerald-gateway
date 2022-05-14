@@ -1,40 +1,20 @@
 <script>
-  import { collections } from "$lib/stores.js";
+  import Checkbox from "../Checkbox.svelte";
   import CollectionComponent from "./CollectionComponent.svelte";
   export let collection;
 
-  let hoveredId;
-
-  const handlePointerEnter = (id) => (hoveredId = id);
-  const handlePointerLeave = (id) => (hoveredId = null);
-
-  const handleSelection = (id) => {
-    $collections[id].selected = !$collections[id].selected;
-  };
+  function selectCollection() {
+    collection.selected = !collection.selected;
+  }
 </script>
 
-<li
-  class={hoveredId === collection.id
-    ? "collection-active"
-    : "collection-inactive"}
-  on:pointerenter={() => handlePointerEnter(collection.id)}
-  on:pointerleave={() => handlePointerLeave(collection.id)}
->
+<li class="collection-row">
   <CollectionComponent {...collection} />
-
-  <div
-    style="display:flex; justify-content:end; width:20%; padding-right: 1rem;"
-  >
-    <input
-      type="checkbox"
-      on:click={() => handleSelection(collection.id)}
-      bind:checked={collection.selected}
-    />
-  </div>
+  <Checkbox handleClick={selectCollection} />
 </li>
 
 <style>
-  .collection-inactive {
+  .collection-row {
     display: flex;
     height: 3.5rem;
     width: 100%;
@@ -43,14 +23,8 @@
     padding-left: 3%;
   }
 
-  .collection-active {
-    display: flex;
-    height: 3.5rem;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+  .collection-row:hover {
     background-color: rgba(56, 232, 198, 0.1);
     cursor: pointer;
-    padding-left: 3%;
   }
 </style>
